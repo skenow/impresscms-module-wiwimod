@@ -1,0 +1,9 @@
+<table cellspacing="0">
+  <tr>
+    <td id="mainmenu">
+  <{foreach item=link from=$block.links}>
+    <a href="<{$xoops_url}>/modules/wiwimod/index.php?page=<{$link.page}>"><{if ($link.title)}><{$link.title}><{else}><{$link.page}><{/if}></a>
+  <{/foreach}>
+    </td>
+  </tr>
+</table>

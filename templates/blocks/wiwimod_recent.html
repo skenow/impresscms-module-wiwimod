@@ -1,0 +1,13 @@
+<table cellspacing="0">
+  <{foreach item=link from=$block.links}>
+  <tr>
+    <td>
+    <a href="<{$xoops_url}>/modules/wiwimod/index.php?page=<{$link.page}>"><{$link.title}></a>
+    </td><td>
+	<span class="itemPoster"><{$link.user}></span>
+	</td><td>
+	<span class="itemPostDate"><{$link.lastmodified}></span>
+	</td>
+  </tr>
+  <{/foreach}>
+</table>

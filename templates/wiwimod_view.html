@@ -1,0 +1,45 @@
+<table class="PageTitle">
+ <tr>
+  <td style="text-align:right">
+	[<{foreach from=$parentlist item=pg}><{$pg}>&nbsp;::&nbsp;<{/foreach}><{$smarty.const._MD_WIWI_THISPAGE}>]
+		<{if $nav}>&nbsp;<{$nav.html}><{/if}>
+  </td>
+ </tr>
+ <tr>
+  <td><h2><{$wiwimod.title}></h2></td>
+  </td>
+ </tr>
+</table>
+<{$wiwimod.body}>
+<table><tr><td>
+	<{if $nav}><{$nav.html}><{/if}>
+</td><td align=right>
+	<div style="text-align: right; padding: 3px; margin: 0px; color : #8090B1"><span style = "border-top: 1px solid #8090B1; padding: 3px; font-style:italic; font-size:small;" >
+	<{$smarty.const._MD_WIWI_MODIFIED_TXT}> <{$wiwimod.lastmodified}> <{$smarty.const._MD_WIWI_BY}> <span class="itemPoster"><{$wiwimod.author}></span></span>
+	<{if $wiwimod.allowPDF}> <a href="wiwipdf.php?page=<{$wiwimod.encodedurl}>" target="_blank"><img src="images/pdf.gif" align=middle></a>&nbsp;<{/if}>
+	<{if $wiwimod.showHistory}> <input type=button onClick="self.location.href='index.php?page=<{$wiwimod.encodedurl}>&op=history';" value="<{$smarty.const._MD_WIWI_HISTORY_BTN}>"><{/if}>
+	<{if $wiwimod.mayEdit}> <input type=button onClick="self.location.href='index.php?page=<{$wiwimod.encodedurl}>&op=edit';" value="<{$smarty.const._EDIT}>"><{/if}></div>
+</td></tr></table>
+
+<{if $wiwimod.showComments}>
+<br />
+<div ><fieldset><legend><{$smarty.const._COMMENTS}></legend>
+<div style="margin: 3px; padding: 3px;">
+<!-- start comments loop -->
+<{if $comment_mode == "flat"}>
+  <{include file="db:system_comments_flat.html"}>
+<{elseif $comment_mode == "thread"}>
+  <{include file="db:system_comments_thread.html"}>
+<{elseif $comment_mode == "nest"}>
+  <{include file="db:system_comments_nest.html"}>
+<{/if}>
+<!-- end comments loop -->
+</div>
+<div style="text-align: center; padding: 3px; margin: 3px;">
+  <{$commentsnav}>
+  <{$lang_notice}>
+</div>
+</fieldset></div>
+<{/if}>
+<{include file='db:system_notification_select.html'}>
+
