@@ -5,7 +5,7 @@ include "../class/wiwiPageNav.class.php";
 
 global $myts;
 
-$op = (isset($HTTP_GET_VARS['op']))?$HTTP_GET_VARS['op']:"";
+$op = (isset($_GET['op']))?$_GET['op']:"";
 
 xoops_cp_header();
 

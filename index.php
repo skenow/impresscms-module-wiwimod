@@ -10,9 +10,10 @@ include_once "class/wiwiRevision.class.php";
 if (isset($_REQUEST['page'])) $page = $_REQUEST['page']; else $page="";
 if (isset($_REQUEST['pageid'])) $pageid = intval($_REQUEST['pageid']); else $pageid=0;
 if (isset($_REQUEST['id'])) $id = intval($_REQUEST['id']); else $id=0;
-$op = (isset($HTTP_GET_VARS['op']))?$HTTP_GET_VARS['op']:"";
-if (!empty($HTTP_POST_VARS)) {
-    extract($HTTP_POST_VARS);
+// valid values for op: preview, insert, quietsave, edit, history, diff, restore
+$op = (isset($_GET['op']))? trim(($_GET['op'])):"";
+if (!empty($_POST)) {
+    extract($_POST);
 }
 
 $page = stripslashes($page);  // if page name comes in url, decode it.
@@ -44,12 +45,12 @@ if ((($op == "preview") || ($op == "insert") || ($op == "quietsave")) && isset($
 	$pageObj = new wiwiRevision($page,0,$pageid);
 	if ($pageObj->id == 0) {
 		/*
-		 * page does'nt exist >> edit new one, with default values for title and profile
+		 * page doesn't exist >> edit new one, with default values for title and profile
 		 */
 		$op = "edit";
 		$pageObj->title = $pageObj->keyword;
-		if (isset($HTTP_GET_VARS['back'])) {
-			$pageObj->parent = stripslashes($HTTP_GET_VARS['back']);	// default value for parent field = initial caller.
+		if (isset($_GET['back'])) {
+			$pageObj->parent = stripslashes($_GET['back']);	// default value for parent field = initial caller.
 			$parentObj = new wiwiRevision($pageObj->parent);
 			$pageObj->profile =& $parentObj->profile;   // is reference assignment a good idea ?
 		}
@@ -331,18 +332,19 @@ switch ($op) {
 		if ($pageObj->canViewComments()) {
 			/*
 			 * set header variables for comment system to operate
-			 */
-			if (!isset($HTTP_GET_VARS['pageid']) || !isset($_GET['pageid'])) {
-				$HTTP_GET_VARS['pageid'] = $pageid ;
+			 */ 
+			 
+			if (!isset($_GET['pageid']) || !isset($_GET['pageid'])) {
+				$_GET['pageid'] = $pageid ;
 				$_GET['pageid'] = $pageid ;  // patch to be compatible with Xoops 2.0.7
 			}
 			//
 			// patch to deal with a bug in the standard Xoops 2.05 comment_view file,
 			// (generated a disgraceful "undefined index notice" in debug mode ;-)
 			//
-			if (!isset($HTTP_GET_VARS['com_order']) || !isset($_GET['com_order'])) {
-				$HTTP_GET_VARS['com_order'] = (is_object($xoopsUser) ? $xoopsUser->getVar('uorder') : $xoopsConfig['com_order']) ;
-				$_GET['com_order'] = $HTTP_GET_VARS['com_order'] ;  // patch to be compatible with Xoops 2.0.7
+			if (!isset($_GET['com_order']) || !isset($_GET['com_order'])) {
+				$_GET['com_order'] = (is_object($xoopsUser) ? $xoopsUser->getVar('uorder') : $xoopsConfig['com_order']) ;
+				$_GET['com_order'] = $_GET['com_order'] ;  // patch to be compatible with Xoops 2.0.7
 			}
 			include XOOPS_ROOT_PATH.'/include/comment_view.php';
 		}

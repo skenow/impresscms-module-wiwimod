@@ -1,7 +1,7 @@
 <?php
 include "admin_header.php";
 
-$op = (isset($HTTP_GET_VARS['op']))?$HTTP_GET_VARS['op']:"";
+$op = (isset($_GET['op']))?$_GET['op']:"";
 
 xoops_cp_header();
 echo getAdminMenu (4,'about');

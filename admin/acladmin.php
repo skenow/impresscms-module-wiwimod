@@ -4,9 +4,9 @@ include "admin_header.php";
 include "../class/wiwiProfile.class.php";
 include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
 
-$op = (isset($HTTP_GET_VARS['op']))?$HTTP_GET_VARS['op']:"";
-if (!empty($HTTP_POST_VARS)) {
-    extract($HTTP_POST_VARS);
+$op = (isset($_GET['op']))?$_GET['op']:"";
+if (!empty($_POST)) {
+    extract($_POST);
 }
 
 switch ($op) {
@@ -19,8 +19,8 @@ default:
 	//--- list profiles ---
 	$prf = new WiwiProfile();
 	$prflst = $prf->getAllProfiles();
-	if (isset($HTTP_GET_VARS['profile'])) {
-		$prid = $HTTP_GET_VARS['profile'];
+	if (isset($_GET['profile'])) {
+		$prid = (int) $_GET['profile'];
 	} else $prid = null;
 	$prf->load($prid);
 
@@ -84,10 +84,15 @@ default:
 
 
 case "save" :
-	if ( isset($HTTP_POST_VARS) ) {
-	foreach ( $HTTP_POST_VARS as $k => $v ) {
+if ( isset($_POST) ) {
+/**
+ *@todo remove this, if is proves unnecessary
+ * does this need to be done, since extract($_POST) is used at the beginning of this file?	
+ */
+ /*  
+	foreach ( $_POST as $k => $v ) {
 		$$k = $v;
-	}
+	}*/
 	$prf = new WiwiProfile();
 	$prf->name = $prf_name;
 	$prf->prid = $prid;
@@ -103,10 +108,10 @@ case "save" :
 	}
 
 case "confirmdelete" :
-	if (isset($HTTP_GET_VARS['profile'])) {
-		$prid = $HTTP_GET_VARS['profile'];
-	} elseif (isset($HTTP_POST_VARS['prid'])) {
-		$prid = $HTTP_POST_VARS['prid'];
+	if (isset($_GET['profile'])) {
+		$prid = (int) $_GET['profile'];
+	} elseif (isset($_POST['prid'])) {
+		$prid = (int) $_POST['prid'];
 	} else redirect_header ("acladmin.php", 2, _AM_WIWI_ERRDELETE_MSG);
 
 	$prf = new WiwiProfile();
@@ -146,14 +151,14 @@ case "confirmdelete" :
 	break;
 
 case "delete" :
-	if (isset($HTTP_GET_VARS['profile'])) {
-		$prid = $HTTP_GET_VARS['profile'];
-	} elseif (isset($HTTP_POST_VARS['prid'])) {
-		$prid = $HTTP_POST_VARS['prid'];
+	if (isset($_GET['profile'])) {
+		$prid = (int) $_GET['profile'];
+	} elseif (isset($_POST['prid'])) {
+		$prid = (int) $_POST['prid'];
 	} else redirect_header ("acladmin.php", 2, _AM_WIWI_ERRDELETE_MSG);
 
-	if (isset($HTTP_GET_VARS['newprf'])) {
-		$newprf = $HTTP_GET_VARS['newprf'];
+	if (isset($_GET['newprf'])) {
+		$newprf = (int) $_GET['newprf'];
 	} else $newprf = 0;
 
 	$prf = new WiwiProfile();
