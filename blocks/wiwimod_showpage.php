@@ -26,7 +26,7 @@ function wiwimod_showpage ($options) {
 		if ($pageObj->canRead()) {
 			$pagecontent = $pageObj->render();
 		} else {
-			$pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align=center>"._MB_WIWI_NOREADACCESS_MSG."</td></tr></table></center><br><br>";
+			$pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>"._MB_WIWI_NOREADACCESS_MSG."</td></tr></table></center><br><br>";
 		}
 
 		//

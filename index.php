@@ -1,11 +1,23 @@
 <?php
+/**
+ * Main index page of wiwimod - displays all pages on the user side
+ * 
+ * @package modules::wiwimod
+ * @author Xavier JIMENEZ
+ * @author Gizmhail
+ * @author skenow <skenow@impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version $Id$  
+ */
+/** Include the page header for the module */    
 include_once "header.php";
+/** Include the class for the page objects (revisions) */
 include_once "class/wiwiRevision.class.php";
 
 
 /*
  * extract all header variables to corresponding php variables ---
- * TODO : - $xoopsUser can be overriden by post variables >> security fix ?
+ * @todo : - $xoopsUser can be overriden by post variables >> security fix ?
  */      
 if (isset($_REQUEST['page'])) $page = $_REQUEST['page']; else $page="";
 if (isset($_REQUEST['pageid'])) $pageid = intval($_REQUEST['pageid']); else $pageid=0;
@@ -103,7 +115,7 @@ switch ($op) {
 		//
 		if (!$pageObj->canWrite()) {
 			include_once XOOPS_ROOT_PATH."/header.php";
-			echo "<br><br><center><table style='align:center; border: 1px solid gray; width:50%; background:#F0F0F0'; ><tr><td align=center><br>"._MD_WIWI_PAGENOTFOUND_MSG."<br><br></td></tr></table><br><br><input type='button' value="._CANCEL." onclick='history.back();'></center>";
+			echo "<br /><br /><center><table style='align:center; border: 1px solid gray; width:50%; background:#F0F0F0'; ><tr><td align='center'><br />"._MD_WIWI_PAGENOTFOUND_MSG."<br /><br /></td></tr></table><br /><br /><input type='button' value="._CANCEL." onclick='history.back();'></center>";
 			include_once XOOPS_ROOT_PATH."/footer.php";
 			break;
 		}
@@ -288,7 +300,7 @@ switch ($op) {
 		$pageObj->body = addslashes($restoredRevision->body);
 		$pageObj->contextBlock = $restoredRevision->contextBlock;
 		$success = $pageObj->add();
-		redirect_header("index.php?page=".$pageObj->keyword."&op=history", 2, ($success)?_MD_WIWI_DBUPDATED_MSG:_MD_WIWI_ERRORINSERT_MSG);
+		redirect_header("index.php?page=".$pageObj->keyword."&amp;op=history", 2, ($success)?_MD_WIWI_DBUPDATED_MSG:_MD_WIWI_ERRORINSERT_MSG);
 		break;
 
 	default:
@@ -301,7 +313,7 @@ switch ($op) {
 		if ($pageObj->canRead()) {
 		    $pagecontent = $pageObj->render();
 		} else {
-		    $pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align=center>"._MD_WIWI_NOREADACCESS_MSG."</td></tr></table></center><br><br>";
+		    $pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>"._MD_WIWI_NOREADACCESS_MSG."</td></tr></table></center><br /><br />";
 		}
 
 		//

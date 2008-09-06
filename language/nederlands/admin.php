@@ -25,14 +25,14 @@ define('_AM_WIWI_SELECTACL_TXT','bewerk een Wiwi profiel:');
 define('_AM_WIWI_CREATEACL_TXT','of creër een nieuw profiel:');
 define('_AM_WIWI_EDITACL_TXT','Profiel info');
 define('_AM_WIWI_ACLHELP_TXT','
-	<P>Wiwi profielen zijn standaard wiwi pagina keuze instellingen waarmee je aangeeft welke pagina toegangs-/lees-/schrijf- en bewerk privileges toegekend krijgt. Je XOOPS-groep(en) ken je lees-/schrijf-/administratie rechten toe mbt de betreffende wiwi pagina\'s.</P>
-	<UL>
-	<LI> LEZERS toegang: kunnen de pagina alleen lezen.
-		<LI>SCHRIJVERS toegang: kunnen de pagina\'s bewerken en een nieuwe pagina met datzelfde profiel aanmaken.</LI>
-		<LI>ADMINISTRATORS toegang: kunnen profielen veranderen/aanpassen naar ieder ander gewenst profiel waarvoor ze "admin" rechten.</LI></UL>
-	<P>Nieuwe pagina\'s behoren standaard tot de "ouders" hun profiel.</P>
-	<P>Het profiel bepaalt ook wie commenta(a)r(en) mag lezen en schrijven. Dit kan handig zijn indien je privé-commenta(a)r(e)n wilt toe laten op publieke pagina\'s...</P>
-	<P>ATTENTIE: Xoops WEBMASTERS hebben altijd àlle privileges op iedere wiwi pagina.</P>
+	<p>Wiwi profielen zijn standaard wiwi pagina keuze instellingen waarmee je aangeeft welke pagina toegangs-/lees-/schrijf- en bewerk privileges toegekend krijgt. Je XOOPS-groep(en) ken je lees-/schrijf-/administratie rechten toe mbt de betreffende wiwi pagina\'s.</p>
+	<ul>
+	<li> LEZERS toegang: kunnen de pagina alleen lezen.
+		<li>SCHRIJVERS toegang: kunnen de pagina\'s bewerken en een nieuwe pagina met datzelfde profiel aanmaken.</li>
+		<li>ADMINISTRATORS toegang: kunnen profielen veranderen/aanpassen naar ieder ander gewenst profiel waarvoor ze "admin" rechten.</li></ul>
+	<p>Nieuwe pagina\'s behoren standaard tot de "ouders" hun profiel.</p>
+	<p>Het profiel bepaalt ook wie commenta(a)r(en) mag lezen en schrijven. Dit kan handig zijn indien je privé-commenta(a)r(e)n wilt toe laten op publieke pagina\'s...</p>
+	<p>ATTENTIE: Xoops WEBMASTERS hebben altijd àlle privileges op iedere wiwi pagina.</p>
 	');
 define('_AM_WIWI_DELCONFIRMTITLE_TXT','BEVESTIG VERWIJDEREN VAN PROFIEL');
 define('_AM_WIWI_DELCONFIRM_TXT','U gaat een profiel verwijderen. Bevestig dit verzoek door de checkbox aan te vinken.');

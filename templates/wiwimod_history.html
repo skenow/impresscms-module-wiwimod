@@ -1,6 +1,6 @@
 
 <{$smarty.const._MD_WIWI_HISTORY_TXT}> : <{$wiwimod.keyword}> 
-<input type=button onClick="self.location.href='index.php?page=<{$wiwimod.keyword}>';" value="<{$smarty.const._MD_WIWI_PAGEVIEW_BTN}>">
+<input type="button" onclick="self.location.href='index.php?page=<{$wiwimod.keyword}>';" value="<{$smarty.const._MD_WIWI_PAGEVIEW_BTN}>" />
 
 <h2><{$wiwimod.title}></h2>
 <{$wiwimod.body}>
@@ -28,15 +28,15 @@ tr.highlitedrevision td {background-color: #FFCC66; padding: 5px;}
 	<tr class="head"><td></td><td><b><{$smarty.const._MD_WIWI_TITLE_COL}></b></td><td width="20%"><b><{$smarty.const._MD_WIWI_MODIFIED_COL}></b></td><td width="10%"><b><{$smarty.const._MD_WIWI_AUTHOR_COL}></b></td><td width="30%"><b><{$smarty.const._MD_WIWI_ACTION_COL}></b></td></tr>
 	<{foreach from=$hist item=revision}>
 		<tr <{if $revision.id == $wiwimod.revid}>class="highlitedrevision"<{else}>class="<{cycle values=even,odd}>"<{/if}> >
-		<td width=10 style="color: #FF0000; font-weight:bold"><{if $revision.id == $wiwimod.revid}><img src="images/hand.gif"><{else}>&nbsp;<{/if}></td>
-		<td><a href="?op=history&page=<{$revision.keyword}>&id=<{$revision.id}>"><{$revision.title}></a></td>
+		<td width=10 style="color: #FF0000; font-weight:bold"><{if $revision.id == $wiwimod.revid}><img src="images/hand.gif" alt='' /><{else}>&nbsp;<{/if}></td>
+		<td><a href="?op=history&amp;page=<{$revision.keyword}>&amp;id=<{$revision.id}>"><{$revision.title}></a></td>
 		<td><{$revision.lastmodified}></td>
 		<td><{$revision.username}></td>
 		<td>
-			<a href="?op=history&page=<{$revision.keyword}>&id=<{$revision.id}>"><{$smarty.const._MD_WIWI_VIEW_BTN}></a> | 
-			<a href="?op=diff&page=<{$revision.keyword}>&id=<{$revision.id}>"><{$smarty.const._MD_WIWI_COMPARE_BTN}></a>
+			<a href="?op=history&amp;page=<{$revision.keyword}>&amp;id=<{$revision.id}>"><{$smarty.const._MD_WIWI_VIEW_BTN}></a> | 
+			<a href="?op=diff&amp;page=<{$revision.keyword}>&amp;id=<{$revision.id}>"><{$smarty.const._MD_WIWI_COMPARE_BTN}></a>
 			<{if $allowRestore}> | <a href="javascript:restoreRevision('<{$revision.id}>');"><{$smarty.const._MD_WIWI_RESTORE_BTN}></a><{/if}>
 			</tr>
 	<{/foreach}>
 </table>
-<p align=right><input type=button onClick="self.location.href='index.php?page=<{$wiwimod.keyword}>';" value="<{$smarty.const._MD_WIWI_PAGEVIEW_BTN}>"></p>
+<p align='right'><input type='button' onclick="self.location.href='index.php?page=<{$wiwimod.keyword}>';" value="<{$smarty.const._MD_WIWI_PAGEVIEW_BTN}>" /></p>

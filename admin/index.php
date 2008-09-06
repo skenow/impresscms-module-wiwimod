@@ -14,7 +14,7 @@ echo 'var frm = document.getElementById("thisform"); ';
 echo 'frm.action = "'.$_SERVER['PHP_SELF'].'"+(extra_args == "" ? "" : "?"+extra_args);';
 echo 'frm.submit();';
 echo '}</script>';
-echo '<form id="thisform" action='.$_SERVER['PHP_SELF'].' method=post>';
+echo '<form id="thisform" action='.$_SERVER['PHP_SELF'].' method="post">';
 
 switch ($op) {
 	default :
@@ -33,7 +33,7 @@ switch ($op) {
 		$id = isset( $_GET['id'] ) ? intval($_GET['id']) : 0; 
 		$rev = new wiwiRevision("",$id);
 		$success = $rev->restore();
-		redirect_header("javascript:submitaction('page=".urlencode($rev->encode($rev->keyword))."&op=history');", 2, ($success)?_MD_WIWI_DBUPDATED_MSG:_MD_WIWI_ERRORINSERT_MSG);
+		redirect_header("javascript:submitaction('page=".urlencode($rev->encode($rev->keyword))."&amp;op=history');", 2, ($success)?_MD_WIWI_DBUPDATED_MSG:_MD_WIWI_ERRORINSERT_MSG);
 		break;
 
 	case "fixit" :
@@ -42,7 +42,7 @@ switch ($op) {
 		$starthist = isset( $_GET['starthist'] ) ? intval( $_GET['starthist'] ) : 0; 
 		$rev = new wiwiRevision("",$id);
 		$success = $rev->fix();
-		redirect_header("javascript:submitaction('page=".urlencode($rev->encode($rev->keyword))."&op=history&starthist=".$starthist."');", 2, ($success)?_MD_WIWI_DBUPDATED_MSG:_MD_WIWI_ERRORINSERT_MSG);
+		redirect_header("javascript:submitaction('page=".urlencode($rev->encode($rev->keyword))."&amp;=history&amp;starthist=".$starthist."');", 2, ($success)?_MD_WIWI_DBUPDATED_MSG:_MD_WIWI_ERRORINSERT_MSG);
 		break;
 
 	case "deleteit" :
@@ -50,7 +50,7 @@ switch ($op) {
 		$page = stripslashes(isset( $_GET['page'] ) ? $_GET['page'] : 0); 
 		$rev = new wiwiRevision($page);
 		$success = $rev->deletePage();
-		redirect_header("javascript:submitaction('page=".urlencode($rev->encode($rev->keyword))."&op=listpages');", 2, ($success)?_MD_WIWI_DBUPDATED_MSG:_MD_WIWI_ERRORINSERT_MSG);
+		redirect_header("javascript:submitaction('page=".urlencode($rev->encode($rev->keyword))."&amp;=listpages');", 2, ($success)?_MD_WIWI_DBUPDATED_MSG:_MD_WIWI_ERRORINSERT_MSG);
 		break;
 
 	case "fix" :
@@ -58,24 +58,24 @@ switch ($op) {
 		$id = isset( $_GET['id'] ) ? intval($_GET['id']) : 0; 
 		$page = stripslashes(isset( $_GET['page'] ) ? $_GET['page'] : 0); 
 		$starthist = isset( $_GET['starthist'] ) ? intval( $_GET['starthist'] ) : 0; 
-		echo "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align=center>"._AM_WIWI_CONFIRMFIX_MSG."<br><br>";
-		echo '<input type=button value='._YES.' onclick="javascript:submitaction(\'op=fixit&id='.$id.'&starthist='.$starthist.'\')">&nbsp;&nbsp;<input type=button value='._NO.' onclick="javascript:submitaction(\'op=history&starthist='.$starthist.'&page='.wiwiRevision::encode($page).'\')">';
-		echo "</td></tr></table></center><br><br>";
+		echo "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>"._AM_WIWI_CONFIRMFIX_MSG."<br /><br />";
+		echo '<input type=\'button\' value='._YES.' onclick="javascript:submitaction(\'op=fixit&amp;id='.$id.'&amp;starthist='.$starthist.'\')" />&nbsp;&nbsp;<input type=\'button\' value='._NO.' onclick="javascript:submitaction(\'op=history&amp;starthist='.$starthist.'&amp;page='.wiwiRevision::encode($page).'\')" />';
+		echo "</td></tr></table></center><br /><br />";
 		break;
 
 
 	case "delete" :
 		include "listpages_hidden.inc.php";
 		$page = stripslashes(isset( $_GET['page'] ) ? $_GET['page'] : 0); 
-		echo "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align=center>"._AM_WIWI_CONFIRMDEL_MSG."<br><br>";
-		echo '<input type=button value='._YES.' onclick="javascript:submitaction(\'op=deleteit&page='.wiwiRevision::encode($page).'\')">&nbsp;&nbsp;<input type=button value='._NO.' onclick="javascript:submitaction(\'op=listpages&startlist='.$startlist.'\')">';
-		echo "</td></tr></table></center><br><br>";
+		echo "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>"._AM_WIWI_CONFIRMDEL_MSG."<br /><br />";
+		echo '<input type=\'button\' value='._YES.' onclick="javascript:submitaction(\'op=deleteit&amp;page='.wiwiRevision::encode($page).'\')" />&nbsp;&nbsp;<input type=\'button\' value='._NO.' onclick="javascript:submitaction(\'op=listpages&amp;startlist='.$startlist.'\')" />';
+		echo "</td></tr></table></center><br /><br />";
 		break;
 
 	case "cleanupdb" :
-		echo "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align=center>"._AM_WIWI_CONFIRMCLEAN_MSG."<br><br>";
-		echo '<input type=button value='._YES.' onclick="javascript:submitaction(\'op=cleanit\')">&nbsp;&nbsp;<input type=button value='._NO.' onclick="javascript:submitaction(\'op=listpages\')">';
-		echo "</td></tr></table></center><br><br>";
+		echo "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align=center>"._AM_WIWI_CONFIRMCLEAN_MSG."<br /><br />";
+		echo '<input type=\'button\' value='._YES.' onclick="javascript:submitaction(\'op=cleanit\')" />&nbsp;&nbsp;<input type=\'button\' value='._NO.' onclick="javascript:submitaction(\'op=listpages\')" />';
+		echo "</td></tr></table></center><br /><br />";
 		break;
 
 	case "cleanit" :

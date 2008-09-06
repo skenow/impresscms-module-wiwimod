@@ -22,13 +22,13 @@ define('_AM_WIWI_SELECTACL_TXT','Profil bearbeiten:');
 define('_AM_WIWI_CREATEACL_TXT','Neues Profil erstellen:');
 define('_AM_WIWI_EDITACL_TXT','Profileigenschaften');
 define('_AM_WIWI_ACLHELP_TXT','
-	<P>Die Wiwi Benutzerrechte bestehen aus Profilen, die bestimmten Gruppen Lese-, Schreib- oder Administrationsrechte für definierte Wiwi-Seiten einr&auml;umen.</P>
-	<UL>
-		<LI>Benutzer mit Schreibberechtigung können Seiten ver&auml;ndern und neue Seiten mit dem gleichen Profil erstellen.</LI>
-		<LI>Benutzer mit Administrationsberechtigung können die Seitenprofile im Rahmen ihrer zugeordneten Administrationsrechte ver&auml;ndern.</LI></UL>
-	<P>Neue Seiten erhalten per Voreinstellung das Profil ihrer Ausgangsseite.</P>
-	<P>Die Benutzerprofile definieren ebenfalls die Lese- und Schreibberechtigungen für die Kommentare. Das ist n&uuml;tzlich, um z.B. private Kommentare auf &ouml;ffentlichen Seiten zu erm&ouml;glichen.</P>
-	<P>Beachte: Xoops Webmaster haben immer vollst&auml;ndige Benutzerrechte f&uuml;r alle Seiten.</P>
+	<p>Die Wiwi Benutzerrechte bestehen aus Profilen, die bestimmten Gruppen Lese-, Schreib- oder Administrationsrechte für definierte Wiwi-Seiten einr&auml;umen.</p>
+	<ul>
+		<li>Benutzer mit Schreibberechtigung können Seiten ver&auml;ndern und neue Seiten mit dem gleichen Profil erstellen.</li>
+		<li>Benutzer mit Administrationsberechtigung können die Seitenprofile im Rahmen ihrer zugeordneten Administrationsrechte ver&auml;ndern.</li></ul>
+	<p>Neue Seiten erhalten per Voreinstellung das Profil ihrer Ausgangsseite.</p>
+	<p>Die Benutzerprofile definieren ebenfalls die Lese- und Schreibberechtigungen für die Kommentare. Das ist n&uuml;tzlich, um z.B. private Kommentare auf &ouml;ffentlichen Seiten zu erm&ouml;glichen.</p>
+	<p>Beachte: Xoops Webmaster haben immer vollst&auml;ndige Benutzerrechte f&uuml;r alle Seiten.</p>
 	');
 define('_AM_WIWI_DELCONFIRMTITLE_TXT','Best&auml;tigung der Profill&ouml;schung');
 define('_AM_WIWI_DELCONFIRM_TXT','Profill&ouml;schung durch Aktivierung der Checkbox best&auml;tigen.');

@@ -40,7 +40,7 @@
 	/*
 	 * Page/diff view
 	 */
-	echo "<hr>";
+	echo "<hr />";
 	echo "<br><fieldset><legend style='font-weight: bold; color: #900;'>";
 	if ($op == "history") {
 		echo _MD_WIWI_BODY_TXT." :</legend><br>";

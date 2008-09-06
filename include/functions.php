@@ -77,7 +77,7 @@ function wiwimod_getXoopsBlock ($blkname) {  // block title or id
 function wiwiShowBlock ($blkname) {
   
 	$blk = wiwimod_getXoopsBlock($blkname);
-	return "<table><tr><td>".$blk['content']."</TD></TR></TABLE>";
+	return "<table><tr><td>".$blk['content']."</td></tr></table>";
 }
 
 
@@ -87,6 +87,7 @@ function wiwiShowBlock ($blkname) {
  */
 function w_adminMenu ($currentoption = 0, $breadcrumb = '')
 {
+  
 	echo getAdminMenu($currentoption, $breadcrumb);
 }
 

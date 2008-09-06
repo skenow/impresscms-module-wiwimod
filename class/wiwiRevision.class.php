@@ -187,7 +187,7 @@ class WiwiRevision {
 	 */
 	function render($body="") {
 
-		$lbr = "<P>|</P>|<HR>|<TABLE>|</TABLE>|<DIV>|</DIV>|<BR>|<UL>|<LI>|</LI>|</UL>";
+		$lbr = "<p>|</p>|<hr />|<rable>|</table>|<div>|</div>|<br />|<ul>|<li>|</li>|</ul>";
 		$nl = "^|".$lbr;
 		$eol =$lbr."|$";
 		$lt = "(?:&lt;|<)";
@@ -234,7 +234,7 @@ class WiwiRevision {
 
 	//		"#^(<li>.*</li>\n)+#m",
 			"#".$lt."\[(PageIndex|RecentChanges)\]".$gt."#ie",		// <[PageIndex]> and <[RecentChanges]>
-			"#^(?!\n|<h2>|<blockquote>|<hr />)(.*?)\n$#sm",			// surrounds with <P> and </P> some lines .. hum, still useful ?
+			"#^(?!\n|<h2>|<blockquote>|<hr />)(.*?)\n$#sm",			// surrounds with <p> and </p> some lines .. hum, still useful ?
 			"#\n+#",												// removes multiple line ends .. still useful ?
     		"#\(\((.+?)\)\)#e",                                     // ((subPage title)) : page to include (addition : Gizmhail)
      		"#<wiwisubpage>[~]?(.+?)</wiwisubpage>#e",              // [[PAGE subPage title]] : page to include (addition : Gizmhail)
@@ -331,14 +331,14 @@ class WiwiRevision {
 				"ORDER BY title ASC",
 				"title",
 				1,
-				'"<span class=wiwi_titre style=\"font-size:large;\">[$counter]</span><br/>"',
+				'"<span class=\'wiwi_titre\' style=\"font-size:large;\">[$counter]</span><br/>"',
 				'"&nbsp;&nbsp;<A href=\"index.php?page=".$this->encode($content["keyword"])."\">".($content["title"] == "" ? $content["keyword"] : $content["title"])."</a><br/>"',
 				""), 
 			"PageIndexI" => array(
 				"ORDER BY w1.keyword ASC", 
 				"keyword", 
 				1, 
-				'"<span class=wiwi_titre>$counter</span><br />"', 
+				'"<span class=\'wiwi_titre\'>$counter</span><br />"', 
 				'"&nbsp;&nbsp;<A href=\"index.php?page=".$content["keyword"]."\">".$content["keyword"]."</a> : ".$content["title"]."<br />"', 
 				""), 
 			"RecentChanges" => array(
@@ -368,7 +368,7 @@ class WiwiRevision {
 
 	function render_block($blkname) {
 		$blk = wiwimod_getXoopsBlock($blkname);
-		return "<table><tr><td>".$blk['content']."</TD></TR></TABLE>";
+		return "<table><tr><td>".$blk['content']."</td></tr></table>";
 	}
 
 

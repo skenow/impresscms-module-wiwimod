@@ -24,13 +24,13 @@ define('_AM_WIWI_SELECTACL_TXT','Modifiez un profil :');
 define('_AM_WIWI_CREATEACL_TXT','ou créez-en un nouveau :');
 define('_AM_WIWI_EDITACL_TXT','Informations sur le profil');
 define('_AM_WIWI_ACLHELP_TXT','
-	<P>Le système de contrôle d\'accès s\'appuie sur des "profils" nommés, qui énumèrent les groupes Xoops ayant le droit de lire/éditer/administrer les pages correspondantes.</P>
-	<UL>
-		<LI>Les&nbspéditeurs&nbsp;peuvent modifier la page affichée, et créer de nouvelles pages avec le même profil.</LI>
-		<LI>Les administrateurs peuvent changer le profil de la page affichée, et lui affecter un autre profil pour lequel ils disposent également de droits d\'administration.</LI></UL>
-	<P>Le profil par défaut des nouvelles pages est celui de la page à partir de laquelle elles ont été créées.</P>
-	<P>Les profils déterminent également l\'accès aux commentaires. Cela est utile notamment pour permettre des commentaires privés sur des pages publiques.</P>
-	<P>Note : Les webmasters Xoops ont un accès complet à toutes les pages.</P>
+	<p>Le système de contrôle d\'accès s\'appuie sur des "profils" nommés, qui énumèrent les groupes Xoops ayant le droit de lire/éditer/administrer les pages correspondantes.</p>
+	<ul>
+		<li>Les&nbspéditeurs&nbsp;peuvent modifier la page affichée, et créer de nouvelles pages avec le même profil.</li>
+		<li>Les administrateurs peuvent changer le profil de la page affichée, et lui affecter un autre profil pour lequel ils disposent également de droits d\'administration.</li></ul>
+	<p>Le profil par défaut des nouvelles pages est celui de la page à partir de laquelle elles ont été créées.</p>
+	<p>Les profils déterminent également l\'accès aux commentaires. Cela est utile notamment pour permettre des commentaires privés sur des pages publiques.</p>
+	<p>Note : Les webmasters Xoops ont un accès complet à toutes les pages.</p>
 	');
 define('_AM_WIWI_DELCONFIRMTITLE_TXT','CONFIRMATION DE SUPPRESSION');
 define('_AM_WIWI_DELCONFIRM_TXT','Vous allez supprimer un profil. Veuillez confirmer ce choix en cochant la case ci-contre.');

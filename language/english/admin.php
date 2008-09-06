@@ -24,13 +24,13 @@ define('_AM_WIWI_SELECTACL_TXT','modify a profile :');
 define('_AM_WIWI_CREATEACL_TXT','or create a new one :');
 define('_AM_WIWI_EDITACL_TXT','Profile info');
 define('_AM_WIWI_ACLHELP_TXT','
-	<P>Wiwi privileges are a set of named profiles describing xoops groups that enventually have read/write/administrate access to corresponding pages.</P>
-	<UL>
-		<LI>Writers&nbsp;can modify the current page, and create new pages with the same profile.</LI>
-		<LI>Administrators&nbsp;can change page profiles to whichever profiles they have "admin" privilege for.</LI></UL>
-	<P>New pages default to their parent\'s profile.</P>
-	<P>Profile also define who can read/post comments. This is useful to allow private comments on public pages ...</P>
-	<P>Note : Xoops webmasters allways have full privileges to Wiwi pages.</P>
+	<p>Wiwi privileges are a set of named profiles describing xoops groups that enventually have read/write/administrate access to corresponding pages.</p>
+	<ul>
+		<li>Writers&nbsp;can modify the current page, and create new pages with the same profile.</li>
+		<li>Administrators&nbsp;can change page profiles to whichever profiles they have "admin" privilege for.</li></ul>
+	<p>New pages default to their parent\'s profile.</p>
+	<p>Profile also define who can read/post comments. This is useful to allow private comments on public pages ...</p>
+	<p>Note : Xoops webmasters allways have full privileges to Wiwi pages.</p>
 	');
 define('_AM_WIWI_DELCONFIRMTITLE_TXT','DELETE PROFILE CONFIRMATION');
 define('_AM_WIWI_DELCONFIRM_TXT','You are about to delete a profile. Please confirm checking the checkbox.');

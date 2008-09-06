@@ -24,13 +24,13 @@ define('_AM_WIWI_SELECTACL_TXT','spremeni profil :');
 define('_AM_WIWI_CREATEACL_TXT','Ali ustvari novega:');
 define('_AM_WIWI_EDITACL_TXT',' Info Profila');
 define('_AM_WIWI_ACLHELP_TXT','
-	<P>Wiwi privilegiji so nastavitve privilegijev, ki doloèajo katere xoops skupine imajo bralni/pisalni/skrbnišk dostop do doloèenih strani.</P>
-	<UL>
-		<LI>Pisatelji&nbsp;lahko spremenijo trenutno stran in naredijo nove strani znotraj istega profilu.</LI>
-		<LI>Skrbniki&nbsp;lahko spremenijo profil do katerega imajo skrbniški dostop.</LI></UL>
-	<P>Nove privzete strani do njenih nadrejenih profilov.</P>
-	<P>Profil tudi doloèa kdo lahko bere/objavlja komentarje. To je uporabno za ker lahko dovolite privatne komentarje na javnih straneh ...</P>
-	<P>Opomba : Xoops skrbnik ima vedno polne privilegije do Wiwi strani.</P>
+	<p>Wiwi privilegiji so nastavitve privilegijev, ki doloèajo katere xoops skupine imajo bralni/pisalni/skrbnišk dostop do doloèenih strani.</p>
+	<ul>
+		<li>Pisatelji&nbsp;lahko spremenijo trenutno stran in naredijo nove strani znotraj istega profilu.</li>
+		<li>Skrbniki&nbsp;lahko spremenijo profil do katerega imajo skrbniški dostop.</li></ul>
+	<p>Nove privzete strani do njenih nadrejenih profilov.</p>
+	<p>Profil tudi doloèa kdo lahko bere/objavlja komentarje. To je uporabno za ker lahko dovolite privatne komentarje na javnih straneh ...</p>
+	<p>Opomba : Xoops skrbnik ima vedno polne privilegije do Wiwi strani.</p>
 	');
 define('_AM_WIWI_DELCONFIRMTITLE_TXT','IZBRIŠITE POTRDITEV PROFILA');
 define('_AM_WIWI_DELCONFIRM_TXT','Ste tik pred tem, da izbrišete profil. Potrdite z oznaèitvijo potrditvenega okenca.');
