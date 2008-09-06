@@ -68,8 +68,7 @@ if ((($op == "preview") || ($op == "insert") || ($op == "quietsave")) && isset($
 		}
 	}
 }
-
-
+if (!isset($_GET['pageid'])){$_GET['pageid'] = (int) $pageObj->pageid;} // this will help with notifications!
 //
 // process required action
 //
@@ -356,7 +355,6 @@ switch ($op) {
 
 		$xoopsTpl->assign('parentlist',$pageObj->parentList());
 
-		
 		$edArr = Array();
 		foreach (getAvailableEditors() as $ed) {
 			$edArr[] = array('value' => $ed[1], 'text' => $ed[0], 'options' => $ed[2]);
@@ -368,12 +366,12 @@ switch ($op) {
 		if ($pageObj->canViewComments()) {
 			/*
 			 * set header variables for comment system to operate
-			 */ 
+			 * note: removed, since I've added it to the main section of code - needed for notifications, too - 2008/08/28 SKenow		 
 			 
 			if (!isset($_GET['pageid']) || !isset($_GET['pageid'])) {
 				$_GET['pageid'] = $pageid ;
 				$_GET['pageid'] = $pageid ;  // patch to be compatible with Xoops 2.0.7
-			}
+			}*/
 			//
 			// patch to deal with a bug in the standard Xoops 2.05 comment_view file,
 			// (generated a disgraceful "undefined index notice" in debug mode ;-)

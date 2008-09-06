@@ -38,6 +38,13 @@ define('_MI_WIWIMOD_PAGENOTIFY_TITLE','Página modificada');
 define('_MI_WIWIMOD_PAGENOTIFY_CAPTION','Notifiqueme cuando la página sea modificada');
 define('_MI_WIWIMOD_PAGENOTIFY_DESC','Reciba notificación cuando algún usuario modifique la página corriente.');
 define('_MI_WIWIMOD_PAGENOTIFY_SUBJECT','[{X_SITENAME}] {X_MODULE} - página modificada (notificación automática)');
+/* Added in version ... */
+define('_MI_WIWIMOD_GLOBALNOTIFYCAT_TITLE','Global');
+define('_MI_WIWIMOD_GLOBALNOTIFYCAT_DESC','Notifications that apply to the all pages');
+define('_MI_WIWIMOD_GLOBALNOTIFY_TITLE','Page updated');
+define('_MI_WIWIMOD_GLOBALNOTIFY_CAPTION','Notify me when any page is modified');
+define('_MI_WIWIMOD_GLOBALNOTIFY_DESC','Receive notification when any user updates any page.');
+define('_MI_WIWIMOD_GLOBALNOTIFY_SUBJECT','[{X_SITENAME}] {X_MODULE} auto-notify : page updated');
 
 
 ?>

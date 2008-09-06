@@ -40,4 +40,12 @@ define('_MI_WIWIMOD_PAGENOTIFY_TITLE','Pagina bijgewerkt');
 define('_MI_WIWIMOD_PAGENOTIFY_CAPTION','Stuur mij een kennisgeving zodra deze pagina is bijgewerkt.');
 define('_MI_WIWIMOD_PAGENOTIFY_DESC','Ontvang een kennisgeving zodra deze pagina doort willekeurige gebruiker is bijgewerkt.');
 define('_MI_WIWIMOD_PAGENOTIFY_SUBJECT','[{X_SITENAME}] {X_MODULE} automatische-kennisgeving : pagina bijgewerkt');
+/* Added in version ... */
+define('_MI_WIWIMOD_GLOBALNOTIFYCAT_TITLE','Global');
+define('_MI_WIWIMOD_GLOBALNOTIFYCAT_DESC','Notifications that apply to the all pages');
+define('_MI_WIWIMOD_GLOBALNOTIFY_TITLE','Page updated');
+define('_MI_WIWIMOD_GLOBALNOTIFY_CAPTION','Notify me when any page is modified');
+define('_MI_WIWIMOD_GLOBALNOTIFY_DESC','Receive notification when any user updates any page.');
+define('_MI_WIWIMOD_GLOBALNOTIFY_SUBJECT','[{X_SITENAME}] {X_MODULE} auto-notify : page updated');
+
 ?>
