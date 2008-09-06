@@ -60,7 +60,7 @@ class WiwiProfile {
 		//
 		// retrieve profile info
 		//
-		$sql = "SELECT prname, commentslevel, historylevel FROM ".$this->db->prefix("wiwimod_profiles")." WHERE prid=".$prid;
+		$sql = "SELECT prname, commentslevel, historylevel FROM ".$this->db->prefix("wiwimod_profiles")." WHERE prid=". (int) $prid;
 
 		$res = $this->db->query($sql);
 		if ($this->db->getRowsNum($res) == 0) return false;
@@ -77,7 +77,7 @@ class WiwiProfile {
 		$member_handler =& xoops_gethandler('member');
 		$grps =& $member_handler->getGroupList();
 
-		$sql = "SELECT gid, priv FROM ".$this->db->prefix("wiwimod_prof_groups")." WHERE prid=".$prid." ORDER BY priv";
+		$sql = "SELECT gid, priv FROM ".$this->db->prefix("wiwimod_prof_groups")." WHERE prid=". (int) $prid." ORDER BY priv";
 		$res = $this->db->query($sql);
 		while ($rows = $this->db->fetchArray($res)) {
 			switch ($rows['priv']) {
@@ -121,7 +121,7 @@ class WiwiProfile {
 			//
 			// Create new profile
 			//
-			$sql = sprintf ("INSERT INTO %s ( prname, commentslevel, historylevel ) VALUES ( %s , %s , %s)",$this->db->prefix("wiwimod_profiles"),$this->db->quoteString($this->name), $this->commentslevel, $this->historylevel);
+			$sql = sprintf ("INSERT INTO %s ( prname, commentslevel, historylevel ) VALUES ( %s , %u , %u)",$this->db->prefix("wiwimod_profiles"),$this->db->quoteString($this->name), $this->commentslevel, $this->historylevel);
 			$success = $this->db->query($sql);
 			if ($success) {
 				$this->prid = $this->db->getInsertId();  // gets new profile id
@@ -131,7 +131,7 @@ class WiwiProfile {
 			//
 			// Update profile
 			//
-			$sql = sprintf ("UPDATE %s SET prname = %s , commentslevel = %s, historylevel = %s WHERE prid = %u",$this->db->prefix("wiwimod_profiles"),$this->db->quoteString($this->name), $this->commentslevel, $this->historylevel, $this->prid);
+			$sql = sprintf ("UPDATE %s SET prname = %s , commentslevel = %u, historylevel = %u WHERE prid = %u",$this->db->prefix("wiwimod_profiles"),$this->db->quoteString($this->name), $this->commentslevel, $this->historylevel, $this->prid);
 			$success = $this->db->query($sql);
 			if ($success) {
 				//
@@ -217,7 +217,7 @@ class WiwiProfile {
 		} else {
 			$t1 = $this->db->prefix("wiwimod_profiles");
 			$t2 = $this->db->prefix("wiwimod_prof_groups");
-			$sql = sprintf("SELECT DISTINCT %s.prid, prname FROM %s LEFT JOIN %s ON %s.prid = %s.prid WHERE gid IN (%s) AND priv = %s",
+			$sql = sprintf("SELECT DISTINCT %s.prid, prname FROM %s LEFT JOIN %s ON %s.prid = %s.prid WHERE gid IN (%s) AND priv = %u",
 				$t1, $t2, $t1, $t2, $t1, implode("," , $usergroups), _WI_ADMIN);
 			$res = $this->db->query($sql);
 			$prlist=Array();

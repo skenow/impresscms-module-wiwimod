@@ -42,7 +42,7 @@ if ((($op == "preview") || ($op == "insert") || ($op == "quietsave")) && isset($
 	$pageObj->title = $title;		
 	$pageObj->body = $body;		
 	$pageObj->lastmodified = $lastmodified;
-	$pageObj->u_id = $uid;
+	$pageObj->u_id = (int) $uid;
 	$pageObj->parent = $pageObj->normalize($parent);		
 	$pageObj->visible = intval($visible);	
 	$pageObj->contextBlock = $pageObj->normalize($contextBlock);
