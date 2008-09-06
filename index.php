@@ -76,6 +76,13 @@ switch ($op) {
 			$success = ($op == "insert") ? $pageObj->add() : $pageObj->save();
 
 			if ($success) {
+				/* Tag module support (Gizmhail) */
+		                if(isTagModuleActivated())
+				{
+					$tag_handler = xoops_getmodulehandler('tag', 'tag');
+					$tag_handler->updateByItem($_POST["item_tag"], $pageid, $xoopsModule->getVar("dirname"), $catid =0);
+				}
+				/* Tag module support end*/
 				// Define tags for notification message
 				$tags = array();
 				$tags['PAGE_NAME'] = $pageObj->title;
@@ -207,6 +214,13 @@ switch ($op) {
 		
 		$form->addElement(new XoopsFormText(_MD_WIWI_VISIBLE_FLD, "visible", 3, 3, $pageObj->visible));
 		$form->addElement( new XoopsFormText(_MD_WIWI_CONTEXTBLOCK_FLD,"contextBlock",15,100,$myts->htmlSpecialChars($pageObj->contextBlock)));
+		/* Tag module support (Gizmhail) */
+		if(isTagModuleActivated())
+		{
+			include_once XOOPS_ROOT_PATH."/modules/tag/include/formtag.php";
+			$form->addElement(new XoopsFormTag("item_tag", 60, 255, $pageObj->pageid, $catid = 0));
+		}
+		/* Tag module support end*/
 
 		$preview_btn = new XoopsFormButton("", "preview", _PREVIEW, "button");
         $preview_btn->setExtra("onclick='document.forms.wiwimodform.op.value=\"preview\"; document.forms.wiwimodform.submit.click();'");
@@ -304,6 +318,16 @@ switch ($op) {
 				));
 			$pagecontent = $cpages[$startpage];
 		}
+
+		/* Tag module support (Gizmhail) */
+		if(isTagModuleActivated())
+		{
+			$xoopsTpl->assign('isTagModuleActivated', array('activated'=>"true"));
+			include_once XOOPS_ROOT_PATH."/modules/tag/include/tagbar.php";
+			$itemid = $pageObj->pageid;
+			$xoopsTpl->assign('tagbar', tagBar($itemid, $catid = 0));
+		}	
+		/* Tag module support end*/
 
 		$xoopsTpl->assign('wiwimod', array(
 			'keyword' => $pageObj->keyword, 

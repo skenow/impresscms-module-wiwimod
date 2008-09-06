@@ -184,5 +184,15 @@ function getAvailableEditors() {
 	return $arr;
 }
 
-
+function isTagModuleActivated()
+{
+  if( !file_exists( XOOPS_ROOT_PATH."/modules/tag/include/formtag.php" ) )
+    return false;
+  $db =& Database::getInstance();
+  $moduleHandler = new XoopsModuleHandler($db);
+  $tagModule = $moduleHandler->getByDirName("tag");
+  if($tagModule == false)
+    return false;
+  return true;
+}
 ?>

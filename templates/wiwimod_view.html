@@ -5,9 +5,15 @@
 		<{if $nav}>&nbsp;<{$nav.html}><{/if}>
   </td>
  </tr>
+ <{if $isTagModuleActivated}>
+ <tr>
+  <td style="text-align:right">
+    <{include file="db:tag_bar.html"}>
+  </td>
+ </tr>
+ <{/if}>
  <tr>
   <td><h2><{$wiwimod.title}></h2></td>
-  </td>
  </tr>
 </table>
 <{$wiwimod.body}>

@@ -51,12 +51,14 @@ function wiwimod_showpage ($options) {
 		$block['mayEdit'] = $pageObj->canWrite();
 		$block['EDIT'] = _EDIT;
 	}
+	$block['dirname'] = $wiwidir; 
 	return $block;
 }
 
 
 function wiwimod_contextshow($options) {
 	global $xoopsDB, $xoopsModuleConfig, $xoopsUser, $myts;
+	$wiwidir = basename(dirname(dirname( __FILE__ ))) ;
 	//
 	// Get content to display
 	//
@@ -94,6 +96,7 @@ function wiwimod_contextshow($options) {
 
 		}
 	}
+	$block['dirname'] = $wiwidir;
 	return $block;
 }
 
