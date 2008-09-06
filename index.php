@@ -309,7 +309,7 @@ switch ($op) {
 			'encodedurl' => $pageObj->encode($pageObj->keyword),
 			'title' => $pageObj->title, 
 			'body' => $pagecontent, 
-			'lastmodified' => date("d.m.y", strtotime($pageObj->lastmodified)), 
+			'lastmodified' => date(_SHORTDATESTRING, strtotime($pageObj->lastmodified)), 
 			'author' => getUserName($pageObj->u_id), 
 			'mayEdit' => $pageObj->canWrite(), 
 			'showComments' => $pageObj->canViewComments() && ($xoopsModuleConfig['com_rule'] != 0),

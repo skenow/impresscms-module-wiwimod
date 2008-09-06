@@ -108,7 +108,7 @@ class WiwiRevision {
 			addslashes($this->keyword),
 			$this->ts->addSlashes($this->title),
 			$this->ts->addSlashes($this->body),
-			date("Y-m-d H:i:s"),						  //-- lastmodified is Now
+			date(_DATESTRING),						  //-- lastmodified is Now
 			$xoopsUser ? $xoopsUser->getVar("uid") : 0,   //-- author is always the current user
 			addslashes($this->parent),
 			$this->visible,
@@ -138,7 +138,7 @@ class WiwiRevision {
 			$this->db->prefix("wiwimod"),
 			$this->ts->addSlashes($this->title),
 			$this->ts->addSlashes($this->body),
-			date("Y-m-d H:i:s"),
+			date(_DATESTRING),
 			$xoopsUser ? $xoopsUser->getVar("uid") : 0,   //-- author is always the current user
 			addslashes($this->parent),
 			$this->visible,
@@ -343,7 +343,7 @@ class WiwiRevision {
 				"ORDER BY w1.lastmodified DESC LIMIT 20", 
 				"lastmodified", 
 				10, 
-				'"<tr><td colspan=3><strong>".date("d.m.y", strtotime($counter))."</strong></td></tr>"',
+				'"<tr><td colspan=3><strong>".date(_SHORTDATESTRING, strtotime($counter))."</strong></td></tr>"',
 				'"<tr><td>&nbsp;".date("H:i",strtotime($content["lastmodified"]))."</td><td><A href=\"index.php?page=".$this->encode($content["keyword"])."\">".($content["title"] == "" ? $content["keyword"] : $content["title"])."</a></td><td><span class=\"itemPoster\">".getUserName($content["u_id"])."</span></td></tr>"',
 				"")
 		);
@@ -596,7 +596,7 @@ class WiwiRevision {
 	function cleanPagesHistory() {
 		global $xoopsDB;
 		$success = true;
-		$sql = "SELECT keyword, MAX(id) AS id FROM ".$xoopsDB->prefix("wiwimod")." WHERE lastmodified<'".date("Y-m-d H:i:s", time() - 61 * 24 * 3600)."' GROUP BY keyword";
+		$sql = "SELECT keyword, MAX(id) AS id FROM ".$xoopsDB->prefix("wiwimod")." WHERE lastmodified<'".date(_DATESTRING, time() - 61 * 24 * 3600)."' GROUP BY keyword";
 		$result = $xoopsDB->query($sql);
 		while ($content = $xoopsDB->fetcharray($result)) {
 			$rev = new wiwiRevision("",$content['id']);

@@ -105,8 +105,8 @@
 		$encodedKeyword = $pageObj->encode($pageArr[$i]->keyword);
 		echo '<tr class="'.(($i % 2)?"even":"odd").'"><td><a href="#" onclick="submitaction(\'op=history&page='.$encodedKeyword.'\');">'.$pageArr[$i]->keyword.'</a></td>
 		<td>'.$myts->htmlSpecialChars($pageArr[$i]->title).'</td>
-		<td>'.date("d.m.y", @strtotime($pageArr[$i]->lastmodified)).'</td>
-		<td><a href="#" onclick="submitaction(\'op=history&page='.$encodedKeyword.'\');">'._MD_WIWI_HISTORY_BTN.'</a> | <a href="javascript:submitaction(\'op=delete&page='.urlencode($encodedKeyword).'\');">'._DELETE.'</a></td></tr>';
+		<td>'.date(_SHORTDATESTRING, @strtotime($pageArr[$i]->lastmodified)).'</td>
+		<td><a href="#" onclick="submitaction(\'op=history&amp;='.$encodedKeyword.'\');">'._MD_WIWI_HISTORY_BTN.'</a> | <a href="javascript:submitaction(\'op=delete&amp;page='.urlencode($encodedKeyword).'\');">'._DELETE.'</a></td></tr>';
 	}
 	echo '</table></br>';
 	echo '<input type="hidden" name="startlist" value="'.$startlist.'">';

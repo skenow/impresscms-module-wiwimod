@@ -20,7 +20,7 @@ function wiwimod_recent ($options) {
 			$link['page'] = wiwiRevision::encode($content["keyword"]);
 			$link['title'] = $content["title"];
 			if ($link['title'] == "") $link['title'] = $content["keyword"];
-			$link['lastmodified'] = date("d.m.y", strtotime($content["lastmodified"]));
+			$link['lastmodified'] = date(_SHORTDATESTRING, strtotime($content["lastmodified"]));
 			$link['user'] = getUserName($content["u_id"]);
 	//		$link['user'] = $content["u_id"];
 			
