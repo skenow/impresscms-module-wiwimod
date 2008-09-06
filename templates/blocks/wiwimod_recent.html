@@ -2,7 +2,7 @@
   <{foreach item=link from=$block.links}>
   <tr>
     <td>
-    <a href="<{$xoops_url}>/modules/wiwimod/index.php?page=<{$link.page}>"><{$link.title}></a>
+    <a href="<{$xoops_url}>/modules/<{$block.dirname}>/index.php?page=<{$link.page}>"><{$link.title}></a>
     </td><td>
 	<span class="itemPoster"><{$link.user}></span>
 	</td><td>

@@ -1,10 +1,11 @@
 <?php
-
-include_once(XOOPS_ROOT_PATH."/modules/wiwimod/header.php");
-include_once(XOOPS_ROOT_PATH."/modules/wiwimod/class/wiwiRevision.class.php");
+$wiwidir = basename( dirname( dirname( __FILE__ ) ) );
+include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/header.php';
+include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/class/wiwiRevision.class.php';
 
 function wiwimod_toc () {
 	global $xoopsDB, $xoopsUser;
+	$wiwidir = basename( dirname(  dirname( __FILE__ ) ) ) ;
 	$block = array();
 	$myts =& MyTextSanitizer::getInstance();
 
@@ -40,6 +41,7 @@ function wiwimod_toc () {
 	}
 
 */
+	$block['dirname'] = $wiwidir;
 	return $block;
 
 }

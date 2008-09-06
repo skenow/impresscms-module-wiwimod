@@ -79,7 +79,7 @@ switch ($op) {
 				// Define tags for notification message
 				$tags = array();
 				$tags['PAGE_NAME'] = $pageObj->title;
-				$tags['PAGE_URL'] = XOOPS_URL . '/modules/wiwimod/index.php?pageid=' . $pageObj->pageid;
+				$tags['PAGE_URL'] = XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/index.php?pageid=' . $pageObj->pageid;
 				$notification_handler =& xoops_gethandler('notification');
 				$notification_handler->triggerEvent('page', $pageObj->pageid, 'page_modified', $tags);
 			}

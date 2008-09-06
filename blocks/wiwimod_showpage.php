@@ -8,12 +8,13 @@
 //  Bugs :	- language constants aren't initialized...
 //
 
-include_once (XOOPS_ROOT_PATH."/modules/wiwimod/header.php");
-include_once (XOOPS_ROOT_PATH."/modules/wiwimod/class/wiwiRevision.class.php");
-
+$wiwidir = basename(dirname(dirname( __FILE__ )));
+include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/header.php';
+include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/class/wiwiRevision.class.php';
 
 function wiwimod_showpage ($options) {
 	global $xoopsDB, $xoopsModuleConfig, $xoopsUser, $myts;
+	$wiwidir = basename(dirname(dirname( __FILE__ ))) ;
    
 	$block = array();
 	$pageObj = new wiwiRevision($options[0]);

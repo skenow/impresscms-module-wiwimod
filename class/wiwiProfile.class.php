@@ -104,7 +104,7 @@ class WiwiProfile {
 		 */
 		$modhandler =& xoops_gethandler('module');				
 		$config_handler =& xoops_gethandler('config');
-        $wiwiModule = $modhandler->getByDirname("wiwimod");  
+        $wiwiModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));  
 		$wiwiConfig =& $config_handler->getConfigsByCat(0, $wiwiModule->getVar('mid'));
 		
 		$prid = $wiwiConfig['DefaultProfile'];
@@ -299,7 +299,7 @@ class WiwiProfile {
 		 * so must guess wiwimod module id from its folder ...
 		 */
 		$modhandler =& xoops_gethandler('module');				
-        $myXoopsModule = $modhandler->getByDirname("wiwimod");  
+        $myXoopsModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));  
 
 		//-- get the config item options from the database
 		$criteria = new CriteriaCompo (new Criteria('conf_modid', $myXoopsModule->getVar('mid')));

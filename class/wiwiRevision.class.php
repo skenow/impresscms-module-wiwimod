@@ -8,12 +8,12 @@
  */
 if (!defined('_WIWIPAGE')) {
 define ("_WIWIPAGE", 1);
-
+$wiwidir = basename(dirname( dirname(__FILE__)));
+$modversion['dirname'] = $wiwidir;
 
 include_once "wiwiProfile.class.php";
-include_once XOOPS_ROOT_PATH."/modules/wiwimod/include/functions.php";
-include_once XOOPS_ROOT_PATH."/modules/wiwimod/include/diff.php";
-
+include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/include/functions.php';
+include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/include/diff.php';
 
 class WiwiRevision {
 
@@ -50,7 +50,7 @@ class WiwiRevision {
 
 		$modhandler =& xoops_gethandler('module');				
 		$config_handler =& xoops_gethandler('config');
-		$wiwiMod = $modhandler->getByDirname("wiwimod");  
+		$wiwiMod = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));  
 		$this->wiwiConfig =& $config_handler->getConfigsByCat(0, $wiwiMod->getVar('mid'));
 
 		if (($page == "") && ($id == 0) && ($pageid == 0)) $page = _MI_WIWIMOD_WIWIHOME;
@@ -302,10 +302,12 @@ class WiwiRevision {
 	 * Utilities for page rendering ;
 	 */
 	function render_wiwiLink($pg,$a,$txt) {
-		return $a."&back=".$this->keyword.$txt.($this->pageExists($pg)?"":"<img src='".XOOPS_URL."/modules/wiwimod/images/nopage.gif'>")."</a>";
+    $wiwidir = basename( dirname(  dirname( __FILE__ ) ) ) ; 
+		return $a."&amp;back=".$this->keyword.$txt.($this->pageExists($pg)?"":"<img src='".XOOPS_URL."/modules/' . $wiwidir . '/images/nopage.gif' alt='' />")."</a>";
 	}
 
 	function render_wikiLink($keyword, $customTitle = "", $show_titles = false )	{
+		$wiwidir = basename( dirname(  dirname( __FILE__ ) ) ) ;
 		$normKeyword = $this->normalize($keyword);
 		$sql = "SELECT title FROM ".$this->db->prefix("wiwimod")." WHERE keyword='".addslashes($normKeyword)."' ORDER BY id DESC LIMIT 1";
 		$dbresult = $this->db->query($sql);
@@ -318,7 +320,7 @@ class WiwiRevision {
 			$txt = ($customTitle != "" ? $customTitle : $normKeyword);
 		}
 
-		return sprintf('<a href="%s">%s%s</a>',XOOPS_URL."/modules/wiwimod/index.php?page=".$this->encode($normKeyword)."&back=".$this->encode($this->keyword), stripslashes($txt), ($pageExists ? "" : "<img src=".XOOPS_URL."/modules/wiwimod/images/nopage.gif>"));
+		return sprintf('<a href="%s">%s%s</a>',XOOPS_URL.'/modules/' . $wiwidir . '/index.php?page='.$this->encode($normKeyword).'&amp;back='.$this->encode($this->keyword), stripslashes($txt), ($pageExists ? "" : '<img src="'.XOOPS_URL.'/modules/' . $wiwidir . '/images/nopage.gif" alt="" />'));
 
 	}
 

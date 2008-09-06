@@ -27,9 +27,9 @@ include "admin_header.php";
 	 * Display and capture preferences screen
 	 */
 	
-	if (!isset($HTTP_POST_VARS['fct'])) $HTTP_GET_VARS['fct'] = $_GET['fct'] = "preferences";
-	if (!isset($HTTP_POST_VARS['op'])) $HTTP_GET_VARS['op' ] = $_GET['op' ] = "showmod";
-	if (!isset($HTTP_POST_VARS['mod'])) $HTTP_GET_VARS['mod'] = $_GET['mod'] = $xoopsModule->getVar('mid');
+	if (!isset($_POST['fct'])) $_GET['fct'] = $_GET['fct'] = "preferences";
+	if (!isset($_POST['op'])) $_GET['op' ] = $_GET['op' ] = "showmod";
+	if (!isset($_POST['mod'])) $_GET['mod'] = $_GET['mod'] = $xoopsModule->getVar('mid');
 	chdir(XOOPS_ROOT_PATH."/modules/system/");
 	ob_start("addAdminMenu");
 		include XOOPS_ROOT_PATH."/modules/system/admin.php";

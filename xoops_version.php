@@ -1,14 +1,27 @@
 <?php
-$modversion['name']        = _MI_WIWIMOD_NAME;
-$modversion['version']     = '0.8.3';
-$modversion['description'] = _MI_WIWIMOD_DESC;
-$modversion['author']      = 'Xavier JIMENEZ';
-$modversion['credits']     = '';
-$modversion['license']     = "GNU General Public License";
-$modversion['help']        = "";
-$modversion['official']    = 0;
-$modversion['image']       = "images/wiwilogo.gif";
-$modversion['dirname']     = "wiwimod";
+/**
+ * xoops_version: Main configuration file for wiwimod
+ * 
+ * @package modules::wiwimod
+ * @author Xavier JIMENEZ
+ * @author Gizmhail
+ * @author skenow <skenow@impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version $Id$  
+ */
+$modversion = array(
+  'name' => _MI_WIWIMOD_NAME,
+  'version' => '0.83',
+  'description' => _MI_WIWIMOD_DESC,
+  'author' => 'Xavier JIMENEZ',
+  'credits' => '',
+  'license' => "GNU General Public License",
+  'help' => "",
+  'official' => 0,
+  'image' => "images/wiwilogo.gif");
+
+$wiwidir = basename(dirname(__FILE__));
+$modversion['dirname'] = $wiwidir;
 
 // Tables created by the SQL file (without prefix!)
 $modversion['sqlfile']['mysql'] = "sql/mysql.sql";
@@ -25,14 +38,18 @@ $modversion['adminmenu'] = "admin/menu.php";
 $modversion['hasMain'] = 1;
 
 // Templates
-$modversion['templates'][1]['file'] = 'wiwimod_view.html';
-$modversion['templates'][1]['description'] = 'WiwiMod - View Wiwi Page';
-$modversion['templates'][2]['file'] = 'wiwimod_edit.html';
-$modversion['templates'][2]['description'] = 'WiwiMod - Edit with Page';
-$modversion['templates'][3]['file'] = 'wiwimod_history.html';
-$modversion['templates'][3]['description'] = 'WiwiMod - View page history';
-$modversion['templates'][4]['file'] = 'wiwimod_pdf.html';
-$modversion['templates'][4]['description'] = 'WiwiMod - pdf';
+$modversion['templates'][1] = array(
+  'file' => 'wiwimod_view.html',
+  'description' => 'WiwiMod - View Wiwi Page');
+$modversion['templates'][2] = array(
+  'file' => 'wiwimod_edit.html',
+  'description' => 'WiwiMod - Edit with Page');
+$modversion['templates'][3]= array(
+  'file' => 'wiwimod_history.html',
+  'description' => 'WiwiMod - View page history');
+$modversion['templates'][4] = array(
+  'file' => 'wiwimod_pdf.html',
+  'description' => 'WiwiMod - pdf');
 
 // Search
 $modversion['hasSearch'] = 1;
@@ -45,33 +62,37 @@ $modversion['comments']['itemName'] = 'pageid';
 $modversion['comments']['pageName'] = 'index.php';
 
 // Blocks
-$modversion['blocks'][1]['file'] = "wiwimod_toc.php";
-$modversion['blocks'][1]['name'] = "Wiwi TOC";
-$modversion['blocks'][1]['description'] = "Wiwi selected entry pages";
-$modversion['blocks'][1]['show_func'] = "wiwimod_toc";
-$modversion['blocks'][1]['template'] = 'wiwimod_toc.html';
+$modversion['blocks'][1] = array(
+  'file' => "wiwimod_toc.php",
+  'name' => "Wiwi TOC",
+  'description' => "Wiwi selected entry pages",
+  'show_func' => "wiwimod_toc",
+  'template' => 'wiwimod_toc.html');
 
-$modversion['blocks'][2]['file'] = "wiwimod_recent.php";
-$modversion['blocks'][2]['name'] = "Wiwi Recent";
-$modversion['blocks'][2]['description'] = "Wiwi recently modified";
-$modversion['blocks'][2]['show_func'] = "wiwimod_recent";
-$modversion['blocks'][2]['edit_func'] = "wiwimod_recent_blockedit";
-$modversion['blocks'][2]['options'] = "5";
-$modversion['blocks'][2]['template'] = 'wiwimod_recent.html';
+$modversion['blocks'][2] = array(
+  'file' => "wiwimod_recent.php",
+  'name' => "Wiwi Recent",
+  'description' => "Wiwi recently modified",
+  'show_func' => "wiwimod_recent",
+  'edit_func' => "wiwimod_recent_blockedit",
+  'options' => "5",
+  'template' => 'wiwimod_recent.html');
 
-$modversion['blocks'][3]['file'] = "wiwimod_showpage.php";
-$modversion['blocks'][3]['name'] = "WiwiSideContent";
-$modversion['blocks'][3]['description'] = "side block for extra content on Wiwi pages";
-$modversion['blocks'][3]['show_func'] = "wiwimod_contextshow";
-$modversion['blocks'][3]['template'] = 'wiwimod_context.html';
+$modversion['blocks'][3] = array(
+  'file' => "wiwimod_showpage.php",
+  'name' => "WiwiSideContent",
+  'description' => "side block for extra content on Wiwi pages",
+  'show_func' => "wiwimod_contextshow",
+  'template' => 'wiwimod_context.html');
 
-$modversion['blocks'][4]['file'] = "wiwimod_showpage.php";
-$modversion['blocks'][4]['name'] = "WiwiShowPage";
-$modversion['blocks'][4]['description'] = "Show a wiwi page";
-$modversion['blocks'][4]['show_func'] = "wiwimod_showpage";
-$modversion['blocks'][4]['edit_func'] = "wiwimod_showpage_blockedit";
-$modversion['blocks'][4]['options'] = "WiwiHome";
-$modversion['blocks'][4]['template'] = 'wiwimod_showpage.html';
+$modversion['blocks'][4] = array(
+  'file' => "wiwimod_showpage.php",
+  'name' => "WiwiShowPage",
+  'description' => "Show a wiwi page",
+  'show_func' => "wiwimod_showpage",
+  'edit_func' => "wiwimod_showpage_blockedit",
+  'options' => "WiwiHome",
+  'template' => 'wiwimod_showpage.html');
 
 // Admin preferences items
 
@@ -102,14 +123,13 @@ $modversion['config'][1]['default'] = 0;
 //$modversion['config'][1]['options'] = array('5' => 5, '10' => 10, '15' => 15, '20' => 20, '25' => 25, '30' => 30);
 $modversion['config'][1]['options'] = array('Xoops Standard' => 0, 'XoopsEditor' => 1,'Spaw' => 2, 'HtmlArea' => 3, 'Koivi' => 4, 'FCK Editor' => 5);
 
-
-
-$modversion['config'][2]['name'] = 'XoopsEditor';
-$modversion['config'][2]['title'] = '_MI_WIWIMOD_XOOPSEDITOR';
-$modversion['config'][2]['description'] = '_MI_WIWIMOD_XOOPSEDITOR_DESC';
-$modversion['config'][2]['formtype'] = 'select';
-$modversion['config'][2]['valuetype'] = 'text';
-$modversion['config'][2]['default'] = 0;
+$modversion['config'][2] = array(
+  'name' => 'XoopsEditor',
+  'title' => '_MI_WIWIMOD_XOOPSEDITOR',
+  'description' => '_MI_WIWIMOD_XOOPSEDITOR_DESC',
+  'formtype' => 'select',
+  'valuetype' => 'text',
+  'default' => 0);
 if (file_exists(XOOPS_ROOT_PATH."/class/xoopseditor/xoopseditor.php")) {
 	include_once(XOOPS_ROOT_PATH."/class/xoopslists.php");
 	include_once(XOOPS_ROOT_PATH."/class/xoopseditor/xoopseditor.php");
@@ -119,56 +139,77 @@ if (file_exists(XOOPS_ROOT_PATH."/class/xoopseditor/xoopseditor.php")) {
 	} 
 else $modversion['config'][2]['options'] = array();
 
+$modversion['config'][3]  = array(
+  'name' => 'DefaultProfile',
+  'title' => '_MI_WIWIMOD_DEFAULTPROFILE',
+  'description' => '_MI_WIWIMOD_DEFAULTPROFILE_DESC',
+  'formtype' => 'select',
+  'valuetype' => 'int',
+  'default' => 0,
+  'options' => array());
 
-$modversion['config'][3]['name'] = 'DefaultProfile';
-$modversion['config'][3]['title'] = '_MI_WIWIMOD_DEFAULTPROFILE';
-$modversion['config'][3]['description'] = '_MI_WIWIMOD_DEFAULTPROFILE_DESC';
-$modversion['config'][3]['formtype'] = 'select';
-$modversion['config'][3]['valuetype'] = 'int';
-$modversion['config'][3]['default'] = 0;
-$modversion['config'][3]['options'] = array();
+$modversion['config'][4] = array(
+  'name' => 'allowPDF',
+  'title' => '_MI_WIWIMOD_ALLOWPDF',
+  'description' => '_MI_WIWIMOD_ALLOWPDF_DESC',
+  'formtype' => 'yesno',
+  'valuetype' => 'int',
+  'default' => 0);
 
-$modversion['config'][4]['name'] = 'allowPDF';
-$modversion['config'][4]['title'] = '_MI_WIWIMOD_ALLOWPDF';
-$modversion['config'][4]['description'] = '_MI_WIWIMOD_ALLOWPDF_DESC';
-$modversion['config'][4]['formtype'] = 'yesno';
-$modversion['config'][4]['valuetype'] = 'int';
-$modversion['config'][4]['default'] = 0;
+$modversion['config'][5] = array(
+  'name' => 'ShowTitles',
+  'title' => '_MI_WIWIMOD_SHOWTITLES',
+  'description' => '_MI_WIWIMOD_SHOWTITLES_DESC',
+  'formtype' => 'yesno',
+  'valuetype' => 'int',
+  'default' => 0);
 
-$modversion['config'][5]['name'] = 'ShowTitles';
-$modversion['config'][5]['title'] = '_MI_WIWIMOD_SHOWTITLES';
-$modversion['config'][5]['description'] ='_MI_WIWIMOD_SHOWTITLES_DESC';
-$modversion['config'][5]['formtype'] = 'yesno';
-$modversion['config'][5]['valuetype'] = 'int';
-$modversion['config'][5]['default'] = 0;
-
-$modversion['config'][6]['name'] = 'ShowCamelCase';
-$modversion['config'][6]['title'] = '_MI_WIWIMOD_USECAMELCASE';
-$modversion['config'][6]['description'] ='_MI_WIWIMOD_USECAMELCASE_DESC';
-$modversion['config'][6]['formtype'] = 'yesno';
-$modversion['config'][6]['valuetype'] = 'int';
-$modversion['config'][6]['default'] = 0;
-
+$modversion['config'][6] = array(
+  'name' => 'ShowCamelCase',
+  'title' => '_MI_WIWIMOD_USECAMELCASE',
+  'description' => '_MI_WIWIMOD_USECAMELCASE_DESC',
+  'formtype' => 'yesno',
+  'valuetype' => 'int',
+  'default' => 0);
 
 // Notification
 
 $modversion['hasNotification'] = 1;
-$modversion['notification']['lookup_file'] = '';
-$modversion['notification']['lookup_func'] = '';
+$modversion['notification'] = array(
+  'lookup_file' => 'include/notification.inc.php',
+  'lookup_func' => 'wiwimod_notify_iteminfo');
 
-$modversion['notification']['category'][1]['name'] = 'page';
-$modversion['notification']['category'][1]['title'] = _MI_WIWIMOD_PAGENOTIFYCAT_TITLE;
-$modversion['notification']['category'][1]['description'] = _MI_WIWIMOD_PAGENOTIFYCAT_DESC;
-$modversion['notification']['category'][1]['subscribe_from'] = 'index.php';
-$modversion['notification']['category'][1]['item_name'] = 'pageid';
-$modversion['notification']['category'][1]['allow_bookmark'] = 1;
+$modversion['notification']['category'][1] = array(
+  'name' => 'page',
+  'title' => _MI_WIWIMOD_PAGENOTIFYCAT_TITLE,
+  'description' => _MI_WIWIMOD_PAGENOTIFYCAT_DESC,
+  'subscribe_from' => array('index.php'),
+  'allow_bookmark' => 1,
+  'item_name' => 'pageid'); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php 
 
-$modversion['notification']['event'][1]['name'] = 'page_modified';
-$modversion['notification']['event'][1]['category'] = 'page';
-$modversion['notification']['event'][1]['title'] = _MI_WIWIMOD_PAGENOTIFY_TITLE;
-$modversion['notification']['event'][1]['caption'] = _MI_WIWIMOD_PAGENOTIFY_CAPTION;
-$modversion['notification']['event'][1]['description'] = _MI_WIWIMOD_PAGENOTIFY_DESC;
-$modversion['notification']['event'][1]['mail_template'] = 'global_pagemodified_notify';
-$modversion['notification']['event'][1]['mail_subject'] = _MI_WIWIMOD_PAGENOTIFY_SUBJECT;
+$modversion['notification']['event'][1] = array(
+  'name' => 'page_modified',
+  'category' => 'page',
+  'title' => _MI_WIWIMOD_PAGENOTIFY_TITLE,
+  'caption' => _MI_WIWIMOD_PAGENOTIFY_CAPTION,
+  'description' => _MI_WIWIMOD_PAGENOTIFY_DESC,
+  'mail_template' => 'global_pagemodified_notify',
+  'mail_subject' => _MI_WIWIMOD_PAGENOTIFY_SUBJECT);
+
+$modversion['notification']['category'][2] = array(
+  'name' => 'global',
+  'title' => _MI_WIWIMOD_GLOBALNOTIFYCAT_TITLE,
+  'description' => _MI_WIWIMOD_GLOBALNOTIFYCAT_DESC,
+  'subscribe_from' => array('index.php'),
+  'item_name' => ''); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php 
+
+$modversion['notification']['event'][2] = array(
+  'name' => 'page_modified',
+  'category' => 'global',
+  'title' => _MI_WIWIMOD_GLOBALNOTIFY_TITLE,
+  'caption' => _MI_WIWIMOD_GLOBALNOTIFY_CAPTION,
+  'description' => _MI_WIWIMOD_GLOBALNOTIFY_DESC,
+  'mail_template' => 'global_pagemodified_notify',
+  'mail_subject' => _MI_WIWIMOD_GLOBALNOTIFY_SUBJECT);
 
 ?>

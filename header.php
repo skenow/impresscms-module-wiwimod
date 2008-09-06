@@ -9,9 +9,11 @@ if (!defined('XOOPS_URL')) {
 	include $regs[1].'mainfile.php';
 }
 $myts =& MyTextSanitizer::getInstance();
+$wiwidir = basename(dirname(__FILE__));
+$modversion['dirname'] = $wiwidir;
 
 include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
-include_once XOOPS_ROOT_PATH."/modules/wiwimod/include/functions.php";
+include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/include/functions.php';
 
 
 ?>

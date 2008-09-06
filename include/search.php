@@ -1,5 +1,6 @@
 <?php
-include_once(XOOPS_ROOT_PATH."/modules/wiwimod/class/wiwiProfile.class.php");
+$wiwidir = basename( dirname( dirname( __FILE__ ) ) );
+include_once XOOPS_ROOT_PATH.'/modules/'. $wiwidir .'/class/wiwiProfile.class.php';
 
 function wiwimod_search($queryarray, $andor, $limit, $offset, $userid)
 {
