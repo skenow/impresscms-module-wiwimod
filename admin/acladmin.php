@@ -65,7 +65,8 @@ default:
 	$aclSubmit = new XoopsFormButton("", "savebtn", _AM_WIWI_EDITACL_SAVE_BTN, "submit");
 	if ($prid !== null) {
 		$aclDelete = new XoopsFormButton("", "delbtn", _AM_WIWI_EDITACL_DELETE_BTN, "submit");
-		$aclDelete->setExtra('onclick="document.all[\'op\'].value=\'confirmdelete\'"');
+		$aclDelete->setExtra('onclick="document.forms.aclform.op.value=\'confirmdelete\'"');
+
 	}
 	$form = new XoopsThemeForm(_AM_WIWI_EDITACL_TXT, "aclform", "acladmin.php");
 	$form->addElement($aclName);
@@ -134,14 +135,14 @@ case "confirmdelete" :
 	$aclConfirmDelete = new XoopsFormCheckBox(_AM_WIWI_ACLNAME_FLD.": ".$prf->name, "confirmchk");
 	$aclConfirmDelete->addOption(1,_AM_WIWI_DELCONFIRM_OPT);
 	$aclConfirmDelete->setDescription(_AM_WIWI_DELCONFIRM_TXT);
-	$aclConfirmDelete->setExtra('onclick="document.all[\'delbtn\'].style.display=(this.checked ? \'inline\' : \'none\')"');
+	$aclConfirmDelete->setExtra('onclick="document.forms.aclform.delbtn.style.display=(this.checked ? \'inline\' : \'none\')"');
 
 	$aclRedir = new XoopsFormSelect(_AM_WIWI_DELREDIR_FLD, "newprf");
 	$aclRedir->addOptionArray($prflst);
 	$aclRedir->setDescription(_AM_WIWI_DELREDIR_TXT);
 
 	$aclDelete = new XoopsFormButton("", "delbtn", _AM_WIWI_EDITACL_DELETE_BTN, "submit");
-	$aclDelete->setExtra ('style="display:none" onclick="document.all[\'op\'].value=\'delete\'"');
+	$aclDelete->setExtra ('style="display:none" onclick="document.forms.aclform.op.value=\'delete\'"');
 	$aclCancel = new XoopsFormButton("", "cancelbtn", _AM_WIWI_EDITACL_CANCEL_BTN, "submit");
 	$btnTray = new XoopsFormElementTray("");
 	$btnTray->addElement($aclDelete);
