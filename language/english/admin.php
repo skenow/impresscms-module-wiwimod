@@ -29,11 +29,11 @@ define('_AM_WIWI_ACLHELP_TXT','
 		<li>Writers&nbsp;can modify the current page, and create new pages with the same profile.</li>
 		<li>Administrators&nbsp;can change page profiles to whichever profiles they have "admin" privilege for.</li></ul>
 	<p>New pages default to their parent\'s profile.</p>
-	<p>Profile also define who can read/post comments. This is useful to allow private comments on public pages ...</p>
-	<p>Note : Xoops webmasters allways have full privileges to Wiwi pages.</p>
+	<p>Profiles also define who can read/post comments. This is useful to allow private comments on public pages ...</p>
+	<p>Note : Webmasters always have full privileges to Wiwi pages.</p>
 	');
 define('_AM_WIWI_DELCONFIRMTITLE_TXT','DELETE PROFILE CONFIRMATION');
-define('_AM_WIWI_DELCONFIRM_TXT','You are about to delete a profile. Please confirm checking the checkbox.');
+define('_AM_WIWI_DELCONFIRM_TXT','You are about to delete a profile. Please confirm by checking the checkbox.');
 define('_AM_WIWI_DELREDIR_TXT','Choose a new profile for pages that were attached to this one.');
 
 define('_AM_WIWI_LISTPAGES_BTN','<< Back to pages list');
@@ -59,7 +59,7 @@ define('_AM_WIWI_WRITERS_OPT','Writers');
 define('_AM_WIWI_ADMINISTRATORS_OPT','Administrators');
 define('_AM_WIWI_COMMENTS_NONE_OPT','(no comments)');
 define('_AM_WIWI_HISTORY_NONE_OPT','(no history)');
-define('_AM_WIWI_DELCONFIRM_OPT','YES, i want to delete this profile.');
+define('_AM_WIWI_DELCONFIRM_OPT','YES, I want to delete this profile.');
 
 define('_AM_WIWI_LISTPAGES_ALLPAGES_OPT','all pages');
 define('_AM_WIWI_LISTPAGES_KEYWORD_OPT','name');
@@ -78,9 +78,9 @@ define('_AM_WIWI_ACLADMIN_NAV','privileges (ACL)');
 define("_AM_WIWI_BLOCKSNGROUPS_NAV", "blocks and groups");
 
 define('_AM_WIWI_NOPAGESPECIFIED_MSG','Please select a page');
-define('_AM_WIWI_CONFIRMDEL_MSG','Do you really want to delete this Wiwi page');
-define('_AM_WIWI_CONFIRMFIX_MSG','Do you really want to fix this Wiwi page');
-define('_AM_WIWI_CONFIRMCLEAN_MSG','Do you really want to clean up the database');
+define('_AM_WIWI_CONFIRMDEL_MSG','Do you really want to delete this Wiwi page?');
+define('_AM_WIWI_CONFIRMFIX_MSG','Do you really want to fix this Wiwi page?');
+define('_AM_WIWI_CONFIRMCLEAN_MSG','Do you really want to clean up the database?');
 define('_AM_WIWI_PRFSAVESUCCESS_MSG','Profile successfully saved on database');
 define('_AM_WIWI_PRFSAVEFAILED_MSG','Error while storing profile. Database NOT updated');
 define('_AM_WIWI_ERRDELETE_MSG','Error : unable to delete profile');

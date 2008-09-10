@@ -49,8 +49,8 @@ define('_MD_WIWI_PAGENOTFOUND_MSG',"This page doesn't exist yet.");
 define('_MD_WIWI_DBUPDATED_MSG','Database successfully updated!');
 define('_MD_WIWI_ERRORINSERT_MSG','Error while updating database!');
 define('_MD_WIWI_EDITCONFLICT_MSG','Conflicting modifications! - All changes have been rejected!');
-define('_MD_WIWI_NOREADACCESS_MSG','<br><h4>Sorry, restricted access page.</h4><br>');
-define('_MD_WIWI_NOWRITEACCESS_MSG','<br><h4>Sorry, you don\'t have write access on this page.</h4><br>');
+define('_MD_WIWI_NOREADACCESS_MSG','<br /><h4>Sorry, restricted access page.</h4><br />');
+define('_MD_WIWI_NOWRITEACCESS_MSG','<br /><h4>Sorry, you don\'t have write access on this page.</h4><br />');
 
 
 // Wiwi special pages - DO NOT TRANSLATE -

@@ -12,7 +12,7 @@
  */
 
 define('_MB_WIWI_WIWIHOME',"WiwiHome");
-define('_MB_WIWI_PAGENOTFOUND_MSG',"<br>Page doesn't exist in the database<br>");
-define('_MB_WIWI_NOREADACCESS_MSG',"<br><h4>Sorry, restricted access</h4><br>");
+define('_MB_WIWI_PAGENOTFOUND_MSG',"<br />Page doesn't exist in the database<br />");
+define('_MB_WIWI_NOREADACCESS_MSG',"<br /><h4>Sorry, restricted access</h4><br />");
 
 ?>
