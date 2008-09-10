@@ -91,7 +91,7 @@ switch ($op) {
 		                if(isTagModuleActivated())
 				{
 					$tag_handler = xoops_getmodulehandler('tag', 'tag');
-					$tag_handler->updateByItem($_POST["item_tag"], $pageid, $xoopsModule->getVar("dirname"), $catid =0);
+					$tag_handler->updateByItem($_POST["item_tag"], $pageObj->pageid, $xoopsModule->getVar("dirname"), $catid =0);
 				}
 				/* Tag module support end*/
 				// Define tags for notification message
@@ -229,7 +229,7 @@ switch ($op) {
 		if(isTagModuleActivated())
 		{
 			include_once XOOPS_ROOT_PATH."/modules/tag/include/formtag.php";
-			$form->addElement(new XoopsFormTag("item_tag", 60, 255, $pageObj->pageid, $catid = 0));
+			$form->addElement(new XoopsFormTag("item_tag", 60, 255, $value=($pageObj->pageid == 0)?$pageObj->keyword: $pageObj->pageid, $catid = 0));
 		}
 		/* Tag module support end*/
 
