@@ -17,6 +17,8 @@ define('_AM_WIWI_PAGESFILTER_TXT','Show pages where');
 define('_AM_WIWI_LIKE_TXT','contains');
 define('_AM_WIWI_PROFILEIS_TXT','is');
 define('_AM_WIWI_ORDERBY_TXT',', ordered by');
+define('_AM_WIWI_LISTPAGES_RESULTS_TXT','results');
+
 define('_AM_WIWI_SELECTACL_BOX','');
 define('_AM_WIWI_SELECTACL_TXT','Profil bearbeiten:');
 define('_AM_WIWI_CREATEACL_TXT','Neues Profil erstellen:');
@@ -58,6 +60,16 @@ define('_AM_WIWI_ADMINISTRATORS_OPT','Administrationsberechtigung');
 define('_AM_WIWI_COMMENTS_NONE_OPT','(Keine Kommentare)');
 define('_AM_WIWI_HISTORY_NONE_OPT','(no history)');
 define('_AM_WIWI_DELCONFIRM_OPT','JA, ich m&ouml;chte das Profil l&ouml;schen.');
+define('_AM_WIWI_LISTPAGES_ALLPAGES_OPT','all pages');
+define('_AM_WIWI_LISTPAGES_KEYWORD_OPT','name');
+define('_AM_WIWI_LISTPAGES_TITLE_OPT','title');
+define('_AM_WIWI_LISTPAGES_BODY_OPT','content');
+define('_AM_WIWI_LISTPAGES_UID_OPT','last author');
+define('_AM_WIWI_LISTPAGES_PARENT_OPT','parent');
+define('_AM_WIWI_LISTPAGES_PRID_OPT','profile');
+define('_AM_WIWI_LISTPAGES_LASTMODIFIED_OPT','last modified');
+define('_AM_WIWI_LISTPAGES_ORDERDESC_OPT','descending');
+define('_AM_WIWI_LISTPAGES_ORDERASC_OPT','ascending');
 
 define('_AM_WIWI_LISTPAGE_NAV','browse pages');
 define('_AM_WIWI_HISTORY_NAV','geschichte');
