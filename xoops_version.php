@@ -26,8 +26,8 @@ $modversion['dirname'] = $wiwidir;
 // Tables created by the SQL file (without prefix!)
 $modversion['sqlfile']['mysql'] = "sql/mysql.sql";
 $modversion['tables'][0] = "wiwimod";
-$modversion['tables'][1] = "wiwimod_profiles";
-$modversion['tables'][2] = "wiwimod_prof_groups";
+$modversion['tables'][] = "wiwimod_profiles";
+$modversion['tables'][] = "wiwimod_prof_groups";
 
 // Administration tools
 $modversion['hasAdmin'] = 1;
@@ -41,13 +41,13 @@ $modversion['hasMain'] = 1;
 $modversion['templates'][1] = array(
   'file' => 'wiwimod_view.html',
   'description' => 'WiwiMod - View Wiwi Page');
-$modversion['templates'][2] = array(
+$modversion['templates'][] = array(
   'file' => 'wiwimod_edit.html',
-  'description' => 'WiwiMod - Edit with Page');
-$modversion['templates'][3]= array(
+  'description' => 'WiwiMod - Edit Wiwi Page');
+$modversion['templates'][]= array(
   'file' => 'wiwimod_history.html',
   'description' => 'WiwiMod - View page history');
-$modversion['templates'][4] = array(
+$modversion['templates'][] = array(
   'file' => 'wiwimod_pdf.html',
   'description' => 'WiwiMod - pdf');
 
@@ -69,7 +69,7 @@ $modversion['blocks'][1] = array(
   'show_func' => "wiwimod_toc",
   'template' => 'wiwimod_toc.html');
 
-$modversion['blocks'][2] = array(
+$modversion['blocks'][] = array(
   'file' => "wiwimod_recent.php",
   'name' => "Wiwi Recent",
   'description' => "Wiwi recently modified",
@@ -78,14 +78,14 @@ $modversion['blocks'][2] = array(
   'options' => "5",
   'template' => 'wiwimod_recent.html');
 
-$modversion['blocks'][3] = array(
+$modversion['blocks'][] = array(
   'file' => "wiwimod_showpage.php",
   'name' => "WiwiSideContent",
   'description' => "side block for extra content on Wiwi pages",
   'show_func' => "wiwimod_contextshow",
   'template' => 'wiwimod_context.html');
 
-$modversion['blocks'][4] = array(
+$modversion['blocks'][] = array(
   'file' => "wiwimod_showpage.php",
   'name' => "WiwiShowPage",
   'description' => "Show a wiwi page",
@@ -139,7 +139,7 @@ if (file_exists(XOOPS_ROOT_PATH."/class/xoopseditor/xoopseditor.php")) {
 	} 
 else $modversion['config'][2]['options'] = array();
 
-$modversion['config'][3]  = array(
+$modversion['config'][]  = array(
   'name' => 'DefaultProfile',
   'title' => '_MI_WIWIMOD_DEFAULTPROFILE',
   'description' => '_MI_WIWIMOD_DEFAULTPROFILE_DESC',
@@ -148,7 +148,7 @@ $modversion['config'][3]  = array(
   'default' => 0,
   'options' => array());
 
-$modversion['config'][4] = array(
+$modversion['config'][] = array(
   'name' => 'allowPDF',
   'title' => '_MI_WIWIMOD_ALLOWPDF',
   'description' => '_MI_WIWIMOD_ALLOWPDF_DESC',
@@ -156,7 +156,7 @@ $modversion['config'][4] = array(
   'valuetype' => 'int',
   'default' => 0);
 
-$modversion['config'][5] = array(
+$modversion['config'][] = array(
   'name' => 'ShowTitles',
   'title' => '_MI_WIWIMOD_SHOWTITLES',
   'description' => '_MI_WIWIMOD_SHOWTITLES_DESC',
@@ -164,7 +164,7 @@ $modversion['config'][5] = array(
   'valuetype' => 'int',
   'default' => 0);
 
-$modversion['config'][6] = array(
+$modversion['config'][] = array(
   'name' => 'ShowCamelCase',
   'title' => '_MI_WIWIMOD_USECAMELCASE',
   'description' => '_MI_WIWIMOD_USECAMELCASE_DESC',
@@ -187,6 +187,13 @@ $modversion['notification']['category'][1] = array(
   'allow_bookmark' => 1,
   'item_name' => 'pageid'); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php 
 
+$modversion['notification']['category'][] = array(
+  'name' => 'global',
+  'title' => _MI_WIWIMOD_GLOBALNOTIFYCAT_TITLE,
+  'description' => _MI_WIWIMOD_GLOBALNOTIFYCAT_DESC,
+  'subscribe_from' => array('index.php'),
+  'item_name' => ''); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php 
+
 $modversion['notification']['event'][1] = array(
   'name' => 'page_modified',
   'category' => 'page',
@@ -196,14 +203,7 @@ $modversion['notification']['event'][1] = array(
   'mail_template' => 'global_pagemodified_notify',
   'mail_subject' => _MI_WIWIMOD_PAGENOTIFY_SUBJECT);
 
-$modversion['notification']['category'][2] = array(
-  'name' => 'global',
-  'title' => _MI_WIWIMOD_GLOBALNOTIFYCAT_TITLE,
-  'description' => _MI_WIWIMOD_GLOBALNOTIFYCAT_DESC,
-  'subscribe_from' => array('index.php'),
-  'item_name' => ''); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php 
-
-$modversion['notification']['event'][2] = array(
+$modversion['notification']['event'][] = array(
   'name' => 'page_modified',
   'category' => 'global',
   'title' => _MI_WIWIMOD_GLOBALNOTIFY_TITLE,
