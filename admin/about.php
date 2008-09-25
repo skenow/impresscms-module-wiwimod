@@ -3,15 +3,18 @@
  * About wiwimod, the wysiwyg wiki
  * 
  * @package modules::wiwimod
+ * @author Xavier JIMENEZ
+ * @author skenow <skenow@impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version $Id$  
  */
 /** Include the admin header for wiwimod */   
-include "admin_header.php";
+include 'admin_header.php';
 
-$op = (isset($_GET['op']))?$_GET['op']:"";
+$op = (isset($_GET['op']))?$_GET['op']:'';
 
 xoops_cp_header();
 echo getAdminMenu (4,'about');
-
 
 switch ($op) {
 	default :
@@ -23,7 +26,5 @@ switch ($op) {
 
 }
 xoops_cp_footer();
-
-
 
 ?>

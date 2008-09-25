@@ -1,8 +1,14 @@
 <?php
-/*
- *   Wiwimod - by Xavier Jimenez -
- *   update script from previous versions
+/**
+ * update script from previous versions
+ * 
+ * @package modules::wiwimod
+ * @author Xavier JIMENEZ
+ * @author skenow <skenow@impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version $Id$  
  */
+
 include_once "header.php";
 global $xoopsDB;
 

@@ -15,24 +15,24 @@ $modversion = array(
   'description' => _MI_WIWIMOD_DESC,
   'author' => 'Xavier JIMENEZ',
   'credits' => '',
-  'license' => "GNU General Public License",
-  'help' => "",
+  'license' => 'GNU General Public License',
+  'help' => '',
   'official' => 0,
-  'image' => "images/wiwilogo.gif");
+  'image' => 'images/wiwilogo.gif');
 
 $wiwidir = basename(dirname(__FILE__));
 $modversion['dirname'] = $wiwidir;
 
 // Tables created by the SQL file (without prefix!)
-$modversion['sqlfile']['mysql'] = "sql/mysql.sql";
-$modversion['tables'][0] = "wiwimod";
-$modversion['tables'][] = "wiwimod_profiles";
-$modversion['tables'][] = "wiwimod_prof_groups";
+$modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
+$modversion['tables'][0] = 'wiwimod';
+$modversion['tables'][] = 'wiwimod_profiles';
+$modversion['tables'][] = 'wiwimod_prof_groups';
 
 // Administration tools
 $modversion['hasAdmin'] = 1;
-$modversion['adminindex'] = "admin/index.php";
-$modversion['adminmenu'] = "admin/menu.php";
+$modversion['adminindex'] = 'admin/index.php';
+$modversion['adminmenu'] = 'admin/menu.php';
 
 // Main menu
 $modversion['hasMain'] = 1;
@@ -53,8 +53,8 @@ $modversion['templates'][] = array(
 
 // Search
 $modversion['hasSearch'] = 1;
-$modversion['search']['file'] = "include/search.php";
-$modversion['search']['func'] = "wiwimod_search";
+$modversion['search']['file'] = 'include/search.php';
+$modversion['search']['func'] = 'wiwimod_search';
 
 // Comments
 $modversion['hasComments'] = 1;
@@ -63,35 +63,35 @@ $modversion['comments']['pageName'] = 'index.php';
 
 // Blocks
 $modversion['blocks'][1] = array(
-  'file' => "wiwimod_toc.php",
-  'name' => "Wiwi TOC",
-  'description' => "Wiwi selected entry pages",
-  'show_func' => "wiwimod_toc",
+  'file' => 'wiwimod_toc.php',
+  'name' => 'Wiwi TOC',
+  'description' => 'Wiwi selected entry pages',
+  'show_func' => 'wiwimod_toc',
   'template' => 'wiwimod_toc.html');
 
 $modversion['blocks'][] = array(
-  'file' => "wiwimod_recent.php",
-  'name' => "Wiwi Recent",
-  'description' => "Wiwi recently modified",
-  'show_func' => "wiwimod_recent",
-  'edit_func' => "wiwimod_recent_blockedit",
-  'options' => "5",
+  'file' => 'wiwimod_recent.php',
+  'name' => 'Wiwi Recent',
+  'description' => 'Wiwi recently modified',
+  'show_func' => 'wiwimod_recent',
+  'edit_func' => 'wiwimod_recent_blockedit',
+  'options' => '5',
   'template' => 'wiwimod_recent.html');
 
 $modversion['blocks'][] = array(
-  'file' => "wiwimod_showpage.php",
-  'name' => "WiwiSideContent",
-  'description' => "side block for extra content on Wiwi pages",
-  'show_func' => "wiwimod_contextshow",
+  'file' => 'wiwimod_showpage.php',
+  'name' => 'WiwiSideContent',
+  'description' => 'side block for extra content on Wiwi pages',
+  'show_func' => 'wiwimod_contextshow',
   'template' => 'wiwimod_context.html');
 
 $modversion['blocks'][] = array(
-  'file' => "wiwimod_showpage.php",
-  'name' => "WiwiShowPage",
-  'description' => "Show a wiwi page",
-  'show_func' => "wiwimod_showpage",
-  'edit_func' => "wiwimod_showpage_blockedit",
-  'options' => "WiwiHome",
+  'file' => 'wiwimod_showpage.php',
+  'name' => 'WiwiShowPage',
+  'description' => 'Show a wiwi page',
+  'show_func' => 'wiwimod_showpage',
+  'edit_func' => 'wiwimod_showpage_blockedit',
+  'options' => 'WiwiHome',
   'template' => 'wiwimod_showpage.html');
 
 // Admin preferences items
@@ -130,10 +130,10 @@ $modversion['config'][2] = array(
   'formtype' => 'select',
   'valuetype' => 'text',
   'default' => 0);
-if (file_exists(XOOPS_ROOT_PATH."/class/xoopseditor/xoopseditor.php")) {
-	include_once(XOOPS_ROOT_PATH."/class/xoopslists.php");
-	include_once(XOOPS_ROOT_PATH."/class/xoopseditor/xoopseditor.php");
-	$editor_name = !empty($_GET['editor_name'])?$_GET['editor_name']:"";
+if (file_exists(XOOPS_ROOT_PATH.'/class/xoopseditor/xoopseditor.php')) {
+	include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
+	include_once XOOPS_ROOT_PATH.'/class/xoopseditor/xoopseditor.php';
+	$editor_name = !empty($_GET['editor_name'])?$_GET['editor_name']:'';
 	$editorhandler = new XoopsEditorHandler();
 	$modversion['config'][2]['options'] = array_flip($editorhandler->getList());
 	} 

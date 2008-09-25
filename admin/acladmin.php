@@ -3,23 +3,26 @@
  * Permissions manager for Wiwimod
  * 
  * @package modules::wiwimod
- *  
+ * @author Xavier JIMENEZ
+ * @author skenow <skenow@impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version $Id$  
  */
 /** Include the administration header */   
-include "admin_header.php";
+include 'admin_header.php';
 /** Include the profile class */
-include "../class/wiwiProfile.class.php";
+include '../class/wiwiProfile.class.php';
 /** Include the core form class */
-include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
+include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
 
-$op = (isset($_GET['op']))?$_GET['op']:"";
+$op = (isset($_GET['op']))?$_GET['op']:'';
 if (!empty($_POST)) {
     extract($_POST);
 }
 
 switch ($op) {
 
-case "edit":
+case 'edit':
 default:
     xoops_cp_header();
 	w_adminMenu (1, _AM_WIWI_ACLADMIN_NAV);
@@ -50,25 +53,25 @@ default:
 	echo '</td></tr></table><br>';
 
 	//--- profile form ---
-	$aclName = new XoopsFormText(_AM_WIWI_ACLNAME_FLD, "prf_name", 20, 20, $prf->name);
-	$aclReaders = new XoopsFormSelectGroup(_AM_WIWI_READERS_FLD, "prf_readers", true, null, 5, true);
+	$aclName = new XoopsFormText(_AM_WIWI_ACLNAME_FLD, 'prf_name', 20, 20, $prf->name);
+	$aclReaders = new XoopsFormSelectGroup(_AM_WIWI_READERS_FLD, 'prf_readers', true, null, 5, true);
 	$aclReaders->setValue(array_keys($prf->readers));
-	$aclWriters = new XoopsFormSelectGroup(_AM_WIWI_WRITERS_FLD, "prf_writers", true, null, 5, true);
+	$aclWriters = new XoopsFormSelectGroup(_AM_WIWI_WRITERS_FLD, 'prf_writers', true, null, 5, true);
 	$aclWriters->setValue(array_keys($prf->writers));
-	$aclAdministrators = new XoopsFormSelectGroup(_AM_WIWI_ADMINISTRATORS_FLD, "prf_administrators", true, null, 5, true);
+	$aclAdministrators = new XoopsFormSelectGroup(_AM_WIWI_ADMINISTRATORS_FLD, 'prf_administrators', true, null, 5, true);
 	$aclAdministrators->setValue(array_keys($prf->administrators));
-	$aclComments = new XoopsFormSelect (_AM_WIWI_COMMENTS_FLD, "prf_commentslevel", $prf->commentslevel);
+	$aclComments = new XoopsFormSelect (_AM_WIWI_COMMENTS_FLD, 'prf_commentslevel', $prf->commentslevel);
 	$aclComments->addOptionArray(array(0 => _AM_WIWI_COMMENTS_NONE_OPT , _WI_READ => _AM_WIWI_READERS_OPT , _WI_WRITE => _AM_WIWI_WRITERS_OPT, _WI_ADMIN => _AM_WIWI_ADMINISTRATORS_OPT));
-	$aclHistory = new XoopsFormSelect (_AM_WIWI_HISTORY_FLD, "prf_historylevel", $prf->historylevel);
+	$aclHistory = new XoopsFormSelect (_AM_WIWI_HISTORY_FLD, 'prf_historylevel', $prf->historylevel);
 	$aclHistory->addOptionArray(array(0 => _AM_WIWI_HISTORY_NONE_OPT , _WI_READ => _AM_WIWI_READERS_OPT , _WI_WRITE => _AM_WIWI_WRITERS_OPT, _WI_ADMIN => _AM_WIWI_ADMINISTRATORS_OPT));
 
-	$aclSubmit = new XoopsFormButton("", "savebtn", _AM_WIWI_EDITACL_SAVE_BTN, "submit");
+	$aclSubmit = new XoopsFormButton('', 'savebtn', _AM_WIWI_EDITACL_SAVE_BTN, 'submit');
 	if ($prid !== null) {
-		$aclDelete = new XoopsFormButton("", "delbtn", _AM_WIWI_EDITACL_DELETE_BTN, "submit");
+		$aclDelete = new XoopsFormButton('', 'delbtn', _AM_WIWI_EDITACL_DELETE_BTN, 'submit');
 		$aclDelete->setExtra('onclick="document.forms.aclform.op.value=\'confirmdelete\'"');
 
 	}
-	$form = new XoopsThemeForm(_AM_WIWI_EDITACL_TXT, "aclform", "acladmin.php");
+	$form = new XoopsThemeForm(_AM_WIWI_EDITACL_TXT, 'aclform', 'acladmin.php');
 	$form->addElement($aclName);
 	$form->addElement($aclReaders);
 	$form->addElement($aclWriters);
@@ -76,13 +79,13 @@ default:
 	$form->addElement($aclComments);
 	$form->addElement($aclHistory);
 
-	$btnTray = new XoopsFormElementTray("");
+	$btnTray = new XoopsFormElementTray('');
 	$btnTray->addElement($aclSubmit);
 	if ($prid !== null) $btnTray->addElement($aclDelete);
 	$form->addElement($btnTray);
 	
-	$form->addElement(new XoopsFormHidden("op","save"));
-	$form->addElement(new XoopsFormHidden("prid",$prid));
+	$form->addElement(new XoopsFormHidden('op','save'));
+	$form->addElement(new XoopsFormHidden('prid',$prid));
 
 	$form->display();
 
@@ -91,8 +94,7 @@ default:
 	xoops_cp_footer();
 	break;
 
-
-case "save" :
+case 'save' :
 if ( isset($_POST) ) {
 /**
  *@todo remove this, if is proves unnecessary
@@ -112,16 +114,16 @@ if ( isset($_POST) ) {
 	$prf->historylevel = $prf_historylevel;
 
 	$success = $prf->store();
-	redirect_header ("acladmin.php?op=edit&amp;profile=".$prid, 2, ($success ? _AM_WIWI_PRFSAVESUCCESS_MSG : _AM_WIWI_PRFSAVEFAILED_MSG));
+	redirect_header ('acladmin.php?op=edit&amp;profile='.$prid, 2, ($success ? _AM_WIWI_PRFSAVESUCCESS_MSG : _AM_WIWI_PRFSAVEFAILED_MSG));
 	break;
 	}
 
-case "confirmdelete" :
+case 'confirmdelete' :
 	if (isset($_GET['profile'])) {
 		$prid = (int) $_GET['profile'];
 	} elseif (isset($_POST['prid'])) {
 		$prid = (int) $_POST['prid'];
-	} else redirect_header ("acladmin.php", 2, _AM_WIWI_ERRDELETE_MSG);
+	} else redirect_header ('acladmin.php', 2, _AM_WIWI_ERRDELETE_MSG);
 
 	$prf = new WiwiProfile();
 	$prf->load($prid);
@@ -132,39 +134,39 @@ case "confirmdelete" :
 	xoops_cp_header();
 	w_adminMenu (1, '_AM_WIWI_ACLADMIN_TXT');
 
-	$aclConfirmDelete = new XoopsFormCheckBox(_AM_WIWI_ACLNAME_FLD.": ".$prf->name, "confirmchk");
+	$aclConfirmDelete = new XoopsFormCheckBox(_AM_WIWI_ACLNAME_FLD.': '.$prf->name, 'confirmchk');
 	$aclConfirmDelete->addOption(1,_AM_WIWI_DELCONFIRM_OPT);
 	$aclConfirmDelete->setDescription(_AM_WIWI_DELCONFIRM_TXT);
 	$aclConfirmDelete->setExtra('onclick="document.forms.aclform.delbtn.style.display=(this.checked ? \'inline\' : \'none\')"');
 
-	$aclRedir = new XoopsFormSelect(_AM_WIWI_DELREDIR_FLD, "newprf");
+	$aclRedir = new XoopsFormSelect(_AM_WIWI_DELREDIR_FLD, 'newprf');
 	$aclRedir->addOptionArray($prflst);
 	$aclRedir->setDescription(_AM_WIWI_DELREDIR_TXT);
 
-	$aclDelete = new XoopsFormButton("", "delbtn", _AM_WIWI_EDITACL_DELETE_BTN, "submit");
+	$aclDelete = new XoopsFormButton('', 'delbtn', _AM_WIWI_EDITACL_DELETE_BTN, 'submit');
 	$aclDelete->setExtra ('style="display:none" onclick="document.forms.aclform.op.value=\'delete\'"');
-	$aclCancel = new XoopsFormButton("", "cancelbtn", _AM_WIWI_EDITACL_CANCEL_BTN, "submit");
-	$btnTray = new XoopsFormElementTray("");
+	$aclCancel = new XoopsFormButton('', 'cancelbtn', _AM_WIWI_EDITACL_CANCEL_BTN, 'submit');
+	$btnTray = new XoopsFormElementTray('');
 	$btnTray->addElement($aclDelete);
 	$btnTray->addElement($aclCancel);
 
-	$form = new XoopsThemeForm(_AM_WIWI_DELCONFIRM_TXT, "aclform", "acladmin.php");
+	$form = new XoopsThemeForm(_AM_WIWI_DELCONFIRM_TXT, 'aclform', 'acladmin.php');
 	$form->addElement($aclConfirmDelete);
 	$form->addElement($aclRedir);
 	$form->addElement($btnTray);
-	$form->addElement(new XoopsFormHidden("op","edit"));
-	$form->addElement(new XoopsFormHidden("prid",$prid));
+	$form->addElement(new XoopsFormHidden('op','edit'));
+	$form->addElement(new XoopsFormHidden('prid',$prid));
 	$form->display();
 
 	xoops_cp_footer();
 	break;
 
-case "delete" :
+case 'delete' :
 	if (isset($_GET['profile'])) {
 		$prid = (int) $_GET['profile'];
 	} elseif (isset($_POST['prid'])) {
 		$prid = (int) $_POST['prid'];
-	} else redirect_header ("acladmin.php", 2, _AM_WIWI_ERRDELETE_MSG);
+	} else redirect_header ('acladmin.php', 2, _AM_WIWI_ERRDELETE_MSG);
 
 	if (isset($_GET['newprf'])) {
 		$newprf = (int) $_GET['newprf'];
@@ -174,11 +176,9 @@ case "delete" :
 	$prf->load($prid);
 	$success = $prf->delete($newprf);
 
-	redirect_header ("acladmin.php", 2, ($success ? _AM_WIWI_PRFDELSUCCESS_MSG : _AM_WIWI_PRFDELFAILED_MSG));
+	redirect_header ('acladmin.php', 2, ($success ? _AM_WIWI_PRFDELSUCCESS_MSG : _AM_WIWI_PRFDELFAILED_MSG));
 	break;
 
-
 }
-
 
 ?>

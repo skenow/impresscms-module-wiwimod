@@ -1,7 +1,15 @@
 <?php
-	/*
-	 * remember listpage filters
-	 */
+/**
+ * remember listpage filters
+ * 
+ * @package modules::wiwimod
+ * @author Xavier JIMENEZ
+ * @author skenow <skenow@impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version $Id$  
+ */
+
+/** @todo properly validate and sanitize HTTP vars */
 	$post_selwhere = (isset($_POST['post_selwhere']))?$_POST['post_selwhere']:"";
 	$post_text = (isset($_POST['post_text']))?$_POST['post_text']:"";
 	$post_profile = (isset($_POST['post_profile']))?intval($_POST['post_profile']):0;
