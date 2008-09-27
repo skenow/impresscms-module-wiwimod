@@ -8,6 +8,7 @@
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
+ /** @todo validate and sanitize HTTP vars */
 if (isset($_POST['fct'])) {
 	$fct = trim($_POST['fct']);
 }

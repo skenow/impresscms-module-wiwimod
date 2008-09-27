@@ -1,4 +1,13 @@
 <?php
+/**
+ * Group permissions for wiwimod
+ * 
+ * @package modules::wiwimod
+ * @author Xavier JIMENEZ
+ * @author skenow <skenow@impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version $Id$  
+ */
 
 if( ! defined( 'XOOPS_ROOT_PATH' ) ) exit ;
 
@@ -17,8 +26,6 @@ function myDeleteByModule($DB, $gperm_modid, $gperm_name = null, $gperm_itemid =
 	}
 	return true;
 }
-
-
 
 // include '../../../include/cp_header.php'; GIJ
 $modid = isset($_POST['modid']) ? intval($_POST['modid']) : 1;

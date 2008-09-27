@@ -43,13 +43,13 @@ function wiki_tag_iteminfo(&$items)
 			// catid is not used in wiwimod, so just skip it
 		foreach(array_keys($items[$cat_id]) as $item_id){
 			// In wiwimod, the item_id is "pageid"
-			$taggedPage =  new WiwiRevision("",0,$item_id);
+			$taggedPage =  new WiwiRevision('',0,$item_id);
                         $items[$cat_id][$item_id] = array(
-                                "title"         => $myts->makeTboxData4Show( $taggedPage->title ) ,
-                                "uid"           => $taggedPage->u_id,
-                                "link"          => "index.php?page=".urlencode($taggedPage->keyword),
-                                "time"          => strtotime($taggedPage->lastmodified),
-                                "content"       => "",
+                                'title'         => $myts->makeTboxData4Show( $taggedPage->title ) ,
+                                'uid'           => $taggedPage->u_id,
+                                'link'          => 'index.php?page='.urlencode($taggedPage->keyword),
+                                'time'          => strtotime($taggedPage->lastmodified),
+                                'content'       => '',
                                 );
                 }
 	}

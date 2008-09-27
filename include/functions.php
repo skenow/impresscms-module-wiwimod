@@ -1,4 +1,15 @@
 <?php
+/**
+ * Common functions for wiwimod
+ * 
+ * @package modules::wiwimod
+ * @author Xavier JIMENEZ
+ * @author skenow <skenow@impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version $Id
+ */ 
+if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
+
 $wiwidir = basename( dirname( dirname( __FILE__ ) ) );
 function getUserName($uid)
 {
@@ -19,14 +30,13 @@ function getUserName($uid)
     return $xoopsConfig['anonymous'];
 }
 
-
 //ok >> rename to ??? , and check block access rights for current user.
 function wiwimod_getXoopsBlock ($blkname) {  // block title or id
 	global $xoopsUser;
 	global $xoopsDB;
   $wiwidir = basename( dirname(  dirname( __FILE__ ) ) ) ;
 	$block = array();
-	$bcontent = "";
+	$bcontent = '';
 	$bid = intval($blkname);
 
 	// 
@@ -80,8 +90,6 @@ function wiwiShowBlock ($blkname) {
 	return "<table><tr><td>".$blk['content']."</td></tr></table>";
 }
 
-
-
 /*
  * code adapted from the excellent SmartFaq module (www.smartfactory.ca)
  */
@@ -97,7 +105,7 @@ function w_adminMenu ($currentoption = 0, $breadcrumb = '')
 function getAdminMenu ($currentoption = 0, $breadcrumb = '')
 {
   $wiwidir = basename( dirname(  dirname( __FILE__ ) ) ) ;
-	$html = "";
+	$html = '';
 	/* Nice buttons styles */
 	$html .= "
     	<style type='text/css'>
@@ -154,11 +162,11 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '')
 function getAvailableEditors() {
 	$arr = Array();
 
-	$arr[] = Array("Xoops Standard" , 0 , "" );
+	$arr[] = Array('Xoops Standard' , 0 , '' );
 	
 	if (file_exists(XOOPS_ROOT_PATH . '/class/xoopseditor')) {
-		include_once(XOOPS_ROOT_PATH."/class/xoopslists.php");
-		include_once(XOOPS_ROOT_PATH."/class/xoopseditor/xoopseditor.php");
+		include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
+		include_once XOOPS_ROOT_PATH.'/class/xoopseditor/xoopseditor.php';
 		$editorhandler = new XoopsEditorHandler();
 		$xedArr = array_flip($editorhandler->getList());
 		foreach ($xedArr as $xedTitle => $xedName) {
@@ -167,19 +175,19 @@ function getAvailableEditors() {
 		} 
 	
 	if (file_exists(XOOPS_ROOT_PATH . '/class/spaw')) {
-		$arr[] = Array("Spaw" , 2 , "" );
+		$arr[] = Array('Spaw' , 2 , '' );
 	}
 	 
 	if (file_exists(XOOPS_ROOT_PATH . '/class/htmlarea')) {
-		$arr[] = Array("HTMLArea" , 3 , "");
+		$arr[] = Array('HTMLArea' , 3 , '');
 	}
 
 	if (file_exists(XOOPS_ROOT_PATH . '/class/wysiwyg')) {
-		$arr[] = Array("Koivi" , 4 , "");
+		$arr[] = Array('Koivi' , 4 , '');
 	}
 
 	if (file_exists(XOOPS_ROOT_PATH . '/class/fckeditor')) {
-		$arr[] = Array("FCKEditor" , 5 , "");
+		$arr[] = Array('FCKEditor' , 5 , '');
 	}
 
 	return $arr;
@@ -187,11 +195,11 @@ function getAvailableEditors() {
 
 function isTagModuleActivated()
 {
-  if( !file_exists( XOOPS_ROOT_PATH."/modules/tag/include/formtag.php" ) )
+  if( !file_exists( XOOPS_ROOT_PATH.'/modules/tag/include/formtag.php' ) )
     return false;
   $db =& Database::getInstance();
   $moduleHandler = new XoopsModuleHandler($db);
-  $tagModule = $moduleHandler->getByDirName("tag");
+  $tagModule = $moduleHandler->getByDirName('tag');
   if($tagModule == false)
     return false;
   return true;

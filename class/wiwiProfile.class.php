@@ -1,20 +1,22 @@
 <?php
-
-/*	=========================================
-
-		Class wiwiProfile
-
-	TODO :  remove any $xoopsModule or $xoopsModuleConfig references, to 
-			enable the class being used from within any other module.
-	=========================================
+/**
+ * Permissions profile
+ *  
+ * @todo remove any $xoopsModule or $xoopsModuleConfig references, to enable the class being used from within any other module. 
+ *   
+ * @package modules::wiwimod
+ * @author Xavier JIMENEZ
+ * @author skenow <skenow@impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version $Id$  
  */
 if (!defined('_WI_READ')) {
 
-define ("_WI_READ", 1);
-define ("_WI_WRITE", 2);
-define ("_WI_ADMIN",3);
-define ("_WI_COMMENTS",4);
-define ("_WI_HISTORY",5);
+define ('_WI_READ', 1);
+define ('_WI_WRITE', 2);
+define ('_WI_ADMIN',3);
+define ('_WI_COMMENTS',4);
+define ('_WI_HISTORY',5);
 
 class WiwiProfile {
 
@@ -39,7 +41,7 @@ class WiwiProfile {
 	function WiwiProfile($prid = 0) {
 		$this->db =& Database::getInstance();
 
-		$this->name = "";
+		$this->name = '';
 		$this->readers = Array();
 		$this->writers = Array();
 		$this->administrators = Array();
@@ -60,7 +62,7 @@ class WiwiProfile {
 		//
 		// retrieve profile info
 		//
-		$sql = "SELECT prname, commentslevel, historylevel FROM ".$this->db->prefix("wiwimod_profiles")." WHERE prid=". (int) $prid;
+		$sql = 'SELECT prname, commentslevel, historylevel FROM '.$this->db->prefix('wiwimod_profiles').' WHERE prid='. (int) $prid;
 
 		$res = $this->db->query($sql);
 		if ($this->db->getRowsNum($res) == 0) return false;
@@ -77,7 +79,7 @@ class WiwiProfile {
 		$member_handler =& xoops_gethandler('member');
 		$grps =& $member_handler->getGroupList();
 
-		$sql = "SELECT gid, priv FROM ".$this->db->prefix("wiwimod_prof_groups")." WHERE prid=". (int) $prid." ORDER BY priv";
+		$sql = 'SELECT gid, priv FROM '.$this->db->prefix('wiwimod_prof_groups').' WHERE prid='. (int) $prid.' ORDER BY priv';
 		$res = $this->db->query($sql);
 		while ($rows = $this->db->fetchArray($res)) {
 			switch ($rows['priv']) {
@@ -116,12 +118,12 @@ class WiwiProfile {
 	//
 	function store() {
 
-		if ($this->name == "") return false;
+		if ($this->name == '') return false;
 		if ($this->prid == 0) {
 			//
 			// Create new profile
 			//
-			$sql = sprintf ("INSERT INTO %s ( prname, commentslevel, historylevel ) VALUES ( %s , %u , %u)",$this->db->prefix("wiwimod_profiles"),$this->db->quoteString($this->name), $this->commentslevel, $this->historylevel);
+			$sql = sprintf ('INSERT INTO %s ( prname, commentslevel, historylevel ) VALUES ( %s , %u , %u)',$this->db->prefix('wiwimod_profiles'),$this->db->quoteString($this->name), $this->commentslevel, $this->historylevel);
 			$success = $this->db->query($sql);
 			if ($success) {
 				$this->prid = $this->db->getInsertId();  // gets new profile id
@@ -131,13 +133,13 @@ class WiwiProfile {
 			//
 			// Update profile
 			//
-			$sql = sprintf ("UPDATE %s SET prname = %s , commentslevel = %u, historylevel = %u WHERE prid = %u",$this->db->prefix("wiwimod_profiles"),$this->db->quoteString($this->name), $this->commentslevel, $this->historylevel, $this->prid);
+			$sql = sprintf ('UPDATE %s SET prname = %s , commentslevel = %u, historylevel = %u WHERE prid = %u',$this->db->prefix('wiwimod_profiles'),$this->db->quoteString($this->name), $this->commentslevel, $this->historylevel, $this->prid);
 			$success = $this->db->query($sql);
 			if ($success) {
 				//
 				// delete old groups info
 				//
-				$sql = sprintf ("DELETE FROM %s WHERE prid = %u",$this->db->prefix("wiwimod_prof_groups"),$this->prid);
+				$sql = sprintf ('DELETE FROM %s WHERE prid = %u',$this->db->prefix('wiwimod_prof_groups'),$this->prid);
 				$success = $this->db->query($sql);
 			}
 		}
@@ -146,19 +148,19 @@ class WiwiProfile {
 			// Insert groups info
 			//
 			foreach ($this->readers as $key) {
-				$sql = sprintf ("INSERT INTO %s ( prid, gid, priv ) VALUES ( %u, %u, %u )", 
-							$this->db->prefix("wiwimod_prof_groups"),$this->prid,$key,_WI_READ);
+				$sql = sprintf ('INSERT INTO %s ( prid, gid, priv ) VALUES ( %u, %u, %u )', 
+							$this->db->prefix('wiwimod_prof_groups'),$this->prid,$key,_WI_READ);
 				$success = $this->db->query($sql);
 
 			}
 			foreach ($this->writers as $key) {
-				$sql = sprintf ("INSERT INTO %s ( prid, gid, priv ) VALUES ( %u, %u, %u )", 
-							$this->db->prefix("wiwimod_prof_groups"),$this->prid,$key,_WI_WRITE);
+				$sql = sprintf ('INSERT INTO %s ( prid, gid, priv ) VALUES ( %u, %u, %u )', 
+							$this->db->prefix('wiwimod_prof_groups'),$this->prid,$key,_WI_WRITE);
 				$success = $success && $this->db->query($sql);
 			}
 			foreach ($this->administrators as $key) {
-				$sql = sprintf ("INSERT INTO %s ( prid, gid, priv ) VALUES ( %u, %u, %u )", 
-							$this->db->prefix("wiwimod_prof_groups"),$this->prid,$key,_WI_ADMIN);
+				$sql = sprintf ('INSERT INTO %s ( prid, gid, priv ) VALUES ( %u, %u, %u )', 
+							$this->db->prefix('wiwimod_prof_groups'),$this->prid,$key,_WI_ADMIN);
 				$success = $success && $this->db->query($sql);
 			}
 		}
@@ -176,11 +178,11 @@ class WiwiProfile {
 	function delete ($newprf = 0) {
 		if ($this->prid == null) return true;
 		
-		$sql = sprintf ("DELETE FROM %s WHERE prid = %u",$this->db->prefix("wiwimod_prof_groups"),$this->prid);
+		$sql = sprintf ('DELETE FROM %s WHERE prid = %u',$this->db->prefix('wiwimod_prof_groups'),$this->prid);
 		$success = $this->db->query($sql);
-		$sql = sprintf("DELETE FROM %s WHERE prid=%u", $this->db->prefix("wiwimod_profiles"),$this->prid);
+		$sql = sprintf('DELETE FROM %s WHERE prid=%u', $this->db->prefix('wiwimod_profiles'),$this->prid);
 		$success = $this->db->query($sql);
-		$sql = sprintf("UPDATE %s SET prid=%u WHERE prid=%u", $this->db->prefix("wiwimod"),$newprf, $this->prid);
+		$sql = sprintf('UPDATE %s SET prid=%u WHERE prid=%u', $this->db->prefix('wiwimod'),$newprf, $this->prid);
 		$success = $this->db->query($sql);
 
 		if ($success) {	//-- update possible values for default profile
@@ -195,7 +197,7 @@ class WiwiProfile {
 	//
 	function getAllProfiles() {
 
-		$sql = "SELECT prname, prid FROM ".$this->db->prefix("wiwimod_profiles");
+		$sql = 'SELECT prname, prid FROM '.$this->db->prefix('wiwimod_profiles');
 		$res = $this->db->query($sql);
 		$prlist = Array();
 		while ($rows = $this->db->fetchArray($res)) {
@@ -210,15 +212,15 @@ class WiwiProfile {
 	//
 	function getAdminProfiles($user) {
 		$member_handler =& xoops_gethandler('member');
-		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar("uid")) : Array(XOOPS_GROUP_ANONYMOUS);
+		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : Array(XOOPS_GROUP_ANONYMOUS);
 
 		if (in_array(XOOPS_GROUP_ADMIN , $usergroups)) {
 			$prlist = $this->getAllProfiles();
 		} else {
-			$t1 = $this->db->prefix("wiwimod_profiles");
-			$t2 = $this->db->prefix("wiwimod_prof_groups");
-			$sql = sprintf("SELECT DISTINCT %s.prid, prname FROM %s LEFT JOIN %s ON %s.prid = %s.prid WHERE gid IN (%s) AND priv = %u",
-				$t1, $t2, $t1, $t2, $t1, implode("," , $usergroups), _WI_ADMIN);
+			$t1 = $this->db->prefix('wiwimod_profiles');
+			$t2 = $this->db->prefix('wiwimod_prof_groups');
+			$sql = sprintf('SELECT DISTINCT %s.prid, prname FROM %s LEFT JOIN %s ON %s.prid = %s.prid WHERE gid IN (%s) AND priv = %u',
+				$t1, $t2, $t1, $t2, $t1, implode(',' , $usergroups), _WI_ADMIN);
 			$res = $this->db->query($sql);
 			$prlist=Array();
 			while ($rows = $this->db->fetchArray($res)) {
@@ -236,12 +238,12 @@ class WiwiProfile {
 	// Xoops webmasters have full access of course.
 	// Returns an three items array with keys _WI_READ, _WI_WRITE, _WI_ADMIN, _WI_COMMENTS
 	//
-	function getUserPrivileges ($user="") {
+	function getUserPrivileges ($user='') {
 		global $xoopsUser;
 
 		$member_handler =& xoops_gethandler('member');
-		if ($user == "") $user = $xoopsUser;
-		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar("uid")) : Array(XOOPS_GROUP_ANONYMOUS);
+		if ($user == '') $user = $xoopsUser;
+		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : Array(XOOPS_GROUP_ANONYMOUS);
 		$priv = Array();
 		$priv[_WI_ADMIN] = in_array(XOOPS_GROUP_ADMIN , $usergroups) || ( count(array_intersect ($usergroups, array_keys($this->administrators))) > 0 );
 		$priv[_WI_WRITE] = $priv[_WI_ADMIN] || ( count(array_intersect ($usergroups, array_keys($this->writers))) > 0 );

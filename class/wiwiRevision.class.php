@@ -1,17 +1,21 @@
 <?php
-
-/*	=========================================
-
-		Class wiwiRevision
-
-	=========================================
+/**
+ * Revision class of wiwimod
+ * 
+ * @package modules::wiwimod
+ * @author Xavier JIMENEZ
+ * @author skenow <skenow@impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version $Id$  
  */
+
+if (!defined('XOOPS_ROOT_PATH')&& !defined('ICMS_ROOT_PATH')) exit();
 if (!defined('_WIWIPAGE')) {
-define ("_WIWIPAGE", 1);
+define ('_WIWIPAGE', 1);
 $wiwidir = basename(dirname( dirname(__FILE__)));
 $modversion['dirname'] = $wiwidir;
 
-include_once "wiwiProfile.class.php";
+include_once 'wiwiProfile.class.php';
 include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/include/functions.php';
 include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/include/diff.php';
 
@@ -33,7 +37,6 @@ class WiwiRevision {
 	var $ts;				// private usage;
 	var $wiwiConfig;		// private usage : used to get Wiwimod configs, even when called from other modules
 
-
 	/*
 	 * Constructor.
 	 * Loads revision from database :
@@ -43,7 +46,7 @@ class WiwiRevision {
 	 *             or the corresponding pageid field (which both are common to
 	 *             all page revisions.
 	 */
-	function WiwiRevision($page="", $id=0, $pageid=0) {
+	function WiwiRevision($page='', $id=0, $pageid=0) {
 
 		$this->db =& Database::getInstance();
 		$this->ts =& MyTextSanitizer::getInstance();
@@ -53,30 +56,30 @@ class WiwiRevision {
 		$wiwiMod = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));  
 		$this->wiwiConfig =& $config_handler->getConfigsByCat(0, $wiwiMod->getVar('mid'));
 
-		if (($page == "") && ($id == 0) && ($pageid == 0)) $page = _MI_WIWIMOD_WIWIHOME;
+		if (($page == '') && ($id == 0) && ($pageid == 0)) $page = _MI_WIWIMOD_WIWIHOME;
 
 		$this->keyword = $page;
-		$this->title = "";		
-		$this->body = "";		
+		$this->title = '';		
+		$this->body = '';		
 		$this->lastmodified = null;
 		$this->u_id = 0;
-		$this->parent = "";		
+		$this->parent = '';		
 		$this->visible = 0;	
-		$this->contextBlock = "";
+		$this->contextBlock = '';
 		$this->pageid = $pageid;
 		$this->profile = new wiwiProfile(); // loads an empty profile
 		$this->id = 0;
 
 		if ($id != 0) {
-			$sql = "SELECT * FROM ".$this->db->prefix("wiwimod")." WHERE id = $id";
-		} elseif ($page != ""){ 
-			$sql = "SELECT * FROM ".$this->db->prefix("wiwimod")." WHERE keyword='".addslashes($page)."' ORDER BY id DESC LIMIT 1";
-		} elseif ($pageid != "") {
-		    $sql = "SELECT * FROM ".$this->db->prefix("wiwimod")." WHERE pageid=$pageid ORDER BY id DESC LIMIT 1";
+			$sql = 'SELECT * FROM '.$this->db->prefix('wiwimod').' WHERE id = '.$id;
+		} elseif ($page != ''){ 
+			$sql = 'SELECT * FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($page).'" ORDER BY id DESC LIMIT 1';
+		} elseif ($pageid != '') {
+		    $sql = 'SELECT * FROM '.$this->db->prefix('wiwimod').' WHERE pageid='.$pageid.' ORDER BY id DESC LIMIT 1';
 		} else {
-			$sql = "";
+			$sql = '';
 		}
-		if ($sql != "") {
+		if ($sql != '') {
 			$result = $this->db->query($sql);
 			if ($this->db->getRowsNum($result) == 0) return false;
 			$row = $this->db->fetchArray($result);
@@ -96,7 +99,6 @@ class WiwiRevision {
 		return $this;
 	}
 
-
 	/*
 	 * Creates a new revision from current object.
 	 */
@@ -104,12 +106,12 @@ class WiwiRevision {
 		global $xoopsUser;
 		$sql = sprintf( 
 			"INSERT INTO %s (keyword, title, body, lastmodified, u_id, parent, visible, contextBlock, pageid, prid) VALUES('%s', '%s', '%s', '%s', '%u', '%s', %u, '%s', %u, %u)",
-			$this->db->prefix("wiwimod"),
+			$this->db->prefix('wiwimod'),
 			addslashes($this->keyword),
 			$this->ts->addSlashes($this->title),
 			$this->ts->addSlashes($this->body),
 			date(_DATESTRING),						  //-- lastmodified is Now
-			$xoopsUser ? $xoopsUser->getVar("uid") : 0,   //-- author is always the current user
+			$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
 			addslashes($this->parent),
 			$this->visible,
 			addslashes($this->contextBlock),
@@ -120,7 +122,7 @@ class WiwiRevision {
 		if (!$result) return false;
 		if ($this->pageid == 0) {
 			$this->pageid = $this->db->getInsertId();
-			$sql = "UPDATE ".$this->db->prefix("wiwimod")." SET pageid = ".$this->pageid." WHERE id = ".$this->pageid;
+			$sql = 'UPDATE '.$this->db->prefix('wiwimod').' SET pageid = '.$this->pageid.' WHERE id = '.$this->pageid;
 			$result = $this->db->query($sql);
 			if (!$result) return false;
 		}
@@ -135,11 +137,11 @@ class WiwiRevision {
 
 		$sql = sprintf(
 			"UPDATE %s SET title='%s', body='%s', lastmodified='%s', u_id='%s', parent='%s', visible=%u, contextBlock='%s', pageid=%u, prid=%u WHERE id=%s",
-			$this->db->prefix("wiwimod"),
+			$this->db->prefix('wiwimod'),
 			$this->ts->addSlashes($this->title),
 			$this->ts->addSlashes($this->body),
 			date(_DATESTRING),
-			$xoopsUser ? $xoopsUser->getVar("uid") : 0,   //-- author is always the current user
+			$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
 			addslashes($this->parent),
 			$this->visible,
 			addslashes($this->contextBlock),
@@ -151,33 +153,31 @@ class WiwiRevision {
 		return ($result ? true : false);
 	}
 
-
-
 	/*
 	 * Renders sub page content, using render method.
 	 * (addition : Gizmhail)
 	 */
-    function renderSubPage($page="")
+    function renderSubPage($page='')
     {
-        $result = "";
+        $result = '';
         if($this->keyword!=$page)
         {
             $subPage =  new WiwiRevision($page);
             $subPageBody = $subPage->body;
             //Check if this sub-page can be read by this user
             //Also check if the page is empty(if it was the case, the render function may try to render the main page, and would loop)
-            if($subPage->canRead()&&$subPageBody!="")
+            if($subPage->canRead()&&$subPageBody!='')
             {
                 $result = $this->render($subPageBody);
             }
             else
             {
-                $result = "";
+                $result = '';
             }
         }
         else
         {
-            $result = "";
+            $result = '';
         }
         return $result;
     }
@@ -185,7 +185,7 @@ class WiwiRevision {
 	/*
 	 * Renders revision content, interpreting wiki codes and XoopsCodes.
 	 */
-	function render($body="") {
+	function render($body='') {
 
 		$lbr = "<p>|</p>|<hr />|<rable>|</table>|<div>|</div>|<br />|<ul>|<li>|</li>|</ul>";
 		$nl = "^|".$lbr;
@@ -290,7 +290,7 @@ class WiwiRevision {
             ""                                                      // (addition : Gizmhail)
 			);
 
-		if ($body == "") $body = $this->body;
+		if ($body == '') $body = $this->body;
 		if ($this->wiwiConfig['ShowCamelCase'] == 0) {  // remove CamelCase parsing.
 			array_splice($search,8,3);
 			array_splice($replace,8,3);
@@ -306,18 +306,18 @@ class WiwiRevision {
 		return $a."&amp;back=".$this->keyword.$txt.($this->pageExists($pg)?"":"<img src='".XOOPS_URL."/modules/' . $wiwidir . '/images/nopage.gif' alt='' />")."</a>";
 	}
 
-	function render_wikiLink($keyword, $customTitle = "", $show_titles = false )	{
+	function render_wikiLink($keyword, $customTitle = '', $show_titles = false )	{
 		$wiwidir = basename( dirname(  dirname( __FILE__ ) ) ) ;
 		$normKeyword = $this->normalize($keyword);
-		$sql = "SELECT title FROM ".$this->db->prefix("wiwimod")." WHERE keyword='".addslashes($normKeyword)."' ORDER BY id DESC LIMIT 1";
+		$sql = 'SELECT title FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($normKeyword).'" ORDER BY id DESC LIMIT 1';
 		$dbresult = $this->db->query($sql);
 		if ($this->db->getRowsNum($dbresult) > 0) {
 			$pageExists = true;  
 			list($title) = $this->db->fetchRow($dbresult);
-			$txt = $customTitle == "" ? (($title != "") && $show_titles) ? $title : $normKeyword : $customTitle ;
+			$txt = $customTitle == '' ? (($title != '') && $show_titles) ? $title : $normKeyword : $customTitle ;
 		} else {
 			$pageExists = false;
-			$txt = ($customTitle != "" ? $customTitle : $normKeyword);
+			$txt = ($customTitle != '' ? $customTitle : $normKeyword);
 		}
 
 		return sprintf('<a href="%s">%s%s</a>',XOOPS_URL.'/modules/' . $wiwidir . '/index.php?page='.$this->encode($normKeyword).'&amp;back='.$this->encode($this->keyword), stripslashes($txt), ($pageExists ? "" : '<img src="'.XOOPS_URL.'/modules/' . $wiwidir . '/images/nopage.gif" alt="" />'));
@@ -351,10 +351,10 @@ class WiwiRevision {
 		);
 		$cfg = $settings[$type];
 		
-		$sql = "SELECT w1.keyword, w1.title, w1.lastmodified, w1.u_id FROM ".$this->db->prefix("wiwimod")." AS w1 LEFT JOIN ".$this->db->prefix("wiwimod")." AS w2 ON w1.keyword=w2.keyword AND w1.id<w2.id WHERE w2.id IS NULL ".$cfg[0];
+		$sql = 'SELECT w1.keyword, w1.title, w1.lastmodified, w1.u_id FROM '.$this->db->prefix('wiwimod').' AS w1 LEFT JOIN '.$this->db->prefix('wiwimod').' AS w2 ON w1.keyword=w2.keyword AND w1.id<w2.id WHERE w2.id IS NULL '.$cfg[0];
 		$result = $this->db->query($sql);
 		
-		$body = "" ; $counter = "[";
+		$body = '' ; $counter = '[';
 		while ($content = $this->db->fetcharray($result)) {
 			if ($counter != strtoupper(substr($content[$cfg[1]], 0, $cfg[2]))) {
 				$counter = strtoupper(substr($content[$cfg[1]], 0, $cfg[2]));
@@ -371,16 +371,15 @@ class WiwiRevision {
 		return "<table><tr><td>".$blk['content']."</td></tr></table>";
 	}
 
-
 	/*
 	 * private function , used by parentList method.
 	 * Note : this was formerly an inline function, but php5 doesn't seem to accept it recursively.
 	 */
 	function parentList_recurr($child, &$parlist, &$db) {
-		$sql = "SELECT parent FROM ".$db->prefix("wiwimod")." WHERE keyword='".addslashes($child)."' ORDER BY id DESC LIMIT 1";
+		$sql = 'SELECT parent FROM '.$db->prefix('wiwimod').' WHERE keyword="'.addslashes($child).'" ORDER BY id DESC LIMIT 1';
 		$result = $db->query($sql);
 		list($parent) = $db->fetchRow($result);
-		if (($parent != "")&&(!in_array($parent, $parlist))) {
+		if (($parent != '')&&(!in_array($parent, $parlist))) {
 			$parlist[] = $parent;
 			$this->parentList_recurr($parent, $parlist, $db);
 		}
@@ -389,17 +388,16 @@ class WiwiRevision {
 	function parentList() {
 
 		$parlist = array();
-		if ($this->keyword != "") {
+		if ($this->keyword != '') {
 			$this->parentList_recurr($this->keyword, $parlist, $this->db);
 		}
-		foreach($parlist as $key=>$parent) $parlist[$key] = $this->render_wikiLink($parent, "", $this->wiwiConfig['ShowTitles']);
+		foreach($parlist as $key=>$parent) $parlist[$key] = $this->render_wikiLink($parent, '', $this->wiwiConfig['ShowTitles']);
 		return array_reverse($parlist);
 	}
 
-
 	function history($limit = 0, $start = 0)
 	{
-		$sql = "SELECT keyword, id, title, body, lastmodified, u_id FROM ".$this->db->prefix("wiwimod")." WHERE keyword='".addslashes($this->keyword)."' ORDER BY id DESC";
+		$sql = 'SELECT keyword, id, title, body, lastmodified, u_id FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($this->keyword).'" ORDER BY id DESC';
 		$result = $this->db->query($sql, $limit, $start);
 
 		$hist = array();
@@ -411,19 +409,18 @@ class WiwiRevision {
 
 	function historyNum()
 	{
-		$sql = "SELECT id FROM ".$this->db->prefix("wiwimod")." WHERE keyword='".addslashes($this->keyword)."' ORDER BY id DESC";
+		$sql = 'SELECT id FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($this->keyword).'" ORDER BY id DESC';
 		$result = $this->db->query($sql);
 		$maxcount = $this->db->getRowsNum($result);
 		return $maxcount;
 	}
-
 
 	function diff(&$bodyDiff, &$titleDiff)
 	{
 		//
 		// Get the latest revision contents
 		//
-		$sql = "SELECT title, body FROM ".$this->db->prefix("wiwimod")." WHERE keyword='".addslashes($this->keyword)."' ORDER BY id DESC LIMIT 1";
+		$sql = 'SELECT title, body FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($this->keyword).'" ORDER BY id DESC LIMIT 1';
 		$result = $this->db->query($sql);
 		list ($title, $body) = $this->db->fetchRow($result);
 		
@@ -447,7 +444,6 @@ class WiwiRevision {
 			'<h2>'.$this->ts->htmlSpecialChars($title).'</h2>' :
 			'<h2><span style="color: red;">'.$this->ts->htmlSpecialChars($this->title).'</span> &rarr; <span style="color: green;">'.$this->ts->htmlSpecialChars($title).'</span></h2>';
 	}
-
 
 	function canRead() {
 		return ($this->profile->canRead());
@@ -503,7 +499,6 @@ class WiwiRevision {
 		}
 		return ($this->db->getRowsNum($this->db->query($sql)) > 0);
 	}
-
 
 	/*
 	 * Returns an array of wiwiRevisions, selected upon given criteria
@@ -572,7 +567,6 @@ class WiwiRevision {
 		return $maxcount;
 	}
 
-
 	//
 	// Creates a new revision whom content is copied from the selected one, but with other data (parent, privileges etc..) untouched.
 	//
@@ -616,7 +610,6 @@ class WiwiRevision {
 		}
 		return $success;
 	}
-
 
 	/*
 	 * Returns an array with all links on the current page.
@@ -667,10 +660,7 @@ class WiwiRevision {
 		return str_replace($search,$replace,$keyword);
 	}
 
-
-
 }  // end class wiwiRevision
-
 
 class WiwiPage extends WiwiRevision {
 
@@ -680,12 +670,6 @@ class WiwiPage extends WiwiRevision {
 	
 }
 
-
 }  // end "ifdefined"
-
-
-
-
-
 
 ?>

@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
-
+if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 /** @todo properly validate and sanitize HTTP vars */
 	$post_selwhere = (isset($_POST['post_selwhere']))?$_POST['post_selwhere']:"";
 	$post_text = (isset($_POST['post_text']))?$_POST['post_text']:"";

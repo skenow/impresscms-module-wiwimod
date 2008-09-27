@@ -30,12 +30,12 @@
 // ------------------------------------------------------------------------- //
 
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
-	exit("Access Denied");
+	exit('Access Denied');
 }
 include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
-include XOOPS_ROOT_PATH."/modules/system/admin/blocksadmin/blocksadmin.php";
+include XOOPS_ROOT_PATH.'/modules/system/admin/blocksadmin/blocksadmin.php';
 
-$op = "list";
+$op = 'list';
 
 if ( isset($_POST) ) {
 	foreach ( $_POST as $k => $v ) {
@@ -44,7 +44,7 @@ if ( isset($_POST) ) {
 }
 
 if ( isset($_GET['op']) ) {
-	if ($_GET['op'] == "edit" || $_GET['op'] == "delete" || $_GET['op'] == "delete_ok" || $_GET['op'] == "clone" || $_GET['op'] == 'previewpopup') {
+	if ($_GET['op'] == 'edit' || $_GET['op'] == 'delete' || $_GET['op'] == 'delete_ok' || $_GET['op'] == 'clone' || $_GET['op'] == 'previewpopup') {
 		$op = $_GET['op'];
 		$bid = isset($_GET['bid']) ? intval($_GET['bid']) : 0;
 	}
@@ -111,14 +111,14 @@ if ($op == 'previewpopup') {
 	exit();
 }
 
-if ( $op == "list" ) {
+if ( $op == 'list' ) {
 	xoops_cp_header();
 	list_blocks();
 	xoops_cp_footer();
 	exit();
 }
 
-if ( $op == "order" ) {
+if ( $op == 'order' ) {
 	foreach (array_keys($bid) as $i) {
 		if( $side[$i] < 0 ) {
 			$visible[$i] = 0 ;
@@ -135,16 +135,16 @@ if ( $op == "order" ) {
 //		order_block($bid[$i], $weight[$i], $visible[$i], $side[$i]); GIJ
 	}
 //	redirect_header("admin.php?fct=blocksadmin",1,_AM_DBUPDATED); GIJ
-	redirect_header("myblocksadmin.php",1,_AM_DBUPDATED);
+	redirect_header('myblocksadmin.php',1,_AM_DBUPDATED);
 	exit();
 }
 
-if ( $op == "save" ) {
+if ( $op == 'save' ) {
 	save_block($bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bmodule, $bcachetime);
 	exit();
 }
 
-if ( $op == "update" ) {
+if ( $op == 'update' ) {
 	$bcachetime = isset($bcachetime) ? intval($bcachetime) : 0;
 	$options = isset($options) ? $options : array();
 	$bcontent = isset($bcontent) ? $bcontent : '';
@@ -155,19 +155,19 @@ if ( $op == "update" ) {
 }
 
 
-if ( $op == "delete_ok" ) {
+if ( $op == 'delete_ok' ) {
     delete_block_ok($bid);
 	exit();
 }
 
-if ( $op == "delete" ) {
+if ( $op == 'delete' ) {
     xoops_cp_header();
 	delete_block($bid);
     xoops_cp_footer();
 	exit();
 }
 
-if ( $op == "edit" ) {
+if ( $op == 'edit' ) {
     xoops_cp_header();
 	edit_block($bid);
     xoops_cp_footer();
@@ -228,10 +228,10 @@ if ($op == 'clone_ok') {
 		$msg = _AM_DBUPDATED;
 		if ($myblock->store() != false) {
 			$db =& Database::getInstance();
-			$sql = sprintf("DELETE FROM %s WHERE block_id = %u", $db->prefix('block_module_link'), $bid);
+			$sql = sprintf('DELETE FROM %s WHERE block_id = %u', $db->prefix('block_module_link'), $bid);
 			$db->query($sql);
 			foreach ($bmodule as $bmid) {
-				$sql = sprintf("INSERT INTO %s (block_id, module_id) VALUES (%u, %d)", $db->prefix('block_module_link'), $bid, intval($bmid));
+				$sql = sprintf('INSERT INTO %s (block_id, module_id) VALUES (%u, %d)', $db->prefix('block_module_link'), $bid, intval($bmid));
 				$db->query($sql);
 			}
 			include_once XOOPS_ROOT_PATH.'/class/template.php';

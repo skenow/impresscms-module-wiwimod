@@ -1,4 +1,13 @@
 <?php
+/**
+ * Page navigation clasee
+ * 
+ * @package modules::wiwimod
+ * @author Xavier JIMENEZ
+ * @author skenow <skenow@impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version $Id$  
+ */
 
 /*
  * derived from standard XoopsPageNav, to use a custom function to change current page.
@@ -16,9 +25,9 @@ class wiwiPageNav extends XoopsPageNav {
 	 * Added $navcall parameter, which should be a javascript function with the prototype below :
 	 *		function mynav (extra_arg);
 	 */
-	function wiwiPageNav($total_items, $items_perpage, $current_start, $start_name="start", $extra_arg="", $navcall = "") {
+	function wiwiPageNav($total_items, $items_perpage, $current_start, $start_name='start', $extra_arg='', $navcall = '') {
 		$this->navcall = $navcall;
-		$this->extra_arg = ($extra_arg == "" ? "" : "&".$extra_arg);
+		$this->extra_arg = ($extra_arg == '' ? '' : '&'.$extra_arg);
 		$this->start_name= $start_name;
 		return XoopsPageNav::XoopsPageNav ($total_items, $items_perpage, $current_start, $start_name, $extra_arg);
 	}
@@ -40,7 +49,7 @@ class wiwiPageNav extends XoopsPageNav {
 		if ( $total_pages > 1 ) {
 			$prev = $this->current - $this->perpage;
 			if ( $prev >= 0 ) {
-				if ($this->navcall == "") {
+				if ($this->navcall == '') {
 					$ret .= '<a href="'.$this->url.$prev.'"><u>&laquo;</u></a> ';
 				}
 				else {
@@ -56,7 +65,7 @@ class wiwiPageNav extends XoopsPageNav {
 					if ( $counter == $total_pages && $current_page < $total_pages - $offset ) {
 						$ret .= '... ';
 					}
-					if ($this->navcall == "")
+					if ($this->navcall == '')
 						$ret .= '<a href="'.$this->url.(($counter - 1) * $this->perpage).'">'.$counter.'</a> ';
 					else
 						$ret .= '<a href="#" onclick="javascript:'.$this->navcall.'(\''.$this->start_name.'='.(($counter - 1) * $this->perpage).$this->extra_arg.'\');">'.$counter.'</a> ';
@@ -68,7 +77,7 @@ class wiwiPageNav extends XoopsPageNav {
 			}
 			$next = $this->current + $this->perpage;
 			if ( $this->total > $next ) {
-				if ($this->navcall == "") {
+				if ($this->navcall == '') {
 					$ret .= '<a href="'.$this->url.$next.'"><u>&raquo;</u></a> ';
 				}
 				else {

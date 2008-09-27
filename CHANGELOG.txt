@@ -9,6 +9,8 @@ Added
 * Use of language constants for date formats
 * Code documentation with phpdoc blocks
 * Changelog.txt
+* Check for ROOT_PATH in all included files
+* New language constants for block options
 
 Fixed
 * Block notifications now work
@@ -20,7 +22,13 @@ Improved
 * Moved page name to the beginning of the meta page title for better SEO
 * Code layout - single quotes instead of double quotes, include/include_once/require/require_once do not use (), removed redundant blank lines
 
+Language additions
+* blocks.php
+  + define('_MB_WIWI_NUM_DISP_DESC','Number of items to display');
+  + define('_MB_WIWI_SHOWPAGE_DESC','Page to display');
+
 == Wiwimod 0.8.3 ==
+
 - enhancement : Added "change editor" feature in page edit form (right-click).
 - enhancement : Added config option for Recent block : max number of items displayed.
 - enhancement : Add config option to enable/disable CamelCase.

@@ -1,4 +1,14 @@
 <?php
+/**
+ * Notification function for wiwimod
+ * 
+ * @package modules::wiwimod
+ * @author Xavier JIMENEZ
+ * @author skenow <skenow@impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version $Id
+ */ 
+if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 
 function wiwimod_notify_iteminfo($category, $item_id)
 {

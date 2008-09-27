@@ -28,6 +28,7 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 
 require_once XOOPS_ROOT_PATH.'/class/xoopsform/formelement.php';
 require_once XOOPS_ROOT_PATH.'/class/xoopsform/formhidden.php';
