@@ -1,5 +1,5 @@
 == Wiwimod x.y.z ==
-Released: (Date)
+Released: 
 
 Added
 * index.html to every directory without one
@@ -11,6 +11,7 @@ Added
 * Changelog.txt
 * Check for ROOT_PATH in all included files
 * New language constants for block options
+* New icons for ImpressCMS admin area
 
 Fixed
 * Block notifications now work

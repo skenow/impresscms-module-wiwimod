@@ -18,10 +18,12 @@ $modversion = array(
   'license' => 'GNU General Public License',
   'help' => '',
   'official' => 0,
-  'image' => 'images/wiwilogo.gif');
+  'image' => 'images/wiwilogo.gif', /* standard XOOPS icon, 92x52 px  */
+  'iconbig' => '', /* big icon for ImpressCMS, 37x37 px */
+  'iconsmall' => '', /* small icon for ImpressCMS, 16x16 px */
+  'dirname' => basename(dirname(__FILE__)),
+  'status' => 'Final' ); 
 
-$wiwidir = basename(dirname(__FILE__));
-$modversion['dirname'] = $wiwidir;
 
 // Tables created by the SQL file (without prefix!)
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';

@@ -1,6 +1,6 @@
 <?php
 /**
- * This block displays a recent changes to Wiwi pages
+ * This block displays recent changes to Wiwi pages
  * 
  * @package modules::wiwimod
  * @author Xavier JIMENEZ
