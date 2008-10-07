@@ -22,6 +22,7 @@ Improved
 * HTML validation
 * Moved page name to the beginning of the meta page title for better SEO
 * Code layout - single quotes instead of double quotes, include/include_once/require/require_once do not use (), removed redundant blank lines
+* Replaced deprecated functions with current functions: makeTboxData4Show() -> htmlSpecialChars(); 
 
 Language additions
 * blocks.php

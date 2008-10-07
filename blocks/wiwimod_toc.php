@@ -35,7 +35,7 @@ function wiwimod_toc () {
 		if ($prf->canRead()) {
 			$link = array();
 			$link['page'] = wiwiRevision::encode($tcontent['keyword']);
-			$link['title'] = $myts->makeTboxData4Show($tcontent['title']);
+			$link['title'] = $myts->htmlSpecialChars($tcontent['title']);
 			$block['links'][] = $link;
 		}
 	}
@@ -55,7 +55,5 @@ function wiwimod_toc () {
 	return $block;
 
 }
-
-
 
 ?>

@@ -12,7 +12,7 @@
 $adminmenu[1] = array(
      'title' => _MI_WIWIMOD_ADMENU1,
      'link'  => 'admin/index.php',
-     'icon' => '', /* 32x32 px for options bar*/
+     'icon' => '', /* 32x32 px for options bar (tabs) */
      'small' => ''); /* 16x16 px for drop down */
 $adminmenu[] = array (
      'title' => _MI_WIWIMOD_ADMENU2,

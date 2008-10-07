@@ -45,7 +45,7 @@ function wiki_tag_iteminfo(&$items)
 			// In wiwimod, the item_id is "pageid"
 			$taggedPage =  new WiwiRevision('',0,$item_id);
                         $items[$cat_id][$item_id] = array(
-                                'title'         => $myts->makeTboxData4Show( $taggedPage->title ) ,
+                                'title'         => $myts->htmlSpecialChars( $taggedPage->title ) ,
                                 'uid'           => $taggedPage->u_id,
                                 'link'          => 'index.php?page='.urlencode($taggedPage->keyword),
                                 'time'          => strtotime($taggedPage->lastmodified),

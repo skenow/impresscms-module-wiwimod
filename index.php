@@ -376,6 +376,6 @@ switch ($op) {
 
 }
 
-$xoopsTpl->assign('xoops_pagetitle',$myts->makeTboxData4Show($xoopsModule->name()) . ' - ' .$myts->makeTboxData4Show($pageObj->title));
+$xoopsTpl->assign('xoops_pagetitle',$myts->htmlSpecialChars($xoopsModule->name()) . ' - ' .$myts->htmlSpecialChars($pageObj->title));
 include XOOPS_ROOT_PATH.'/footer.php';
 ?>
