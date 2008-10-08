@@ -20,8 +20,8 @@ include_once 'class/wiwiRevision.class.php';
  * @todo : - $xoopsUser can be overriden by post variables >> security fix ?
  */      
 if (isset($_REQUEST['page'])) $page = $_REQUEST['page']; else $page='';
-if (isset($_REQUEST['pageid'])) $pageid = intval($_REQUEST['pageid']); else $pageid=0;
-if (isset($_REQUEST['id'])) $id = intval($_REQUEST['id']); else $id=0;
+if (isset($_REQUEST['pageid'])) $pageid = (int) $_REQUEST['pageid']; else $pageid=0;
+if (isset($_REQUEST['id'])) $id = (int) $_REQUEST['id']; else $id=0;
 // valid values for op: preview, insert, quietsave, edit, history, diff, restore
 $op = (isset($_GET['op']))? trim(($_GET['op'])):"";
 if (!empty($_POST)) {
@@ -44,11 +44,11 @@ if ((($op == 'preview') || ($op == 'insert') || ($op == 'quietsave')) && isset($
 	$pageObj->lastmodified = $lastmodified;
 	$pageObj->u_id = (int) $uid;
 	$pageObj->parent = $pageObj->normalize($parent);		
-	$pageObj->visible = intval($visible);	
+	$pageObj->visible = (int) $visible;	
 	$pageObj->contextBlock = $pageObj->normalize($contextBlock);
-	$pageObj->pageid = intval($pageid);
-	$pageObj->profile = new wiwiProfile(intval($prid));	
-	$pageObj->id = intval($id);
+	$pageObj->pageid = (int) $pageid;
+	$pageObj->profile = new wiwiProfile( (int) $prid);	
+	$pageObj->id = (int) $id;
 
 } else {
 	/*
@@ -143,12 +143,12 @@ switch ($op) {
 		$form = new XoopsThemeForm(_MD_WIWI_EDIT_TXT.': $page', 'wiwimodform', 'index.php');
 		$btn_tray = new XoopsFormElementTray('', ' ');
 	
-		$form->addElement(new XoopsFormHidden('op',		'insert'));
-		$form->addElement(new XoopsFormHidden('page',	$myts->htmlSpecialChars($pageObj->keyword)));
-		$form->addElement(new XoopsFormHidden('pageid',	$pageObj->pageid));
-		$form->addElement(new XoopsFormHidden('id',		$pageObj->id));
-		$form->addElement(new XoopsFormHidden('uid',	($xoopsUser)?$xoopsUser->getVar('uid'):0));
-		$form->addElement(new XoopsFormHidden('lastmodified',	$pageObj->lastmodified));
+		$form->addElement(new XoopsFormHidden('op', 'insert'));
+		$form->addElement(new XoopsFormHidden('page', $myts->htmlSpecialChars($pageObj->keyword)));
+		$form->addElement(new XoopsFormHidden('pageid', $pageObj->pageid));
+		$form->addElement(new XoopsFormHidden('id', $pageObj->id));
+		$form->addElement(new XoopsFormHidden('uid', ($xoopsUser)?$xoopsUser->getVar('uid'):0));
+		$form->addElement(new XoopsFormHidden('lastmodified', $pageObj->lastmodified));
 
 		$form->addElement(new XoopsFormText(_MD_WIWI_TITLE_FLD, 'title', 80, 250, $myts->htmlSpecialChars($pageObj->title)));
 
@@ -319,7 +319,7 @@ switch ($op) {
 		// Handle pagebreaks
 		//
 		$cpages = explode ("[pagebreak]", $pagecontent);
-		if (isset($_GET['startpage'])) $startpage = intval($_GET['startpage']) ; else $startpage = 0;
+		if (isset($_GET['startpage'])) $startpage = (int) $_GET['startpage'] ; else $startpage = 0;
 		if (count($cpages) > 0) {
 			include_once XOOPS_ROOT_PATH . '/class/pagenav.php'; 
 			$pagenav = new XoopsPageNav(count($cpages), 1, $startpage, 'startpage', 'page='.$pageObj->keyword); 
