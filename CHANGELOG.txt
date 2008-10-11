@@ -13,6 +13,7 @@ Added
 * New language constants for block options
 * New icons for ImpressCMS admin area
 * formatTimestamp to date values. (stranger)
+* RTL style for admin menu. (stranger)
 
 Fixed
 * Block notifications now work
