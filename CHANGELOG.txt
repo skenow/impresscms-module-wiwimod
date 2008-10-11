@@ -12,6 +12,7 @@ Added
 * Check for ROOT_PATH in all included files
 * New language constants for block options
 * New icons for ImpressCMS admin area
+* formatTimestamp to date values. (stranger)
 
 Fixed
 * Block notifications now work

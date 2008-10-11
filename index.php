@@ -345,7 +345,7 @@ switch ($op) {
 			'encodedurl' => $pageObj->encode($pageObj->keyword),
 			'title' => $pageObj->title, 
 			'body' => $pagecontent, 
-			'lastmodified' => date(_SHORTDATESTRING, strtotime($pageObj->lastmodified)), 
+			'lastmodified' => formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING), 
 			'author' => getUserName($pageObj->u_id), 
 			'mayEdit' => $pageObj->canWrite(), 
 			'showComments' => $pageObj->canViewComments() && ($xoopsModuleConfig['com_rule'] != 0),

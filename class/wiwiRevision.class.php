@@ -110,7 +110,7 @@ class WiwiRevision {
 			addslashes($this->keyword),
 			$this->ts->addSlashes($this->title),
 			$this->ts->addSlashes($this->body),
-			date(_DATESTRING),						  //-- lastmodified is Now
+			formatTimestamp(_DATESTRING),						  //-- lastmodified is Now
 			$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
 			addslashes($this->parent),
 			$this->visible,
@@ -140,7 +140,7 @@ class WiwiRevision {
 			$this->db->prefix('wiwimod'),
 			$this->ts->addSlashes($this->title),
 			$this->ts->addSlashes($this->body),
-			date(_DATESTRING),
+			formatTimestamp(_DATESTRING),
 			$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
 			addslashes($this->parent),
 			$this->visible,
@@ -218,10 +218,10 @@ class WiwiRevision {
 			"#(".$nl.")\* (.*)#m",									// * list item
 
 			/*En test : Gizmhail */
-			"#(".$nl.")\* (.*)#m", //détection des niv0li
-			"#(".$nl.")\*\* (.*)#m", //détection des niv1li
-			"#(".$nl.")\*\*\* (.*)#m", //détection des niv2li
-			"#(".$nl.")   (?: )*\* (.*)#m", //détection des niv3li
+			"#(".$nl.")\* (.*)#m", //dtection des niv0li
+			"#(".$nl.")\*\* (.*)#m", //dtection des niv1li
+			"#(".$nl.")\*\*\* (.*)#m", //dtection des niv2li
+			"#(".$nl.")   (?: )*\* (.*)#m", //dtection des niv3li
 
 			"#<niv0li>(?(?!\n\n)(?:.|\n))*</niv(0|1|2|3)li>#", //groupage des niv0li
 			"#<niv1li>(?(?!niv0li)(?:.|\n))*</niv(1|2|3)li>#", //groupage des niv1li
@@ -266,10 +266,10 @@ class WiwiRevision {
 			"\\1<li>\\2</li>\\3", 
 
 			/*En test : Gizmhail */
-			"<niv0li>\\2</niv0li>", //détection des niv0li
-			"<niv1li style='margin-left: 8px;list-style: disc inside;'>\\2</niv1li>", //détection des niv1li
-			"<niv2li style='margin-left: 16px;list-style: square inside;'>\\2</niv2li>", //détection des niv2li
-			"<niv3li style='margin-left: 24px;list-style: circle inside;'>\\2</niv3li>", //détection des niv3li
+			"<niv0li>\\2</niv0li>", //dtection des niv0li
+			"<niv1li style='margin-left: 8px;list-style: disc inside;'>\\2</niv1li>", //dtection des niv1li
+			"<niv2li style='margin-left: 16px;list-style: square inside;'>\\2</niv2li>", //dtection des niv2li
+			"<niv3li style='margin-left: 24px;list-style: circle inside;'>\\2</niv3li>", //dtection des niv3li
 
 			"<niv0ul>\\0</niv0ul>", //groupage des niv0li
 			"<niv1ul>\\0</niv1ul>", //groupage des niv1li
@@ -345,8 +345,8 @@ class WiwiRevision {
 				"ORDER BY w1.lastmodified DESC LIMIT 20", 
 				"lastmodified", 
 				10, 
-				'"<tr><td colspan=3><strong>".date(_SHORTDATESTRING, strtotime($counter))."</strong></td></tr>"',
-				'"<tr><td>&nbsp;".date("H:i",strtotime($content["lastmodified"]))."</td><td><A href=\"index.php?page=".$this->encode($content["keyword"])."\">".($content["title"] == "" ? $content["keyword"] : $content["title"])."</a></td><td><span class=\"itemPoster\">".getUserName($content["u_id"])."</span></td></tr>"',
+				'"<tr><td colspan=3><strong>".formatTimestamp(strtotime($counter), _SHORTDATESTRING)."</strong></td></tr>"',
+				'"<tr><td>&nbsp;".formatTimestamp(strtotime($content["lastmodified"]), "H:i")."</td><td><A href=\"index.php?page=".$this->encode($content["keyword"])."\">".($content["title"] == "" ? $content["keyword"] : $content["title"])."</a></td><td><span class=\"itemPoster\">".getUserName($content["u_id"])."</span></td></tr>"',
 				"")
 		);
 		$cfg = $settings[$type];
@@ -592,7 +592,7 @@ class WiwiRevision {
 	function cleanPagesHistory() {
 		global $xoopsDB;
 		$success = true;
-		$sql = "SELECT keyword, MAX(id) AS id FROM ".$xoopsDB->prefix("wiwimod")." WHERE lastmodified<'".date(_DATESTRING, time() - 61 * 24 * 3600)."' GROUP BY keyword";
+		$sql = "SELECT keyword, MAX(id) AS id FROM ".$xoopsDB->prefix("wiwimod")." WHERE lastmodified<'".formatTimestamp(time() - 61 * 24 * 3600, _DATESTRING)."' GROUP BY keyword";
 		$result = $xoopsDB->query($sql);
 		while ($content = $xoopsDB->fetcharray($result)) {
 			$rev = new wiwiRevision("",$content['id']);

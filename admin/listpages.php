@@ -114,7 +114,7 @@ if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 		$encodedKeyword = $pageObj->encode($pageArr[$i]->keyword);
 		echo '<tr class="'.(($i % 2)?"even":"odd").'"><td><a href="#" onclick="submitaction(\'op=history&amp;page='.$encodedKeyword.'\');">'.$pageArr[$i]->keyword.'</a></td>
 		<td>'.$myts->htmlSpecialChars($pageArr[$i]->title).'</td>
-		<td>'.date(_SHORTDATESTRING, @strtotime($pageArr[$i]->lastmodified)).'</td>
+		<td>'.formatTimestamp( @strtotime($pageArr[$i]->lastmodified), _SHORTDATESTRING ).'</td>
 		<td><a href="#" onclick="submitaction(\'op=history&amp;page='.$encodedKeyword.'\');">'._MD_WIWI_HISTORY_BTN.'</a> | <a href="javascript:submitaction(\'op=delete&amp;page='.urlencode($encodedKeyword).'\');">'._DELETE.'</a></td></tr>';
 	}
 	echo '</table></br>';

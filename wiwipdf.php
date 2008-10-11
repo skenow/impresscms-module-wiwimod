@@ -43,7 +43,7 @@ function printPage(&$pageObj,&$pdf) {
 		'keyword' => $pageObj->keyword, 
 		'title' => $pageObj->title, 
 		'body' => $pagecontent, 
-		'lastmodified' => date(_SHORTDATESTRING, strtotime($pageObj->lastmodified)), 
+		'lastmodified' => formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING), 
 		'author' => getUserName($pageObj->u_id), 
 		));
 	ob_start();

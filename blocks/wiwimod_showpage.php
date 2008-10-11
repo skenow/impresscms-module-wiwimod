@@ -50,7 +50,7 @@ function wiwimod_showpage ($options) {
 		$block['encodedurl'] = $pageObj->encode($pageObj->keyword);
 		$block['title'] = $pageObj->title;
 		$block['body'] = $pagecontent;
-		$block['lastmodified'] = date(_SHORTDATESTRING, strtotime($pageObj->lastmodified));
+		$block['lastmodified'] = formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING);
 		$block['author'] = getUserName($pageObj->u_id);
 
 		$block['mayEdit'] = $pageObj->canWrite();
@@ -85,7 +85,7 @@ function wiwimod_contextshow($options) {
 				$block['encodedurl'] = $pageObj->encode($pageObj->keyword);
 				$block['title'] = $pageObj->title;
 				$block['body'] = $pageObj->render();
-				$block['lastmodified'] = date(_SHORTDATESTRING, strtotime($pageObj->lastmodified));
+				$block['lastmodified'] = formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING);
 				$block['author'] = getUserName($pageObj->u_id);
 				$block['mayEdit'] = $pageObj->canWrite();
 				$block['EDIT'] = _EDIT;

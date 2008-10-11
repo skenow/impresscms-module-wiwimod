@@ -37,7 +37,7 @@ function wiwimod_search($queryarray, $andor, $limit, $offset, $userid)
 			$items[] = array(
 				 'title' => $myrow['title'],
 				 'link' => 'index.php?page='.$myrow['keyword'],
-				 'time' => strtotime($myrow['lastmodified']),
+				 'time' => formatTimestamp(strtotime($myrow['lastmodified']), _SHORTDATESTRING),
 				 'uid' => $myrow['u_id'],
 				 'image' => '../../images/quote.gif'
 			 );

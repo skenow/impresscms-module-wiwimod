@@ -48,7 +48,7 @@ function wiki_tag_iteminfo(&$items)
                                 'title'         => $myts->htmlSpecialChars( $taggedPage->title ) ,
                                 'uid'           => $taggedPage->u_id,
                                 'link'          => 'index.php?page='.urlencode($taggedPage->keyword),
-                                'time'          => strtotime($taggedPage->lastmodified),
+                                'time'          => formatTimestamp(strtotime($taggedPage->lastmodified), _SHORTDATESTRING),
                                 'content'       => '',
                                 );
                 }
