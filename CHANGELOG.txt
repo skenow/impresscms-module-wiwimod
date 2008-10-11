@@ -27,6 +27,7 @@ Improved
 * Replaced deprecated functions with current functions: makeTboxData4Show() -> htmlSpecialChars(); 
 * References to class/xoopsuser.php relocated to kernel/user.php (vaughan)
 * Changed intval() to (int) for faster processing
+* moved mysql.sql to language folders for a beter localization. (stranger)
 
 Language additions
 * blocks.php
