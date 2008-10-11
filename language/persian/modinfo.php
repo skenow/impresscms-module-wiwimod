@@ -3,16 +3,16 @@
 // Module Info
 
 // The name of this module
-define('_MI_WIWIMOD_NAME','Wiwi');
+define('_MI_WIWIMOD_NAME','ویوی');
 
 // A brief description of this module
-define('_MI_WIWIMOD_DESC','A wysiwyg wiki tool.');
+define('_MI_WIWIMOD_DESC','دانشنامه‌ای برای ایمپرس سی‌ام‌اس.');
 
 // Admin menu
-define('_MI_WIWIMOD_ADMENU1','Pages');
-define('_MI_WIWIMOD_ADMENU2','Privileges');
-define('_MI_WIWIMOD_ADMENU3','Blocks/Groups');
-define('_MI_WIWIMOD_ADMENU4','About...');
+define('_MI_WIWIMOD_ADMENU1','صفحات');
+define('_MI_WIWIMOD_ADMENU2','دسترسی‌ها');
+define('_MI_WIWIMOD_ADMENU3','بلوک‌ها/گروه‌ها');
+define('_MI_WIWIMOD_ADMENU4','درباره‌ی سازنده');
 
 // Admin options
 define('_MI_WIWIMOD_EDITOR','Which editor should Wiwi use');
