@@ -37,7 +37,7 @@
 		echo '<tr class="'.(($pageObj->id == $rev['id']) ? "highlitedrevision" : (($i % 2)?"even":"odd")).'">';
 		echo '<td width="10">'.($pageObj->id == $rev['id'] ? '<img src="../images/hand.gif">' : '&nbsp;').'</td>';
 		echo '<td><a href="#" onclick="javascript:submitaction(\'page='.$encodedKeyword.'&op=history&id='.$rev['id'].'\');">'.$myts->htmlSpecialChars($rev['title']).'</a></td>';
-		echo '<td>'.$rev['lastmodified'].'</td>';
+		echo '<td>'.formatTimestamp( strtotime($rev['lastmodified']), _MEDIUMDATESTRING ).'</td>';
 		echo '<td>'.getUserName($rev['u_id']).'</td>';
 		
 		echo '<td><a href="#" onclick="javascript:submitaction(\'page='.$encodedKeyword.'&op=history&id='.$rev['id'].'\');">'._MD_WIWI_VIEW_BTN.'</a> | <a href="#" onclick="javascript:submitaction(\'page='.$encodedKeyword.'&op=diff&id='.$rev['id'].'\');">'._MD_WIWI_COMPARE_BTN.'</a> | <a href="javascript:submitaction(\'op=restore&id='.$rev['id'].'\');">'._MD_WIWI_RESTORE_BTN.'</a> | <a href="javascript:submitaction(\'page='.urlencode($encodedKeyword).'&amp;op=fix&amp;id='.$rev['id'].'\');">'._MD_WIWI_FIX_BTN.'</a></td></tr>';
