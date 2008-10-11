@@ -19,9 +19,9 @@ function wiwimod_search($queryarray, $andor, $limit, $offset, $userid)
     
     $sql = 'SELECT w1.* FROM '.$xoopsDB->prefix('wiwimod').' AS w1 LEFT JOIN '.$xoopsDB->prefix('wiwimod').' AS w2 ON w1.keyword=w2.keyword AND w1.id<w2.id WHERE w2.id IS NULL';
     if (is_array($queryarray) && ($count = count($queryarray))) {
-        $sql .= ' AND (w1.title LIKE '.%$queryarray[0]%.' OR w1.body LIKE '.%$queryarray[0]%.')';
+        $sql .= ' AND (w1.title LIKE '.$queryarray[0].' OR w1.body LIKE '.$queryarray[0].')';
         for($i = 1; $i < $count; $i++) {
-            $sql .= ' $andor (w1.title LIKE '.%$queryarray[$i]%.' OR w1.body LIKE '.%$queryarray[$i]%.')';
+            $sql .= ' $andor (w1.title LIKE '.$queryarray[$i].' OR w1.body LIKE '.$queryarray[$i].')';
         }
     } else {
         $sql .= ' AND w1.u_id='.$userid.'';

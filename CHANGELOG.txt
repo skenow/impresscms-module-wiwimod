@@ -16,6 +16,7 @@ Added
 Fixed
 * Block notifications now work
 * Can delete profiles
+* unexpected '%' in include\search.php on line 22. (stranger)
 
 Improved
 * $modversion definitions in xoops_version.php reduced to arrays - more compact and easier to read
