@@ -1,33 +1,38 @@
 <?php
-// ------------------------------------------------------------------------- //
-//                            myblocksadmin.php                              //
-//                - XOOPS block admin for each modules -                     //
-//                          GIJOE <http://www.peak.ne.jp/>                   //
-// ------------------------------------------------------------------------- //
-
-include_once( '../../../include/cp_header.php' ) ;
-include_once( 'mygrouppermform.php' ) ;
-include_once( XOOPS_ROOT_PATH.'/class/xoopsblock.php' ) ;
-
+/**
+ * Block admin for wiwimod
+ *  
+ * @todo Get the core block admin form so it is always current
+ * @package modules::wiwimod
+ * @author GIJOE <http://www.peak.ne.jp/>
+ * @author skenow <skenow@impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @version $Id$  
+ */
+/** include the control panel header */
+include_once '../../../include/cp_header.php' ;
+/** include the group permissions form */
+include_once 'mygrouppermform.php';
+/** include the blocks class */
+include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
 
 $xoops_system_path = XOOPS_ROOT_PATH . '/modules/system' ;
 
 // language files
 $language = $xoopsConfig['language'] ;
-if( ! file_exists( "$xoops_system_path/language/$language/admin/blocksadmin.php") ) $language = 'english' ;
+if( ! file_exists( $xoops_system_path.'/language/'.$language.'/admin/blocksadmin.php') ) $language = 'english' ;
 
 // to prevent from notice that constants already defined
 $error_reporting_level = error_reporting( 0 ) ;
-include_once( "$xoops_system_path/constants.php" ) ;
-include_once( "$xoops_system_path/language/$language/admin.php" ) ;
-include_once( "$xoops_system_path/language/$language/admin/blocksadmin.php" ) ;
+include_once $xoops_system_path. '/constants.php';
+include_once $xoops_system_path.'/language/'.$language.'/admin.php';
+include_once $xoops_system_path.'/language/'.$language.'/admin/blocksadmin.php';
 error_reporting( $error_reporting_level ) ;
 
-$group_defs = file( "$xoops_system_path/language/$language/admin/groups.php" ) ;
+$group_defs = file( $xoops_system_path.'/language/'.$language.'/admin/groups.php' ) ;
 foreach( $group_defs as $def ) {
 	if( strstr( $def , '_AM_ACCESSRIGHTS' ) || strstr( $def , '_AM_ACTIVERIGHTS' ) ) eval( $def ) ;
 }
-
 
 // check $xoopsModule
 if( ! is_object( $xoopsModule ) ) redirect_header( XOOPS_URL.'/user.php' , 1 , _NOPERM ) ;
@@ -38,9 +43,10 @@ if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_BLOCK, $xoopsUser
 
 // get blocks owned by the module
 $block_arr =& XoopsBlock::getByModule( $xoopsModule->mid() ) ;
-
-
-
+/** 
+ * List and display the blocks and their options - this function is also found in system/admin/blocksadmin/blocksadmin.php 
+ *   
+ */
 function list_blocks()
 {
 	global $block_arr ;
@@ -64,33 +70,36 @@ function list_blocks()
 	// blocks displaying loop
 	$class = 'even' ;
 	foreach( array_keys( $block_arr ) as $i ) {
-		$sseln = $ssel0 = $ssel1 = $ssel2 = $ssel3 = $ssel4 = "";
+		$sseln = $ssel0 = $ssel1 = $ssel2 = $ssel3 = $ssel4 = '';
 
-		$weight = $block_arr[$i]->getVar("weight") ;
-		$title = $block_arr[$i]->getVar("title") ;
-		$name = $block_arr[$i]->getVar("name") ;
-		$bcachetime = $block_arr[$i]->getVar("bcachetime") ;
-		$bid = $block_arr[$i]->getVar("bid") ;
+		$weight = $block_arr[$i]->getVar('weight') ;
+		$title = $block_arr[$i]->getVar('title') ;
+		$name = $block_arr[$i]->getVar('name') ;
+		$bcachetime = $block_arr[$i]->getVar('bcachetime') ;
+		$bid = $block_arr[$i]->getVar('bid') ;
 
 		// visible and side
-		if ( $block_arr[$i]->getVar("visible") != 1 ) {
+		//$x_sides = array(0 => _AM_SBLEFT, 1 => _AM_SBRIGHT, 3 => _AM_CBLEFT, 4 => _AM_CBRIGHT, 5 => _AM_CBCENTER, 7 => _AM_CBBOTTOMLEFT, 8 => _AM_CBBOTTOMRIGHT, 9 => _AM_CBBOTTOM, );
+		//$sides = array(0=>XOOPS_SIDEBLOCK_LEFT,1=>XOOPS_SIDEBLOCK_RIGHT,2=>XOOPS_CENTERBLOCK_LEFT,4=>XOOPS_CENTERBLOCK_RIGHT,3=>XOOPS_CENTERBLOCK_CENTER);
+		$checked_style = " checked='checked' style='background-color:#00FF00;'";
+		if ( $block_arr[$i]->getVar('visible') != 1 ) {
 			$sseln = " checked='checked' style='background-color:#FF0000;'";
-		} else switch( $block_arr[$i]->getVar("side") ) {
+		} else switch( $block_arr[$i]->getVar('side') ) {
 			default :
-			case XOOPS_SIDEBLOCK_LEFT :
-				$ssel0 = " checked='checked' style='background-color:#00FF00;'";
+			case  XOOPS_SIDEBLOCK_LEFT:
+				$ssel0 = $checked_style;
 				break ;
 			case XOOPS_SIDEBLOCK_RIGHT :
-				$ssel1 = " checked='checked' style='background-color:#00FF00;'";
+				$ssel1 = $checked_style;
 				break ;
 			case XOOPS_CENTERBLOCK_LEFT :
-				$ssel2 = " checked='checked' style='background-color:#00FF00;'";
+				$ssel2 = $checked_style;
 				break ;
 			case XOOPS_CENTERBLOCK_RIGHT :
-				$ssel4 = " checked='checked' style='background-color:#00FF00;'";
+				$ssel4 = $checked_style;
 				break ;
 			case XOOPS_CENTERBLOCK_CENTER :
-				$ssel3 = " checked='checked' style='background-color:#00FF00;'";
+				$ssel3 = $checked_style;
 				break ;
 		}
 
@@ -106,7 +115,7 @@ function list_blocks()
 
 		// target modules
 		$db =& Database::getInstance();
-		$result = $db->query( "SELECT module_id FROM ".$db->prefix('block_module_link')." WHERE block_id='$bid'" ) ;
+		$result = $db->query( 'SELECT module_id FROM '.$db->prefix('block_module_link').' WHERE block_id="'.$bid.'"' ) ;
 		$selected_mids = array();
 		while ( list( $selected_mid ) = $db->fetchRow( $result ) ) {
 			$selected_mids[] = intval( $selected_mid ) ;
@@ -136,7 +145,11 @@ function list_blocks()
 				<input type='text' name='title[$bid]' value='$title' size='20' />
 			</td>
 			<td class='$class' align='center' nowrap='nowrap'>
-				<input type='radio' name='side[$bid]' value='".XOOPS_SIDEBLOCK_LEFT."'$ssel0 />-<input type='radio' name='side[$bid]' value='".XOOPS_CENTERBLOCK_LEFT."'$ssel2 /><input type='radio' name='side[$bid]' value='".XOOPS_CENTERBLOCK_CENTER."'$ssel3 /><input type='radio' name='side[$bid]' value='".XOOPS_CENTERBLOCK_RIGHT."'$ssel4 />-<input type='radio' name='side[$bid]' value='".XOOPS_SIDEBLOCK_RIGHT."'$ssel1 />
+				<input type='radio' name='side[$bid]' value='".XOOPS_SIDEBLOCK_LEFT."'$ssel0 />
+                    -<input type='radio' name='side[$bid]' value='".XOOPS_CENTERBLOCK_LEFT."'$ssel2 />
+                    <input type='radio' name='side[$bid]' value='".XOOPS_CENTERBLOCK_CENTER."'$ssel3 />
+                    <input type='radio' name='side[$bid]' value='".XOOPS_CENTERBLOCK_RIGHT."'$ssel4 />
+                    -<input type='radio' name='side[$bid]' value='".XOOPS_SIDEBLOCK_RIGHT."'$ssel1 />
 				<br />
 				<br />
 				<input type='radio' name='side[$bid]' value='-1'$sseln />
@@ -176,7 +189,6 @@ function list_blocks()
 	</form>\n" ;
 }
 
-
 function list_groups()
 {
 	global $xoopsModule , $block_arr ;
@@ -194,14 +206,12 @@ function list_groups()
 	echo $form->render() ;
 }
 
-
-
 if( ! empty( $_POST['submit'] ) ) {
-	include( "mygroupperm.php" ) ;
-	redirect_header( XOOPS_URL."/modules/".$xoopsModule->dirname()."/admin/myblocksadmin.php" , 1 , _MD_AM_DBUPDATED );
+	include 'mygroupperm.php';
+	redirect_header( XOOPS_URL.'/modules/'.$xoopsModule->dirname().'/admin/myblocksadmin.php' , 1 , _MD_AM_DBUPDATED );
 }
 
-include "../include/functions.php";
+include '../include/functions.php';
 xoops_cp_header() ;
 echo getAdminMenu (3,_AM_WIWI_BLOCKSNGROUPS_NAV);
 if( file_exists( './mymenu.php' ) ) include( './mymenu.php' ) ;
