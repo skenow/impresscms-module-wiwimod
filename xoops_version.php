@@ -2,7 +2,7 @@
 /**
  * xoops_version: Main configuration file for wiwimod
  * 
- * @package modules::wiwimod
+ * @package Wiwimod
  * @author Xavier JIMENEZ
  * @author Gizmhail
  * @author skenow <skenow@impresscms.org>
@@ -22,7 +22,9 @@ $modversion = array(
   'iconbig' => '', /* big icon for ImpressCMS, 37x35 px */
   'iconsmall' => '', /* small icon for ImpressCMS, 16x16 px */
   'dirname' => basename(dirname(__FILE__)),
-  'status' => 'Final' ); 
+  'status' => 'Final',
+  'onInstall' => 'include/oninstall.inc.php',
+  'onUpdate' => 'include/onupdate.inc.php' ); 
 
 
 // Tables created by the SQL file (without prefix!)

@@ -2,7 +2,7 @@
 /**
  * Used to create comparisons between revisions
  * 
- * @package modules::wiwimod
+ * @package Wiwimod
  * @author Xavier JIMENEZ
  * @author skenow <skenow@impresscms.org>
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)

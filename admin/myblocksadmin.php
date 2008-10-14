@@ -3,7 +3,7 @@
  * Block admin for wiwimod
  *  
  * @todo Get the core block admin form so it is always current
- * @package modules::wiwimod
+ * @package Wiwimod
  * @author GIJOE <http://www.peak.ne.jp/>
  * @author skenow <skenow@impresscms.org>
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)

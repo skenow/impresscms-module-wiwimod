@@ -2,7 +2,7 @@
 /**
  * Main index page of wiwimod - displays all pages on the user side
  * 
- * @package modules::wiwimod
+ * @package Wiwimod
  * @author Xavier JIMENEZ
  * @author Gizmhail
  * @author skenow <skenow@impresscms.org>
