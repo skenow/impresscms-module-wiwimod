@@ -113,7 +113,7 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '')
     	#buttonbar { float".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"right":"left")."; width:100%; background: #e7e7e7 url('" . XOOPS_URL . "/modules/" . $wiwidir . "/images/bg.gif') repeat-x left bottom; font-size:93%; line-height:normal; border-left: 1px solid black; border-right: 1px solid black; margin-bottom: 12px; }
     	#buttonbar ul { margin:0; margin-top: 15px; padding:10px 10px 0; list-style:none; }
 		#buttonbar li { display:inline; margin:0; padding:0; }
-		#buttonbar a { float".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"right":"left")."; background:url('" . XOOPS_URL . "/modules/" . $wiwidir . "/images/left_both.gif') no-repeat left top; margin:0; padding:0 0 0 9px; border-bottom:1px solid #000; text-decoration:none; }
+		#buttonbar a { float:".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"right":"left")."; background:url('" . XOOPS_URL . "/modules/" . $wiwidir . "/images/left_both.gif') no-repeat left top; margin:0; padding:0 0 0 9px; border-bottom:1px solid #000; text-decoration:none; }
 		#buttonbar a span { float:".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"right":"left")."; display:block; background:url('" . XOOPS_URL . "/modules/" . $wiwidir . "/images/right_both.gif') no-repeat right top; padding:5px 15px 4px 6px; font-weight:bold; color:#765; }
 		/* Commented Backslash Hack hides rule from IE5-Mac \*/
 		#buttonbar a span {float:none;}

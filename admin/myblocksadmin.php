@@ -79,37 +79,30 @@ function list_blocks()
 		$bid = $block_arr[$i]->getVar('bid') ;
 
 		// visible and side
-		//$x_sides = array(0 => _AM_SBLEFT, 1 => _AM_SBRIGHT, 3 => _AM_CBLEFT, 4 => _AM_CBRIGHT, 5 => _AM_CBCENTER, 7 => _AM_CBBOTTOMLEFT, 8 => _AM_CBBOTTOMRIGHT, 9 => _AM_CBBOTTOM, );
-		//$sides = array(0=>XOOPS_SIDEBLOCK_LEFT,1=>XOOPS_SIDEBLOCK_RIGHT,2=>XOOPS_CENTERBLOCK_LEFT,4=>XOOPS_CENTERBLOCK_RIGHT,3=>XOOPS_CENTERBLOCK_CENTER);
-		$checked_style = " checked='checked' style='background-color:#00FF00;'";
-		if ( $block_arr[$i]->getVar('visible') != 1 ) {
-			$sseln = " checked='checked' style='background-color:#FF0000;'";
-		} else switch( $block_arr[$i]->getVar('side') ) {
-			default :
-			case  XOOPS_SIDEBLOCK_LEFT:
-				$ssel0 = $checked_style;
-				break ;
-			case XOOPS_SIDEBLOCK_RIGHT :
-				$ssel1 = $checked_style;
-				break ;
-			case XOOPS_CENTERBLOCK_LEFT :
-				$ssel2 = $checked_style;
-				break ;
-			case XOOPS_CENTERBLOCK_RIGHT :
-				$ssel4 = $checked_style;
-				break ;
-			case XOOPS_CENTERBLOCK_CENTER :
-				$ssel3 = $checked_style;
-				break ;
-		}
-
-		// bcachetime
+		$new_sides = array (
+             XOOPS_SIDEBLOCK_LEFT => _AM_SBLEFT,
+             XOOPS_SIDEBLOCK_RIGHT => _AM_SBRIGHT,
+             XOOPS_CENTERBLOCK_LEFT => _AM_CBLEFT,
+             XOOPS_CENTERBLOCK_RIGHT => _AM_CBRIGHT,
+             XOOPS_CENTERBLOCK_CENTER => _AM_CBCENTER,
+             XOOPS_CENTERBLOCK_BOTTOMLEFT => _AM_CBBOTTOMLEFT,
+             XOOPS_CENTERBLOCK_BOTTOMRIGHT => _AM_CBBOTTOMRIGHT,
+             XOOPS_CENTERBLOCK_BOTTOM => _AM_CBBOTTOM );
+		$side_options = '';
+		foreach ( $new_sides as $sidenum => $sidename ) {
+               if ($block_arr[$i]->getVar('side') == $sidenum){
+                    $side_options .= "<option value='$sidenum' selected='selected'>$sidename</option>";     
+               } else {
+                    $side_options .= "<option value='$sidenum' >$sidename</option>";
+               }
+          }
+          // bcachetime
 		$cachetime_options = '' ;
 		foreach( $cachetimes as $cachetime => $cachetime_name ) {
 			if( $bcachetime == $cachetime ) {
-				$cachetime_options .= "<option value='$cachetime' selected='selected'>$cachetime_name</option>\n" ;
+				$cachetime_options .= "<option value='$cachetime' selected='selected'>$cachetime_name</option>" ;
 			} else {
-				$cachetime_options .= "<option value='$cachetime'>$cachetime_name</option>\n" ;
+				$cachetime_options .= "<option value='$cachetime'>$cachetime_name</option>" ;
 			}
 		}
 
@@ -130,9 +123,9 @@ function list_blocks()
 		$module_options = '' ;
 		foreach( $module_list as $mid => $mname ) {
 			if( in_array( $mid , $selected_mids ) ) {
-				$module_options .= "<option value='$mid' selected='selected'>$mname</option>\n" ;
+				$module_options .= "<option value='$mid' selected='selected'>$mname</option>" ;
 			} else {
-				$module_options .= "<option value='$mid'>$mname</option>\n" ;
+				$module_options .= "<option value='$mid'>$mname</option>" ;
 			}
 		}
 
@@ -145,18 +138,12 @@ function list_blocks()
 				<input type='text' name='title[$bid]' value='$title' size='20' />
 			</td>
 			<td class='$class' align='center' nowrap='nowrap'>
-				<input type='radio' name='side[$bid]' value='".XOOPS_SIDEBLOCK_LEFT."'$ssel0 />
-                    -<input type='radio' name='side[$bid]' value='".XOOPS_CENTERBLOCK_LEFT."'$ssel2 />
-                    <input type='radio' name='side[$bid]' value='".XOOPS_CENTERBLOCK_CENTER."'$ssel3 />
-                    <input type='radio' name='side[$bid]' value='".XOOPS_CENTERBLOCK_RIGHT."'$ssel4 />
-                    -<input type='radio' name='side[$bid]' value='".XOOPS_SIDEBLOCK_RIGHT."'$ssel1 />
-				<br />
-				<br />
-				<input type='radio' name='side[$bid]' value='-1'$sseln />
-				"._NONE."
+				<select name='side[$bid]' size='5' >
+				      $side_options
+				</select>
 			</td>
 			<td class='$class' align='center'>
-				<input type='text' name=weight[$bid] value='$weight' size='5' maxlength='5' style='text-align:right;' />
+				<input type='text' name='weight[$bid]' value='$weight' size='5' maxlength='5' style='text-align:right;' />
 			</td>
 			<td class='$class' align='center'>
 				<select name='bmodule[$bid][]' size='5' multiple='multiple'>
