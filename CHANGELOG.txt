@@ -29,6 +29,7 @@ Improved
 * References to class/xoopsuser.php relocated to kernel/user.php (vaughan)
 * Changed intval() to (int) for faster processing
 * moved mysql.sql to language folders for a beter localization. (stranger)
+* myblocksadmin updated for current basic block positions - works in ImpressCMS 1.0 and 1.1 and in XOOPS 2.0.18 and 2.3
 
 Language additions
 * blocks.php

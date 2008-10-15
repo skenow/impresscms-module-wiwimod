@@ -9,18 +9,18 @@
  * @version $Id$  
  */
 
-if( ! defined( 'XOOPS_ROOT_PATH' ) ) exit ;
+if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 
 function myDeleteByModule($DB, $gperm_modid, $gperm_name = null, $gperm_itemid = null)
 {
-	$criteria = new CriteriaCompo(new Criteria('gperm_modid', intval($gperm_modid)));
+	$criteria = new CriteriaCompo(new Criteria('gperm_modid', (int) $gperm_modid));
 	if (isset($gperm_name)) {
 		$criteria->add(new Criteria('gperm_name', $gperm_name));
 		if (isset($gperm_itemid)) {
-			$criteria->add(new Criteria('gperm_itemid', intval($gperm_itemid)));
+			$criteria->add(new Criteria('gperm_itemid', (int) $gperm_itemid));
 		}
 	}
-	$sql = "DELETE FROM ".$DB->prefix('group_permission').' '.$criteria->renderWhere();
+	$sql = 'DELETE FROM '.$DB->prefix('group_permission').' '.$criteria->renderWhere();
 	if (!$result = $DB->query($sql)) {
 		return false;
 	}
@@ -28,7 +28,7 @@ function myDeleteByModule($DB, $gperm_modid, $gperm_name = null, $gperm_itemid =
 }
 
 // include '../../../include/cp_header.php'; GIJ
-$modid = isset($_POST['modid']) ? intval($_POST['modid']) : 1;
+$modid = isset($_POST['modid']) ? (int) $_POST['modid'] : 1;
 // we dont want system module permissions to be changed here ( 1 -> 0 GIJ)
 if ($modid <= 0 || !is_object($xoopsUser) || !$xoopsUser->isAdmin($modid)) {
 	redirect_header(XOOPS_URL.'/user.php', 1, _NOPERM);
