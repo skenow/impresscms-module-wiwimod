@@ -24,7 +24,15 @@ $modversion = array(
   'dirname' => basename(dirname(__FILE__)),
   'status' => 'Final',
   'onInstall' => 'include/oninstall.inc.php',
-  'onUpdate' => 'include/onupdate.inc.php' ); 
+  'onUpdate' => 'include/onupdate.inc.php',
+  'demo_site_url' => '',
+  'demo_site_name' => '',
+  'support_site_url' => '',
+  'support_site_name' => '',
+  'submit_bug' => '',
+  'submit_feature' => '',
+  'warning' => '',
+  'author_word' => '_MI_WIWIMOD_AUTHOR_WORD' ); 
 
 
 // Tables created by the SQL file (without prefix!)
@@ -44,16 +52,16 @@ $modversion['hasMain'] = 1;
 // Templates
 $modversion['templates'][1] = array(
   'file' => 'wiwimod_view.html',
-  'description' => 'WiwiMod - View Wiwi Page');
+  'description' => _MI_WIWIMOD_TEMPLATE_VIEW_DESC);
 $modversion['templates'][] = array(
   'file' => 'wiwimod_edit.html',
-  'description' => 'WiwiMod - Edit Wiwi Page');
+  'description' => _MI_WIWIMOD_TEMPLATE_EDIT_DESC);
 $modversion['templates'][]= array(
   'file' => 'wiwimod_history.html',
-  'description' => 'WiwiMod - View page history');
+  'description' => _MI_WIWIMOD_TEMPLATE_HISTORY_DESC);
 $modversion['templates'][] = array(
   'file' => 'wiwimod_pdf.html',
-  'description' => 'WiwiMod - pdf');
+  'description' => _MI_WIWIMOD_TEMPLATE_PDF_DESC);
 
 // Search
 $modversion['hasSearch'] = 1;
@@ -68,15 +76,15 @@ $modversion['comments']['pageName'] = 'index.php';
 // Blocks
 $modversion['blocks'][1] = array(
   'file' => 'wiwimod_toc.php',
-  'name' => 'Wiwi TOC',
-  'description' => 'Wiwi selected entry pages',
+  'name' => _MI_WIWIMOD_BLOCK_TOC_NAME,
+  'description' => _MI_WIWIMOD_BLOCK_TOC_DESC,
   'show_func' => 'wiwimod_toc',
   'template' => 'wiwimod_toc.html');
 
 $modversion['blocks'][] = array(
   'file' => 'wiwimod_recent.php',
-  'name' => 'Wiwi Recent',
-  'description' => 'Wiwi recently modified',
+  'name' => _MI_WIWIMOD_BLOCK_RECENT_NAME,
+  'description' => _MI_WIWIMOD_BLOCK_RECENT_DESC,
   'show_func' => 'wiwimod_recent',
   'edit_func' => 'wiwimod_recent_blockedit',
   'options' => '5',
@@ -84,15 +92,15 @@ $modversion['blocks'][] = array(
 
 $modversion['blocks'][] = array(
   'file' => 'wiwimod_showpage.php',
-  'name' => 'WiwiSideContent',
-  'description' => 'side block for extra content on Wiwi pages',
+  'name' => _MI_WIWIMOD_BLOCK_RELATED_NAME,
+  'description' => _MI_WIWIMOD_BLOCK_RELATED_DESC,
   'show_func' => 'wiwimod_contextshow',
   'template' => 'wiwimod_context.html');
 
 $modversion['blocks'][] = array(
   'file' => 'wiwimod_showpage.php',
-  'name' => 'WiwiShowPage',
-  'description' => 'Show a wiwi page',
+  'name' => _MI_WIWIMOD_BLOCK_SHOWPAGE_NAME,
+  'description' => _MI_WIWIMOD_BLOCK_SHOWPAGE_DESC,
   'show_func' => 'wiwimod_showpage',
   'edit_func' => 'wiwimod_showpage_blockedit',
   'options' => 'WiwiHome',
@@ -186,7 +194,7 @@ $modversion['notification'] = array(
 $modversion['notification']['category'][1] = array(
   'name' => 'page',
   'title' => _MI_WIWIMOD_PAGENOTIFYCAT_TITLE,
-  'description' => _MI_WIWIMOD_PAGENOTIFYCAT_DESC,
+  'description' => '_MI_WIWIMOD_PAGENOTIFYCAT_DESC',
   'subscribe_from' => array('index.php'),
   'allow_bookmark' => 1,
   'item_name' => 'pageid'); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php 
@@ -194,7 +202,7 @@ $modversion['notification']['category'][1] = array(
 $modversion['notification']['category'][] = array(
   'name' => 'global',
   'title' => _MI_WIWIMOD_GLOBALNOTIFYCAT_TITLE,
-  'description' => _MI_WIWIMOD_GLOBALNOTIFYCAT_DESC,
+  'description' => '_MI_WIWIMOD_GLOBALNOTIFYCAT_DESC',
   'subscribe_from' => array('index.php'),
   'item_name' => ''); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php 
 
@@ -203,17 +211,17 @@ $modversion['notification']['event'][1] = array(
   'category' => 'page',
   'title' => _MI_WIWIMOD_PAGENOTIFY_TITLE,
   'caption' => _MI_WIWIMOD_PAGENOTIFY_CAPTION,
-  'description' => _MI_WIWIMOD_PAGENOTIFY_DESC,
+  'description' => '_MI_WIWIMOD_PAGENOTIFY_DESC',
   'mail_template' => 'global_pagemodified_notify',
-  'mail_subject' => _MI_WIWIMOD_PAGENOTIFY_SUBJECT);
+  'mail_subject' => '_MI_WIWIMOD_PAGENOTIFY_SUBJECT');
 
 $modversion['notification']['event'][] = array(
   'name' => 'page_modified',
   'category' => 'global',
   'title' => _MI_WIWIMOD_GLOBALNOTIFY_TITLE,
   'caption' => _MI_WIWIMOD_GLOBALNOTIFY_CAPTION,
-  'description' => _MI_WIWIMOD_GLOBALNOTIFY_DESC,
+  'description' => '_MI_WIWIMOD_GLOBALNOTIFY_DESC',
   'mail_template' => 'global_pagemodified_notify',
-  'mail_subject' => _MI_WIWIMOD_GLOBALNOTIFY_SUBJECT);
+  'mail_subject' => '_MI_WIWIMOD_GLOBALNOTIFY_SUBJECT');
 
 ?>

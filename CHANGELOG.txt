@@ -1,4 +1,4 @@
-== Wiwimod x.y.z ==
+== Wiwimod 0.8.3 Re-release ==
 Released: 
 
 Added
@@ -11,6 +11,7 @@ Added
 * Changelog.txt
 * Check for ROOT_PATH in all included files
 * New language constants for block options
+* Language constants are used throughout for complete internationalization (i18n) and localization (l10n)
 * New icons for ImpressCMS admin area
 * formatTimestamp to date values. (stranger)
 * RTL style for admin menu. (stranger)
@@ -29,12 +30,26 @@ Improved
 * References to class/xoopsuser.php relocated to kernel/user.php (vaughan)
 * Changed intval() to (int) for faster processing
 * moved mysql.sql to language folders for a beter localization. (stranger)
-* myblocksadmin updated for current basic block positions - works in ImpressCMS 1.0 and 1.1 and in XOOPS 2.0.18 and 2.3
+* myblocksadmin updated for current basic block positions - works in ImpressCMS 1.0 (and partially in 1.1) and in XOOPS 2.0.18 and 2.3
 
 Language additions
 * blocks.php
   + define('_MB_WIWI_NUM_DISP_DESC','Number of items to display');
   + define('_MB_WIWI_SHOWPAGE_DESC','Page to display');
+* xoops_version.php
+  + define('_MI_WIWIMOD_TEMPLATE_VIEW_DESC','View Wiwi Page');
+  + define('_MI_WIWIMOD_TEMPLATE_EDIT_DESC','Edit Wiwi Page');
+  + define('_MI_WIWIMOD_TEMPLATE_HISTORY_DESC','View page history');
+  + define('_MI_WIWIMOD_TEMPLATE_PDF_DESC','WiwiMod - pdf');
+  + define('_MI_WIWIMOD_BLOCK_TOC_NAME','Wiwi TOC');
+  + define('_MI_WIWIMOD_BLOCK_TOC_DESC','Wiwi selected entry pages');
+  + define('_MI_WIWIMOD_BLOCK_RECENT_NAME','Wiwi Recent');
+  + define('_MI_WIWIMOD_BLOCK_RECENT_DESC','Wiwi recently modified');
+  + define('_MI_WIWIMOD_BLOCK_RELATED_NAME','WiwiSideContent');
+  + define('_MI_WIWIMOD_BLOCK_RELATED_DESC','Side block for extra content on Wiwi pages');
+  + define('_MI_WIWIMOD_BLOCK_SHOWPAGE_NAME','WiwiShowPage');
+  + define('_MI_WIWIMOD_BLOCK_SHOWPAGE_DESC','Show a wiwi page');
+  + define('_MI_WIWIMOD_DEFAULTPROFILE_DESC','Default profile assigned to new pages');
 
 == Wiwimod 0.8.3 ==
 

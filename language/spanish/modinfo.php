@@ -18,7 +18,7 @@ define('_MI_WIWIMOD_ADMENU4','Acerca de...');
 define('_MI_WIWIMOD_EDITOR','Editor de texto a usar');
 define('_MI_WIWIMOD_EDITOR_DESC','');
 define('_MI_WIWIMOD_DEFAULTPROFILE','Perfil inicial');
-
+// Default profile description was added in re-release, see below
 define('_MI_WIWIMOD_ALLOWPDF','Mostrar el icono de creación de archivos PDF');
 define('_MI_WIWIMOD_ALLOWPDF_DESC','La generación de archivos PDF a partir de las páginas es aun experimental ...');
 
@@ -38,11 +38,26 @@ define('_MI_WIWIMOD_PAGENOTIFY_TITLE','Página modificada');
 define('_MI_WIWIMOD_PAGENOTIFY_CAPTION','Notifíqueme cuando la página sea modificada');
 define('_MI_WIWIMOD_PAGENOTIFY_DESC','Recibir una notificación cuando algún usuario modifique la página actual.');
 define('_MI_WIWIMOD_PAGENOTIFY_SUBJECT','[{X_SITENAME}] {X_MODULE} - página modificada (notificación automática)');
-/* Added in version ... */
+/* Added in version 0.83 Re-release */
 define('_MI_WIWIMOD_GLOBALNOTIFYCAT_TITLE','Global');
 define('_MI_WIWIMOD_GLOBALNOTIFYCAT_DESC','Notificaciones relativas a todas las páginas');
 define('_MI_WIWIMOD_GLOBALNOTIFY_TITLE','Página actualizada');
 define('_MI_WIWIMOD_GLOBALNOTIFY_CAPTION','Notifíqueme cuando cualquier página es modificada');
 define('_MI_WIWIMOD_GLOBALNOTIFY_DESC','Recibir una notificación cuando cualquier usuario actualiza cualquier página.');
 define('_MI_WIWIMOD_GLOBALNOTIFY_SUBJECT','[{X_SITENAME}] {X_MODULE} notificación automática: página actualizada');
+
+define('_MI_WIWIMOD_TEMPLATE_VIEW_DESC','View Wiwi Page');
+define('_MI_WIWIMOD_TEMPLATE_EDIT_DESC','Edit Wiwi Page');
+define('_MI_WIWIMOD_TEMPLATE_HISTORY_DESC','View page history');
+define('_MI_WIWIMOD_TEMPLATE_PDF_DESC','WiwiMod - pdf');
+define('_MI_WIWIMOD_BLOCK_TOC_NAME','Wiwi TOC');
+define('_MI_WIWIMOD_BLOCK_TOC_DESC','Wiwi selected entry pages');
+define('_MI_WIWIMOD_BLOCK_RECENT_NAME','Wiwi Recent');
+define('_MI_WIWIMOD_BLOCK_RECENT_DESC','Wiwi recently modified');
+define('_MI_WIWIMOD_BLOCK_RELATED_NAME','WiwiSideContent');
+define('_MI_WIWIMOD_BLOCK_RELATED_DESC','Side block for extra content on Wiwi pages');
+define('_MI_WIWIMOD_BLOCK_SHOWPAGE_NAME','WiwiShowPage');
+define('_MI_WIWIMOD_BLOCK_SHOWPAGE_DESC','Show a wiwi page');
+define('_MI_WIWIMOD_AUTHOR_WORD','<h4>About Wiwi 0.8.3</h4><br />Wiwi is GPL software ; visit Wiwi home page at <a href="http://www.zonatim.com/modules/wiwimod?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> to support or get help.<br /><br />If you\'ve just migrated from an older Wiwi version (0.7.1 or less), please click here : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
+
 ?>
