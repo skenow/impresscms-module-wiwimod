@@ -51,10 +51,10 @@ function list_blocks()
 {
 	global $block_arr ;
 
-	// cachetime options
+// cachetime options
 	$cachetimes = array('0' => _NOCACHE, '30' => sprintf(_SECONDS, 30), '60' => _MINUTE, '300' => sprintf(_MINUTES, 5), '1800' => sprintf(_MINUTES, 30), '3600' => _HOUR, '18000' => sprintf(_HOURS, 5), '86400' => _DAY, '259200' => sprintf(_DAYS, 3), '604800' => _WEEK, '2592000' => _MONTH);
 
-	// displaying TH
+// displaying TH
 	echo "
 	<form action='admin.php' name='blockadmin' method='post'>
 		<table width='90%' class='outer' cellpadding='4' cellspacing='1'>
@@ -64,22 +64,29 @@ function list_blocks()
 			<th align='center'>"._AM_WEIGHT."</th>
 			<th align='center'>"._AM_VISIBLEIN."</th>
 			<th align='center'>"._AM_BCACHETIME."</th>
+			<th align='center'>"._AM_VISIBLE."</th>
 			<th align='right'>"._AM_ACTION."</th>
 		</tr>\n" ;
-
-	// blocks displaying loop
+//  if (method_exists('XoopsBlock','getBlockPositions')) {echo 'You are using ImpressCMS and can have custom block positions<br />';}
+//	if (file_exists(XOOPS_ROOT_PATH.'/kernel/page.php')) {echo 'You are using ImpressCMS 1.1 and can have custom page links <br />';}
+	$adv_blocks = method_exists('XoopsBlock','getBlockPositions');
+	$adv_pages = file_exists(XOOPS_ROOT_PATH.'/kernel/page.php');
+// blocks displaying loop
 	$class = 'even' ;
 	foreach( array_keys( $block_arr ) as $i ) {
-		$sseln = $ssel0 = $ssel1 = $ssel2 = $ssel3 = $ssel4 = '';
 
 		$weight = $block_arr[$i]->getVar('weight') ;
 		$title = $block_arr[$i]->getVar('title') ;
 		$name = $block_arr[$i]->getVar('name') ;
 		$bcachetime = $block_arr[$i]->getVar('bcachetime') ;
 		$bid = $block_arr[$i]->getVar('bid') ;
-
-		// visible and side
-		$new_sides = array (
+		$yvisible = $nvisible = '';
+		$yvisible = ($block_arr[$i]->getVar('visible') == 1 ? "checked='checked'" : '' );
+		$nvisible = ($block_arr[$i]->getVar('visible') == 1 ? '' : "checked='checked'" );
+  		$side_options = '';
+     // Block positions - XOOPS 2.0.x, 2.3.x
+     if (!$adv_blocks){
+    		$new_sides = array (
              XOOPS_SIDEBLOCK_LEFT => _AM_SBLEFT,
              XOOPS_SIDEBLOCK_RIGHT => _AM_SBRIGHT,
              XOOPS_CENTERBLOCK_LEFT => _AM_CBLEFT,
@@ -88,15 +95,26 @@ function list_blocks()
              XOOPS_CENTERBLOCK_BOTTOMLEFT => _AM_CBBOTTOMLEFT,
              XOOPS_CENTERBLOCK_BOTTOMRIGHT => _AM_CBBOTTOMRIGHT,
              XOOPS_CENTERBLOCK_BOTTOM => _AM_CBBOTTOM );
-		$side_options = '';
-		foreach ( $new_sides as $sidenum => $sidename ) {
-               if ($block_arr[$i]->getVar('side') == $sidenum){
-                    $side_options .= "<option value='$sidenum' selected='selected'>$sidename</option>";     
-               } else {
-                    $side_options .= "<option value='$sidenum' >$sidename</option>";
-               }
+      } else {
+
+     /* Block positions - ImpressCMS 1.0+ */
+          $posarr = XoopsBlock::getBlockPositions ( true );
+          $new_sides = array ( );
+          foreach ( $posarr as $k => $v ) {
+          	$titl = (defined ( $posarr [$k] ['title'] )) ? constant ( $posarr [$k] ['title'] ) : $posarr [$k] ['title'];
+          	$new_sides [$k] = $titl;
           }
-          // bcachetime
+      }
+
+    	foreach ( $new_sides as $sidenum => $sidename ) {
+           if ($block_arr[$i]->getVar('side') == $sidenum){
+                $side_options .= "<option value='$sidenum' selected='selected'>$sidename</option>";     
+           } else {
+                $side_options .= "<option value='$sidenum' >$sidename</option>";
+           }
+      }
+
+     // bcachetime
 		$cachetime_options = '' ;
 		foreach( $cachetimes as $cachetime => $cachetime_name ) {
 			if( $bcachetime == $cachetime ) {
@@ -106,30 +124,36 @@ function list_blocks()
 			}
 		}
 
-		// target modules
-		$db =& Database::getInstance();
-		$result = $db->query( 'SELECT module_id FROM '.$db->prefix('block_module_link').' WHERE block_id="'.$bid.'"' ) ;
-		$selected_mids = array();
-		while ( list( $selected_mid ) = $db->fetchRow( $result ) ) {
-			$selected_mids[] = intval( $selected_mid ) ;
-		}
-		$module_handler =& xoops_gethandler('module');
-		$criteria = new CriteriaCompo(new Criteria('hasmain', 1));
-		$criteria->add(new Criteria('isactive', 1));
-		$module_list =& $module_handler->getList($criteria);
-		$module_list[-1] = _AM_TOPPAGE;
-		$module_list[0] = _AM_ALLPAGES;
-		ksort($module_list);
-		$module_options = '' ;
-		foreach( $module_list as $mid => $mname ) {
+     		$db =& Database::getInstance();
+     		$result = $db->query( 'SELECT module_id FROM '.$db->prefix('block_module_link').' WHERE block_id="'.$bid.'"' ) ;
+    		$selected_mids = array();
+     		while ( list( $selected_mid ) = $db->fetchRow( $result ) ) {
+            $selected_mids[] = (int) $selected_mid ;
+    		}
+     if (!$adv_pages){
+       // target modules - XOOPS 2.0.x, 2.3.x and ImpressCMS 1.0.x
+        $module_handler =& xoops_gethandler('module');
+    		$criteria = new CriteriaCompo(new Criteria('hasmain', 1));
+    		$criteria->add(new Criteria('isactive', 1));
+    		$module_list =& $module_handler->getList($criteria);
+    		$module_list[-1] = _AM_TOPPAGE;
+    		$module_list[0] = _AM_ALLPAGES;
+    		ksort($module_list);
+    		$module_options = '' ;
+  	foreach( $module_list as $mid => $mname ) {
 			if( in_array( $mid , $selected_mids ) ) {
 				$module_options .= "<option value='$mid' selected='selected'>$mname</option>" ;
 			} else {
 				$module_options .= "<option value='$mid'>$mname</option>" ;
 			}
 		}
+		} else {
+     /* target modules/pages - ImpressCMS 1.1+ */
+    		$page_handler = & xoops_gethandler ( 'page' );
+    		$module_options = $page_handler->getPageSelOptions ( $selected_mids );        
+    }
 
-		// displaying part
+     // displaying part
 		echo "
 		<tr valign='middle'>
 			<td class='$class'>
@@ -155,6 +179,11 @@ function list_blocks()
 					$cachetime_options
 				</select>
 			</td>
+			<td class='$class' align='center'>
+			  <input type='radio' name='visible[$bid]' value='1' $yvisible />"._YES."&nbsp;
+                 <input type='radio' name='visible[$bid]' value='0' $nvisible />"._NO."
+                 <input type='hidden' name='oldvisible[$bid]' value='".$block_arr[$i]->getVar('visible')."' />
+               </td>
 			<td class='$class' align='right'>
 				<a href='admin.php?fct=blocksadmin&amp;op=edit&amp;bid=$bid'>"._EDIT."</a>
 				<input type='hidden' name='bid[$bid]' value='$bid' />
@@ -166,7 +195,7 @@ function list_blocks()
 
 	echo "
 		<tr>
-			<td class='foot' align='center' colspan='6'>
+			<td class='foot' align='center' colspan='7'>
 				<input type='hidden' name='fct' value='blocksadmin' />
 				<input type='hidden' name='op' value='order' />
 				<input type='submit' name='submit' value='"._SUBMIT."' />
