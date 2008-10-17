@@ -86,7 +86,7 @@ if ($admintest != 0) {
 }
 if (false != $error) {
 	xoops_cp_header();
-	echo '<h4>System Configuration</h4>';
+	echo '<h4>'._AM_WIWI_SYS_CFG.'</h4>';
 	echo '<table class="outer" cellpadding="4" cellspacing="1">';
 	echo '<tr>';
 	$groups = $xoopsUser->getGroups();

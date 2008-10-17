@@ -8,7 +8,8 @@
  *  _FLD	: title of form elements
  *  _DESC	: description under the title for form elements
  *  _MSG	: messages, alerts ...
- *
+ * @package Wiwimod 
+ * @version $Id$ 
  */
 
 define('_MD_WIWI_MODIFIED_TXT', 'Last modified:');		
@@ -52,11 +53,10 @@ define('_MD_WIWI_EDITCONFLICT_MSG','Conflicting modifications! - All changes hav
 define('_MD_WIWI_NOREADACCESS_MSG','<br /><h4>Sorry, restricted access page.</h4><br />');
 define('_MD_WIWI_NOWRITEACCESS_MSG','<br /><h4>Sorry, you don\'t have write access on this page.</h4><br />');
 
-
-// Wiwi special pages - DO NOT TRANSLATE -
+// Wiwi special pages - 
 // Change these names, if you want a different homepage and error page
 // for this language - just make sure that they are legal WiwiLink names.
-define('_MI_WIWIMOD_WIWIHOME','WiwiHome');
+
 define('_MI_WIWIMOD_WIWI404','IllegalName');
 
 

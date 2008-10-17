@@ -36,7 +36,7 @@ $modversion = array(
 
 
 // Tables created by the SQL file (without prefix!)
-$modversion['sqlfile']['mysql'] = 'language/'.$xoopsConfig['language'].'/mysql.sql';
+$modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 $modversion['tables'][0] = 'wiwimod';
 $modversion['tables'][] = 'wiwimod_profiles';
 $modversion['tables'][] = 'wiwimod_prof_groups';
@@ -103,7 +103,7 @@ $modversion['blocks'][] = array(
   'description' => _MI_WIWIMOD_BLOCK_SHOWPAGE_DESC,
   'show_func' => 'wiwimod_showpage',
   'edit_func' => 'wiwimod_showpage_blockedit',
-  'options' => 'WiwiHome',
+  'options' => _MI_WIWIMOD_WIWIHOME,
   'template' => 'wiwimod_showpage.html');
 
 // Admin preferences items
