@@ -18,9 +18,9 @@ $modversion = array(
   'license' => 'GNU General Public License',
   'help' => '',
   'official' => 0,
-  'image' => 'images/wiwilogo.gif', /* standard XOOPS icon, 92x52 px  */
-  'iconbig' => '', /* big icon for ImpressCMS, 37x35 px */
-  'iconsmall' => '', /* small icon for ImpressCMS, 16x16 px */
+  'image' => 'images/wiwilogo-blue.gif', /* standard XOOPS icon, 92x52 px  */
+  'iconbig' => 'images/wiwimod.png', /* big icon for ImpressCMS, 37x35 px */
+  'iconsmall' => 'images/wiwimod-small.png', /* small icon for ImpressCMS, 16x16 px */
   'dirname' => basename(dirname(__FILE__)),
   'status' => 'Final',
   'onInstall' => 'include/oninstall.inc.php',
@@ -34,7 +34,9 @@ $modversion = array(
   'warning' => '',
   'author_word' => '_MI_WIWIMOD_AUTHOR_WORD' ); 
 
-
+if (defined('ICMS_VERSION_NAME')) {
+  $modversion['image'] = 'images/wiwimod.png';
+}
 // Tables created by the SQL file (without prefix!)
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 $modversion['tables'][0] = 'wiwimod';
