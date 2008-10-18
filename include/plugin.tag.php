@@ -27,7 +27,7 @@ if (!defined('XOOPS_ROOT_PATH')){ exit(); }
  * 
  */
 
-function wiki_tag_iteminfo(&$items)
+function wiwimod_tag_iteminfo(&$items)
 {
 	if(empty($items) || !is_array($items)){
 		return false;
@@ -61,7 +61,7 @@ function wiki_tag_iteminfo(&$items)
  * @return	boolean
  * 
  */
-function wiki_tag_synchronization($mid)
+function wiwimod_tag_synchronization($mid)
 {
    //Optional	
 }
