@@ -56,8 +56,7 @@ define('_MD_WIWI_NOWRITEACCESS_MSG','<br><h4>Oprostite a za to stran nimate dovo
 // Wiwi special pages - DO NOT TRANSLATE -
 // Change these names, if you want a different homepage and error page
 // for this language - just make sure that they are legal WiwiLink names.
-define('_MI_WIWIMOD_WIWIHOME','GlavnaStran');
+define('_MI_WIWIMOD_WIWIHOME','GlavnaStran'); // Also need in modinfo.php
 define('_MI_WIWIMOD_WIWI404','IllegalName');
-
 
 ?>

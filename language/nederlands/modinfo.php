@@ -61,5 +61,6 @@ define('_MI_WIWIMOD_BLOCK_RELATED_DESC','Side block for extra content on Wiwi pa
 define('_MI_WIWIMOD_BLOCK_SHOWPAGE_NAME','WiwiShowPage');
 define('_MI_WIWIMOD_BLOCK_SHOWPAGE_DESC','Show a wiwi page');
 define('_MI_WIWIMOD_AUTHOR_WORD','<h4>About Wiwi 0.8.3</h4><br />Wiwi is GPL software ; visit Wiwi home page at <a href="http://www.zonatim.com/modules/wiwimod?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> to support or get help.<br /><br />If you\'ve just migrated from an older Wiwi version (0.7.1 or less), please click here : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
-
+define('_MI_WIWIMOD_DEFAULTPROFILE_DESC','Default profile assigned to new pages');
+define('_MI_WIWIMOD_WIWIHOME','WiwiHome');
 ?>

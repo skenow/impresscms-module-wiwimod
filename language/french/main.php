@@ -53,10 +53,10 @@ define('_MD_WIWI_NOREADACCESS_MSG','<br><h4>Désolé, page en accès restreint.</h4
 define('_MD_WIWI_NOWRITEACCESS_MSG','<br><h4>Désolé, vous n\'avez pas les droits pour modifier cette page.</h4><br>');
 
 
-// Wiwi special pages - DO NOT TRANSLATE -
+// Wiwi special pages - 
 // Change these names, if you want a different homepage and error page
 // for this language - just make sure that they are legal WiwiLink names.
-define('_MI_WIWIMOD_WIWIHOME','WiwiHome');
+define('_MI_WIWIMOD_WIWIHOME','WiwiHome'); // Also need in modinfo.php
 define('_MI_WIWIMOD_WIWI404','IllegalName');
 
 ?>

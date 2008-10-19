@@ -10,7 +10,6 @@
  *  _MSG	: messages, alerts ...
  *
  */
-//Traducción por debianus
 
 define('_MD_WIWI_MODIFIED_TXT', 'modificada en :');
 define('_MD_WIWI_BY','por');
@@ -54,11 +53,10 @@ define('_MD_WIWI_NOREADACCESS_MSG','<br><h4>Lo sentimos, la página tiene el acce
 define('_MD_WIWI_NOWRITEACCESS_MSG','<br><h4>Lo sentimos, no tiene permisos para modificar esta página.</h4><br>');
 
 
-// Wiwi special pages - DO NOT TRANSLATE -
+// Wiwi special pages - 
 // Change these names, if you want a different homepage and error page
 // for this language - just make sure that they are legal WiwiLink names.
-define('_MI_WIWIMOD_WIWIHOME','WiwiHome');
+define('_MI_WIWIMOD_WIWIHOME','WiwiHome'); // Also need in modinfo.php
 define('_MI_WIWIMOD_WIWI404','IllegalName');
-
 
 ?>

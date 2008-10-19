@@ -8,7 +8,8 @@
  *  _FLD	: title of form elements
  *  _DESC	: description under the title for form elements
  *  _MSG	: messages, alerts ...
- *
+ * @package Wiwimod 
+ * @version $Id: main.php 5734 2008-10-17 01:25:01Z skenow $ 
  */
 
 define('_MD_WIWI_MODIFIED_TXT', 'تاریخ آخرین ویرایش:');		
@@ -56,8 +57,7 @@ define('_MD_WIWI_NOWRITEACCESS_MSG','<br /><h4>Sorry, you don\'t have write acce
 // Wiwi special pages - DO NOT TRANSLATE -
 // Change these names, if you want a different homepage and error page
 // for this language - just make sure that they are legal WiwiLink names.
-define('_MI_WIWIMOD_WIWIHOME','صفحه‌ی آغاز ویوی‌');
-define('_MI_WIWIMOD_WIWI404','نام غیرمجاز می‌باشد');
 
+define('_MI_WIWIMOD_WIWI404','نام غیرمجاز می‌باشد');
 
 ?>
