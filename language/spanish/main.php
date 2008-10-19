@@ -57,6 +57,6 @@ define('_MD_WIWI_NOWRITEACCESS_MSG','<br><h4>Lo sentimos, no tiene permisos para
 // Change these names, if you want a different homepage and error page
 // for this language - just make sure that they are legal WiwiLink names.
 define('_MI_WIWIMOD_WIWIHOME','WiwiHome'); // Also need in modinfo.php
-define('_MI_WIWIMOD_WIWI404','IllegalName');
+define('_MI_WIWIMOD_WIWI404','IllegalName');//Comprobar la validez del nombre
 
 ?>
