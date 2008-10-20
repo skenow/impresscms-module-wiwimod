@@ -10,10 +10,10 @@
  /** include the modinfo constants, so we don't have to define them again (specifically, _MI_WIWIMOD_WIWIHOME) */
  include_once 'modinfo.php';
 
- define('_MI_WIWIMOD_PROFILE1','Open Content');
- define('_MI_WIWIMOD_PROFILE2','Public Content');
- define('_MI_WIWIMOD_PROFILE3','Private Content'); 
- define('_MI_WIWIMOD_WIWIHOME_TITLE','Your Wiwi home page');
+ define('_MI_WIWIMOD_PROFILE1','Offener Inhalt');
+ define('_MI_WIWIMOD_PROFILE2','Öffentlicher Inhalt');
+ define('_MI_WIWIMOD_PROFILE3','Privater Inhalt'); 
+ define('_MI_WIWIMOD_WIWIHOME_TITLE','Ihre Wiwi Startseite');
 
  define('_MI_WIWIMOD_WIWIHOME_TEXT',
      "<p><table border=\'0\'>

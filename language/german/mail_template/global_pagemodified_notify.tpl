@@ -1,17 +1,16 @@
-Hello {X_UNAME},
+Hallo {X_UNAME},
 
-A page you're monitoring has been updated in {X_SITENAME} : "{PAGE_NAME}" .
+Eine Seite, welche von Ihnen beobachtet wird, wurde aktualisiert auf {X_SITENAME} : "{PAGE_NAME}" .
 
-Follow this link to view the page:
+Der folgende Link zeigt die Seite:
 {PAGE_URL}
 
 
 -----------
 
-You are receiving this message because you selected to be notified when this page is updated.
+Sie erhalten die Nachricht, weil die ausgewählt haben, dass Sie benachtigt werden möchten wenn die Seite aktualisiert wurde.
 
-If this is an error or you wish not to receive further such notifications, pleas
-e update your subscriptions by visiting the link below: 
+Wenn es sich um ein Fehler handelt oder Sie in Zukunft keine weiteren Benachrichtungen erhalten möchten, dann aktualisieren Sie bitte die Benachrichtigungsoptionen und folgen dazu dem Link:
 {X_UNSUBSCRIBE_URL}
 
 -----------

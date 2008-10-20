@@ -9,17 +9,17 @@ define('_MI_WIWIMOD_NAME','Wiwi');
 define('_MI_WIWIMOD_DESC','Ein Wiki mit WYSIWYG-Editor.');
 
 // Admin menu
-define('_MI_WIWIMOD_ADMENU1','Pages');
+define('_MI_WIWIMOD_ADMENU1','Seiten');
 define('_MI_WIWIMOD_ADMENU2','Benutzerrechte');
 define('_MI_WIWIMOD_ADMENU3','Blocks/Groups');
-define('_MI_WIWIMOD_ADMENU4','About...');
+define('_MI_WIWIMOD_ADMENU4','Über...');
 
 // Admin options
 define('_MI_WIWIMOD_EDITOR','WYSIWYG-Editor');
 define('_MI_WIWIMOD_EDITOR_DESC','');
 define('_MI_WIWIMOD_DEFAULTPROFILE','Default profile');
 // Default profile description was added in re-release, see below
-define('_MI_WIWIMOD_ALLOWPDF','Show PDF button on pages ?');
+define('_MI_WIWIMOD_ALLOWPDF','Zeige eine PDF Grfik auf den Seiten ?');
 define('_MI_WIWIMOD_ALLOWPDF_DESC','PDF generation from HTML pages is still at experimental level.');
 
 define('_MI_WIWIMOD_SHOWTITLES','Show page titles instead of page name');
@@ -32,7 +32,7 @@ define('_MI_WIWIMOD_XOOPSEDITOR','Choose a "XoopsEditor" supported editor');
 define('_MI_WIWIMOD_XOOPSEDITOR_DESC','Valid if XoopsEditor was chosen above');
 
 // Notification options
-define('_MI_WIWIMOD_PAGENOTIFYCAT_TITLE','Page');
+define('_MI_WIWIMOD_PAGENOTIFYCAT_TITLE','Seite');
 define('_MI_WIWIMOD_PAGENOTIFYCAT_DESC','Notifications that apply to the current page');
 define('_MI_WIWIMOD_PAGENOTIFY_TITLE','Page updated');
 define('_MI_WIWIMOD_PAGENOTIFY_CAPTION','Notify me when the current page is modified');
