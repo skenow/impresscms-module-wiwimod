@@ -19,13 +19,42 @@ include_once 'class/wiwiRevision.class.php';
  * extract all header variables to corresponding php variables ---
  * @todo : - $xoopsUser can be overriden by post variables >> security fix ?
  */      
-if (isset($_REQUEST['page'])) $page = $_REQUEST['page']; else $page='';
-if (isset($_REQUEST['pageid'])) $pageid = (int) $_REQUEST['pageid']; else $pageid=0;
-if (isset($_REQUEST['id'])) $id = (int) $_REQUEST['id']; else $id=0;
+$id = $pageid =$visible =  0;
+$page = $contextBlock = $parent = $op = '';
+$allowed_getvars = array (
+     'op'=>'string',
+     'back'=>'string',
+     'pageid'=>'int',
+     'startpage'=>'int',
+     'com_order'=>'string',
+     'page'=>'string',
+     'id'=>'int');
+$allowed_postvars = array (
+     'op'=>'string',
+     'page'=>'string',
+     'pageid'=>'int',
+     'id'=>'int',
+     'uid'=>'int', 
+     'lastmodified'=>'string', 
+     'title'=>'string', 
+     'editor'=>'string', 
+     'editoptions'=>'string',
+     'body'=>'string', 
+     'parent'=>'string',
+     'prid'=>'int',
+     'visible'=>'int',
+     'contextBlock'=>'string',
+     'item_tag'=>'string');
+$clean_GET = wiwi_cleanVars($_GET, $allowed_getvars);
+extract($clean_GET);
+
 // valid values for op: preview, insert, quietsave, edit, history, diff, restore
-$op = (isset($_GET['op']))? trim(($_GET['op'])):"";
+$valid_ops = array('preview', 'insert', 'quietsave', 'edit', 'history', 'diff', 'restore', NULL);
+$op = (in_array($op, $valid_ops, true)) ? $op : '';
+//$op = (isset($_GET['op']))? trim(($_GET['op'])):"";
 if (!empty($_POST)) {
-    extract($_POST);
+     $clean_POST = wiwi_cleanVars($_POST, $allowed_postvars);
+     extract($clean_POST);
 }
 
 $page = stripslashes($page);  // if page name comes in url, decode it.
@@ -140,7 +169,7 @@ switch ($op) {
 		/*
 		 * Build form
 		 */
-		$form = new XoopsThemeForm(_MD_WIWI_EDIT_TXT.': $page', 'wiwimodform', 'index.php');
+		$form = new XoopsThemeForm(_MD_WIWI_EDIT_TXT.': '.$page, 'wiwimodform', 'index.php');
 		$btn_tray = new XoopsFormElementTray('', ' ');
 	
 		$form->addElement(new XoopsFormHidden('op', 'insert'));
@@ -157,8 +186,8 @@ switch ($op) {
 			$edArr[] = array('value' => $ed[1], 'text' => $ed[0], 'options' => $ed[2]);
 		}
 		$xoopsTpl->assign('editorsArr',$edArr);
-		$editor = isset($_REQUEST['editor']) ? $_REQUEST['editor'] : $xoopsModuleConfig['Editor'] ;
-		$editOptions = isset($_REQUEST['editoptions']) ? $_REQUEST['editoptions'] : "" ;
+		$editor = isset($_POST['editor']) ? $_POST['editor'] : $xoopsModuleConfig['Editor'] ;
+		$editOptions = isset($_POST['editoptions']) ? $_POST['editoptions'] : "" ;
 		$form->addElement(new XoopsFormHidden('editor', $editor));
 		$form->addElement(new XoopsFormHidden('editoptions', $editOptions));
 		

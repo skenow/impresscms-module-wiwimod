@@ -204,4 +204,69 @@ function isTagModuleActivated()
     return false;
   return true;
 }
+/**
+ * Basic validation and sanitation of user input
+ * 
+ * This can be expanded for all different types of input: email, URL, filenames, media/mimetypes 
+ * 
+ * @param array $input_var Array of user input, gather from $_GET, $_POST
+ * @param array $valid_vars Array of valid variables and data type (integer, boolean, string, )   
+ * @return array Array of validated and sanitized variables
+ */
+ 
+ function wiwi_cleanVars ($input_var, $valid_vars) {
+ $clean_var = array();
+ foreach ($valid_vars as $key=>$type){
+  if ( empty($input_var[$key])) {
+    $input_var[$key] = NULL;
+    continue;
+  }
+  switch ($type) {
+    case 'int':
+    case 'integer':
+      $clean_var[$key] = 0;
+      if (is_numeric($input_var[$key])) {
+       $clean_var[$key] = (int) $input_var[$key];
+      }
+      break;
+    case 'string':
+      $clean_var[$key] = '';
+      if (is_string($input_var[$key])) {
+      $clean_var[$key] = trim($input_var[$key]);
+      }
+      break;
+    case 'float':
+    case 'double':
+    case 'real':
+      $clean_var[$key] = 0;
+      if (is_float($input_var[$key])) {
+      $clean_var[$key] = (float) $input_var[$key];
+      }
+      break; 
+    case 'bool':
+    case 'boolean':
+      $clean_var[$key] = false;
+      if (is_bool($input_var[$key])) {
+      $clean_var[$key] = (bool) $input_var[$key];
+      }
+      break;
+    case 'binary':/* only PHP6 - for now
+      if (is_string($input_var[$key])) {
+      $clean_var[$key] = htmlspecialchars(trim($input_var[$key]));
+      }*/
+      break;
+    case 'array': /* need to walk the array, I suppose
+      if (is_array($input_var[$key])) {
+      $clean_var[$key] = htmlspecialchars(trim($input_var[$key]));
+      }*/
+      break;
+    case 'object':
+      if (is_object($input_var[$key])) {
+      $clean_var[$key] = (object)$input_var[$key];
+      }
+      break;
+    }
+ }
+ return $clean_var;
+ }
 ?>

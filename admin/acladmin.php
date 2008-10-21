@@ -14,12 +14,23 @@ include 'admin_header.php';
 include '../class/wiwiProfile.class.php';
 /** Include the core form class */
 include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+$op = $prid = $newprf = $profile = null;
 
-$op = (isset($_GET['op']))?$_GET['op']:'';
+$allowed_get = array(
+  'profile' => 'int',
+  'newprf' => 'int');
+$clean_GET = wiwi_cleanVars ($_GET,$allowed_get);
+extract($clean_GET);
+
+$allowed_postvars = array(
+  'prid' => 'int');
 if (!empty($_POST)) {
-    extract($_POST);
+     $clean_POST = wiwi_cleanVars($_POST, $allowed_postvars);
+     extract($_POST);
 }
 
+$valid_ops = array('edit', 'save', 'confirmdelete', 'delete', NULL);
+if (in_array($op, $valid_ops, true)) {
 switch ($op) {
 
 case 'edit':
@@ -30,9 +41,6 @@ default:
 	//--- list profiles ---
 	$prf = new WiwiProfile();
 	$prflst = $prf->getAllProfiles();
-	if (isset($_GET['profile'])) {
-		$prid = (int) $_GET['profile'];
-	} else $prid = null;
 	$prf->load($prid);
 
 	echo '<script>function loadPrf(ele) { ';
@@ -96,14 +104,6 @@ default:
 
 case 'save' :
 if ( isset($_POST) ) {
-/**
- *@todo remove this, if is proves unnecessary
- * does this need to be done, since extract($_POST) is used at the beginning of this file?	
- */
- /*  
-	foreach ( $_POST as $k => $v ) {
-		$$k = $v;
-	}*/
 	$prf = new WiwiProfile();
 	$prf->name = $prf_name;
 	$prf->prid = (int) $prid;
@@ -119,10 +119,10 @@ if ( isset($_POST) ) {
 	}
 
 case 'confirmdelete' :
-	if (isset($_GET['profile'])) {
-		$prid = (int) $_GET['profile'];
-	} elseif (isset($_POST['prid'])) {
-		$prid = (int) $_POST['prid'];
+	if (isset($profile)) {
+		$prid = (int) $profile;
+	} elseif (isset($prid)) {
+		$prid = (int) $prid;
 	} else redirect_header ('acladmin.php', 2, _AM_WIWI_ERRDELETE_MSG);
 
 	$prf = new WiwiProfile();
@@ -162,15 +162,11 @@ case 'confirmdelete' :
 	break;
 
 case 'delete' :
-	if (isset($_GET['profile'])) {
-		$prid = (int) $_GET['profile'];
-	} elseif (isset($_POST['prid'])) {
-		$prid = (int) $_POST['prid'];
+	if (isset($profile)) {
+		$prid = (int) $profile;
+	} elseif (isset($prid)) {
+		$prid = (int) $prid;
 	} else redirect_header ('acladmin.php', 2, _AM_WIWI_ERRDELETE_MSG);
-
-	if (isset($_GET['newprf'])) {
-		$newprf = (int) $_GET['newprf'];
-	} else $newprf = 0;
 
 	$prf = new WiwiProfile();
 	$prf->load($prid);
@@ -179,6 +175,7 @@ case 'delete' :
 	redirect_header ('acladmin.php', 2, ($success ? _AM_WIWI_PRFDELSUCCESS_MSG : _AM_WIWI_PRFDELFAILED_MSG));
 	break;
 
+}
 }
 
 ?>

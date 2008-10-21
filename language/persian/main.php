@@ -57,7 +57,7 @@ define('_MD_WIWI_NOWRITEACCESS_MSG','<br /><h4>Sorry, you don\'t have write acce
 // Wiwi special pages - DO NOT TRANSLATE -
 // Change these names, if you want a different homepage and error page
 // for this language - just make sure that they are legal WiwiLink names.
-
+if (!defined('_MI_WIWIMOD_WIWIHOME'){define('_MI_WIWIMOD_WIWIHOME','WiwiHome');}
 define('_MI_WIWIMOD_WIWI404','نام غیرمجاز می‌باشد');
 
 ?>
