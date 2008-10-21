@@ -10,12 +10,24 @@
  */
 if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 /** @todo properly validate and sanitize HTTP vars */
-	$post_selwhere = (isset($_POST['post_selwhere']))?$_POST['post_selwhere']:"";
-	$post_text = (isset($_POST['post_text']))?$_POST['post_text']:"";
-	$post_profile = (isset($_POST['post_profile']))?intval($_POST['post_profile']):0;
-	$post_selorderby = (isset($_POST['post_selorderby']))?$_POST['post_selorderby']:"keyword";
-	$post_selorderdir = (isset($_POST['post_selorderdir']))?$_POST['post_selorderdir']:"ASC";
-	$startlist = isset( $_POST['startlist'] ) ? intval( $_POST['startlist'] ) : 0; 
+$post_selwhere = $post_text = $post_profile = $startlist = NULL;
+$post_selorderby = 'keyword';
+$post_selorderdir = 'ASC';
+
+$allowed_postvars = array (
+  'post_selwhere' => 'string',
+  'post_text' => 'string',
+  'post_profile' => 'int',
+  'post_selorderby' => 'string',
+  'post_selorderdir' => 'string');
+$clean_POST = wiwi_cleanVars($_POST, $allowed_postvars);
+extract($clean_POST);
+
+$allowed_getvars = array (
+  'startlist' => 'int');
+$clean_GET = wiwi_cleanVars($_GET, $allowed_getvars);
+extract($clean_GET);
+
 	echo '<input type="hidden" name = "post_selwhere" value="'.$post_selwhere.'">';
 	echo '<input type="hidden" name = "post_text" value="'.$post_text.'">';
 	echo '<input type="hidden" name = "post_profile" value="'.$post_profile.'">';
