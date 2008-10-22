@@ -131,7 +131,7 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '')
 	$myts = &MyTextSanitizer::getInstance();
 	
 	$tblColors = Array();
-	$tblColors[0] = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = '';
+	$tblColors[0] = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] ='';
 	$tblColors[$currentoption] = 'current';
 	if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $wiwidir . '/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
 		include_once XOOPS_ROOT_PATH . '/modules/' . $wiwidir . '/language/' . $xoopsConfig['language'] . '/modinfo.php';
@@ -154,6 +154,7 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '')
 	$html .= "<li id='" . $tblColors[2] . "'><a href=\"" . XOOPS_URL . "/modules/" . $wiwidir . "/admin/preferences.php\"><span>" . _PREFERENCES . "</span></a></li>";
 	$html .= "<li id='" . $tblColors[3] . "'><a href=\"" . XOOPS_URL . "/modules/" . $wiwidir . "/admin/myblocksadmin.php\"><span>" . _MI_WIWIMOD_ADMENU3  . "</span></a></li>";
 	$html .= "<li id='" . $tblColors[4] . "'><a href=\"" . XOOPS_URL . "/modules/" . $wiwidir . "/admin/about.php\"><span>" . _MI_WIWIMOD_ADMENU4 . "</span></a></li>";
+	$html .= "<li id='" . $tblColors[5] . "'><a href=\"" . XOOPS_URL . "/modules/" . $wiwidir . "/admin/help.php\"><span>" . _MI_WIWIMOD_ADMENU5 . "</span></a></li>";
 	$html .= "</ul></div>&nbsp;";
 
 	return $html;
