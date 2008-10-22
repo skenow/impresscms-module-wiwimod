@@ -533,7 +533,7 @@ class WiwiRevision {
 			$pageObj->keyword = $row['keyword']; 
 			$pageObj->title = $row['title'];		
 			$pageObj->body = $row['body'];	
-			$pageObj->lastmodified = $row['lastmodified']; 
+			$pageObj->lastmodified = formatTimestamp( strtotime($row['lastmodified']), _MEDIUMDATESTRING ); 
 			$pageObj->u_id = $row['u_id']; 
 			$pageObj->parent = $row['parent'];		
 			$pageObj->visible = $row['visible'];	
