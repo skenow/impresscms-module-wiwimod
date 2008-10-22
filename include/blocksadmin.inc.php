@@ -15,7 +15,7 @@ include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
 include XOOPS_ROOT_PATH.'/modules/system/admin/blocksadmin/blocksadmin.php';
 
 $op = 'list';
-
+$adv_pages = @file_exists(XOOPS_ROOT_PATH.'/kernel/page.php'); // test to see if ImpressCMS 1.1+
 if ( isset($_POST) ) {
 	foreach ( $_POST as $k => $v ) {
 		$$k = $v;
@@ -108,8 +108,11 @@ if ( $op == 'order' ) {
 
 		$bmodule[$i] = (isset($bmodule[$i]) && is_array($bmodule[$i])) ? $bmodule[$i] : array(-1) ;
 
+     if (!$adv_pages) { // -- XOOPS 2.0.x, 2.3.x and ImpressCMS 1.0.x
 		myblocksadmin_update_block($i, $side[$i], $weight[$i], $visible[$i], $title[$i], '', '', $bcachetime[$i], $bmodule[$i], array());
-
+     } else { // -- ImpressCMS 1.1+
+		icms_update_block($i, $side[$i], $weight[$i], $visible[$i], $title[$i], '', '', $bcachetime[$i], $bmodule[$i], array());
+     }
 //		if ( $oldweight[$i] != $weight[$i] || $oldvisible[$i] != $visible[$i] || $oldside[$i] != $side[$i] )
 //		order_block($bid[$i], $weight[$i], $visible[$i], $side[$i]); GIJ
 	}
@@ -129,7 +132,11 @@ if ( $op == 'update' ) {
 	$bcontent = isset($bcontent) ? $bcontent : '';
 	$bctype = isset($bctype) ? $bctype : '';
 	$bmodule = (isset($bmodule) && is_array($bmodule)) ? $bmodule : array(-1) ; // GIJ +
+     if (!$adv_pages) {// -- XOOPS 2.0.x, 2.3.x and ImpressCMS 1.0.x
 	$msg = myblocksadmin_update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options); // GIJ c
+     } else { // -- ImpressCMS 1.1+
+          $msg = icms_update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $option=array());
+	}
 	redirect_header('myblocksadmin.php',1,$msg); // GIJ +
 }
 
@@ -236,5 +243,89 @@ if ($op == 'clone_ok') {
 		// exit(); GIJ -
 		return $msg ; // GIJ +
 	}
-
+/**
+ * ImpressCMS 1.1 update blocks function handles pages
+ */ 
+    function icms_update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options=array())
+    {
+        global $xoopsConfig;
+        if (empty($bmodule)) {
+            xoops_cp_header();
+            xoops_error(sprintf(_AM_NOTSELNG, _AM_VISIBLEIN));
+            xoops_cp_footer();
+            exit();
+        }
+        $myblock = new XoopsBlock($bid);
+        $myblock->setVar('side', $bside);
+        $myblock->setVar('weight', $bweight);
+        $myblock->setVar('visible', $bvisible);
+        $myblock->setVar('title', $btitle);
+        $myblock->setVar('content', $bcontent);
+        $myblock->setVar('bcachetime', $bcachetime);
+        if (isset($options)) {
+            $options_count = count($options);
+            if ($options_count > 0) {
+                //Convert array values to comma-separated
+                for ( $i = 0; $i < $options_count; $i++ ) {
+                    if (is_array($options[$i])) {
+                        $options[$i] = implode(',', $options[$i]);
+                    }
+                }
+                $options = implode('|', $options);
+                $myblock->setVar('options', $options);
+            }
+        }
+        if ($myblock->getVar('block_type') == 'C') {
+            switch ($bctype) {
+            case 'H':
+                $name = _AM_CUSTOMHTML;
+                break;
+            case 'P':
+                $name = _AM_CUSTOMPHP;
+                break;
+            case 'S':
+                $name = _AM_CUSTOMSMILE;
+                break;
+            default:
+                $name = _AM_CUSTOMNOSMILE;
+                break;
+            }
+            $myblock->setVar('name', $name);
+            $myblock->setVar('c_type', $bctype);
+        } else {
+            $myblock->setVar('c_type', 'H');
+        }
+        $msg = _AM_DBUPDATED;
+        if ($myblock->store() != false) {
+            $db =& Database::getInstance();
+            $sql = sprintf("DELETE FROM %s WHERE block_id = '%u'", $db->prefix('block_module_link'), intval($bid));
+            $db->query($sql);
+            foreach ($bmodule as $bmid) {
+            	$page = explode('-', $bmid);
+            	$mid = $page[0];
+            	$pageid = $page[1];
+            	$sql = "INSERT INTO ".$db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($bid)."', '".intval($mid)."', '".intval($pageid)."')";
+            	$db->query($sql);
+            }
+            include_once XOOPS_ROOT_PATH.'/class/template.php';
+            $xoopsTpl = new XoopsTpl();
+            $xoopsTpl->xoops_setCaching(2);
+            if ($myblock->getVar('template') != '') {
+                if ($xoopsTpl->is_cached('db:'.$myblock->getVar('template'), 'blk_'.$myblock->getVar('bid'))) {
+                    if (!$xoopsTpl->clear_cache('db:'.$myblock->getVar('template'), 'blk_'.$myblock->getVar('bid'))) {
+                        $msg = 'Unable to clear cache for block ID '.$bid;
+                    }
+                }
+            } else {
+                if ($xoopsTpl->is_cached('db:system_dummy.html', 'blk_'.$bid)) {
+                    if (!$xoopsTpl->clear_cache('db:system_dummy.html', 'blk_'.$bid)) {
+                        $msg = 'Unable to clear cache for block ID '.$bid;
+                    }
+                }
+            }
+        } else {
+            $msg = 'Failed update of block. ID:'.$bid;
+        }
+        //redirect_header('admin.php?fct=blocksadmin&amp;t='.time(),1,$msg);
+    }
 ?>

@@ -70,7 +70,7 @@ function list_blocks()
 //  if (method_exists('XoopsBlock','getBlockPositions')) {echo 'You are using ImpressCMS and can have custom block positions<br />';}
 //	if (file_exists(XOOPS_ROOT_PATH.'/kernel/page.php')) {echo 'You are using ImpressCMS 1.1 and can have custom page links <br />';}
 	$adv_blocks = method_exists('XoopsBlock','getBlockPositions');
-	$adv_pages = file_exists(XOOPS_ROOT_PATH.'/kernel/page.php');
+	$adv_pages = @file_exists(XOOPS_ROOT_PATH.'/kernel/page.php');
 // blocks displaying loop
 	$class = 'even' ;
 	foreach( array_keys( $block_arr ) as $i ) {
@@ -125,13 +125,13 @@ function list_blocks()
 		}
 
      		$db =& Database::getInstance();
+     if (!$adv_pages){
+       // target modules - XOOPS 2.0.x, 2.3.x and ImpressCMS 1.0.x
      		$result = $db->query( 'SELECT module_id FROM '.$db->prefix('block_module_link').' WHERE block_id="'.$bid.'"' ) ;
     		$selected_mids = array();
      		while ( list( $selected_mid ) = $db->fetchRow( $result ) ) {
             $selected_mids[] = (int) $selected_mid ;
     		}
-     if (!$adv_pages){
-       // target modules - XOOPS 2.0.x, 2.3.x and ImpressCMS 1.0.x
         $module_handler =& xoops_gethandler('module');
     		$criteria = new CriteriaCompo(new Criteria('hasmain', 1));
     		$criteria->add(new Criteria('isactive', 1));
@@ -149,6 +149,11 @@ function list_blocks()
 		}
 		} else {
      /* target modules/pages - ImpressCMS 1.1+ */
+    		$result = $db->query( 'SELECT module_id, page_id FROM '.$db->prefix('block_module_link').' WHERE block_id="'.$bid.'"' ) ;
+    		$selected_mids = array();
+         		while ( $row = $db->fetchArray( $result ) ) {
+               $selected_mids[] = (int)$row['module_id'].'-'.(int)$row['page_id'];
+    		}
     		$page_handler = & xoops_gethandler ( 'page' );
     		$module_options = $page_handler->getPageSelOptions ( $selected_mids );        
     }

@@ -12,6 +12,7 @@
  */
  if (!defined("XOOPS_ROOT_PATH") && !defined('ICMS_ROOT_PATH')) die('Root path not defined');
  
+function xoops_module_install_wiwimod (){ 
  $mydir = dirname(dirname(__FILE__));
 
  if (@file_exists($mydir.'/language/'.$xoopsConfig['language'].'/install.php')){
@@ -49,7 +50,7 @@
  $prof->commentslevel = 1;
  $prof->historylevel = 1;
  $prof->store();
-/* Update the Prefences option with default profiles */
+/* Update the Preferences option with default profiles */
  $prof->updateModuleConfig();
  
 /* add the default home page here */
@@ -66,6 +67,11 @@
   $page->pageid = '1';		
   $page->profile->prid = '1';		
 	
-  $page->add();	  
- 
+  $page->add();
+  
+  return true;
+ } 
+/* This will create a function with a name based on the installation directory */
+ $myfunc = "function xoops_module_install_".basename(dirname(dirname(__FILE__)))."() { return xoops_module_install_wiwimod();}";
+ eval($myfunc);
 ?>

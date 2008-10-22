@@ -105,7 +105,7 @@ switch ($op) {
 
 }
 
-echo '</form><br />'. var_dump(get_included_files());
+echo '</form><br />';
 } else {
 // put something here if you want to inform users of a bad op value
 // echo "you made a bad choice!";

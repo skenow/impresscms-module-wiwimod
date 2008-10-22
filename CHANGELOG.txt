@@ -30,10 +30,10 @@ Improved
 * Replaced deprecated functions with current functions: makeTboxData4Show() -> htmlSpecialChars(); 
 * References to class/xoopsuser.php relocated to kernel/user.php (vaughan)
 * Changed intval() to (int) for faster processing
-* myblocksadmin updated for current basic block positions - works in ImpressCMS 1.0 (and partially in 1.1) and in XOOPS 2.0.18 and 2.3
+* myblocksadmin updated for current basic block positions - works in ImpressCMS 1.0, 1.1 and in XOOPS 2.0.18 and 2.3
 * Profiles are saved as config options during the installation - no longer need to save a profile before setting default profile
 * All data inserts are now done in include/oninstall.php and are not in the SQL definitions 
-* Data validation for GET/POST variables
+* Data validation for GET/POST/REQUEST variables
 
 Language additions
 * blocks.php

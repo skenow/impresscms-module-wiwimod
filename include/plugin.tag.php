@@ -54,6 +54,9 @@ function wiwimod_tag_iteminfo(&$items)
                 }
 	}
 }
+/* This will create a function with a name based on the installation directory */
+ $myfunc = "function ".basename(dirname(dirname(__FILE__)))."_tag_iteminfo () { return wiwimod_tag_iteminfo();}";
+ eval($myfunc);
 
 /**
  * Remove orphan tag-item links
