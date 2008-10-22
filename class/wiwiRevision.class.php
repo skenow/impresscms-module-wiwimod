@@ -332,21 +332,21 @@ class WiwiRevision {
 				"title",
 				1,
 				'"<span class=\'wiwi_titre\' style=\"font-size:large;\">[$counter]</span><br/>"',
-				'"&nbsp;&nbsp;<A href=\"index.php?page=".$this->encode($content["keyword"])."\">".($content["title"] == "" ? $content["keyword"] : $content["title"])."</a><br/>"',
+				'"&nbsp;&nbsp;<a href=\"index.php?page=".$this->encode($content["keyword"])."\">".($content["title"] == "" ? $content["keyword"] : $content["title"])."</a><br/>"',
 				""), 
 			"PageIndexI" => array(
 				"ORDER BY w1.keyword ASC", 
 				"keyword", 
 				1, 
 				'"<span class=\'wiwi_titre\'>$counter</span><br />"', 
-				'"&nbsp;&nbsp;<A href=\"index.php?page=".$content["keyword"]."\">".$content["keyword"]."</a> : ".$content["title"]."<br />"', 
+				'"&nbsp;&nbsp;<a href=\"index.php?page=".$content["keyword"]."\">".$content["keyword"]."</a> : ".$content["title"]."<br />"', 
 				""), 
 			"RecentChanges" => array(
 				"ORDER BY w1.lastmodified DESC LIMIT 20", 
 				"lastmodified", 
 				10, 
 				'"<tr><td colspan=3><strong>".formatTimestamp(strtotime($counter), _SHORTDATESTRING)."</strong></td></tr>"',
-				'"<tr><td>&nbsp;".formatTimestamp(strtotime($content["lastmodified"]), "H:i")."</td><td><A href=\"index.php?page=".$this->encode($content["keyword"])."\">".($content["title"] == "" ? $content["keyword"] : $content["title"])."</a></td><td><span class=\"itemPoster\">".getUserName($content["u_id"])."</span></td></tr>"',
+				'"<tr><td>&nbsp;".formatTimestamp(strtotime($content["lastmodified"]), "H:i")."</td><td><a href=\"index.php?page=".$this->encode($content["keyword"])."\">".($content["title"] == "" ? $content["keyword"] : $content["title"])."</a></td><td><span class=\"itemPoster\">".getUserName($content["u_id"])."</span></td></tr>"',
 				"")
 		);
 		$cfg = $settings[$type];
