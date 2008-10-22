@@ -13,6 +13,7 @@ define('_MI_WIWIMOD_ADMENU1','Pages');
 define('_MI_WIWIMOD_ADMENU2','Privilèges');
 define('_MI_WIWIMOD_ADMENU3','Blocs et Groupes');
 define('_MI_WIWIMOD_ADMENU4','A Propos...');
+define('_MI_WIWIMOD_ADMENU5','Help');
 
 // Admin options
 define('_MI_WIWIMOD_EDITOR','Quel éditeur utiliser');

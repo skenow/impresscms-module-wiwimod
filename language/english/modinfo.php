@@ -13,6 +13,7 @@ define('_MI_WIWIMOD_ADMENU1','Pages');
 define('_MI_WIWIMOD_ADMENU2','Privileges');
 define('_MI_WIWIMOD_ADMENU3','Blocks/Groups');
 define('_MI_WIWIMOD_ADMENU4','About...');
+define('_MI_WIWIMOD_ADMENU5','Help');
 
 // Admin options
 define('_MI_WIWIMOD_EDITOR','Which editor should Wiwi use');
@@ -58,7 +59,7 @@ define('_MI_WIWIMOD_BLOCK_RELATED_NAME','WiwiSideContent');
 define('_MI_WIWIMOD_BLOCK_RELATED_DESC','Side block for extra content on Wiwi pages');
 define('_MI_WIWIMOD_BLOCK_SHOWPAGE_NAME','WiwiShowPage');
 define('_MI_WIWIMOD_BLOCK_SHOWPAGE_DESC','Show a wiwi page');
-define('_MI_WIWIMOD_AUTHOR_WORD','<h4>About Wiwi 0.8.3</h4><br />Wiwi is GPL software ; visit Wiwi home page at <a href="http://www.zonatim.com/modules/wiwimod?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> to support or get help.<br /><br />If you\'ve just migrated from an older Wiwi version (0.7.1 or less), please click here : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
+define('_MI_WIWIMOD_AUTHOR_WORD','<h4>Help About Wiwi 0.8.3</h4><br />Wiwi is GPL software ; visit Wiwi home page at <a href="http://www.zonatim.com/modules/wiwimod?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> to support or get help.<br /><br />If you\'ve just migrated from an older Wiwi version (0.7.1 or less), please click here : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
 define('_MI_WIWIMOD_DEFAULTPROFILE_DESC','Default profile assigned to new pages');
 if (!defined('_MI_WIWIMOD_WIWIHOME')){define('_MI_WIWIMOD_WIWIHOME','WiwiHome');}
 ?>

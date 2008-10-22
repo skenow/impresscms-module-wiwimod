@@ -14,6 +14,7 @@ define('_MI_WIWIMOD_ADMENU1','Pagina\'s ');
 define('_MI_WIWIMOD_ADMENU2','Toegangsrechten');
 define('_MI_WIWIMOD_ADMENU3','Blocks/Groepen');
 define('_MI_WIWIMOD_ADMENU4','Over...');
+define('_MI_WIWIMOD_ADMENU5','Help');
 
 // Admin options
 define('_MI_WIWIMOD_EDITOR','Welke editor moet wiwi gebruiken?');

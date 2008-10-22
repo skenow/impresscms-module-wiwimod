@@ -13,6 +13,7 @@ define('_MI_WIWIMOD_ADMENU1','Strani');
 define('_MI_WIWIMOD_ADMENU2','Privilegiji');
 define('_MI_WIWIMOD_ADMENU3','Bloki/Skupine');
 define('_MI_WIWIMOD_ADMENU4','Vizitka...');
+define('_MI_WIWIMOD_ADMENU5','Help');
 
 // Admin options
 define('_MI_WIWIMOD_EDITOR','Kateri program za urejanje naj Wiwi uporablja');

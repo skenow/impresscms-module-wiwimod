@@ -13,6 +13,7 @@ define('_MI_WIWIMOD_ADMENU1','صفحات');
 define('_MI_WIWIMOD_ADMENU2','دسترسی‌ها');
 define('_MI_WIWIMOD_ADMENU3','بلوک‌ها/گروه‌ها');
 define('_MI_WIWIMOD_ADMENU4','درباره‌ی سازنده');
+define('_MI_WIWIMOD_ADMENU5','Help');
 
 // Admin options
 define('_MI_WIWIMOD_EDITOR','Which editor should Wiwi use');

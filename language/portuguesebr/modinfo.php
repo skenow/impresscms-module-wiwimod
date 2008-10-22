@@ -14,6 +14,7 @@ define('_MI_WIWIMOD_ADMENU1','Páginas');
 define('_MI_WIWIMOD_ADMENU2','Privilégios');
 define('_MI_WIWIMOD_ADMENU3','Blocos/Grupos');
 define('_MI_WIWIMOD_ADMENU4','Sobre...');
+define('_MI_WIWIMOD_ADMENU5','Help');
 
 // Admin options
 define('_MI_WIWIMOD_EDITOR','Editor, que deve utilizar no Wiki');
