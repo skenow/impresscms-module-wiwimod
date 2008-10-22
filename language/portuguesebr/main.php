@@ -1,6 +1,6 @@
 <?php
 /*
- * Module and admin language definition
+ * Module and admin language portuguese definition
  * 
  *	_BTN	: text within buttons or action links
  *  _COL	: column headers
@@ -10,48 +10,49 @@
  *  _MSG	: messages, alerts ...
  * @package Wiwimod 
  * @version $Id: main.php 5810 2008-10-19 03:35:40Z skenow $ 
- */
+* Translation: GibaPhp - http://br.impresscms.org
+  */
 
-define('_MD_WIWI_MODIFIED_TXT', 'Last modified:');		
+define('_MD_WIWI_MODIFIED_TXT', 'Última modificação:');		
 define('_MD_WIWI_BY','by');								
-define('_MD_WIWI_HISTORY_TXT','History of page');		
-define('_MD_WIWI_EDIT_TXT','Edit Wiwi Page');
-define('_MD_WIWI_BODY_TXT','Page content');
-define('_MD_WIWI_DIFF_TXT','Differences between current and latest revisions');
-define('_MD_WIWI_THISPAGE','This page');
+define('_MD_WIWI_HISTORY_TXT','Página do Histórico');		
+define('_MD_WIWI_EDIT_TXT','Editar Página');
+define('_MD_WIWI_BODY_TXT','Conteúdo da Página');
+define('_MD_WIWI_DIFF_TXT','Diferenças entre a página atual e as revisões recentes');
+define('_MD_WIWI_THISPAGE','Esta página');
 
 //define('_MD_WIWI_EDIT_BTN','Edit');						
 //define('_MD_WIWI_PREVIEW_BTN','Preview');
-define('_MD_WIWI_SUBMITREVISION_BTN','New revision');
-define('_MD_WIWI_QUIETSAVE_BTN','Save');
-define('_MD_WIWI_HISTORY_BTN','History');				
-define('_MD_WIWI_PAGEVIEW_BTN','Back to page view');	
-define('_MD_WIWI_VIEW_BTN','View');
-define('_MD_WIWI_RESTORE_BTN','Restore');
-define('_MD_WIWI_FIX_BTN','Fix');
-define('_MD_WIWI_COMPARE_BTN','Compare');
-define('_MD_WIWI_SELEDITOR_BTN','(right-click to select another editor)');
+define('_MD_WIWI_SUBMITREVISION_BTN','Nova revisão');
+define('_MD_WIWI_QUIETSAVE_BTN','Salvar');
+define('_MD_WIWI_HISTORY_BTN','Histórico');				
+define('_MD_WIWI_PAGEVIEW_BTN','Voltar para a página');	
+define('_MD_WIWI_VIEW_BTN','Visualizar');
+define('_MD_WIWI_RESTORE_BTN','Restauração');
+define('_MD_WIWI_FIX_BTN','Consertar');
+define('_MD_WIWI_COMPARE_BTN','Comparar');
+define('_MD_WIWI_SELEDITOR_BTN','(clique com o botão direito do mouse para selecionar outro editor)');
 
-define('_MD_WIWI_TITLE_FLD','Title');					
-define('_MD_WIWI_BODY_FLD','Content');
-define('_MD_WIWI_VISIBLE_FLD','Visible');
-define('_MD_WIWI_CONTEXTBLOCK_FLD','Side content');
-define('_MD_WIWI_PARENT_FLD','Parent page');
-define('_MD_WIWI_PROFILE_FLD','Privileges profile');
+define('_MD_WIWI_TITLE_FLD','Título');					
+define('_MD_WIWI_BODY_FLD','Conteúdo');
+define('_MD_WIWI_VISIBLE_FLD','Visível');
+define('_MD_WIWI_CONTEXTBLOCK_FLD','Conteúdo Lateral');
+define('_MD_WIWI_PARENT_FLD','Página Principal');
+define('_MD_WIWI_PROFILE_FLD','Privilégios do perfil');
 
-define('_MD_WIWI_TITLE_COL','Title');					
-define('_MD_WIWI_MODIFIED_COL','Modified');				
-define('_MD_WIWI_AUTHOR_COL','Author');
-define('_MD_WIWI_ACTION_COL','Action');
-define('_MD_WIWI_KEYWORD_COL','Page ID');
+define('_MD_WIWI_TITLE_COL','Título');					
+define('_MD_WIWI_MODIFIED_COL','Modificado');				
+define('_MD_WIWI_AUTHOR_COL','Autor');
+define('_MD_WIWI_ACTION_COL','Ação');
+define('_MD_WIWI_KEYWORD_COL','ID');
 
 
-define('_MD_WIWI_PAGENOTFOUND_MSG',"This page doesn't exist yet.");
-define('_MD_WIWI_DBUPDATED_MSG','Database successfully updated!');
-define('_MD_WIWI_ERRORINSERT_MSG','Error while updating database!');
-define('_MD_WIWI_EDITCONFLICT_MSG','Conflicting modifications! - All changes have been rejected!');
-define('_MD_WIWI_NOREADACCESS_MSG','<br /><h4>Sorry, restricted access page.</h4><br />');
-define('_MD_WIWI_NOWRITEACCESS_MSG','<br /><h4>Sorry, you don\'t have write access on this page.</h4><br />');
+define('_MD_WIWI_PAGENOTFOUND_MSG',"Esta página não existe ainda.");
+define('_MD_WIWI_DBUPDATED_MSG','Banco de dados atualizado com sucesso!');
+define('_MD_WIWI_ERRORINSERT_MSG','Erro durante a atualização do banco de dados!');
+define('_MD_WIWI_EDITCONFLICT_MSG','Modificações em Conflito! - Todas as alterações feitas até o momento serão rejeitadas!');
+define('_MD_WIWI_NOREADACCESS_MSG','<br /><h4>Lamento, o acesso a esta página é restrito.</h4><br />');
+define('_MD_WIWI_NOWRITEACCESS_MSG','<br /><h4>Lamento, você não tem permissões para escrever/acessar esta página.</h4><br />');
 
 // Wiwi special pages - 
 // Change these names, if you want a different homepage and error page
