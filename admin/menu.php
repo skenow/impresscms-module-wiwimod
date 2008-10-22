@@ -24,4 +24,14 @@ $adminmenu[] = array(
      'link'  => 'admin/myblocksadmin.php',
      'icon' => 'images/blocksgroups.png',
      'small' => 'images/blocksgroups_small.png');
+$adminmenu[] = array(
+     'title' => _MI_WIWIMOD_ADMENU4,
+     'link'  => 'admin/about.php',
+     'icon' => 'images/about.png',
+     'small' => 'images/about_small.png');
+$adminmenu[] = array(
+     'title' => _MI_WIWIMOD_ADMENU5,
+     'link'  => 'admin/help.php',
+     'icon' => 'images/help.png',
+     'small' => 'images/help_small.png');
 ?>
