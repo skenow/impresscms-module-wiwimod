@@ -73,6 +73,14 @@ Language additions
 
 * admin/admin.php
   + define('_AM_WIWI_SYS_CFG','System Configuration');
+
+Contributors to this release
+* skenow
+* pesian_stranger
+* gibaphp
+* juancj
+* xoops-magazine
+* m0nty_
   
 == Wiwimod 0.8.3 ==
 
