@@ -1,12 +1,12 @@
 <?php
 /**
  * Revision class of wiwimod
- * 
+ *
  * @package Wiwimod
  * @author Xavier JIMENEZ
  * @author skenow <skenow@impresscms.org>
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$  
+ * @version $Id$
  */
 
 if (!defined('XOOPS_ROOT_PATH')&& !defined('ICMS_ROOT_PATH')) exit();
@@ -22,9 +22,9 @@ include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/include/diff.php';
 class WiwiRevision {
 
 	var $keyword;			// the CamelCase code of the page
-	var $title;				
-	var $body;				
-	var $lastmodified;		
+	var $title;
+	var $body;
+	var $lastmodified;
 	var $u_id;				// user id of last author
 	var $parent;			// CamelCase code of the parent page
 	var $visible;			// weight of the reviison in TOC block
@@ -42,7 +42,7 @@ class WiwiRevision {
 	 * Loads revision from database :
 	 *    - loads requested revision if $id is provided ;
 	 *    - loads latest revision of page if $id isn't provided
-	 *		Note : in this case, $page can be either the page CamelCase keyword, 
+	 *		Note : in this case, $page can be either the page CamelCase keyword,
 	 *             or the corresponding pageid field (which both are common to
 	 *             all page revisions.
 	 */
@@ -51,20 +51,20 @@ class WiwiRevision {
 		$this->db =& Database::getInstance();
 		$this->ts =& MyTextSanitizer::getInstance();
 
-		$modhandler =& xoops_gethandler('module');				
+		$modhandler =& xoops_gethandler('module');
 		$config_handler =& xoops_gethandler('config');
-		$wiwiMod = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));  
+		$wiwiMod = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));
 		$this->wiwiConfig =& $config_handler->getConfigsByCat(0, $wiwiMod->getVar('mid'));
 
 		if (($page == '') && ($id == 0) && ($pageid == 0)) $page = _MI_WIWIMOD_WIWIHOME;
 
 		$this->keyword = $page;
-		$this->title = '';		
-		$this->body = '';		
+		$this->title = '';
+		$this->body = '';
 		$this->lastmodified = null;
 		$this->u_id = 0;
-		$this->parent = '';		
-		$this->visible = 0;	
+		$this->parent = '';
+		$this->visible = 0;
 		$this->contextBlock = '';
 		$this->pageid = $pageid;
 		$this->profile = new wiwiProfile(); // loads an empty profile
@@ -72,7 +72,7 @@ class WiwiRevision {
 
 		if ($id != 0) {
 			$sql = 'SELECT * FROM '.$this->db->prefix('wiwimod').' WHERE id = '.$id;
-		} elseif ($page != ''){ 
+		} elseif ($page != ''){
 			$sql = 'SELECT * FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($page).'" ORDER BY id DESC LIMIT 1';
 		} elseif ($pageid != '') {
 		    $sql = 'SELECT * FROM '.$this->db->prefix('wiwimod').' WHERE pageid='.$pageid.' ORDER BY id DESC LIMIT 1';
@@ -84,12 +84,12 @@ class WiwiRevision {
 			if ($this->db->getRowsNum($result) == 0) return false;
 			$row = $this->db->fetchArray($result);
 			$this->keyword = $row['keyword'];
-			$this->title = $row['title'];		
-			$this->body = $row['body'];	
-			$this->lastmodified = $row['lastmodified']; 
-			$this->u_id = $row['u_id']; 
-			$this->parent = $row['parent'];		
-			$this->visible = $row['visible'];	
+			$this->title = $row['title'];
+			$this->body = $row['body'];
+			$this->lastmodified = $row['lastmodified'];
+			$this->u_id = $row['u_id'];
+			$this->parent = $row['parent'];
+			$this->visible = $row['visible'];
 			$this->contextBlock = $row['contextBlock'];
 			$this->pageid = $row['pageid'];
 			$this->id = $row['id'];
@@ -104,7 +104,7 @@ class WiwiRevision {
 	 */
 	function add() {
 		global $xoopsUser;
-		$sql = sprintf( 
+		$sql = sprintf(
 			"INSERT INTO %s (keyword, title, body, lastmodified, u_id, parent, visible, contextBlock, pageid, prid) VALUES('%s', '%s', '%s', '%s', '%u', '%s', %u, '%s', %u, %u)",
 			$this->db->prefix('wiwimod'),
 			addslashes($this->keyword),
@@ -187,108 +187,123 @@ class WiwiRevision {
 	 */
 	function render($body='') {
 
-		$lbr = "<p>|</p>|<hr />|<rable>|</table>|<div>|</div>|<br />|<ul>|<li>|</li>|</ul>";
+		$lbr = "<p>|</p>|<hr />|<table>|</table>|<div>|</div>|<br />|<ul>|<li>|</li>|</ul>";
 		$nl = "^|".$lbr;
 		$eol =$lbr."|$";
 		$lt = "(?:&lt;|<)";
 		$gt = "(?:&gt;|>)";
 
-		$search = array(
-     		"#\[\[PAGE (.+?)\]\]#",                                 // [[PAGE subPage free link]] : we first save it(otherwise it might be recognise as a free link) (addition : Gizmhail)
-			"#\r\n?#",												// is this one still useful ?
-			"#".$lt."{2}(.*?)".$gt."{2}#s",							// <<bold text>>
-			"#\{{2}(.*?)\}{2}#s",									// {{italic text}}
-			"#(".$nl.")-{4,}(".$eol.")#m",							// ---- : horizontal rule
-			"#\[\[BR\]\]#i",										// [br] : line break .. still useful ?
-			
-			"#\[\[XBLK (.+?)\]\]#ie" ,								// Xoops block ($1 is the block id or title)
-			"#\[\[IMG ([^\s\"\[>{}]+)( ([^\"<\n]+?))?\]\]#i",		// [[IMG url title]] : inline image ... 
+		$search = array();
+          $replace = array();
+          // [[PAGE subPage free link]] : we first save it(otherwise it might be recognise as a free link) (addition : Gizmhail)
+     		$search[] = "#\[\[PAGE (.+?)\]\]#";
+               $replace[] = "<wiwisubpage>~\\1</wiwisubpage>";
+          // is this one still useful ?
+			$search[] = "#\r\n?#";
+               $replace[] = "\n";
+          // <<bold text>>
+			$search[] = "#".$lt."{2}(.*?)".$gt."{2}#s";
+               $replace[] = "<strong>\\1</strong>";
+          // {{italic text}}
+			$search[] = "#\{{2}(.*?)\}{2}#s";
+               $replace[] = "<em>\\1</em>";
+          // ---- : horizontal rule
+			$search[] = "#(".$nl.")-{4,}(".$eol.")#m";
+               $replace[] = "\\1<hr />\\2";
+          // [br] : line break .. still useful ?
+			$search[] = "#\[\[BR\]\]#i";
+               $replace[] = "<br />";
+          // Xoops block ($1 is the block id or title)
+			$search[] = "#\[\[XBLK (.+?)\]\]#ie" ;
+               $replace[] = '$this->render_block("$1")';
+          // [[IMG url title]] : inline image ...
+			$search[] = "#\[\[IMG ([^\s\"\[>{}]+)( ([^\"<\n]+?))?\]\]#i";
+               $replace[] = '<img src="\\1" alt="\\3" />';
+          // CamelCase
+			$search[] = "#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#e";
+               $replace[] = '"$1".$this->render_wikiLink("$2" , "",'.$this->wiwiConfig['ShowTitles'].')';
+          // escaped CamelCase
+			$search[] = "#(^|\s|>)~(([A-Z][a-z]+){2,}\d*)\b#";
+               $replace[] = '\\1\\2';
+          // [[CamelCase title]]
+			$search[] = "#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#e";
+               $replace[] = '$this->render_wikiLink("$1" ,"$3", '.$this->wiwiConfig['ShowTitles'].')';
+          // [[www.mysite.org title]] and [[<a ... /a> title]]
+			$search[] = "#\[\[(<a.*>)(.*)</a> (.+?)\]\]#i";
+               $replace[] = '$1$3</a>';
+          // [[free link | title]]
+			$search[] = "#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#e";
+               $replace[] = '$this->render_wikiLink("$1" ,"$2", '.$this->wiwiConfig['ShowTitles'].')';
+          // [[free link]]
+			$search[] = "#\[\[(.+?)\]\]#e";
+               $replace[] = '$this->render_wikiLink("$1" ,"", '.$this->wiwiConfig['ShowTitles'].')';
+     	//        "#([\w.-]+@[\w.-]+)(?![\w.]*(\">|<))#";
+          //        '<a href="mailto:\\1">\\1</a>';
+          // link with href ending with ?page=
+			$search[] = "#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))(\">.*)</a>#Uie";
+               $replace[] = '$this->render_wiwiLink("$2","$1","$4");';
+          // =Title=
+			$search[] = "#(".$nl.")=(.*)=(".$eol.")#m";
+               $replace[] = "\n\\1<h2>\\2</h2>\\3\n";
+          // > quoted text
+			$search[] = "#(".$nl.")".$gt." .* (".$eol.")#me";
+               $replace[] = '"<blockquote>".str_replace("\n", " ", preg_replace("#^> #m", "", "$0"))."</blockquote>\n"';
+          // * list item
+			$search[] = "#(".$nl.")\* (.*)#m";
+               $replace[] = "\\1<li>\\2</li>\\3";
+	/*En test : Gizmhail */
+          //detection des niv0li
+			$search[] = "#(".$nl.")\* (.*)#m";
+               $replace[] = "<niv0li>\\2</niv0li>";
+          //detection des niv1li
+			$search[] = "#(".$nl.")\*\* (.*)#m";
+               $replace[] = "<niv1li style='margin-left: 8px;list-style: disc inside;'>\\2</niv1li>";
+          //detection des niv2li
+			$search[] = "#(".$nl.")\*\*\* (.*)#m";
+               $replace[] = "<niv2li style='margin-left: 16px;list-style: square inside;'>\\2</niv2li>";
+          //detection des niv3li
+			$search[] = "#(".$nl.")   (?: )*\* (.*)#m";
+               $replace[] = "<niv3li style='margin-left: 24px;list-style: circle inside;'>\\2</niv3li>";
+          //groupage des niv0li
+			$search[] = "#<niv0li>(?(?!\n\n)(?:.|\n))*</niv(0|1|2|3)li>#";
+               $replace[] = "<niv0ul>\\0</niv0ul>";
+          //groupage des niv1li
+			$search[] = "#<niv1li>(?(?!niv0li)(?:.|\n))*</niv(1|2|3)li>#";
+               $replace[] = "<niv1ul>\\0</niv1ul>";
+          //groupage des niv1li
+			$search[] = "#<niv2li>(?(?!niv0li|niv1li)(?:.|\n))*</niv(2|3)li>#";
+               $replace[] = "<niv2ul>\\0</niv2ul>";
+          //groupage des niv1li
+			$search[] = "#<niv3li>(?(?!niv0li|niv1li|niv2li)(?:.|\n))*</niv(3)li>#";
+               $replace[] = "<niv3ul>\\0</niv3ul>";
+          //nettoyage des niv*li
+			$search[] = "#niv([0-9]*)li#";
+               $replace[] = "li";
+          //nettoyage des niv*ul
+			$search[] = "#niv([0-9]*)ul#";
+               $replace[] = "ul";
+     /*Fin de test : Gizmhail */
 
-			"#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#e",					// CamelCase
-			"#(^|\s|>)~(([A-Z][a-z]+){2,}\d*)\b#",					// escaped CamelCase
-			"#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#e",				// [[CamelCase title]]
-			"#\[\[(<a.*>)(.*)</a> (.+?)\]\]#i",						// [[www.mysite.org title]] and [[<a ... /a> title]]
-			"#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#e",					// [[free link | title]]
-			"#\[\[(.+?)\]\]#e",										// [[free link]]
-	//        "#([\w.-]+@[\w.-]+)(?![\w.]*(\">|<))#",
-			"#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))(\">.*)</a>#Uie",	// link with href ending with ?page=
-			
-			"#(".$nl.")=(.*)=(".$eol.")#m",							// =Title=
-			"#(".$nl.")".$gt." .* (".$eol.")#me",					// > quoted text
-			"#(".$nl.")\* (.*)#m",									// * list item
-
-			/*En test : Gizmhail */
-			"#(".$nl.")\* (.*)#m", //dtection des niv0li
-			"#(".$nl.")\*\* (.*)#m", //dtection des niv1li
-			"#(".$nl.")\*\*\* (.*)#m", //dtection des niv2li
-			"#(".$nl.")   (?: )*\* (.*)#m", //dtection des niv3li
-
-			"#<niv0li>(?(?!\n\n)(?:.|\n))*</niv(0|1|2|3)li>#", //groupage des niv0li
-			"#<niv1li>(?(?!niv0li)(?:.|\n))*</niv(1|2|3)li>#", //groupage des niv1li
-			"#<niv2li>(?(?!niv0li|niv1li)(?:.|\n))*</niv(2|3)li>#", //groupage des niv1li
-			"#<niv3li>(?(?!niv0li|niv1li|niv2li)(?:.|\n))*</niv(3)li>#", //groupage des niv1li
-
-			"#niv([0-9]*)li#", //nettoyage des niv*li
-			"#niv([0-9]*)ul#", //nettoyage des niv*ul
-            /*Fin de test : Gizmhail */
-
-	//		"#^(<li>.*</li>\n)+#m",
-			"#".$lt."\[(PageIndex|RecentChanges)\]".$gt."#ie",		// <[PageIndex]> and <[RecentChanges]>
-			"#^(?!\n|<h2>|<blockquote>|<hr />)(.*?)\n$#sm",			// surrounds with <p> and </p> some lines .. hum, still useful ?
-			"#\n+#",												// removes multiple line ends .. still useful ?
-    		"#\(\((.+?)\)\)#e",                                     // ((subPage title)) : page to include (addition : Gizmhail)
-     		"#<wiwisubpage>[~]?(.+?)</wiwisubpage>#e",              // [[PAGE subPage title]] : page to include (addition : Gizmhail)
-			"#\._\.#ie"                                             // dummy string, to prevent recognition of special senquences(addition : Gizmhail)
-			);
-
-		$replace = array(
-		    "<wiwisubpage>~\\1</wiwisubpage>",                      // (addition : Gizmhail)
-			"\n",
-			"<strong>\\1</strong>",
-			"<em>\\1</em>",
-			"\\1<hr />\\2",
-			"<br />",
-			
-			'$this->render_block("$1")',
-			'<img src="\\1" alt="\\3" />',
-
-			'"$1".$this->render_wikiLink("$2" , "",'.$this->wiwiConfig['ShowTitles'].')',
-			'\\1\\2',
-			'$this->render_wikiLink("$1" ,"$3", '.$this->wiwiConfig['ShowTitles'].')',
-			'$1$3</a>', 
-			'$this->render_wikiLink("$1" ,"$2", '.$this->wiwiConfig['ShowTitles'].')',
-			'$this->render_wikiLink("$1" ,"", '.$this->wiwiConfig['ShowTitles'].')',
-	//        '<a href="mailto:\\1">\\1</a>',
-			'$this->render_wiwiLink("$2","$1","$4");',
-			
-			"\n\\1<h2>\\2</h2>\\3\n",
-			'"<blockquote>".str_replace("\n", " ", preg_replace("#^> #m", "", "$0"))."</blockquote>\n"',
-			"\\1<li>\\2</li>\\3", 
-
-			/*En test : Gizmhail */
-			"<niv0li>\\2</niv0li>", //dtection des niv0li
-			"<niv1li style='margin-left: 8px;list-style: disc inside;'>\\2</niv1li>", //dtection des niv1li
-			"<niv2li style='margin-left: 16px;list-style: square inside;'>\\2</niv2li>", //dtection des niv2li
-			"<niv3li style='margin-left: 24px;list-style: circle inside;'>\\2</niv3li>", //dtection des niv3li
-
-			"<niv0ul>\\0</niv0ul>", //groupage des niv0li
-			"<niv1ul>\\0</niv1ul>", //groupage des niv1li
-			"<niv2ul>\\0</niv2ul>", //groupage des niv2li
-			"<niv3ul>\\0</niv3ul>", //groupage des niv3li
-
-            "li", //nettoyage des niv*li
-            "ul", //nettoyage des niv*ul
-
-            /*Fin de test : Gizmhail */
-
-	//		"<ul>\n\\0</ul>\n",
-			'$this->render_index("$1")',
-			"<p>\\1</p>", 
-			"\n",
-			'$this->renderSubPage("$1")',                           // (addition : Gizmhail)
-			'$this->renderSubPage("$1")',                           // (addition : Gizmhail)
-            ""                                                      // (addition : Gizmhail)
-			);
+          //		"#^(<li>.*</li>\n)+#m";
+          //		"<ul>\n\\0</ul>\n";
+          // <[PageIndex]> and <[RecentChanges]>
+			$search[] = "#".$lt."\[(PageIndex|RecentChanges)\]".$gt."#ie";
+               $replace[] = '$this->render_index("$1")';
+          // surrounds with <p> and </p> some lines .. hum, still useful ?
+			$search[] = "#^(?!\n|<h2>|<blockquote>|<hr />)(.*?)\n$#sm";
+               $replace[] = "<p>\\1</p>";
+          // removes multiple line ends .. still useful ?
+			$search[] = "#\n+#";
+               $replace[] = "\n";
+          // ((subPage title)) : page to include (addition : Gizmhail)
+         		$search[] = "#\(\((.+?)\)\)#e";
+               $replace[] = '$this->renderSubPage("$1")';
+          // [[PAGE subPage title]] : page to include (addition : Gizmhail)
+     		$search[] = "#<wiwisubpage>[~]?(.+?)</wiwisubpage>#e";
+               $replace[] = '$this->renderSubPage("$1")';
+          // dummy string, to prevent recognition of special senquences(addition : Gizmhail)
+			$search[] = "#\._\.#ie";
+               $replace[] = "";
 
 		if ($body == '') $body = $this->body;
 		if ($this->wiwiConfig['ShowCamelCase'] == 0) {  // remove CamelCase parsing.
@@ -302,7 +317,7 @@ class WiwiRevision {
 	 * Utilities for page rendering ;
 	 */
 	function render_wiwiLink($pg,$a,$txt) {
-    $wiwidir = basename( dirname(  dirname( __FILE__ ) ) ) ; 
+    $wiwidir = basename( dirname(  dirname( __FILE__ ) ) ) ;
 		return $a."&amp;back=".$this->keyword.$txt.($this->pageExists($pg)?"":"<img src='".XOOPS_URL."/modules/' . $wiwidir . '/images/nopage.gif' alt='' />")."</a>";
 	}
 
@@ -312,7 +327,7 @@ class WiwiRevision {
 		$sql = 'SELECT title FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($normKeyword).'" ORDER BY id DESC LIMIT 1';
 		$dbresult = $this->db->query($sql);
 		if ($this->db->getRowsNum($dbresult) > 0) {
-			$pageExists = true;  
+			$pageExists = true;
 			list($title) = $this->db->fetchRow($dbresult);
 			$txt = $customTitle == '' ? (($title != '') && $show_titles) ? $title : $normKeyword : $customTitle ;
 		} else {
@@ -333,27 +348,27 @@ class WiwiRevision {
 				1,
 				'"<span class=\'wiwi_titre\' style=\"font-size:large;\">[$counter]</span><br/>"',
 				'"&nbsp;&nbsp;<a href=\"index.php?page=".$this->encode($content["keyword"])."\">".($content["title"] == "" ? $content["keyword"] : $content["title"])."</a><br/>"',
-				""), 
+				""),
 			"PageIndexI" => array(
-				"ORDER BY w1.keyword ASC", 
-				"keyword", 
-				1, 
-				'"<span class=\'wiwi_titre\'>$counter</span><br />"', 
-				'"&nbsp;&nbsp;<a href=\"index.php?page=".$content["keyword"]."\">".$content["keyword"]."</a> : ".$content["title"]."<br />"', 
-				""), 
+				"ORDER BY w1.keyword ASC",
+				"keyword",
+				1,
+				'"<span class=\'wiwi_titre\'>$counter</span><br />"',
+				'"&nbsp;&nbsp;<a href=\"index.php?page=".$content["keyword"]."\">".$content["keyword"]."</a> : ".$content["title"]."<br />"',
+				""),
 			"RecentChanges" => array(
-				"ORDER BY w1.lastmodified DESC LIMIT 20", 
-				"lastmodified", 
-				10, 
+				"ORDER BY w1.lastmodified DESC LIMIT 20",
+				"lastmodified",
+				10,
 				'"<tr><td colspan=3><strong>".formatTimestamp(strtotime($counter), _SHORTDATESTRING)."</strong></td></tr>"',
 				'"<tr><td>&nbsp;".formatTimestamp(strtotime($content["lastmodified"]), "H:i")."</td><td><a href=\"index.php?page=".$this->encode($content["keyword"])."\">".($content["title"] == "" ? $content["keyword"] : $content["title"])."</a></td><td><span class=\"itemPoster\">".getUserName($content["u_id"])."</span></td></tr>"',
 				"")
 		);
 		$cfg = $settings[$type];
-		
+
 		$sql = 'SELECT w1.keyword, w1.title, w1.lastmodified, w1.u_id FROM '.$this->db->prefix('wiwimod').' AS w1 LEFT JOIN '.$this->db->prefix('wiwimod').' AS w2 ON w1.keyword=w2.keyword AND w1.id<w2.id WHERE w2.id IS NULL '.$cfg[0];
 		$result = $this->db->query($sql);
-		
+
 		$body = '' ; $counter = '[';
 		while ($content = $this->db->fetcharray($result)) {
 			if ($counter != strtoupper(substr($content[$cfg[1]], 0, $cfg[2]))) {
@@ -362,7 +377,7 @@ class WiwiRevision {
 			}
 			eval('$body .= '.$cfg[4].'."\n";');
 		}
-		
+
 		return "<table>".$body.(($body)?$cfg[5]:"")."</table>\n\n";
 	}
 
@@ -423,7 +438,7 @@ class WiwiRevision {
 		$sql = 'SELECT title, body FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($this->keyword).'" ORDER BY id DESC LIMIT 1';
 		$result = $this->db->query($sql);
 		list ($title, $body) = $this->db->fetchRow($result);
-		
+
 		//
 		// remove formatting tags, replace tags generating a line break with a "\n".
 		//
@@ -476,21 +491,21 @@ class WiwiRevision {
 		$result = $this->db->query($sql);
 		$rowsnum = $this->db->getRowsNum($result);
 
-		if ($this->id == 0) {  
+		if ($this->id == 0) {
 
 			return ($rowsnum > 0) ;  // this was a page creation : somebody did it before ...
 		} else {
 			list($db_lastmodified) = $this->db->fetchRow($result);
 			return ($this->lastmodified != $db_lastmodified);
 		}
-		
+
 	}
 
 	function pageExists ($page="", $id = 0) {
 		$page = addslashes($this->normalize($page));
 		if ($id > 0) {
 			$sql = "SELECT keyword FROM ".$this->db->prefix("wiwimod")." WHERE id = $id";
-		} elseif (($page != "") && (intval($page == 0))){ 
+		} elseif (($page != "") && (intval($page == 0))){
 			$sql = "SELECT keyword FROM ".$this->db->prefix("wiwimod")." WHERE keyword='$page' ORDER BY id DESC LIMIT 1";
 		} elseif ($page != "") {
 		    $sql = "SELECT keyword FROM ".$this->db->prefix("wiwimod")." WHERE pageid=$page ORDER BY id DESC LIMIT 1";
@@ -502,8 +517,8 @@ class WiwiRevision {
 
 	/*
 	 * Returns an array of wiwiRevisions, selected upon given criteria
-	 * $where :			
-	 * $order :				
+	 * $where :
+	 * $order :
 	 * $items_perpage :		if 0, returns all the results
 	 * $current_start :		position of the first returned element within the results
 	 */
@@ -530,13 +545,13 @@ class WiwiRevision {
 		for ($i = 0; $i < $this->db->getRowsNum($result_a); $i++) {
 			$row = $this->db->fetchArray($result_a);
 			$pageObj = new WiwiRevision();
-			$pageObj->keyword = $row['keyword']; 
-			$pageObj->title = $row['title'];		
-			$pageObj->body = $row['body'];	
-			$pageObj->lastmodified = formatTimestamp( strtotime($row['lastmodified']), _MEDIUMDATESTRING ); 
-			$pageObj->u_id = $row['u_id']; 
-			$pageObj->parent = $row['parent'];		
-			$pageObj->visible = $row['visible'];	
+			$pageObj->keyword = $row['keyword'];
+			$pageObj->title = $row['title'];
+			$pageObj->body = $row['body'];
+			$pageObj->lastmodified = formatTimestamp( strtotime($row['lastmodified']), _MEDIUMDATESTRING );
+			$pageObj->u_id = $row['u_id'];
+			$pageObj->parent = $row['parent'];
+			$pageObj->visible = $row['visible'];
 			$pageObj->contextBlock = $row['contextBlock'];
 			$pageObj->pageid = $row['pageid'];
 			$pageObj->id = $row['id'];
@@ -667,7 +682,7 @@ class WiwiPage extends WiwiRevision {
 	function WiwiPage($keyword = "", $pageid = 0) {
 		return WiwiRevision::WiwiRevision ($keyword, 0, $pageid);
 	}
-	
+
 }
 
 }  // end "ifdefined"
