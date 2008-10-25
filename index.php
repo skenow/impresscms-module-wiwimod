@@ -5,7 +5,6 @@
  * @package Wiwimod
  * @author Xavier JIMENEZ
  * @author Gizmhail
- * @author skenow <skenow@impresscms.org>
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
