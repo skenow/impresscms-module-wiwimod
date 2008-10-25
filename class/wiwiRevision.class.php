@@ -187,7 +187,7 @@ class WiwiRevision {
 	 */
 	function render($body='') {
 
-		$lbr = "<p>|</p>|<hr />|<rable>|</table>|<div>|</div>|<br />|<ul>|<li>|</li>|</ul>";
+		$lbr = "<p>|</p>|<hr />|<table>|</table>|<div>|</div>|<br />|<ul>|<li>|</li>|</ul>";
 		$nl = "^|".$lbr;
 		$eol =$lbr."|$";
 		$lt = "(?:&lt;|<)";
