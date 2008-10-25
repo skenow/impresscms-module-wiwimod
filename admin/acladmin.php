@@ -26,7 +26,7 @@ $allowed_postvars = array(
   'prid' => 'int');
 if (!empty($_POST)) {
      $clean_POST = wiwi_cleanVars($_POST, $allowed_postvars);
-     extract($_POST);
+     extract($clean_POST);
 }
 
 $valid_ops = array('edit', 'save', 'confirmdelete', 'delete', NULL);
@@ -41,6 +41,7 @@ default:
 	//--- list profiles ---
 	$prf = new WiwiProfile();
 	$prflst = $prf->getAllProfiles();
+	$prid = $profile;
 	$prf->load($prid);
 
 	echo '<script>function loadPrf(ele) { ';
