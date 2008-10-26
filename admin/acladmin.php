@@ -4,7 +4,6 @@
  * 
  * @package Wiwimod
  * @author Xavier JIMENEZ
-*
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
@@ -23,7 +22,14 @@ $clean_GET = wiwi_cleanVars ($_GET,$allowed_get);
 extract($clean_GET);
 
 $allowed_postvars = array(
-  'prid' => 'int');
+  'prid' => 'int',
+  'prf_name' => 'string',
+  'prf_readers' => 'array',
+  'prf_writers' => 'array',
+  'prf_administrators' => 'array',
+  'prf_commentslevel' => 'int',
+  'prf_historylevel' => 'int',
+  'op' => 'string');
 if (!empty($_POST)) {
      $clean_POST = wiwi_cleanVars($_POST, $allowed_postvars);
      extract($clean_POST);

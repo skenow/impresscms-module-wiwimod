@@ -4,7 +4,7 @@
  * 
  * @package Wiwimod
  * @author Xavier JIMENEZ
-*
+ * @author skenow <skenow@impresscms.org>
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id
  */ 
@@ -256,10 +256,10 @@ function isTagModuleActivated()
       $clean_var[$key] = htmlspecialchars(trim($input_var[$key]));
       }*/
       break;
-    case 'array': /* need to walk the array, I suppose
+    case 'array': /* need to walk the array, I suppose */
       if (is_array($input_var[$key])) {
-      $clean_var[$key] = htmlspecialchars(trim($input_var[$key]));
-      }*/
+      $clean_var[$key] = $input_var[$key];
+      }
       break;
     case 'object':
       if (is_object($input_var[$key])) {
