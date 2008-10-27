@@ -14,7 +14,7 @@
 
 define('_MD_WIWI_MODIFIED_TXT', 'Aktualisierung ');		
 define('_MD_WIWI_BY','von');	
-define('_MD_WIWI_HISTORY_TXT','Geschichte');		
+define('_MD_WIWI_HISTORY_TXT','Historie');		
 define('_MD_WIWI_EDIT_TXT','Seite bearbeiten');
 define('_MD_WIWI_BODY_TXT','Inhalt');
 define('_MD_WIWI_DIFF_TXT','Unterschied zwischen aktueller und letzter Revisions');
@@ -24,13 +24,13 @@ define('_MD_WIWI_THISPAGE','Dieser Seite');
 //define('_MD_WIWI_PREVIEW_BTN','Preview');
 define('_MD_WIWI_SUBMITREVISION_BTN','Neue Revision');
 define('_MD_WIWI_QUIETSAVE_BTN','Speichern');
-define('_MD_WIWI_HISTORY_BTN','Geschichte');				
-define('_MD_WIWI_PAGEVIEW_BTN','Zurück zu Seite Ansicht');	
+define('_MD_WIWI_HISTORY_BTN','Historie');				
+define('_MD_WIWI_PAGEVIEW_BTN','Zurück zu Seitenansicht');	
 define('_MD_WIWI_VIEW_BTN','Ansicht');
 define('_MD_WIWI_RESTORE_BTN','Wiederherstellen');
 define('_MD_WIWI_FIX_BTN','Fix');
 define('_MD_WIWI_COMPARE_BTN','Vergleichen Sie');
-define('_MD_WIWI_SELEDITOR_BTN','(right-click to select another editor)');
+define('_MD_WIWI_SELEDITOR_BTN','(Rechtsklick zum Auswählen eines Editors)');
 
 define('_MD_WIWI_TITLE_FLD','Titel');					
 define('_MD_WIWI_BODY_FLD','Inhalt');
@@ -56,6 +56,6 @@ define('_MD_WIWI_NOWRITEACCESS_MSG','<br><h4>Entschuldigung, Sie haben keine Ber
 // Wiwi special pages - 
 // Change these names, if you want a different homepage and error page
 // for this language - just make sure that they are legal WiwiLink names.
-if (!defined('_MI_WIWIMOD_WIWIHOME'){define('_MI_WIWIMOD_WIWIHOME','WiwiHome'); }// Also need in modinfo.php
+if (!defined('_MI_WIWIMOD_WIWIHOME')){define('_MI_WIWIMOD_WIWIHOME','WiwiHome'); }// Also need in modinfo.php
 define('_MI_WIWIMOD_WIWI404','IllegalName');
 ?>
