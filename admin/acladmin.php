@@ -23,7 +23,7 @@ extract($clean_GET);
 
 $allowed_postvars = array(
   'prid' => 'int',
-  'prf_name' => 'string',
+  'prf_name' => 'plaintext',
   'prf_readers' => 'array',
   'prf_writers' => 'array',
   'prf_administrators' => 'array',

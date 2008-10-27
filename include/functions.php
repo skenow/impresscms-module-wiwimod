@@ -230,10 +230,17 @@ function isTagModuleActivated()
        $clean_var[$key] = (int) $input_var[$key];
       }
       break;
+    case 'html':
     case 'string':
       $clean_var[$key] = '';
       if (is_string($input_var[$key])) {
       $clean_var[$key] = trim($input_var[$key]);
+      }
+      break;
+    case 'plaintext':
+      $clean_var[$key] = '';
+      if (is_string($input_var[$key])) {
+      $clean_var[$key] = htmlspecialchars(trim($input_var[$key]));
       }
       break;
     case 'float':

@@ -19,32 +19,32 @@ include_once 'class/wiwiRevision.class.php';
  * extract all header variables to corresponding php variables ---
  * @todo : - $xoopsUser can be overriden by post variables >> security fix ?
  */      
-$id = $pageid =$visible =  0;
+$id = $pageid = $visible = $editor =  0;
 $page = $contextBlock = $parent = $op = '';
 $allowed_getvars = array (
-     'op'=>'string',
+     'op'=>'plaintext',
      'back'=>'string',
      'pageid'=>'int',
      'startpage'=>'int',
-     'com_order'=>'string',
+     'com_order'=>'plaintext',
      'page'=>'string',
      'id'=>'int');
 $allowed_postvars = array (
-     'op'=>'string',
+     'op'=>'plaintext',
      'page'=>'string',
      'pageid'=>'int',
      'id'=>'int',
      'uid'=>'int', 
-     'lastmodified'=>'string', 
-     'title'=>'string', 
-     'editor'=>'string', 
-     'editoptions'=>'string',
+     'lastmodified'=>'plaintext', 
+     'title'=>'plaintext', 
+     'editor'=>'int', 
+     'editoptions'=>'plaintext',
      'body'=>'string', 
-     'parent'=>'string',
+     'parent'=>'plaintext',
      'prid'=>'int',
      'visible'=>'int',
-     'contextBlock'=>'string',
-     'item_tag'=>'string');
+     'contextBlock'=>'plaintext',
+     'item_tag'=>'plaintext');
 $clean_GET = wiwi_cleanVars($_GET, $allowed_getvars);
 extract($clean_GET);
 
