@@ -13,6 +13,7 @@
  
 function xoops_module_install_wiwimod (){ 
  $mydir = dirname(dirname(__FILE__));
+ global $xoopsConfig;
 
  if (@file_exists($mydir.'/language/'.$xoopsConfig['language'].'/install.php')){
       include $mydir.'/language/'.$xoopsConfig['language'].'/install.php';
