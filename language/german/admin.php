@@ -60,6 +60,7 @@ define('_AM_WIWI_ADMINISTRATORS_OPT','Administrationsberechtigung');
 define('_AM_WIWI_COMMENTS_NONE_OPT','(Keine Kommentare)');
 define('_AM_WIWI_HISTORY_NONE_OPT','(Keine Historie)');
 define('_AM_WIWI_DELCONFIRM_OPT','JA, ich möchte das Profil löschen.');
+
 define('_AM_WIWI_LISTPAGES_ALLPAGES_OPT','Alle Seiten');
 define('_AM_WIWI_LISTPAGES_KEYWORD_OPT','Name');
 define('_AM_WIWI_LISTPAGES_TITLE_OPT','Titel');
@@ -85,4 +86,5 @@ define('_AM_WIWI_PRFSAVEFAILED_MSG','Fehler! Profil wurde nicht erfolgreich gepe
 define('_AM_WIWI_ERRDELETE_MSG','Fehler: Profil konnte nicht gelöscht werden');
 define('_AM_WIWI_PRFDELSUCCESS_MSG','Profil erfolgreich gelöscht');
 define('_AM_WIWI_PRFDELFAILED_MSG','Fehler! Profil wurde nicht erfolgreich gelöscht');
+define('_AM_WIWI_SYS_CFG','System-Konfiguration');
 ?>
