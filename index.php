@@ -396,7 +396,7 @@ switch ($op) {
 			// patch to deal with a bug in the standard Xoops 2.05 comment_view file,
 			// (generated a disgraceful "undefined index notice" in debug mode ;-)
 			//
-			if (!isset($_GET['com_order'])) {
+			if (!isset($clean_GET['com_order'])) {
 				$_GET['com_order'] = (is_object($xoopsUser) ? $xoopsUser->getVar('uorder') : $xoopsConfig['com_order']) ;
 				}
 			include XOOPS_ROOT_PATH.'/include/comment_view.php';
