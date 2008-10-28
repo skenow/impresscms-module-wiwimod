@@ -6,6 +6,7 @@
  * and  use language constants for internationalization (i18n) and localization (l10n)
  *  
  * @package Wiwimod
+ *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */

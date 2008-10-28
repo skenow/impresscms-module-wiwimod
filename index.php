@@ -5,6 +5,7 @@
  * @package Wiwimod
  * @author Xavier JIMENEZ
  * @author Gizmhail
+ *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
@@ -18,32 +19,32 @@ include_once 'class/wiwiRevision.class.php';
  * extract all header variables to corresponding php variables ---
  * @todo : - $xoopsUser can be overriden by post variables >> security fix ?
  */      
-$id = $pageid =$visible =  0;
+$id = $pageid = $visible = $editor =  0;
 $page = $contextBlock = $parent = $op = '';
 $allowed_getvars = array (
-     'op'=>'string',
+     'op'=>'plaintext',
      'back'=>'string',
      'pageid'=>'int',
      'startpage'=>'int',
-     'com_order'=>'string',
+     'com_order'=>'plaintext',
      'page'=>'string',
      'id'=>'int');
 $allowed_postvars = array (
-     'op'=>'string',
+     'op'=>'plaintext',
      'page'=>'string',
      'pageid'=>'int',
      'id'=>'int',
      'uid'=>'int', 
-     'lastmodified'=>'string', 
-     'title'=>'string', 
-     'editor'=>'string', 
-     'editoptions'=>'string',
+     'lastmodified'=>'plaintext', 
+     'title'=>'plaintext', 
+     'editor'=>'int', 
+     'editoptions'=>'plaintext',
      'body'=>'string', 
-     'parent'=>'string',
+     'parent'=>'plaintext',
      'prid'=>'int',
      'visible'=>'int',
-     'contextBlock'=>'string',
-     'item_tag'=>'string');
+     'contextBlock'=>'plaintext',
+     'item_tag'=>'plaintext');
 $clean_GET = wiwi_cleanVars($_GET, $allowed_getvars);
 extract($clean_GET);
 
@@ -89,8 +90,8 @@ if ((($op == 'preview') || ($op == 'insert') || ($op == 'quietsave')) && isset($
 		 */
 		$op = 'edit';
 		$pageObj->title = $pageObj->keyword;
-		if (isset($_GET['back'])) {
-			$pageObj->parent = stripslashes($_GET['back']);	// default value for parent field = initial caller.
+		if (isset($clean_GET['back'])) {
+			$pageObj->parent = stripslashes($clean_GET['back']);	// default value for parent field = initial caller.
 			$parentObj = new wiwiRevision($pageObj->parent);
 			$pageObj->profile =& $parentObj->profile;   // is reference assignment a good idea ?
 		}
@@ -119,7 +120,7 @@ switch ($op) {
 		                if(isTagModuleActivated())
 				{
 					$tag_handler = xoops_getmodulehandler('tag', 'tag');
-					$tag_handler->updateByItem($_POST['item_tag'], $pageObj->pageid, $xoopsModule->getVar('dirname'), $catid =0);
+					$tag_handler->updateByItem($clean_POST['item_tag'], $pageObj->pageid, $xoopsModule->getVar('dirname'), $catid =0);
 				}
 				/* Tag module support end*/
 				// Define tags for notification message
@@ -185,8 +186,8 @@ switch ($op) {
 			$edArr[] = array('value' => $ed[1], 'text' => $ed[0], 'options' => $ed[2]);
 		}
 		$xoopsTpl->assign('editorsArr',$edArr);
-		$editor = isset($_POST['editor']) ? $_POST['editor'] : $xoopsModuleConfig['Editor'] ;
-		$editOptions = isset($_POST['editoptions']) ? $_POST['editoptions'] : "" ;
+		$editor = isset($clean_POST['editor']) ? $clean_POST['editor'] : $xoopsModuleConfig['Editor'] ;
+		$editOptions = isset($clean_POST['editoptions']) ? $clean_POST['editoptions'] : "" ;
 		$form->addElement(new XoopsFormHidden('editor', $editor));
 		$form->addElement(new XoopsFormHidden('editoptions', $editOptions));
 		
@@ -347,7 +348,7 @@ switch ($op) {
 		// Handle pagebreaks
 		//
 		$cpages = explode ("[pagebreak]", $pagecontent);
-		if (isset($_GET['startpage'])) $startpage = (int) $_GET['startpage'] ; else $startpage = 0;
+		if (isset($clean_GET['startpage'])) $startpage = (int) $clean_GET['startpage'] ; else $startpage = 0;
 		if (count($cpages) > 0) {
 			include_once XOOPS_ROOT_PATH . '/class/pagenav.php'; 
 			$pagenav = new XoopsPageNav(count($cpages), 1, $startpage, 'startpage', 'page='.$pageObj->keyword); 
@@ -395,7 +396,7 @@ switch ($op) {
 			// patch to deal with a bug in the standard Xoops 2.05 comment_view file,
 			// (generated a disgraceful "undefined index notice" in debug mode ;-)
 			//
-			if (!isset($_GET['com_order'])) {
+			if (!isset($clean_GET['com_order'])) {
 				$_GET['com_order'] = (is_object($xoopsUser) ? $xoopsUser->getVar('uorder') : $xoopsConfig['com_order']) ;
 				}
 			include XOOPS_ROOT_PATH.'/include/comment_view.php';

@@ -4,6 +4,7 @@
  * 
  * @package Wiwimod
  * @author Xavier JIMENEZ
+ *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
@@ -16,11 +17,11 @@ $post_selorderby = 'keyword';
 $post_selorderdir = 'ASC';
 
 $allowed_postvars = array (
-  'post_selwhere' => 'string',
-  'post_text' => 'string',
+  'post_selwhere' => 'plaintext',
+  'post_text' => 'plaintext',
   'post_profile' => 'int',
-  'post_selorderby' => 'string',
-  'post_selorderdir' => 'string');
+  'post_selorderby' => 'plaintext',
+  'post_selorderdir' => 'plaintext');
 $clean_POST = wiwi_cleanVars($_POST, $allowed_postvars);
 extract($clean_POST);
 
