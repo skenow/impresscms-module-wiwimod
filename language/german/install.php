@@ -18,9 +18,9 @@
  define('_MI_WIWIMOD_WIWIHOME_TEXT',
      "<p><table border=\'0\'>
      <tbody><tr><td>
-     <p>Welcome;<br />This is Wiwi\'s default home page. Feel free to edit and modify it. 
-     To create new pages, type in anywhere a page name and surround it with double square brackets ( [[ ). 
-     When you save this page, the brackets will be replaced by a link to your new page.</p>
+     <p>Willkommen;<br />Das ist die Wiwi-Standard-Startseite. Fühlen Sie sich frei zu bearbeiten und zu verändern. 
+     So erstellen Sie neue Seiten, geben Sie in jedem Ort einer Seite einem Name und setzen es mit doppelten eckigen Klammern ( [[ ). 
+     Wenn Sie diese Seite speichern, die Klammern werden durch einen Link zu Ihrer neuen Seite ersetzt.</p>
      <p>Check <a href=\'manual.html\' target=_blank>the manual</a> for an in depth view of editing features.</p></td>
      <td><img src=\'images/wiwilogo.gif\' /></td></tr></tbody></table></p>
      <p><table cellspacing=\'5\' cellpadding=\'5\' width=\'100%\' border=\'0\'>

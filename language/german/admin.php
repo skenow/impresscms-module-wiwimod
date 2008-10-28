@@ -85,4 +85,5 @@ define('_AM_WIWI_PRFSAVEFAILED_MSG','Fehler! Profil wurde nicht erfolgreich gepe
 define('_AM_WIWI_ERRDELETE_MSG','Fehler: Profil konnte nicht gelöscht werden');
 define('_AM_WIWI_PRFDELSUCCESS_MSG','Profil erfolgreich gelöscht');
 define('_AM_WIWI_PRFDELFAILED_MSG','Fehler! Profil wurde nicht erfolgreich gelöscht');
+define('_AM_WIWI_SYS_CFG','System-Konfiguration');
 ?>
