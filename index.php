@@ -90,8 +90,8 @@ if ((($op == 'preview') || ($op == 'insert') || ($op == 'quietsave')) && isset($
 		 */
 		$op = 'edit';
 		$pageObj->title = $pageObj->keyword;
-		if (isset($_GET['back'])) {
-			$pageObj->parent = stripslashes($_GET['back']);	// default value for parent field = initial caller.
+		if (isset($clean_GET['back'])) {
+			$pageObj->parent = stripslashes($clean_GET['back']);	// default value for parent field = initial caller.
 			$parentObj = new wiwiRevision($pageObj->parent);
 			$pageObj->profile =& $parentObj->profile;   // is reference assignment a good idea ?
 		}
@@ -120,7 +120,7 @@ switch ($op) {
 		                if(isTagModuleActivated())
 				{
 					$tag_handler = xoops_getmodulehandler('tag', 'tag');
-					$tag_handler->updateByItem($_POST['item_tag'], $pageObj->pageid, $xoopsModule->getVar('dirname'), $catid =0);
+					$tag_handler->updateByItem($clean_POST['item_tag'], $pageObj->pageid, $xoopsModule->getVar('dirname'), $catid =0);
 				}
 				/* Tag module support end*/
 				// Define tags for notification message
@@ -186,8 +186,8 @@ switch ($op) {
 			$edArr[] = array('value' => $ed[1], 'text' => $ed[0], 'options' => $ed[2]);
 		}
 		$xoopsTpl->assign('editorsArr',$edArr);
-		$editor = isset($_POST['editor']) ? $_POST['editor'] : $xoopsModuleConfig['Editor'] ;
-		$editOptions = isset($_POST['editoptions']) ? $_POST['editoptions'] : "" ;
+		$editor = isset($clean_POST['editor']) ? $clean_POST['editor'] : $xoopsModuleConfig['Editor'] ;
+		$editOptions = isset($clean_POST['editoptions']) ? $clean_POST['editoptions'] : "" ;
 		$form->addElement(new XoopsFormHidden('editor', $editor));
 		$form->addElement(new XoopsFormHidden('editoptions', $editOptions));
 		
@@ -348,7 +348,7 @@ switch ($op) {
 		// Handle pagebreaks
 		//
 		$cpages = explode ("[pagebreak]", $pagecontent);
-		if (isset($_GET['startpage'])) $startpage = (int) $_GET['startpage'] ; else $startpage = 0;
+		if (isset($clean_GET['startpage'])) $startpage = (int) $clean_GET['startpage'] ; else $startpage = 0;
 		if (count($cpages) > 0) {
 			include_once XOOPS_ROOT_PATH . '/class/pagenav.php'; 
 			$pagenav = new XoopsPageNav(count($cpages), 1, $startpage, 'startpage', 'page='.$pageObj->keyword); 
