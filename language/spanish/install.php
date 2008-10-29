@@ -10,18 +10,16 @@
  /** include the modinfo constants, so we don't have to define them again (specifically, _MI_WIWIMOD_WIWIHOME) */
  include_once 'modinfo.php';
 
- define('_MI_WIWIMOD_PROFILE1','Open Content');
- define('_MI_WIWIMOD_PROFILE2','Public Content');
- define('_MI_WIWIMOD_PROFILE3','Private Content'); 
- define('_MI_WIWIMOD_WIWIHOME_TITLE','Your Wiwi home page');
+ define('_MI_WIWIMOD_PROFILE1','Contenido público');
+ define('_MI_WIWIMOD_PROFILE2','Contenido público');
+ define('_MI_WIWIMOD_PROFILE3','Contenido privado'); 
+ define('_MI_WIWIMOD_WIWIHOME_TITLE','Pá?ina de inicio');
 
  define('_MI_WIWIMOD_WIWIHOME_TEXT',
      "<p><table border=\'0\'>
      <tbody><tr><td>
-     <p>Welcome;<br />This is Wiwi\'s default home page. Feel free to edit and modify it. 
-     To create new pages, type in anywhere a page name and surround it with double square brackets ( [[ ). 
-     When you save this page, the brackets will be replaced by a link to your new page.</p>
-     <p>Check <a href=\'manual.html\' target=_blank>the manual</a> for an in depth view of editing features.</p></td>
+     <p>Bienvenido;<br />Esta es la página predeterminada de inicio de Wiwimod. Puede modificarla como desee. Para crear nuevas páginas, seleccione un nombre y colóquelo dentro de paréntesis de esta forma: ( [[ ). cuando guarda la página, los paréntesis serán cambiados por un enlace a su nueva página.</p>
+     <p>Compruebe <a href=\'manual.html\' target=_blank>el manual</a> para obtener más información sobre las caracerísticas de edición, creación o modificación de páginas.</p></td>
      <td><img src=\'images/wiwilogo.gif\' /></td></tr></tbody></table></p>
      <p><table cellspacing=\'5\' cellpadding=\'5\' width=\'100%\' border=\'0\'>
           <tbody><tr><td bgcolor=\'#e4e4e4\'>Pages index</td>
