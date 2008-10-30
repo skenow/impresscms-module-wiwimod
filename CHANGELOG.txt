@@ -78,7 +78,7 @@ Contributors to this release
 * skenow
 * pesian_stranger
 * gibaphp
-* juancj
+* juancj/debianus
 * xoops-magazine
 * m0nty_
   
