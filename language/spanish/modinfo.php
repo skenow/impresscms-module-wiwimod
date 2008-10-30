@@ -6,14 +6,14 @@
 define('_MI_WIWIMOD_NAME','Wiwi');
 
 // A brief description of this module
-define('_MI_WIWIMOD_DESC','Un wiki <em>wysiwyg.</em>');
+define('_MI_WIWIMOD_DESC','Un wiki <em>WYSIWYG.</em>');
 
 // Admin menu
 define('_MI_WIWIMOD_ADMENU1','Páginas');
 define('_MI_WIWIMOD_ADMENU2','Privilegios');
 define('_MI_WIWIMOD_ADMENU3','Bloques y grupos');
 define('_MI_WIWIMOD_ADMENU4','Acerca de...');
-define('_MI_WIWIMOD_ADMENU5','Help');
+define('_MI_WIWIMOD_ADMENU5','Ayuda');
 
 // Admin options
 define('_MI_WIWIMOD_EDITOR','Editor de texto a usar');
@@ -30,7 +30,7 @@ define('_MI_WIWIMOD_USECAMELCASE','Interpretar el CamelCase');
 define('_MI_WIWIMOD_USECAMELCASE_DESC','Interpreta las palabras en CamelCase como vínculos hacia otras páginas del wiki.CamelCase es la práctica de escribir frases o palabras compuestas eliminando los espacios y poniendo en mayúscula la primera letra de cada palabra. El nombre viene del parecido de estas mayúsculas, entre las demás letras, con las jorobas de los camellos.');
 
 define('_MI_WIWIMOD_XOOPSEDITOR','Elija un editor del package "XoopsEditor"');
-define('_MI_WIWIMOD_XOOPSEDITOR_DESC','Usese cuando el editor elegido es XoopsEditor');
+define('_MI_WIWIMOD_XOOPSEDITOR_DESC','Úsese cuando el editor elegido es XoopsEditor');
 
 // Notification options
 define('_MI_WIWIMOD_PAGENOTIFYCAT_TITLE','Página');
@@ -43,7 +43,7 @@ define('_MI_WIWIMOD_PAGENOTIFY_SUBJECT','[{X_SITENAME}] {X_MODULE} - página modi
 define('_MI_WIWIMOD_GLOBALNOTIFYCAT_TITLE','Global');
 define('_MI_WIWIMOD_GLOBALNOTIFYCAT_DESC','Notificaciones relativas a todas las páginas');
 define('_MI_WIWIMOD_GLOBALNOTIFY_TITLE','Página actualizada');
-define('_MI_WIWIMOD_GLOBALNOTIFY_CAPTION','Notifíqueme cuando cualquier página es modificada');
+define('_MI_WIWIMOD_GLOBALNOTIFY_CAPTION','Notificarme cuando cualquier página es modificada');
 define('_MI_WIWIMOD_GLOBALNOTIFY_DESC','Recibir una notificación cuando cualquier usuario actualiza cualquier página.');
 define('_MI_WIWIMOD_GLOBALNOTIFY_SUBJECT','[{X_SITENAME}] {X_MODULE} notificación automática: página actualizada');
 
@@ -61,5 +61,5 @@ define('_MI_WIWIMOD_BLOCK_SHOWPAGE_NAME','WiwiShowPage');
 define('_MI_WIWIMOD_BLOCK_SHOWPAGE_DESC','Mostrar una página');
 define('_MI_WIWIMOD_AUTHOR_WORD','<h4>Sobre Wiwi 0.8.3</h4><br />Wiwi es software bajo licencia GPL; visite la página de Wiwi <a href="http://www.zonatim.com/modules/wiwimod?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> to support or get help.<br /><br />If you\'ve just migrated from an older Wiwi version (0.7.1 or less), please click here : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
 define('_MI_WIWIMOD_DEFAULTPROFILE_DESC','Default profile assigned to new pages');
-if (!defined('_MI_WIWIMOD_WIWIHOME'){define('_MI_WIWIMOD_WIWIHOME','WiwiHome');}
+if (!defined('_MI_WIWIMOD_WIWIHOME'){define('_MI_WIWIMOD_WIWIHOME','Inicio');}
 ?>
