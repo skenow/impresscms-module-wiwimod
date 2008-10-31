@@ -4,7 +4,7 @@
  * 
  * @package Wiwimod
  * @author Xavier JIMENEZ
-*
+ *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
@@ -42,7 +42,6 @@ function wiwimod_recent ($options) {
 	$block['dirname'] = $wiwidir;
 	return $block;
 }
-
 
 function wiwimod_recent_blockedit ($options) {
     $form = _MB_WIWI_NUM_DISP_DESC."&nbsp;:&nbsp;<input type='text' name='options[0]' value='".$options[0]."' />";

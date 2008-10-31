@@ -4,7 +4,7 @@
  * 
  * @package Wiwimod
  * @author Xavier JIMENEZ
-*
+ *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
@@ -13,7 +13,6 @@
  * derived from standard XoopsPageNav, to use a custom function to change current page.
  */
 include_once XOOPS_ROOT_PATH . '/class/pagenav.php'; 
-
 
 class wiwiPageNav extends XoopsPageNav {
 
@@ -90,4 +89,3 @@ class wiwiPageNav extends XoopsPageNav {
 
 }
 ?>
-

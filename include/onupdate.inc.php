@@ -5,7 +5,7 @@
  * This file is loaded and executed at the end of the update module process
  *  
  * @package Wiwimod
-*
+ *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */

@@ -5,7 +5,7 @@
  * @todo Get the core block admin form so it is always current
  * @package Wiwimod
  * @author GIJOE <http://www.peak.ne.jp/>
-*
+ *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */

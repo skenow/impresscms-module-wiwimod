@@ -4,7 +4,7 @@
  * 
  * @package Wiwimod
  * @author Xavier JIMENEZ
-*
+ *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id: about.php 5726 2008-10-16 16:00:36Z skenow $  
  */
