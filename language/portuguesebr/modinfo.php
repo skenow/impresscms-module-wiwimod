@@ -62,5 +62,5 @@ define('_MI_WIWIMOD_BLOCK_SHOWPAGE_NAME','WiwiShowPage');
 define('_MI_WIWIMOD_BLOCK_SHOWPAGE_DESC','Mostrar uma página do Wiki');
 define('_MI_WIWIMOD_AUTHOR_WORD','<h4>Sobre o Wiwi 0.8.3</h4><br />Wiwi é um software GPL ; visite a página inicial do Wiwi no <a href="http://www.zonatim.com/modules/wiwimod?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> para suporte ou conseguir ajuda.<br /><br />Se você estiver migrando da versão (0.7.1 ou menor), favor clicar aqui : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Leia o Manual</a> e <a href=\'../ReadMe.txt\' target=\'_blank\'>notas sobre a atualização</a> para começar.');
 define('_MI_WIWIMOD_DEFAULTPROFILE_DESC','Perfil predefinido e atribuído para novas páginas');
-if (!defined('_MI_WIWIMOD_WIWIHOME'){define('_MI_WIWIMOD_WIWIHOME','WiwiHome');}
+if (!defined('_MI_WIWIMOD_WIWIHOME')){define('_MI_WIWIMOD_WIWIHOME','WiwiHome');}
 ?>
