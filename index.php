@@ -405,6 +405,6 @@ switch ($op) {
 
 }
 
-$xoopsTpl->assign('xoops_pagetitle',$myts->htmlSpecialChars($xoopsModule->name()) . ' - ' .$myts->htmlSpecialChars($pageObj->title));
+$xoopsTpl->assign('xoops_pagetitle',$myts->htmlSpecialChars( $myts->htmlSpecialChars($pageObj->title) . ' - ' .$xoopsModule->name()));
 include XOOPS_ROOT_PATH.'/footer.php';
 ?>
