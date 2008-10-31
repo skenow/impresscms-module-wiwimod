@@ -14,7 +14,6 @@
  */
 include_once XOOPS_ROOT_PATH . '/class/pagenav.php'; 
 
-
 class wiwiPageNav extends XoopsPageNav {
 
 	var $navcall ;
@@ -90,4 +89,3 @@ class wiwiPageNav extends XoopsPageNav {
 
 }
 ?>
-

@@ -11,36 +11,28 @@
  * @version $Id$  
  */
 if (!defined('_WI_READ')) {
-
 define ('_WI_READ', 1);
 define ('_WI_WRITE', 2);
 define ('_WI_ADMIN',3);
 define ('_WI_COMMENTS',4);
 define ('_WI_HISTORY',5);
-
 class WiwiProfile {
-
 	var $name;
 	var $prid;					// this attribute is naturally read-only...
-
 	//
 	//  arrays below have group ids as keys, and group names as values.
 	//
 	var $readers;
 	var $writers;
 	var $administrators;
-
 	var $commentslevel;			// 0 if no comments allowed, otherwise _WI_READ, _WI_WRITE or _WI_ADMIN
 	var $historylevel;			// 0 if no history allowed, otherwise _WI_READ, _WI_WRITE or _WI_ADMIN
-
 	var $db;					// private usage;
-
 	//
 	// Constructor
 	//
 	function WiwiProfile($prid = 0) {
 		$this->db =& Database::getInstance();
-
 		$this->name = '';
 		$this->readers = Array();
 		$this->writers = Array();
@@ -48,37 +40,29 @@ class WiwiProfile {
 		$this->prid = $prid;
 		$this->commentslevel = 0;
 		$this->historylevel = _WI_WRITE;
-
 		if ($prid != 0) $this->load($prid);
 	}
-
 	//
 	// sets object with db data
 	//
 	function load ($prid=0) {
-
 		if ($prid == 0) return;  // 0 isn't a valid profile id.
-
 		//
 		// retrieve profile info
 		//
 		$sql = 'SELECT prname, commentslevel, historylevel FROM '.$this->db->prefix('wiwimod_profiles').' WHERE prid='. (int) $prid;
-
 		$res = $this->db->query($sql);
 		if ($this->db->getRowsNum($res) == 0) return false;
 		list($this->name, $this->commentslevel, $this->historylevel) = $this->db->fetchRow($res);
 		$this->prid = $prid;
-
 		//
 		// retrieve groups info
 		//
 		$this->readers = Array();
 		$this->writers = Array();
 		$this->administrators = Array();
-
 		$member_handler =& xoops_gethandler('member');
 		$grps =& $member_handler->getGroupList();
-
 		$sql = 'SELECT gid, priv FROM '.$this->db->prefix('wiwimod_prof_groups').' WHERE prid='. (int) $prid.' ORDER BY priv';
 		$res = $this->db->query($sql);
 		while ($rows = $this->db->fetchArray($res)) {
@@ -97,8 +81,6 @@ class WiwiProfile {
 			$dst[$rows['gid']] = $grps[$rows['gid']];
 		}
 	}
-
-
 	function getDefaultProfileId () {
 		/*
 		 * cannot use globals xoopsModule or xoopsModuleConfig, if called from within another module ;
@@ -108,16 +90,13 @@ class WiwiProfile {
 		$config_handler =& xoops_gethandler('config');
         $wiwiModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));  
 		$wiwiConfig =& $config_handler->getConfigsByCat(0, $wiwiModule->getVar('mid'));
-		
 		$prid = $wiwiConfig['DefaultProfile'];
 		return $prid;
 	}
-
 	//
 	// Saves object data to the database
 	//
 	function store() {
-
 		if ($this->name == '') return false;
 		if ($this->prid == 0) {
 			//
@@ -128,7 +107,6 @@ class WiwiProfile {
 			if ($success) {
 				$this->prid = $this->db->getInsertId();  // gets new profile id
 			}
-
 		} else {
 			//
 			// Update profile
@@ -151,7 +129,6 @@ class WiwiProfile {
 				$sql = sprintf ('INSERT INTO %s ( prid, gid, priv ) VALUES ( %u, %u, %u )', 
 							$this->db->prefix('wiwimod_prof_groups'),$this->prid,$key,_WI_READ);
 				$success = $this->db->query($sql);
-
 			}
 			foreach ($this->writers as $key) {
 				$sql = sprintf ('INSERT INTO %s ( prid, gid, priv ) VALUES ( %u, %u, %u )', 
@@ -164,39 +141,31 @@ class WiwiProfile {
 				$success = $success && $this->db->query($sql);
 			}
 		}
-
 		if ($success) {	//-- update possible values for default profile
 			$this->updateModuleConfig();
 		}
-
 	return ($success ? $this->prid : false);
 	}
-
 	//
 	// Delete a profile, and modifies impacted Wiwi pages profile
 	// 
 	function delete ($newprf = 0) {
 		if ($this->prid == null) return true;
-		
 		$sql = sprintf ('DELETE FROM %s WHERE prid = %u',$this->db->prefix('wiwimod_prof_groups'),$this->prid);
 		$success = $this->db->query($sql);
 		$sql = sprintf('DELETE FROM %s WHERE prid=%u', $this->db->prefix('wiwimod_profiles'),$this->prid);
 		$success = $this->db->query($sql);
 		$sql = sprintf('UPDATE %s SET prid=%u WHERE prid=%u', $this->db->prefix('wiwimod'),$newprf, $this->prid);
 		$success = $this->db->query($sql);
-
 		if ($success) {	//-- update possible values for default profile
 			$this->updateModuleConfig();
 		}
-
 		return $success;
 	}
-
 	//
 	// Retrieves an array with all profiles name and id.
 	//
 	function getAllProfiles() {
-
 		$sql = 'SELECT prname, prid FROM '.$this->db->prefix('wiwimod_profiles');
 		$res = $this->db->query($sql);
 		$prlist = Array();
@@ -205,7 +174,6 @@ class WiwiProfile {
 		}
 		return $prlist;
 	}
-
 	//
 	// Retrieves an array with all profile name and id where the selected user has admin privilege
 	// Xoops Webmasters have admin access to all profiles of course.
@@ -213,7 +181,6 @@ class WiwiProfile {
 	function getAdminProfiles($user) {
 		$member_handler =& xoops_gethandler('member');
 		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : Array(XOOPS_GROUP_ANONYMOUS);
-
 		if (in_array(XOOPS_GROUP_ADMIN , $usergroups)) {
 			$prlist = $this->getAllProfiles();
 		} else {
@@ -228,10 +195,7 @@ class WiwiProfile {
 			}
 		}
 		return $prlist;
-	
 	}
-
-
 	//
 	// Retrieves selected user read, write and administrator privileges on the current profile,
 	// depending on all groups he is member of.
@@ -240,7 +204,6 @@ class WiwiProfile {
 	//
 	function getUserPrivileges ($user='') {
 		global $xoopsUser;
-
 		$member_handler =& xoops_gethandler('member');
 		if ($user == '') $user = $xoopsUser;
 		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : Array(XOOPS_GROUP_ANONYMOUS);
@@ -248,61 +211,49 @@ class WiwiProfile {
 		$priv[_WI_ADMIN] = in_array(XOOPS_GROUP_ADMIN , $usergroups) || ( count(array_intersect ($usergroups, array_keys($this->administrators))) > 0 );
 		$priv[_WI_WRITE] = $priv[_WI_ADMIN] || ( count(array_intersect ($usergroups, array_keys($this->writers))) > 0 );
 		$priv[_WI_READ] = $priv[_WI_WRITE]  || ( count(array_intersect ($usergroups, array_keys($this->readers))) > 0 );
-
 		$priv[_WI_COMMENTS] = (
 			($priv[_WI_READ] && ($this->commentslevel == _WI_READ)) ||
 			($priv[_WI_WRITE] && (($this->commentslevel == _WI_READ) || ($this->commentslevel == _WI_WRITE))) ||
 			($priv[_WI_ADMIN] && (($this->commentslevel == _WI_READ) || ($this->commentslevel == _WI_WRITE) || ($this->commentslevel == _WI_ADMIN)))
 			);
-
 		$priv[_WI_HISTORY] = (
 			($priv[_WI_READ] && ($this->historylevel == _WI_READ)) ||
 			($priv[_WI_WRITE] && (($this->historylevel == _WI_READ) || ($this->historylevel == _WI_WRITE))) ||
 			($priv[_WI_ADMIN] && (($this->historylevel == _WI_READ) || ($this->historylevel == _WI_WRITE) || ($this->historylevel == _WI_ADMIN)))
 			);
 	return $priv;
-	
 	}
-
 	function canRead() {
 		$priv = $this->getUserPrivileges();
 		return ($priv[_WI_READ]);
 	}
-
 	function canWrite() {
 		$priv = $this->getUserPrivileges();
 		return ($priv[_WI_WRITE]);
 	}
-
 	function canAdministrate() {
 		$priv = $this->getUserPrivileges();
 		return ($priv[_WI_ADMIN]);
 	}
-
 	function canViewComments() {
 		$priv = $this->getUserPrivileges();
 		return ($priv[_WI_COMMENTS]);
 	}
-
 	function canViewHistory() {
 		$priv = $this->getUserPrivileges();
 		return ($priv[_WI_HISTORY]);
 	}
-
-
 	/*
 	 * Updates wiwimod's module options with the uptodate list of profiles
 	 * (to enable selecting the "default" profile within module's preferences.
 	 */
 	function updateModuleConfig() {
-		
 		/*
 		 * cannot use the global xoopsModule, if called from within another module ;
 		 * so must guess wiwimod module id from its folder ...
 		 */
 		$modhandler =& xoops_gethandler('module');				
         $myXoopsModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));  
-
 		//-- get the config item options from the database
 		$criteria = new CriteriaCompo (new Criteria('conf_modid', $myXoopsModule->getVar('mid')));
 		$criteria->add(new Criteria('conf_name', 'DefaultProfile'));
@@ -310,7 +261,6 @@ class WiwiProfile {
 		$configs =& $config_handler->getConfigs($criteria,false);
 		$confid = $configs[0]->getVar('conf_id');
 		$old_options =& $config_handler->getConfigOptions(new Criteria('conf_id',$confid),false);
-
 		//-- create the new options
 		$optionshandler = xoops_gethandler('configoption');
 		$prlist = $this->getAllProfiles();
@@ -322,34 +272,16 @@ class WiwiProfile {
 			$optionshandler->insert($opt);
 			unset ($opt);
 		   }
-		
 		//-- delete old ones;
 		foreach ($old_options as $opt) {
 			$optionshandler->delete($opt);
 		}
-
 		//-- clear cache
 /*		$cnf =& $configs[0];
 		if (!empty($config_handler->_cachedConfigs[$cnf->getVar('conf_modid')][$cnfg->getVar('conf_catid')])) {
 			unset ($config_handler->_cachedConfigs[$cnf->getVar('conf_modid')][$cnfg->getVar('conf_catid')]);
 		} */
-
 	}
-
-
-
 }  // end class wiwiProfile
-
 }  // end "ifdefined"
-
-
-
-
-
-
-
-
-
-
-
 ?>

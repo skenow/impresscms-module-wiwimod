@@ -365,10 +365,10 @@ class WiwiRevision {
 				"")
 		);
 		$cfg = $settings[$type];
-
+		
 		$sql = 'SELECT w1.keyword, w1.title, w1.lastmodified, w1.u_id FROM '.$this->db->prefix('wiwimod').' AS w1 LEFT JOIN '.$this->db->prefix('wiwimod').' AS w2 ON w1.keyword=w2.keyword AND w1.id<w2.id WHERE w2.id IS NULL '.$cfg[0];
 		$result = $this->db->query($sql);
-
+		
 		$body = '' ; $counter = '[';
 		while ($content = $this->db->fetcharray($result)) {
 			if ($counter != strtoupper(substr($content[$cfg[1]], 0, $cfg[2]))) {
@@ -377,7 +377,7 @@ class WiwiRevision {
 			}
 			eval('$body .= '.$cfg[4].'."\n";');
 		}
-
+		
 		return "<table>".$body.(($body)?$cfg[5]:"")."</table>\n\n";
 	}
 
@@ -438,7 +438,7 @@ class WiwiRevision {
 		$sql = 'SELECT title, body FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($this->keyword).'" ORDER BY id DESC LIMIT 1';
 		$result = $this->db->query($sql);
 		list ($title, $body) = $this->db->fetchRow($result);
-
+		
 		//
 		// remove formatting tags, replace tags generating a line break with a "\n".
 		//
@@ -491,14 +491,14 @@ class WiwiRevision {
 		$result = $this->db->query($sql);
 		$rowsnum = $this->db->getRowsNum($result);
 
-		if ($this->id == 0) {
+		if ($this->id == 0) {  
 
 			return ($rowsnum > 0) ;  // this was a page creation : somebody did it before ...
 		} else {
 			list($db_lastmodified) = $this->db->fetchRow($result);
 			return ($this->lastmodified != $db_lastmodified);
 		}
-
+		
 	}
 
 	function pageExists ($page="", $id = 0) {
@@ -682,7 +682,7 @@ class WiwiPage extends WiwiRevision {
 	function WiwiPage($keyword = "", $pageid = 0) {
 		return WiwiRevision::WiwiRevision ($keyword, 0, $pageid);
 	}
-
+	
 }
 
 }  // end "ifdefined"

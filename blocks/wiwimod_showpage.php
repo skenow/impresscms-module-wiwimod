@@ -60,7 +60,6 @@ function wiwimod_showpage ($options) {
 	return $block;
 }
 
-
 function wiwimod_contextshow($options) {
 	global $xoopsDB, $xoopsModuleConfig, $xoopsUser, $myts;
 	$wiwidir = basename(dirname(dirname( __FILE__ ))) ;
@@ -105,14 +104,10 @@ function wiwimod_contextshow($options) {
 	return $block;
 }
 
-
-
 function wiwimod_showpage_blockedit ($options) {
     $form = _MB_WIWI_SHOWPAGE_DESC."&nbsp;:&nbsp;<input type='text' name='options[0]' value='".$options[0]."' />";
 	return $form;
 
 }
-
-
 
 ?>

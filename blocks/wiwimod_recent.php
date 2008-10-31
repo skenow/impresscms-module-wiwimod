@@ -43,7 +43,6 @@ function wiwimod_recent ($options) {
 	return $block;
 }
 
-
 function wiwimod_recent_blockedit ($options) {
     $form = _MB_WIWI_NUM_DISP_DESC."&nbsp;:&nbsp;<input type='text' name='options[0]' value='".$options[0]."' />";
 	return $form;

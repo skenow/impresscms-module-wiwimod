@@ -8,8 +8,7 @@
  *  _FLD	: title of form elements
  *  _DESC	: description under the title for form elements
  *  _MSG	: messages, alerts ...
- * @package Wiwimod 
- * @version $Id$ 
+ *
  */
 
 define('_MD_WIWI_MODIFIED_TXT', 'Aktualisierung ');		
@@ -52,6 +51,7 @@ define('_MD_WIWI_ERRORINSERT_MSG','Fehler beim Aktualisieren der Datenbank!');
 define('_MD_WIWI_EDITCONFLICT_MSG','Ungültige Angaben! - Die &Auml;nderungen wurden abgelehnt!');
 define('_MD_WIWI_NOREADACCESS_MSG','<br><h4>Entschuldigung, die Ansicht dieser Seite erfordert weitergehende Benutzerrechte.</h4><br>');
 define('_MD_WIWI_NOWRITEACCESS_MSG','<br><h4>Entschuldigung, Sie haben keine Berechtigung zum Bearbeiten dieser Seite.</h4><br>');
+
 
 // Wiwi special pages - 
 // Change these names, if you want a different homepage and error page

@@ -60,7 +60,6 @@ define('_AM_WIWI_ADMINISTRATORS_OPT','Administrationsberechtigung');
 define('_AM_WIWI_COMMENTS_NONE_OPT','(Keine Kommentare)');
 define('_AM_WIWI_HISTORY_NONE_OPT','(Keine Historie)');
 define('_AM_WIWI_DELCONFIRM_OPT','JA, ich möchte das Profil löschen.');
-
 define('_AM_WIWI_LISTPAGES_ALLPAGES_OPT','Alle Seiten');
 define('_AM_WIWI_LISTPAGES_KEYWORD_OPT','Name');
 define('_AM_WIWI_LISTPAGES_TITLE_OPT','Titel');
