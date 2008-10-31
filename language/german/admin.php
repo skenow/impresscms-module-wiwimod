@@ -30,7 +30,7 @@ define('_AM_WIWI_ACLHELP_TXT','
 		<li>Benutzer mit Administrationsberechtigung können die Seitenprofile im Rahmen ihrer zugeordneten Administrationsrechte verändern.</li></ul>
 	<p>Neue Seiten erhalten per Voreinstellung das Profil ihrer Ausgangsseite.</p>
 	<p>Die Benutzerprofile definieren ebenfalls die Lese- und Schreibberechtigungen für die Kommentare. Das ist nützlich, um z.B. private Kommentare auf öffentlichen Seiten zu ermöglichen.</p>
-	<p>Beachte: Xoops Webmaster haben immer vollständige Benutzerrechte für alle Seiten.</p>
+	<p>Beachte: Webmaster haben immer vollständige Benutzerrechte für alle Seiten.</p>
 	');
 define('_AM_WIWI_DELCONFIRMTITLE_TXT','Bestätigung der Profillöschung');
 define('_AM_WIWI_DELCONFIRM_TXT','Konten-Löschung durch Aktivierung der Checkbox bestätigen.');
