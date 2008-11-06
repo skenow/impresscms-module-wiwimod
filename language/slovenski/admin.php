@@ -87,7 +87,4 @@ define('_AM_WIWI_ERRDELETE_MSG','Napaka : ne morem izbrisati profila');
 define('_AM_WIWI_PRFDELSUCCESS_MSG','Profil izbrisan iz podatkovne baze.');
 define('_AM_WIWI_PRFDELFAILED_MSG','Pri brisanju profila je prišlo do napake. Podatkovna baza NI POSODOBLJENA');
 
-
-
-
 ?>

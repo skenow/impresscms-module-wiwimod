@@ -21,21 +21,28 @@ include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/include/diff.php';
 
 class WiwiRevision {
 
-	var $keyword;			// the CamelCase code of the page
-	var $title;
-	var $body;
-	var $lastmodified;
-	var $u_id;				// user id of last author
-	var $parent;			// CamelCase code of the parent page
-	var $visible;			// weight of the reviison in TOC block
-	var $contextBlock;		// CamelCase code of the page to be shwon in the side block
-	var $pageid;			// id of the initial revision (necessary to keep comments visible)
-	var $profile;			// the current revision profile (@link WiwiProfile)
-	var $id;				// revision unique id.
-
-	var $db;				// private usage;
-	var $ts;				// private usage;
-	var $wiwiConfig;		// private usage : used to get Wiwimod configs, even when called from other modules
+  var $keyword;			// the CamelCase code of the page
+  var $title;
+  var $body;
+  var $lastmodified;
+  var $u_id;			// user id of last author
+  var $parent;			// CamelCase code of the parent page
+  var $visible;			// weight of the reviison in TOC block
+  var $contextBlock;		// CamelCase code of the page to be shwon in the side block
+  var $pageid;			// id of the initial revision (necessary to keep comments visible)
+  var $profile;			// the current revision profile (@link WiwiProfile)
+  var $id;				// revision unique id.
+  
+  var $db;				// private usage;
+  var $ts;				// private usage;
+  var $wiwiConfig;		// private usage : used to get Wiwimod configs, even when called from other modules
+  var $summary;           // revision summary
+  var $views;                // number of times the page was viewed
+  var $creator;  // creator of the page
+  var $created; // create datetime of the page
+  var $revisions; // number of revisions of this page, also the latest revision of the page
+  var $lastviewed; // last time the page was accessed
+  var $allowComments;
 
 	/*
 	 * Constructor.
@@ -69,32 +76,48 @@ class WiwiRevision {
 		$this->pageid = $pageid;
 		$this->profile = new wiwiProfile(); // loads an empty profile
 		$this->id = 0;
-
+		$this->summary = '';
+		$this->views = 0;
+		$this->creator = 0;
+		$this->created = null;
+		$this->revisions = 1;
+		$this->lastviewed = null;
+		$this->allowComments = '1';
+/* new SQL, based on the new tables */
+   $sql = 'SELECT * FROM '.$this->db->prefix('wiwimod_pages').' p,' .$this->db->prefix('wiwimod_revisions') .' r';
 		if ($id != 0) {
-			$sql = 'SELECT * FROM '.$this->db->prefix('wiwimod').' WHERE id = '.$id;
+			$sql .= ' WHERE revid = '.$id;
 		} elseif ($page != ''){
-			$sql = 'SELECT * FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($page).'" ORDER BY id DESC LIMIT 1';
+			$sql .= ' WHERE p.lastmodified = r.modified AND keyword="'.addslashes($page).'" ';
 		} elseif ($pageid != '') {
-		    $sql = 'SELECT * FROM '.$this->db->prefix('wiwimod').' WHERE pageid='.$pageid.' ORDER BY id DESC LIMIT 1';
+		    $sql .= ' WHERE p.lastmodified = r.modified AND p.pageid='.$pageid.'';
 		} else {
 			$sql = '';
 		}
+/* end of the new SQL */
+		
 		if ($sql != '') {
-			$result = $this->db->query($sql);
-			if ($this->db->getRowsNum($result) == 0) return false;
-			$row = $this->db->fetchArray($result);
-			$this->keyword = $row['keyword'];
-			$this->title = $row['title'];
-			$this->body = $row['body'];
-			$this->lastmodified = $row['lastmodified'];
-			$this->u_id = $row['u_id'];
-			$this->parent = $row['parent'];
-			$this->visible = $row['visible'];
-			$this->contextBlock = $row['contextBlock'];
-			$this->pageid = $row['pageid'];
-			$this->id = $row['id'];
-			$this->profile = new wiwiProfile($row['prid'] != 0 ? $row['prid'] : WiwiProfile::getDefaultProfileId());
-
+      $result = $this->db->query($sql);
+      if ($this->db->getRowsNum($result) == 0) return false;
+        $row = $this->db->fetchArray($result);
+        $this->keyword = $row['keyword'];
+        $this->title = $row['title'];
+        $this->body = $row['body'];
+        $this->lastmodified = $row['lastmodified'];
+        $this->u_id = $row['userid'];
+        $this->parent = $row['parent'];
+        $this->visible = $row['visible'];
+        $this->contextBlock = $row['contextBlock'];
+        $this->pageid = $row['pageid'];
+        $this->id = $row['revid'];
+        $this->profile = new wiwiProfile($row['prid'] != 0 ? $row['prid'] : WiwiProfile::getDefaultProfileId());
+        $this->summary = $row['summary'];
+        $this->views = $row['views'];
+        $this->creator = $row['creator'];
+        $this->created = $row['createdate'];
+        $this->revisions = $row['revisions'];
+        $this->lastviewed = $row['lastviewed'];
+        $this->allowComments = $row['allowComments'];
 		}
 		return $this;
 	}
@@ -104,52 +127,117 @@ class WiwiRevision {
 	 */
 	function add() {
 		global $xoopsUser;
+		$add_date = date(_DATESTRING); //$this->created,
+		if ($this->pageid == 0) { // only insert into the pages table if it is the first revision
 		$sql = sprintf(
-			"INSERT INTO %s (keyword, title, body, lastmodified, u_id, parent, visible, contextBlock, pageid, prid) VALUES('%s', '%s', '%s', '%s', '%u', '%s', %u, '%s', %u, %u)",
-			$this->db->prefix('wiwimod'),
+			"INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock)
+                VALUES('%s', '%s', '%s', %u, %u, %u, '%s', '%s', '%s', '%s')",
+			$this->db->prefix('wiwimod_pages'),
 			addslashes($this->keyword),
 			$this->ts->addSlashes($this->title),
-			$this->ts->addSlashes($this->body),
-			date(_DATESTRING),						  //-- lastmodified is Now
-			$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
+			$add_date,						  //-- lastmodified is Now
 			addslashes($this->parent),
 			$this->visible,
-			addslashes($this->contextBlock),
-			$this->pageid,
-			$this->profile->prid
-			);
+			$this->profile->prid,
+			$xoopsUser ? $xoopsUser->getVar('uid') : 0, //$this->creator,
+			$add_date,
+			$this->allowComments,
+			addslashes($this->contextBlock)
+      		);
 		$result = $this->db->query($sql);
 		if (!$result) return false;
-		if ($this->pageid == 0) {
-			$this->pageid = $this->db->getInsertId();
-			$sql = 'UPDATE '.$this->db->prefix('wiwimod').' SET pageid = '.$this->pageid.' WHERE id = '.$this->pageid;
+		$this->pageid = $this->db->getInsertId();
+		}
+			$sql = sprintf(
+               "INSERT INTO %s (pageid, summary, body, userid, modified)
+	               VALUES (%u, '%s', '%s', %u, '%s')",
+				$this->db->prefix('wiwimod_revisions'),
+				$this->pageid,
+				$this->ts->addSlashes($this->summary),
+				$this->ts->addSlashes($this->body),
+				$xoopsUser ? $xoopsUser->getVar('uid') : 0,
+				$add_date
+               );
 			$result = $this->db->query($sql);
 			if (!$result) return false;
-		}
+		$sql = sprintf(
+               "UPDATE %s SET revisions=%u, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s' WHERE pageid=%u",
+				$this->db->prefix('wiwimod_pages'),
+				$this->revisions + 1,
+				$add_date,
+				addslashes($this->parent),
+				$this->profile->prid,
+				$this->visible,
+				$this->allowComments,
+				$this->ts->addSlashes($this->title),
+				addslashes($this->contextBlock),
+				$this->pageid
+          );
+          $result = $this->db->query($sql);
+		return ($result ? true : false);
+		
 		return true;
 	}
 
 	/*
 	 * Saves the current revision on the database.
-	 */
+	* a new query to update a revision and page - mysql allows updating multiple tables in a single query */
 	function save() {
+		global $xoopsUser;
+          $save_date = date(_DATESTRING);
+		$sql = sprintf(
+			"UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=%u, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s'
+               WHERE revid=%u AND p.pageid=%u",
+				$this->db->prefix('wiwimod_pages'),
+				$this->db->prefix('wiwimod_revisions'),
+				$this->ts->addSlashes($this->body),
+				$save_date,
+				$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
+				addslashes($this->contextBlock),
+				$this->summary,
+				$this->ts->addSlashes($this->title),
+				$this->revisions + 1,
+				$save_date,
+				addslashes($this->parent),
+				$this->profile->prid,
+				$this->visible,
+				$this->allowComments,
+				$this->id,
+				$this->pageid
+			);
+		$result = $this->db->query($sql);
+		return ($result ? true : false);
+	}
+
+/*
+ * function visited() - version 0.85
+ * Return True or False.
+ * Objective: Save visit and date visit
+ * (addition : GibaPhp - XoopsTotal )
+ * New - Function for new block top visit and block last visit
+ * Today:
+ * -> Saves the current visit on the database.
+ * -> Saves the current date on the database.
+ *
+ * In Future.
+ * Log system access registered user for analysing.
+ * Register access page in table for statistics and points.
+ * New block - last users visited on topic
+ * New admin section - statistic visit users and
+ * anonymous count and section interest.
+ */
+
+	function visited() {
 		global $xoopsUser;
 
 		$sql = sprintf(
-			"UPDATE %s SET title='%s', body='%s', lastmodified='%s', u_id='%s', parent='%s', visible=%u, contextBlock='%s', pageid=%u, prid=%u WHERE id=%s",
-			$this->db->prefix('wiwimod'),
-			$this->ts->addSlashes($this->title),
-			$this->ts->addSlashes($this->body),
+			"UPDATE %s SET views=%u, lastviewed='%s' WHERE pageid=%u",
+			$this->db->prefix("wiwimod_pages"),
+			$this->views +1,
 			date(_DATESTRING),
-			$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
-			addslashes($this->parent),
-			$this->visible,
-			addslashes($this->contextBlock),
-			$this->pageid,
-			$this->profile->prid,
-			$this->id
+			$this->pageid
 			);
-		$result = $this->db->query($sql);
+		   $result = $this->db->query($sql);
 		return ($result ? true : false);
 	}
 
@@ -194,116 +282,116 @@ class WiwiRevision {
 		$gt = "(?:&gt;|>)";
 
 		$search = array();
-          $replace = array();
-          // [[PAGE subPage free link]] : we first save it(otherwise it might be recognise as a free link) (addition : Gizmhail)
+		$replace = array();
+      // [[PAGE subPage free link]] : we first save it(otherwise it might be recognise as a free link) (addition : Gizmhail)
      		$search[] = "#\[\[PAGE (.+?)\]\]#";
-               $replace[] = "<wiwisubpage>~\\1</wiwisubpage>";
-          // is this one still useful ?
+            $replace[] = "<wiwisubpage>~\\1</wiwisubpage>";
+      // is this one still useful ?
 			$search[] = "#\r\n?#";
-               $replace[] = "\n";
-          // <<bold text>>
+            $replace[] = "\n";
+      // <<bold text>>
 			$search[] = "#".$lt."{2}(.*?)".$gt."{2}#s";
-               $replace[] = "<strong>\\1</strong>";
-          // {{italic text}}
+            $replace[] = "<strong>\\1</strong>";
+      // {{italic text}}
 			$search[] = "#\{{2}(.*?)\}{2}#s";
-               $replace[] = "<em>\\1</em>";
-          // ---- : horizontal rule
+            $replace[] = "<em>\\1</em>";
+      // ---- : horizontal rule
 			$search[] = "#(".$nl.")-{4,}(".$eol.")#m";
-               $replace[] = "\\1<hr />\\2";
-          // [br] : line break .. still useful ?
+            $replace[] = "\\1<hr />\\2";
+      // [br] : line break .. still useful ?
 			$search[] = "#\[\[BR\]\]#i";
-               $replace[] = "<br />";
-          // Xoops block ($1 is the block id or title)
+            $replace[] = "<br />";
+      // Xoops block ($1 is the block id or title)
 			$search[] = "#\[\[XBLK (.+?)\]\]#ie" ;
-               $replace[] = '$this->render_block("$1")';
-          // [[IMG url title]] : inline image ...
+            $replace[] = '$this->render_block("$1")';
+      // [[IMG url title]] : inline image ...
 			$search[] = "#\[\[IMG ([^\s\"\[>{}]+)( ([^\"<\n]+?))?\]\]#i";
-               $replace[] = '<img src="\\1" alt="\\3" />';
-          // CamelCase
+            $replace[] = '<img src="\\1" alt="\\3" />';
+      // CamelCase
 			$search[] = "#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#e";
-               $replace[] = '"$1".$this->render_wikiLink("$2" , "",'.$this->wiwiConfig['ShowTitles'].')';
-          // escaped CamelCase
+            $replace[] = '"$1".$this->render_wikiLink("$2" , "",'.$this->wiwiConfig['ShowTitles'].')';
+      // escaped CamelCase
 			$search[] = "#(^|\s|>)~(([A-Z][a-z]+){2,}\d*)\b#";
-               $replace[] = '\\1\\2';
-          // [[CamelCase title]]
+            $replace[] = '\\1\\2';
+      // [[CamelCase title]]
 			$search[] = "#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#e";
-               $replace[] = '$this->render_wikiLink("$1" ,"$3", '.$this->wiwiConfig['ShowTitles'].')';
-          // [[www.mysite.org title]] and [[<a ... /a> title]]
+            $replace[] = '$this->render_wikiLink("$1" ,"$3", '.$this->wiwiConfig['ShowTitles'].')';
+      // [[www.mysite.org title]] and [[<a ... /a> title]]
 			$search[] = "#\[\[(<a.*>)(.*)</a> (.+?)\]\]#i";
-               $replace[] = '$1$3</a>';
-          // [[free link | title]]
+            $replace[] = '$1$3</a>';
+      // [[free link | title]]
 			$search[] = "#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#e";
-               $replace[] = '$this->render_wikiLink("$1" ,"$2", '.$this->wiwiConfig['ShowTitles'].')';
-          // [[free link]]
+            $replace[] = '$this->render_wikiLink("$1" ,"$2", '.$this->wiwiConfig['ShowTitles'].')';
+      // [[free link]]
 			$search[] = "#\[\[(.+?)\]\]#e";
-               $replace[] = '$this->render_wikiLink("$1" ,"", '.$this->wiwiConfig['ShowTitles'].')';
-     	//        "#([\w.-]+@[\w.-]+)(?![\w.]*(\">|<))#";
-          //        '<a href="mailto:\\1">\\1</a>';
-          // link with href ending with ?page=
+            $replace[] = '$this->render_wikiLink("$1" ,"", '.$this->wiwiConfig['ShowTitles'].')';
+		//        "#([\w.-]+@[\w.-]+)(?![\w.]*(\">|<))#";
+		//        '<a href="mailto:\\1">\\1</a>';
+		// link with href ending with ?page=
 			$search[] = "#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))(\">.*)</a>#Uie";
-               $replace[] = '$this->render_wiwiLink("$2","$1","$4");';
-          // =Title=
+            $replace[] = '$this->render_wiwiLink("$2","$1","$4");';
+      // =Title=
 			$search[] = "#(".$nl.")=(.*)=(".$eol.")#m";
-               $replace[] = "\n\\1<h2>\\2</h2>\\3\n";
-          // > quoted text
+            $replace[] = "\n\\1<h2>\\2</h2>\\3\n";
+      // > quoted text
 			$search[] = "#(".$nl.")".$gt." .* (".$eol.")#me";
-               $replace[] = '"<blockquote>".str_replace("\n", " ", preg_replace("#^> #m", "", "$0"))."</blockquote>\n"';
-          // * list item
+            $replace[] = '"<blockquote>".str_replace("\n", " ", preg_replace("#^> #m", "", "$0"))."</blockquote>\n"';
+      // * list item
 			$search[] = "#(".$nl.")\* (.*)#m";
-               $replace[] = "\\1<li>\\2</li>\\3";
+            $replace[] = "\\1<li>\\2</li>\\3";
 	/*En test : Gizmhail */
-          //detection des niv0li
+      //detection des niv0li
 			$search[] = "#(".$nl.")\* (.*)#m";
-               $replace[] = "<niv0li>\\2</niv0li>";
-          //detection des niv1li
+            $replace[] = "<niv0li>\\2</niv0li>";
+      //detection des niv1li
 			$search[] = "#(".$nl.")\*\* (.*)#m";
-               $replace[] = "<niv1li style='margin-left: 8px;list-style: disc inside;'>\\2</niv1li>";
-          //detection des niv2li
+            $replace[] = "<niv1li style='margin-left: 8px;list-style: disc inside;'>\\2</niv1li>";
+      //detection des niv2li
 			$search[] = "#(".$nl.")\*\*\* (.*)#m";
-               $replace[] = "<niv2li style='margin-left: 16px;list-style: square inside;'>\\2</niv2li>";
-          //detection des niv3li
+            $replace[] = "<niv2li style='margin-left: 16px;list-style: square inside;'>\\2</niv2li>";
+      //detection des niv3li
 			$search[] = "#(".$nl.")   (?: )*\* (.*)#m";
-               $replace[] = "<niv3li style='margin-left: 24px;list-style: circle inside;'>\\2</niv3li>";
-          //groupage des niv0li
+            $replace[] = "<niv3li style='margin-left: 24px;list-style: circle inside;'>\\2</niv3li>";
+      //groupage des niv0li
 			$search[] = "#<niv0li>(?(?!\n\n)(?:.|\n))*</niv(0|1|2|3)li>#";
-               $replace[] = "<niv0ul>\\0</niv0ul>";
-          //groupage des niv1li
+            $replace[] = "<niv0ul>\\0</niv0ul>";
+      //groupage des niv1li
 			$search[] = "#<niv1li>(?(?!niv0li)(?:.|\n))*</niv(1|2|3)li>#";
-               $replace[] = "<niv1ul>\\0</niv1ul>";
-          //groupage des niv1li
+            $replace[] = "<niv1ul>\\0</niv1ul>";
+      //groupage des niv1li
 			$search[] = "#<niv2li>(?(?!niv0li|niv1li)(?:.|\n))*</niv(2|3)li>#";
-               $replace[] = "<niv2ul>\\0</niv2ul>";
-          //groupage des niv1li
+            $replace[] = "<niv2ul>\\0</niv2ul>";
+      //groupage des niv1li
 			$search[] = "#<niv3li>(?(?!niv0li|niv1li|niv2li)(?:.|\n))*</niv(3)li>#";
-               $replace[] = "<niv3ul>\\0</niv3ul>";
-          //nettoyage des niv*li
+            $replace[] = "<niv3ul>\\0</niv3ul>";
+      //nettoyage des niv*li
 			$search[] = "#niv([0-9]*)li#";
-               $replace[] = "li";
-          //nettoyage des niv*ul
+            $replace[] = "li";
+      //nettoyage des niv*ul
 			$search[] = "#niv([0-9]*)ul#";
-               $replace[] = "ul";
+            $replace[] = "ul";
      /*Fin de test : Gizmhail */
 
           //		"#^(<li>.*</li>\n)+#m";
           //		"<ul>\n\\0</ul>\n";
           // <[PageIndex]> and <[RecentChanges]>
 			$search[] = "#".$lt."\[(PageIndex|RecentChanges)\]".$gt."#ie";
-               $replace[] = '$this->render_index("$1")';
+            $replace[] = '$this->render_index("$1")';
           // surrounds with <p> and </p> some lines .. hum, still useful ?
 			$search[] = "#^(?!\n|<h2>|<blockquote>|<hr />)(.*?)\n$#sm";
-               $replace[] = "<p>\\1</p>";
+            $replace[] = "<p>\\1</p>";
           // removes multiple line ends .. still useful ?
 			$search[] = "#\n+#";
-               $replace[] = "\n";
+            $replace[] = "\n";
           // ((subPage title)) : page to include (addition : Gizmhail)
-         		$search[] = "#\(\((.+?)\)\)#e";
-               $replace[] = '$this->renderSubPage("$1")';
+       		$search[] = "#\(\((.+?)\)\)#e";
+            $replace[] = '$this->renderSubPage("$1")';
           // [[PAGE subPage title]] : page to include (addition : Gizmhail)
      		$search[] = "#<wiwisubpage>[~]?(.+?)</wiwisubpage>#e";
-               $replace[] = '$this->renderSubPage("$1")';
+            $replace[] = '$this->renderSubPage("$1")';
           // dummy string, to prevent recognition of special senquences(addition : Gizmhail)
 			$search[] = "#\._\.#ie";
-               $replace[] = "";
+            $replace[] = "";
 
 		if ($body == '') $body = $this->body;
 		if ($this->wiwiConfig['ShowCamelCase'] == 0) {  // remove CamelCase parsing.
@@ -324,7 +412,7 @@ class WiwiRevision {
 	function render_wikiLink($keyword, $customTitle = '', $show_titles = false )	{
 		$wiwidir = basename( dirname(  dirname( __FILE__ ) ) ) ;
 		$normKeyword = $this->normalize($keyword);
-		$sql = 'SELECT title FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($normKeyword).'" ORDER BY id DESC LIMIT 1';
+		$sql = 'SELECT title FROM '.$this->db->prefix('wiwimod_pages') .' WHERE keyword="'.addslashes($normKeyword).'"';
 		$dbresult = $this->db->query($sql);
 		if ($this->db->getRowsNum($dbresult) > 0) {
 			$pageExists = true;
@@ -350,14 +438,14 @@ class WiwiRevision {
 				'"&nbsp;&nbsp;<a href=\"index.php?page=".$this->encode($content["keyword"])."\">".($content["title"] == "" ? $content["keyword"] : $content["title"])."</a><br/>"',
 				""),
 			"PageIndexI" => array(
-				"ORDER BY w1.keyword ASC",
+				"ORDER BY keyword ASC",
 				"keyword",
 				1,
 				'"<span class=\'wiwi_titre\'>$counter</span><br />"',
 				'"&nbsp;&nbsp;<a href=\"index.php?page=".$content["keyword"]."\">".$content["keyword"]."</a> : ".$content["title"]."<br />"',
 				""),
 			"RecentChanges" => array(
-				"ORDER BY w1.lastmodified DESC LIMIT 20",
+				"ORDER BY lastmodified DESC LIMIT 20",
 				"lastmodified",
 				10,
 				'"<tr><td colspan=3><strong>".formatTimestamp(strtotime($counter), _SHORTDATESTRING)."</strong></td></tr>"',
@@ -365,10 +453,10 @@ class WiwiRevision {
 				"")
 		);
 		$cfg = $settings[$type];
-		
-		$sql = 'SELECT w1.keyword, w1.title, w1.lastmodified, w1.u_id FROM '.$this->db->prefix('wiwimod').' AS w1 LEFT JOIN '.$this->db->prefix('wiwimod').' AS w2 ON w1.keyword=w2.keyword AND w1.id<w2.id WHERE w2.id IS NULL '.$cfg[0];
+
+		$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id FROM '.$this->db->prefix('wiwimod_pages').' p, ' . $this->db->prefix('wiwimod_revisions') . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified '.$cfg[0];
 		$result = $this->db->query($sql);
-		
+
 		$body = '' ; $counter = '[';
 		while ($content = $this->db->fetcharray($result)) {
 			if ($counter != strtoupper(substr($content[$cfg[1]], 0, $cfg[2]))) {
@@ -377,7 +465,7 @@ class WiwiRevision {
 			}
 			eval('$body .= '.$cfg[4].'."\n";');
 		}
-		
+
 		return "<table>".$body.(($body)?$cfg[5]:"")."</table>\n\n";
 	}
 
@@ -391,7 +479,7 @@ class WiwiRevision {
 	 * Note : this was formerly an inline function, but php5 doesn't seem to accept it recursively.
 	 */
 	function parentList_recurr($child, &$parlist, &$db) {
-		$sql = 'SELECT parent FROM '.$db->prefix('wiwimod').' WHERE keyword="'.addslashes($child).'" ORDER BY id DESC LIMIT 1';
+		$sql = 'SELECT parent FROM '.$db->prefix('wiwimod_pages').' WHERE keyword="'.addslashes($child).'"';
 		$result = $db->query($sql);
 		list($parent) = $db->fetchRow($result);
 		if (($parent != '')&&(!in_array($parent, $parlist))) {
@@ -399,7 +487,10 @@ class WiwiRevision {
 			$this->parentList_recurr($parent, $parlist, $db);
 		}
 	}
-
+  /**
+   * Creates breadcrumb of all parent pages to current page
+   * @return array List of parent pages linked to the page
+   */
 	function parentList() {
 
 		$parlist = array();
@@ -412,7 +503,7 @@ class WiwiRevision {
 
 	function history($limit = 0, $start = 0)
 	{
-		$sql = 'SELECT keyword, id, title, body, lastmodified, u_id FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($this->keyword).'" ORDER BY id DESC';
+		$sql = 'SELECT keyword, revid as id, title, body, modified as lastmodified, userid as u_id, summary FROM '.$this->db->prefix('wiwimod_revisions').' r, '. $this->db->prefix('wiwimod_pages') .' p WHERE p.keyword="'.addslashes($this->keyword).'" AND p.pageid=r.pageid ORDER BY id DESC';
 		$result = $this->db->query($sql, $limit, $start);
 
 		$hist = array();
@@ -424,9 +515,9 @@ class WiwiRevision {
 
 	function historyNum()
 	{
-		$sql = 'SELECT id FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($this->keyword).'" ORDER BY id DESC';
+		$sql = 'SELECT revisions FROM '.$this->db->prefix('wiwimod_pages').' WHERE keyword="'.addslashes($this->keyword).'"';
 		$result = $this->db->query($sql);
-		$maxcount = $this->db->getRowsNum($result);
+		list($maxcount) = $this->db->fetchRow($result);
 		return $maxcount;
 	}
 
@@ -435,10 +526,10 @@ class WiwiRevision {
 		//
 		// Get the latest revision contents
 		//
-		$sql = 'SELECT title, body FROM '.$this->db->prefix('wiwimod').' WHERE keyword="'.addslashes($this->keyword).'" ORDER BY id DESC LIMIT 1';
+		$sql = 'SELECT title, body FROM '.$this->db->prefix('wiwimod_revisions').' r, '.$this->db->prefix('wiwimod_pages').' p WHERE p.pageid="'.$this->pageid.'" AND r.pageid="'.$this->pageid.'" ORDER BY revid DESC LIMIT 1';
 		$result = $this->db->query($sql);
 		list ($title, $body) = $this->db->fetchRow($result);
-		
+
 		//
 		// remove formatting tags, replace tags generating a line break with a "\n".
 		//
@@ -486,29 +577,29 @@ class WiwiRevision {
 	 *        user may have created a doc with the same "keyword" meanwhile ..
 	 */
 	function concurrentlySaved () {
-
-		$sql = "SELECT lastmodified FROM ".$this->db->prefix("wiwimod")." WHERE keyword='".addslashes($this->keyword)."' ORDER BY id DESC LIMIT 1";
+ return false;
+		$sql = "SELECT lastmodified FROM ".$this->db->prefix("wiwimod_pages")." WHERE keyword='".addslashes($this->keyword)."'";
 		$result = $this->db->query($sql);
 		$rowsnum = $this->db->getRowsNum($result);
 
-		if ($this->id == 0) {  
+		if ($this->id == 0) {
 
 			return ($rowsnum > 0) ;  // this was a page creation : somebody did it before ...
 		} else {
 			list($db_lastmodified) = $this->db->fetchRow($result);
 			return ($this->lastmodified != $db_lastmodified);
 		}
-		
+
 	}
 
 	function pageExists ($page="", $id = 0) {
 		$page = addslashes($this->normalize($page));
 		if ($id > 0) {
-			$sql = "SELECT keyword FROM ".$this->db->prefix("wiwimod")." WHERE id = $id";
+			$sql = "SELECT keyword FROM ".$this->db->prefix("wiwimod_pages")." WHERE pageid = $id";
 		} elseif (($page != "") && (intval($page == 0))){
-			$sql = "SELECT keyword FROM ".$this->db->prefix("wiwimod")." WHERE keyword='$page' ORDER BY id DESC LIMIT 1";
+			$sql = "SELECT keyword FROM ".$this->db->prefix("wiwimod_pages")." WHERE keyword='$page'";
 		} elseif ($page != "") {
-		    $sql = "SELECT keyword FROM ".$this->db->prefix("wiwimod")." WHERE pageid=$page ORDER BY id DESC LIMIT 1";
+		    $sql = "SELECT keyword FROM ".$this->db->prefix("wiwimod_pages")." WHERE pageid=$page";
 		} else {
 			return false;
 		}
@@ -527,17 +618,17 @@ class WiwiRevision {
 		if ($order == "") $order = "keyword ASC";
 		$fieldlist = "keyword|title|body|lastmodified|u_id|parent|visible|contextBlock|prid|id";
 
-		$sql_a =  "SELECT w1.* FROM ".$this->db->prefix("wiwimod")." AS w1 LEFT JOIN ".$this->db->prefix("wiwimod")." AS w2 ON w1.keyword=w2.keyword AND w1.id < w2.id WHERE w2.id IS NULL";
+		$sql_a =  "SELECT p.*, body, summary, contextBlock, r.userid as u_id, revid as id FROM ".$this->db->prefix("wiwimod_pages")." AS p, ".$this->db->prefix("wiwimod_revisions")." AS r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified";
 
 		/*
 		 * the passed "where" clause has to be adapted because of he jointure : fields must be prefixed with "w1."
 		 *
 		 */
 		if ($where != "") {
-			$sql_a .= " AND (".preg_replace("#(".$fieldlist.")#i" , "w1.$1" , $where).") ";
+			$sql_a .= " AND ".$where;
 		}
 		if ($order != "") {
-			$sql_a .= " ORDER BY ".preg_replace("#(".$fieldlist.")#i" , "w1.$1" , $order)." ";
+			$sql_a .= " ORDER BY ".$order;
 		}
 		$result_a = $this->db->query($sql_a, $items_perpage, $current_start);
 
@@ -556,28 +647,31 @@ class WiwiRevision {
 			$pageObj->pageid = $row['pageid'];
 			$pageObj->id = $row['id'];
 			$pageObj->profile = new wiwiProfile($row['prid']);
+			$pageObj->creator = $row['creator'];
+			$pageObj->created = $row['createdate'];
+			$pageObj->views = $row['views'];
+			$pageObj->revisions = $row['revisions'];
+			$pageObj->lastviewed = $row['lastviewed'];
+			$pageObj->allowComments = $row['allowComments'];
+			$pageObj->summary = $row['summary'];
 			$pageArr[$i] = $pageObj;
 			unset ($pageObj);
 		}
 		return $pageArr;
 	}
 
-	function getPagesNum($where = "", $order = "")
+	function getPagesNum($where = "")/*, $order = "" - the order by is unnecessary for obtaining a count and sorting is just extra overhead */
 	{
-		if ($order == "") $order = "keyword ASC";
 		$fieldlist = "keyword|title|body|lastmodified|u_id|parent|visible|contextBlock|prid|id";
 
-		$sql_a =  "SELECT w1.id FROM ".$this->db->prefix("wiwimod")." AS w1 LEFT JOIN ".$this->db->prefix("wiwimod")." AS w2 ON w1.keyword=w2.keyword AND w1.id < w2.id WHERE w2.id IS NULL";
+		$sql_a =  "SELECT count(p.pageid) as count FROM ".$this->db->prefix("wiwimod_pages").' p, '.$this->db->prefix("wiwimod_revisions").' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified';
 
 		if ($where != "") {
-			$sql_a .= " AND (".preg_replace("#(".$fieldlist.")#i" , "w1.$1" , $where).") ";
-		}
-		if ($order != "") {
-			$sql_a .= " ORDER BY ".preg_replace("#(".$fieldlist.")#i" , "w1.$1" , $order)." ";
+			$sql_a .= " AND ".$where;
 		}
 
 		$result = $this->db->query($sql_a);
-		$maxcount = $this->db->getRowsNum($result);
+		list($maxcount) = $this->db->fetchRow($result);
 
 		return $maxcount;
 	}
@@ -599,7 +693,7 @@ class WiwiRevision {
 	 */
 	function fix()
 	{
-		$sql = "DELETE FROM ".$this->db->prefix("wiwimod")." WHERE keyword='".addslashes($this->keyword)."' AND id<".$this->id;
+		$sql = 'DELETE FROM '.$this->db->prefix('wiwimod_revisions').' WHERE pageid="'.addslashes($this->pageid).'" AND modified < "'.$this->lastmodified.'"';
 		$success = $this->db->query($sql);
 		return $success;
 	}
@@ -607,7 +701,7 @@ class WiwiRevision {
 	function cleanPagesHistory() {
 		global $xoopsDB;
 		$success = true;
-		$sql = "SELECT keyword, MAX(id) AS id FROM ".$xoopsDB->prefix("wiwimod")." WHERE lastmodified<'".formatTimestamp(time() - 61 * 24 * 3600, _DATESTRING)."' GROUP BY keyword";
+		$sql = "SELECT pageid, MAX(revid) AS id FROM ".$xoopsDB->prefix("wiwimod_revisions")." WHERE modified<'".formatTimestamp(time() - 61 * 24 * 3600, _DATESTRING)."' GROUP BY pageid";
 		$result = $xoopsDB->query($sql);
 		while ($content = $xoopsDB->fetcharray($result)) {
 			$rev = new wiwiRevision("",$content['id']);
@@ -617,11 +711,11 @@ class WiwiRevision {
 	}
 
 	function deletePage() {
-	    $sql = "DELETE FROM ".$this->db->prefix("wiwimod")." WHERE keyword='".addslashes($this->keyword)."'";
+	    $sql = 'DELETE r.*, p.* FROM '.$this->db->prefix('wiwimod_revisions').' r, '.$this->db->prefix('wiwimod_pages').' p WHERE r.pageid="'.$this->pageid.'" AND p.pageid="'.$this->pageid.'"';
 	    $success = $this->db->query($sql);
 		if ($success) {
-			$this->id = 0;
-			$this->pageid=0;
+      $this->id = 0;
+      $this->pageid=0;
 		}
 		return $success;
 	}
@@ -682,7 +776,7 @@ class WiwiPage extends WiwiRevision {
 	function WiwiPage($keyword = "", $pageid = 0) {
 		return WiwiRevision::WiwiRevision ($keyword, 0, $pageid);
 	}
-	
+
 }
 
 }  // end "ifdefined"

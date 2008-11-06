@@ -55,8 +55,8 @@ function wiwimod_showpage ($options) {
 
 		$block['mayEdit'] = $pageObj->canWrite();
 		$block['EDIT'] = _EDIT;
+	$block['dirname'] = $wiwidir;
 	}
-	$block['dirname'] = $wiwidir; 
 	return $block;
 }
 
@@ -73,7 +73,8 @@ function wiwimod_contextshow($options) {
 		$page = urldecode($preg_res[1]);
 	} else $page=_MB_WIWI_WIWIHOME;
 
-	$sql = 'SELECT contextBlock FROM '.$xoopsDB->prefix('wiwimod').' WHERE keyword="'.$page.'" ORDER BY id DESC LIMIT 1';
+	//$sql = 'SELECT contextBlock FROM '.$xoopsDB->prefix('wiwimod').' WHERE keyword="'.$page.'" ORDER BY id DESC LIMIT 1';
+	$sql = 'SELECT contextBlock FROM '.$xoopsDB->prefix('wiwimod_pages').' WHERE keyword="'.$page.'" ORDER BY pageid DESC LIMIT 1';
 	$result = $xoopsDB->query($sql);
 	list($sidePage) = $xoopsDB->fetchRow($result);
 	if ($sidePage != '') {
@@ -99,8 +100,8 @@ function wiwimod_contextshow($options) {
 			}
 
 		}
-	}
 	$block['dirname'] = $wiwidir;
+	}
 	return $block;
 }
 

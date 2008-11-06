@@ -1,21 +1,41 @@
-#
-# Table structure for wiwimod 0.7
-#
+/* New table structure, separating the page metadata from the revision details */
+CREATE TABLE wiwimod_pages (
+  pageid int unsigned NOT NULL auto_increment COMMENT 'Unique integer ID for the page',
+  keyword varchar(255) NOT NULL DEFAULT '' COMMENT 'Keyword/page name',
+  title varchar(255) NOT NULL DEFAULT '' COMMENT 'Title of the page',
+  creator mediumint(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Userid for the user that created the page, from users.uid',
+  createdate datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Datetime the page was created',
+  prid int NOT NULL DEFAULT 0 COMMENT 'Profile id to control page access, defined in wiwimod_profiles.prid',
+  parent varchar(255) DEFAULT '' COMMENT 'Keyword/page name of the parent page for the page',
+  views int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Number of times this page has been viewed',
+  visible int DEFAULT 0 COMMENT 'Determines if the page is visible in the index and its sort order (weight)',
+  revisions int DEFAULT 0 COMMENT 'The number of times the page has been revised',
+  lastmodified datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Last time this page was revised',
+  lastviewed datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Last time this page was viewed by someone other than the last author',
+  allowComments ENUM('0','1') DEFAULT '1' COMMENT 'Allow or restrict (additional) comments for the page',
+  contextBlock varchar(255) DEFAULT '' COMMENT 'Keyword/page name for the related content block',
+  PRIMARY KEY (pageid),
+  UNIQUE KEY (keyword)
+) TYPE=MyISAM COMMENT 'Holds the list of pages and their properties';
 
-CREATE TABLE wiwimod (
-  id int(10) NOT NULL auto_increment,
-  keyword varchar(255) NOT NULL default '',
-  title varchar(255) NOT NULL default '',
-  body text NOT NULL default '',
-  lastmodified datetime NOT NULL default '0000-00-00 00:00:00',
-  u_id int(10) NOT NULL default '0',
-  visible int(3) default '0',
-  contextBlock varchar(255) default '',
-  parent varchar(255) default '',
-  pageid int(10) default '0',
-  prid integer default '0',
-  PRIMARY KEY (id)
-) TYPE=MyISAM;
+/*insert into wiwimod_pages (pageid, keyword, creator, createdate, prid, parent, visible, revisions, lastmodified, lastviewed, title) 
+select w.pageid, w.keyword, w.u_id, min(w.lastmodified), w.prid, w.parent, w.visible, count(w.id), max(w.lastmodified), max(w.lastmodified), w.title 
+from wiwimod w group by pageid*/
+
+
+CREATE TABLE wiwimod_revisions (
+  revid int UNSIGNED NOT NULL AUTO_INCREMENT,
+  pageid int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Link to wiwimod_pages.pageid',
+  body mediumtext NOT NULL COMMENT 'Text for this revision',
+  summary tinytext COMMENT 'Summary of the revision by the author',
+  modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Timestamp for the revision',
+  userid mediumint(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Userid for the user that modified the page, from users.uid',
+  PRIMARY KEY page (revid)
+) TYPE=MyISAM COMMENT 'Holds details of the individual revisions to each page';
+
+/* insert into wiwimod_revisions (pageid, body, contextBlock, modified, userid)
+select pageid, body, contextBlock, lastmodified, u_id 
+from wiwimod */
 
 CREATE TABLE wiwimod_profiles (
    prid integer not null auto_increment,

@@ -116,7 +116,7 @@ extract($clean_GET);
 	}
 	$pageObj = new WiwiRevision();
 	$pageArr =& $pageObj->getPages($wherexpr,$post_selorderby.' '.$post_selorderdir,$pgitemsnum,$startlist);
-	$maxcount = $pageObj->getPagesNum($wherexpr,$post_selorderby.' '.$post_selorderdir);
+	$maxcount = $pageObj->getPagesNum($wherexpr/*,$post_selorderby.' '.$post_selorderdir*/);
 	
 	echo '<table border="0" cellpadding="0" cellspacing="1" width="100%" class="outer">';
 	echo '<tr class="head"><td width="20%"><b>'._MD_WIWI_KEYWORD_COL.'</b></td><td><b>'._MD_WIWI_TITLE_COL.'</b></td><td width="10%"><b>'._MD_WIWI_MODIFIED_COL.'</b></td><td width="30%"><b>'._MD_WIWI_ACTION_COL.'</b></td></tr>';

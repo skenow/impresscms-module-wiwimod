@@ -19,7 +19,8 @@ function wiwimod_recent ($options) {
 	$limit = intval($options[0]);
 	$block = array();
 	$myts =& MyTextSanitizer::getInstance();
-    $sql = 'SELECT w1.keyword, w1.title, w1.lastmodified, w1.u_id, w1.prid FROM '.$xoopsDB->prefix('wiwimod').' AS w1 LEFT JOIN '.$xoopsDB->prefix('wiwimod').' AS w2 ON w1.keyword=w2.keyword AND w1.id<w2.id WHERE w2.id IS NULL ORDER BY w1.lastmodified DESC LIMIT '.$limit;
+    //$sql = 'SELECT w1.keyword, w1.title, w1.lastmodified, w1.u_id, w1.prid, w1.rev_summary FROM '.$xoopsDB->prefix('wiwimod').' AS w1 LEFT JOIN '.$xoopsDB->prefix('wiwimod').' AS w2 ON w1.keyword=w2.keyword AND w1.id<w2.id WHERE w2.id IS NULL ORDER BY w1.lastmodified DESC LIMIT '.$limit;
+    $sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, prid, summary FROM '.$xoopsDB->prefix('wiwimod_pages').' p, '.$xoopsDB->prefix('wiwimod_revisions').' r WHERE p.pageid=r.pageid AND lastmodified=modified ORDER BY lastmodified DESC LIMIT '.$limit;
     $result = $xoopsDB->query($sql);
     
 	//Filter each entry according to its privilege
@@ -34,6 +35,7 @@ function wiwimod_recent ($options) {
 			$link['lastmodified'] = formatTimestamp(strtotime($content['lastmodified']), _SHORTDATESTRING);
 			$link['user'] = getUserName($content['u_id']);
 	//		$link['user'] = $content["u_id"];
+	    $link['summary'] = $content['summary'];
 			
 			$block['links'][] = $link;
 		}

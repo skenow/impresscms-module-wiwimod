@@ -19,8 +19,8 @@ include_once 'class/wiwiRevision.class.php';
  * extract all header variables to corresponding php variables ---
  * @todo : - $xoopsUser can be overriden by post variables >> security fix ?
  */      
-$id = $pageid = $visible = $editor =  0;
-$page = $contextBlock = $parent = $op = '';
+$id = $pageid = $visible = $editor = $allowComments = 0;
+$page = $contextBlock = $parent = $op = $summary = '';
 $allowed_getvars = array (
      'op'=>'plaintext',
      'back'=>'string',
@@ -44,14 +44,16 @@ $allowed_postvars = array (
      'prid'=>'int',
      'visible'=>'int',
      'contextBlock'=>'plaintext',
-     'item_tag'=>'plaintext');
+     'item_tag'=>'plaintext',
+     'summary' => 'plaintext',
+     'allowComments' => 'plaintext');
 $clean_GET = wiwi_cleanVars($_GET, $allowed_getvars);
 extract($clean_GET);
 
 // valid values for op: preview, insert, quietsave, edit, history, diff, restore
 $valid_ops = array('preview', 'insert', 'quietsave', 'edit', 'history', 'diff', 'restore', NULL);
 $op = (in_array($op, $valid_ops, true)) ? $op : '';
-//$op = (isset($_GET['op']))? trim(($_GET['op'])):"";
+
 if (!empty($_POST)) {
      $clean_POST = wiwi_cleanVars($_POST, $allowed_postvars);
      extract($clean_POST);
@@ -62,15 +64,20 @@ $page = stripslashes($page);  // if page name comes in url, decode it.
 //
 //-- Retrieve page data
 //
-if ((($op == 'preview') || ($op == 'insert') || ($op == 'quietsave')) && isset($id)) {
-	/*
-	 * data comes from post variables
-	 */
-	$pageObj = new wiwiRevision();
+
+/*
+ * Read data from database
+ */
+
+if (in_array($op, array('preview','insert', 'quietsave')) && isset($id)) {
+/*
+ * Data coming from post variables  (and possibly the database)
+ */
+  $pageObj = new wiwiRevision();
 	$pageObj->keyword = $page;
 	$pageObj->title = $title;		
 	$pageObj->body = $body;		
-	$pageObj->lastmodified = $lastmodified;
+	//$pageObj->lastmodified = $lastmodified;
 	$pageObj->u_id = (int) $uid;
 	$pageObj->parent = $pageObj->normalize($parent);		
 	$pageObj->visible = (int) $visible;	
@@ -78,26 +85,26 @@ if ((($op == 'preview') || ($op == 'insert') || ($op == 'quietsave')) && isset($
 	$pageObj->pageid = (int) $pageid;
 	$pageObj->profile = new wiwiProfile( (int) $prid);	
 	$pageObj->id = (int) $id;
+	$pageObj->summary = $summary;
+	$pageObj->allowComments = $allowComments;
 
 } else {
-	/*
-	 * data is read from database
-	 */
-	$pageObj = new wiwiRevision($page,0,$pageid);
-	if ($pageObj->id == 0) {
-		/*
-		 * page doesn't exist >> edit new one, with default values for title and profile
-		 */
-		$op = 'edit';
-		$pageObj->title = $pageObj->keyword;
-		if (isset($clean_GET['back'])) {
-			$pageObj->parent = stripslashes($clean_GET['back']);	// default value for parent field = initial caller.
-			$parentObj = new wiwiRevision($pageObj->parent);
-			$pageObj->profile =& $parentObj->profile;   // is reference assignment a good idea ?
-		}
-	}
+
+  $pageObj = new wiwiRevision($page,0,$pageid);
+  if ($pageObj->id == 0) {
+  	/*
+  	 * page doesn't exist >> edit new one, with default values for title and profile
+  	 */
+  	$op = 'edit';
+  	$pageObj->title = $pageObj->keyword;
+  	if (isset($clean_GET['back'])) {
+  		$pageObj->parent = stripslashes($clean_GET['back']);	// default value for parent field = initial caller.
+  		$parentObj = new wiwiRevision($pageObj->parent);
+  		$pageObj->profile =& $parentObj->profile;   // is reference assignment a good idea ?
+  	}
+  }
 }
-if (!isset($_GET['pageid'])){$_GET['pageid'] = (int) $pageObj->pageid;} // this will help with notifications!
+  if (!isset($_GET['pageid'])){$_GET['pageid'] = (int) $pageObj->pageid;} // this will help with notifications!
 //
 // process required action
 //
@@ -262,6 +269,13 @@ switch ($op) {
 		}
 		/* Tag module support end*/
 
+		$form->addElement( new XoopsFormText(_MI_WIWIMOD_REVISION_SUMMARY,'summary',60,255,''));
+/*		$allowComments_checkbox =	 new XoopsFormCheckBox(_MI_WIWIMOD_ALLOW_COMMENTS, 'allowComments',);
+		$allowComments_checkbox->addOption ($allowComments, $pageObj->allowComments);
+		$option_tray = new XoopsFormElementTray('Options','<br />');
+		$option_tray->addElement($allowComments_checkbox);
+		$form->addElement($allowComments_checkbox);*/
+
 		$preview_btn = new XoopsFormButton('', 'preview', _PREVIEW, 'button');
         $preview_btn->setExtra("onclick='document.forms.wiwimodform.op.value=\"preview\"; document.forms.wiwimodform.submit.click();'");
         $btn_tray->addElement($preview_btn);
@@ -296,7 +310,7 @@ switch ($op) {
 				'encodedurl' => $pageObj->encode($pageObj->keyword),
 				'revid' => $pageObj->id,
 				'title' => $pageObj->title, 
-				'body' => $pageObj->render(), 
+				'body' => $pageObj->render()
 				));
 		} else {
 			$pageObj->diff($bodyDiff, $titleDiff);
@@ -340,6 +354,25 @@ switch ($op) {
 		
 		if ($pageObj->canRead()) {
 		    $pagecontent = $pageObj->render();
+        /*
+         *
+         * Start count visit - GibaPhp
+         * No count visit for some user last modified
+         * In future, count for relevant ip, cookies and more.
+         * if logout or no, verify it.
+         *
+         */
+          if (($xoopsUser)?$xoopsUser->getVar('uid'):0){
+             if (($xoopsUser->getVar("uid")) == ($pageObj->u_id)) {
+                //-- author is equal the current user not count visit
+             } else {
+               $pageObj->visited(); // no is user last modified
+             }
+          } else {
+               $pageObj->visited(); // no user registered - count visit
+          }
+        /* End modification to count visits */
+        
 		} else {
 		    $pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>"._MD_WIWI_NOREADACCESS_MSG."</td></tr></table></center><br /><br />";
 		}
@@ -405,6 +438,6 @@ switch ($op) {
 
 }
 
-$xoopsTpl->assign('xoops_pagetitle',$myts->htmlSpecialChars($xoopsModule->name()) . ' - ' .$myts->htmlSpecialChars($pageObj->title));
+$xoopsTpl->assign('xoops_pagetitle',$myts->htmlSpecialChars( $myts->htmlSpecialChars($pageObj->title) . ' - ' .$xoopsModule->name()));
 include XOOPS_ROOT_PATH.'/footer.php';
 ?>

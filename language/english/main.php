@@ -59,4 +59,7 @@ define('_MD_WIWI_NOWRITEACCESS_MSG','<br /><h4>Sorry, you don\'t have write acce
 if (!defined('_MI_WIWIMOD_WIWIHOME')){define('_MI_WIWIMOD_WIWIHOME','WiwiHome');}// Also need in modinfo.php
 define('_MI_WIWIMOD_WIWI404','IllegalName');
 
+// Added in version 1.0
+define('_MI_WIWIMOD_REVISION_SUMMARY', 'Revision Summary');
+define('_MI_WIWIMOD_ALLOW_COMMENTS','Allow Comments');
 ?>

@@ -1,4 +1,32 @@
+==Wiwimod 1.0==
+Status: Beta
+Released:
+
+Added
+* New data fields: creator, create date, views, last viewed, revisions (count), summary, allow comments
+* Update function to migrate data to new tables
+* Functions to update new fields - visited (Gibaphp)
+
+Fixed
+
+Improved
+* DB structure: split wiwimod table into wiwimod_pages and wiwimod_revisions. Overall DB size is reduced while the amount of information is increased
+* Code layout of the parser - thanks to work found in 0.8.9 beta release (Gizhmail/Xavier/others)
+* Size of body field increased to mediumtext, allowing for larger pages
+
+Language additions
+* main.php
+  + define('_MI_WIWIMOD_REVISION_SUMMARY', 'Revision Summary');
+  + define('_MI_WIWIMOD_ALLOW_COMMENTS','Allow Comments');
+
+* update.php (new file)
+  
+Contributors to this release
+* skenow
+* gibaphp
+
 == Wiwimod 0.8.3 Re-release ==
+Status: RC2
 Released: 
 
 Added
@@ -81,6 +109,7 @@ Contributors to this release
 * juancj/debianus
 * xoops-magazine
 * m0nty_
+* algalochkin
   
 == Wiwimod 0.8.3 ==
 

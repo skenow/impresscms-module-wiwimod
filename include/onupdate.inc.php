@@ -9,6 +9,109 @@
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
-if (!defined("XOOPS_ROOT_PATH")) die("Root path not defined");
+if (!defined("XOOPS_ROOT_PATH")&& !defined('ICMS_ROOT_PATH')) exit("Root path not defined");
 
+function xoops_module_update_wiwimod (){ 
+     $wiwiInstallDir = dirname(dirname(__FILE__));
+     $wiwiModDir = basename(dirname(dirname(__FILE__)));
+     global $xoopsConfig;
+          
+     if (@file_exists($wiwiInstallDir.'/language/'.$xoopsConfig['language'].'/update.php')){
+          include $wiwiInstallDir.'/language/'.$xoopsConfig['language'].'/update.php';
+     } else {
+          include $wiwiInstallDir.'/language/english/update.php';
+     }
+     
+     $db =& Database::getInstance();
+     $modhandler =& xoops_gethandler('module');
+     $config_handler =& xoops_gethandler('config');
+     $wiwiMod = $modhandler->getByDirname($wiwiModDir);
+ 
+/* Get current module version before proceeding */
+ 
+/* Changes in 1.0
+ * wiwimod table split into 2 tables - wiwimod_pages and wiwimod_revisions
+ * How can I do this without having the SQL here - just pulling from sql/mysql.sql? 
+ */ 
+
+/* Check for new table - wiwimod_pages - and add it if it doesn't exist */ 
+     $sql = "CREATE TABLE IF NOT EXISTS ". $db->prefix('wiwimod_pages') ." (
+       pageid int unsigned NOT NULL auto_increment COMMENT 'Unique integer ID for the page',
+       keyword varchar(255) NOT NULL DEFAULT '' COMMENT 'Keyword/page name',
+       title varchar(255) NOT NULL DEFAULT '' COMMENT 'Title of the page',
+       creator mediumint(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Userid for the user that created the page, from users.uid',
+       createdate datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Datetime the page was created',
+       prid int NOT NULL DEFAULT 0 COMMENT 'Profile id to control page access, defined in wiwimod_profiles.prid',
+       parent varchar(255) DEFAULT '' COMMENT 'Keyword/page name of the parent page for the page',
+       views int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Number of times this page has been viewed',
+       visible int DEFAULT 0 COMMENT 'Determines if the page is visible in the index and its sort order (weight)',
+       revisions int DEFAULT 0 COMMENT 'The number of times the page has been revised',
+       lastmodified datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Last time this page was revised',
+       lastviewed datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Last time this page was viewed by someone other than the last author',
+       allowComments ENUM('0','1') DEFAULT '1' COMMENT 'Allow or restrict (additional) comments for the page',
+       contextBlock varchar(255) DEFAULT '' COMMENT 'Keyword/page name for the related content block',
+     PRIMARY KEY (pageid),
+       UNIQUE KEY (keyword)
+     ) TYPE=MyISAM COMMENT 'Holds the list of pages and their properties';
+     ";
+     $db->query($sql);
+      
+/* Copy existing data to the new table, if it is empty */
+     $sql = 'SELECT pageid FROM '. $db->prefix('wiwimod_pages');
+     $result = $db->query($sql);
+     if ($db->getRowsNum($result) < 1) {
+          $sql = 'INSERT INTO '. $db->prefix('wiwimod_pages') .' (pageid, keyword, creator, createdate, revisions, lastmodified, lastviewed) 
+               SELECT w.pageid, w.keyword, w.u_id, min(w.lastmodified), count(w.id), max(w.lastmodified), max(w.lastmodified)
+               FROM '. $db->prefix('wiwimod') .' w GROUP BY pageid';
+          $db->query($sql);
+     }
+/* The initial insert of data pulls the first record and for some columns we want the last record. This will accomplish that */
+     $sql = 'UPDATE '.$db->prefix('wiwimod_pages') .' p, '. $db->prefix('wiwimod') .' w 
+       SET p.visible = w.visible, p.prid = w.prid, p.parent = w.parent, p.title = w.title, p.contextBlock = w.contextBlock
+       WHERE p.pageid = w.pageid AND p.lastmodified = w.lastmodified';
+     $db->query($sql);  
+     
+/* Check for new table - wiwimod_revision - and add it if it doesn't exist */
+     $sql = "CREATE TABLE IF NOT EXISTS ". $db->prefix('wiwimod_revisions') ." (
+       revid int UNSIGNED NOT NULL AUTO_INCREMENT,
+       pageid int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Link to wiwimod_pages.pageid',
+       body mediumtext NOT NULL COMMENT 'Text for this revision',
+       summary tinytext COMMENT 'Summary of the revision by the author',
+       modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Timestamp for the revision',
+       userid mediumint(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Userid for the user that modified the page, from users.uid',
+       PRIMARY KEY page (revid)
+     ) TYPE=MyISAM COMMENT 'Holds details of the individual revisions to each page';
+     ";
+     $db->query($sql);
+ 
+/* Copy existing data into new table, if the table is empty */
+     $sql = 'SELECT pageid FROM '. $db->prefix('wiwimod_revisions');
+     $result = $db->query($sql);
+     if ($db->getRowsNum($result) < 1) {
+          $sql = 'INSERT INTO '. $db->prefix('wiwimod_revisions').' (pageid, body, modified, userid)
+               SELECT pageid, body, lastmodified, u_id 
+               FROM '. $db->prefix('wiwimod');
+          $db->query($sql);
+     }
+  
+/* After the pages and revisions are moved, the notifications and comments tables need to be updated, and the tag module, if that is installed */
+     
+/* Remove old table */
+       $sql = 'DROP TABLE '. $db->prefix('wiwimod');
+       //$db->query($sql);
+
+/* Because of the way profiles are generated, the config options need to be updated */
+ include_once $wiwiInstallDir.'/class/wiwiProfile.class.php';
+ $prof = new WiwiProfile();
+ $prof->updateModuleConfig();
+ 
+ return true;
+}
+
+/* This will create a function with a name based on the installation directory, if it is not in wiwimod */
+     $wiwiModDir = basename(dirname(dirname(__FILE__)));
+     if (!function_exists('xoops_module_update_'.$wiwiModDir)) {
+      $myfunc = "function xoops_module_update_".$wiwiModDir."() { return xoops_module_install_wiwimod();}";
+      eval($myfunc);
+     }
 ?>

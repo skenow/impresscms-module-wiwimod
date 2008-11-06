@@ -66,7 +66,8 @@ function xoops_module_install_wiwimod (){
   $page->visible = '';		
   $page->contextBlock = '';	
   $page->pageid = '1';		
-  $page->profile->prid = '1';		
+  $page->profile->prid = '1';
+  $page->summary = '';		
 	
   $page->add();
   

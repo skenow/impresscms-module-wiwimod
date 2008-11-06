@@ -25,7 +25,8 @@ function wiwimod_toc () {
 */
 
 	// Select also the "prid" (privilege Id) 
-	$sql = 'SELECT w1.keyword, w1.title, w1.visible, w1.prid FROM '.$xoopsDB->prefix('wiwimod').' AS w1 LEFT JOIN '.$xoopsDB->prefix('wiwimod').' AS w2 ON w1.keyword=w2.keyword AND w1.id<w2.id WHERE w2.id IS NULL AND w1.visible>0 ORDER BY w1.visible ';
+	//$sql = 'SELECT w1.keyword, w1.title, w1.visible, w1.prid FROM '.$xoopsDB->prefix('wiwimod').' AS w1 LEFT JOIN '.$xoopsDB->prefix('wiwimod').' AS w2 ON w1.keyword=w2.keyword AND w1.id<w2.id WHERE w2.id IS NULL AND w1.visible>0 ORDER BY w1.visible ';
+	$sql = 'SELECT keyword, title, visible, prid FROM '.$xoopsDB->prefix('wiwimod_pages').' p, '.$xoopsDB->prefix('wiwimod_revisions').' r WHERE p.pageid=r.pageid AND lastmodified=modified AND visible>0 ORDER BY visible ';
 	$result = $xoopsDB->query($sql);
 	
 	//Filter each entry according to its privilege

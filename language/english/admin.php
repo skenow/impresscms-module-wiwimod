@@ -87,4 +87,5 @@ define('_AM_WIWI_ERRDELETE_MSG','Error : unable to delete profile');
 define('_AM_WIWI_PRFDELSUCCESS_MSG','Profile deleted from the database.');
 define('_AM_WIWI_PRFDELFAILED_MSG','Error while deleting profile. Database NOT updated');
 define('_AM_WIWI_SYS_CFG','System Configuration');
+
 ?>

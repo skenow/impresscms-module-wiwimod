@@ -11,7 +11,8 @@
  */
 $modversion = array(
   'name' => _MI_WIWIMOD_NAME,
-  'version' => '0.83',
+  'version' => '1.0',
+  'status' => 'Beta',
   'description' => _MI_WIWIMOD_DESC,
   'author' => 'Xavier JIMENEZ',
   'credits' => '',
@@ -22,7 +23,6 @@ $modversion = array(
   'iconbig' => 'images/wiwimod.png', /* big icon for ImpressCMS, 37x35 px */
   'iconsmall' => 'images/wiwimod-small.png', /* small icon for ImpressCMS, 16x16 px */
   'dirname' => basename(dirname(__FILE__)),
-  'status' => 'Final',
   'onInstall' => 'include/oninstall.inc.php',
   'onUpdate' => 'include/onupdate.inc.php',
   'demo_site_url' => '',
