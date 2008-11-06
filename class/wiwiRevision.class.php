@@ -86,7 +86,7 @@ class WiwiRevision {
 /* new SQL, based on the new tables */
    $sql = 'SELECT * FROM '.$this->db->prefix('wiwimod_pages').' p,' .$this->db->prefix('wiwimod_revisions') .' r';
 		if ($id != 0) {
-			$sql .= ' WHERE revid = '.$id;
+			$sql .= ' WHERE revid = '.$id.' AND p.pageid = r.pageid';
 		} elseif ($page != ''){
 			$sql .= ' WHERE p.lastmodified = r.modified AND keyword="'.addslashes($page).'" ';
 		} elseif ($pageid != '') {
@@ -96,9 +96,9 @@ class WiwiRevision {
 		}
 /* end of the new SQL */
 		
-		if ($sql != '') {
-      $result = $this->db->query($sql);
-      if ($this->db->getRowsNum($result) == 0) return false;
+	if ($sql != '') {
+		$result = $this->db->query($sql);
+		if ($this->db->getRowsNum($result) == 0) return false;
         $row = $this->db->fetchArray($result);
         $this->keyword = $row['keyword'];
         $this->title = $row['title'];

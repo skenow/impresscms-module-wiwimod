@@ -20,7 +20,7 @@ include_once 'class/wiwiRevision.class.php';
  * @todo : - $xoopsUser can be overriden by post variables >> security fix ?
  */      
 $id = $pageid = $visible = $editor = $allowComments = 0;
-$page = $contextBlock = $parent = $op = $summary = '';
+$page = $contextBlock = $parent = $op = $summary = $item_tag = '';
 $allowed_getvars = array (
      'op'=>'plaintext',
      'back'=>'string',
@@ -73,17 +73,17 @@ if (in_array($op, array('preview','insert', 'quietsave')) && isset($id)) {
 /*
  * Data coming from post variables  (and possibly the database)
  */
-  $pageObj = new wiwiRevision();
+	$pageObj = new wiwiRevision();
 	$pageObj->keyword = $page;
-	$pageObj->title = $title;		
-	$pageObj->body = $body;		
+	$pageObj->title = $title;
+	$pageObj->body = $body;
 	//$pageObj->lastmodified = $lastmodified;
 	$pageObj->u_id = (int) $uid;
-	$pageObj->parent = $pageObj->normalize($parent);		
-	$pageObj->visible = (int) $visible;	
+	$pageObj->parent = $pageObj->normalize($parent);
+	$pageObj->visible = (int) $visible;
 	$pageObj->contextBlock = $pageObj->normalize($contextBlock);
 	$pageObj->pageid = (int) $pageid;
-	$pageObj->profile = new wiwiProfile( (int) $prid);	
+	$pageObj->profile = new wiwiProfile( (int) $prid);
 	$pageObj->id = (int) $id;
 	$pageObj->summary = $summary;
 	$pageObj->allowComments = $allowComments;

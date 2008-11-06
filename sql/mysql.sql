@@ -18,11 +18,6 @@ CREATE TABLE wiwimod_pages (
   UNIQUE KEY (keyword)
 ) TYPE=MyISAM COMMENT 'Holds the list of pages and their properties';
 
-/*insert into wiwimod_pages (pageid, keyword, creator, createdate, prid, parent, visible, revisions, lastmodified, lastviewed, title) 
-select w.pageid, w.keyword, w.u_id, min(w.lastmodified), w.prid, w.parent, w.visible, count(w.id), max(w.lastmodified), max(w.lastmodified), w.title 
-from wiwimod w group by pageid*/
-
-
 CREATE TABLE wiwimod_revisions (
   revid int UNSIGNED NOT NULL AUTO_INCREMENT,
   pageid int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Link to wiwimod_pages.pageid',
@@ -32,10 +27,6 @@ CREATE TABLE wiwimod_revisions (
   userid mediumint(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Userid for the user that modified the page, from users.uid',
   PRIMARY KEY page (revid)
 ) TYPE=MyISAM COMMENT 'Holds details of the individual revisions to each page';
-
-/* insert into wiwimod_revisions (pageid, body, contextBlock, modified, userid)
-select pageid, body, contextBlock, lastmodified, u_id 
-from wiwimod */
 
 CREATE TABLE wiwimod_profiles (
    prid integer not null auto_increment,
