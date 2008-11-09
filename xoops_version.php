@@ -32,7 +32,7 @@ $modversion = array(
   'submit_bug' => '',
   'submit_feature' => '',
   'warning' => '',
-  'author_word' => '_MI_WIWIMOD_AUTHOR_WORD' ); 
+  'author_word' => _MI_WIWIMOD_AUTHOR_WORD ); 
 
 if (defined('ICMS_VERSION_NAME')) {
   $modversion['image'] = 'images/wiwimod.png';
