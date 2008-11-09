@@ -449,12 +449,12 @@ class WiwiRevision {
 				"lastmodified",
 				10,
 				'"<tr><td colspan=3><strong>".formatTimestamp(strtotime($counter), _SHORTDATESTRING)."</strong></td></tr>"',
-				'"<tr><td>&nbsp;".formatTimestamp(strtotime($content["lastmodified"]), "H:i")."</td><td><a href=\"index.php?page=".$this->encode($content["keyword"])."\">".($content["title"] == "" ? $content["keyword"] : $content["title"])."</a></td><td><span class=\"itemPoster\">".getUserName($content["u_id"])."</span></td></tr>"',
+				'"<tr><td>&nbsp;".formatTimestamp(strtotime($content["lastmodified"]), "H:i")."</td><td><a href=\"index.php?page=".$this->encode($content["keyword"])."\">".($content["title"] == "" ? $content["keyword"] : $content["title"])."</a></td><td>".$content["summary"]."</td><td><span class=\"itemPoster\">".getUserName($content["u_id"])."</span></td></tr>"',
 				"")
 		);
 		$cfg = $settings[$type];
 
-		$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id FROM '.$this->db->prefix('wiwimod_pages').' p, ' . $this->db->prefix('wiwimod_revisions') . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified '.$cfg[0];
+		$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM '.$this->db->prefix('wiwimod_pages').' p, ' . $this->db->prefix('wiwimod_revisions') . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified '.$cfg[0];
 		$result = $this->db->query($sql);
 
 		$body = '' ; $counter = '[';

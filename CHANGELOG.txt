@@ -6,6 +6,7 @@ Added
 * New data fields: creator, create date, views, last viewed, revisions (count), summary, allow comments
 * Update function to migrate data to new tables
 * Functions to update new fields - visited (Gibaphp)
+* Summary information to RecentChanges rendering, also available in History view
 
 Fixed
 
