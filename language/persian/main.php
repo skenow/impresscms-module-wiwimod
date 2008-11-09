@@ -25,18 +25,18 @@ define('_MD_WIWI_THISPAGE','این صفحه');
 define('_MD_WIWI_SUBMITREVISION_BTN','نسخه‌ی جدید');
 define('_MD_WIWI_QUIETSAVE_BTN','ذخیره شود');
 define('_MD_WIWI_HISTORY_BTN','تاریخچه');				
-define('_MD_WIWI_PAGEVIEW_BTN','Back to page view');	
+define('_MD_WIWI_PAGEVIEW_BTN','بازگشت به نمایه‌ی صفحه');	
 define('_MD_WIWI_VIEW_BTN','نمایه');
 define('_MD_WIWI_RESTORE_BTN','بازسازی');
 define('_MD_WIWI_FIX_BTN','رفع ایرادها');
 define('_MD_WIWI_COMPARE_BTN','مقایسه کن');
-define('_MD_WIWI_SELEDITOR_BTN','(right-click to select another editor)');
+define('_MD_WIWI_SELEDITOR_BTN','(برای انتخاب ویراستار، کلیک راست کنید)');
 
 define('_MD_WIWI_TITLE_FLD','عنوان');					
 define('_MD_WIWI_BODY_FLD','متن');
 define('_MD_WIWI_VISIBLE_FLD','نمایان');
 define('_MD_WIWI_CONTEXTBLOCK_FLD','Side content');
-define('_MD_WIWI_PARENT_FLD','Parent page');
+define('_MD_WIWI_PARENT_FLD','صفحه‌ی اصلی');
 define('_MD_WIWI_PROFILE_FLD','Privileges profile');
 
 define('_MD_WIWI_TITLE_COL','عنوان');					
@@ -57,7 +57,7 @@ define('_MD_WIWI_NOWRITEACCESS_MSG','<br /><h4>Sorry, you don\'t have write acce
 // Wiwi special pages - DO NOT TRANSLATE -
 // Change these names, if you want a different homepage and error page
 // for this language - just make sure that they are legal WiwiLink names.
-if (!defined('_MI_WIWIMOD_WIWIHOME'){define('_MI_WIWIMOD_WIWIHOME','WiwiHome');}
+if (!defined('_MI_WIWIMOD_WIWIHOME')){define('_MI_WIWIMOD_WIWIHOME','WiwiHome');}
 define('_MI_WIWIMOD_WIWI404','نام غیرمجاز می‌باشد');
 
 ?>

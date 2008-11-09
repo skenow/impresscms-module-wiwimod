@@ -11,9 +11,9 @@
  *
  */
 
-define('_MB_WIWI_WIWIHOME',"WiwiHome");
-define('_MB_WIWI_PAGENOTFOUND_MSG',"<br />Page doesn't exist in the database<br />");
-define('_MB_WIWI_NOREADACCESS_MSG',"<br /><h4>Sorry, restricted access</h4><br />");
-define('_MB_WIWI_NUM_DISP_DESC','Number of items to display');
-define('_MB_WIWI_SHOWPAGE_DESC','Page to display');
+define('_MB_WIWI_WIWIHOME',"’›ÕÂù&#1740; «’·&#1740; Ê&#1740;Ê&#1740;");
+define('_MB_WIWI_PAGENOTFOUND_MSG',"<br />«&#1740;‰ ’›ÕÂ œ— Å«&#1740;ê«Â œ«œÂ ÊÃÊœ ‰œ«—œ<br />");
+define('_MB_WIWI_NOREADACCESS_MSG',"<br /><h4>»« ⁄—÷ ÅÊ“‘° œ” —”&#1740; „Ê—œ ‰&#1740;«“ —« ‰œ«—&#1740;œ</h4><br />");
+define('_MB_WIWI_NUM_DISP_DESC',' ⁄œ«œ „Ê«—œ œ— »·Êò');
+define('_MB_WIWI_SHOWPAGE_DESC','’›Õ«  ﬁ«»· ‰„«&#1740;‘');
 ?>

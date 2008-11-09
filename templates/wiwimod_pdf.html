@@ -2,11 +2,11 @@
 <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/xoops.css" />
 <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_themecss}>" />
 </head>
-<table class="PageTitle"><tr><td><h2><{$wiwimod.title}></h2></td><td style="text-align:right">
+<table class="PageTitle"><tr><td><h2><{$wiwimod.title}></h2></td><td style="text-align:<{$smarty.const._GLOBAL_RIGHT}>">
 <{foreach from=$parentlist item=pg}>[<{$pg}>]&nbsp;>&nbsp;<{/foreach}>
 [<{$wiwimod.keyword}>]</td></tr></table>
 
 <{$wiwimod.body}>
-<div style="text-align: right; padding: 3px; margin: 0px; color : #8090B1"><span style = "border-top: 1px solid #8090B1; padding: 3px; font-style:italic; font-size:small;" >
+<div style="text-align: <{$smarty.const._GLOBAL_RIGHT}>; padding: 3px; margin: 0px; color : #8090B1"><span style = "border-top: 1px solid #8090B1; padding: 3px; font-style:italic; font-size:small;" >
 <{$smarty.const._MD_WIWI_MODIFIED_TXT}> <{$wiwimod.lastmodified}> <{$smarty.const._MD_WIWI_BY}> <span class="itemPoster"><{$wiwimod.author}></span>
 </span></div>

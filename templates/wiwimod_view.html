@@ -1,13 +1,13 @@
 <table class="PageTitle">
  <tr>
-  <td style="text-align:right">
+  <td style="text-align:<{$smarty.const._GLOBAL_RIGHT}>">
 	[<{foreach from=$parentlist item=pg}><{$pg}>&nbsp;::&nbsp;<{/foreach}><{$smarty.const._MD_WIWI_THISPAGE}>]
 		<{if $nav}>&nbsp;<{$nav.html}><{/if}>
   </td>
  </tr>
  <{if $isTagModuleActivated}>
  <tr>
-  <td style="text-align:right">
+  <td style="text-align:<{$smarty.const._GLOBAL_RIGHT}>">
     <{include file="db:tag_bar.html"}>
   </td>
  </tr>
@@ -19,8 +19,8 @@
 <{$wiwimod.body}>
 <table><tr><td>
 	<{if $nav}><{$nav.html}><{/if}>
-</td><td align='right'>
-	<div style="text-align: right; padding: 3px; margin: 0px; color : #8090B1"><span style = "border-top: 1px solid #8090B1; padding: 3px; font-style:italic; font-size:small;" >
+</td><td align='<{$smarty.const._GLOBAL_RIGHT}>'>
+	<div style="text-align: <{$smarty.const._GLOBAL_RIGHT}>; padding: 3px; margin: 0px; color : #8090B1"><span style = "border-top: 1px solid #8090B1; padding: 3px; font-style:italic; font-size:small;" >
 	<{$smarty.const._MD_WIWI_MODIFIED_TXT}> <{$wiwimod.lastmodified}> <{$smarty.const._MD_WIWI_BY}> <span class="itemPoster"><{$wiwimod.author}></span></span>
 	<{if $wiwimod.allowPDF}> <a href="wiwipdf.php?page=<{$wiwimod.encodedurl}>" target="_blank"><img src="images/pdf.gif" align="middle" alt="" /></a>&nbsp;<{/if}>
 	<{if $wiwimod.showHistory}> <input type="button" onclick="self.location.href='index.php?page=<{$wiwimod.encodedurl}>&amp;op=history';" value="<{$smarty.const._MD_WIWI_HISTORY_BTN}>" /><{/if}>
