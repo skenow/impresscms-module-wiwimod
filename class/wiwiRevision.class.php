@@ -110,7 +110,7 @@ class WiwiRevision {
 			addslashes($this->keyword),
 			$this->ts->addSlashes($this->title),
 			$this->ts->addSlashes($this->body),
-			date(_DATESTRING),						  //-- lastmodified is Now
+			date('Y/n/j G:i:s'), // -> do not use: date(_DATESTRING), it will not insert/update the db properly!  //-- lastmodified is Now
 			$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
 			addslashes($this->parent),
 			$this->visible,
@@ -140,7 +140,7 @@ class WiwiRevision {
 			$this->db->prefix('wiwimod'),
 			$this->ts->addSlashes($this->title),
 			$this->ts->addSlashes($this->body),
-			date(_DATESTRING),
+			date('Y/n/j G:i:s'), // -> do not use: date(_DATESTRING), it will not insert/update the db properly! 
 			$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
 			addslashes($this->parent),
 			$this->visible,
