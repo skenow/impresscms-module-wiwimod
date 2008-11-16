@@ -127,7 +127,7 @@ class WiwiRevision {
 	 */
 	function add() {
 		global $xoopsUser;
-		$add_date = date(_DATESTRING); //$this->created,
+		$add_date = date('Y/n/j G:i:s'); //$this->created, in a format that MySQL can handle
 		if ($this->pageid == 0) { // only insert into the pages table if it is the first revision
 		$sql = sprintf(
 			"INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock)
@@ -184,7 +184,7 @@ class WiwiRevision {
 	* a new query to update a revision and page - mysql allows updating multiple tables in a single query */
 	function save() {
 		global $xoopsUser;
-          $save_date = date(_DATESTRING);
+          $save_date = date('Y/n/j G:i:s');
 		$sql = sprintf(
 			"UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=%u, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s'
                WHERE revid=%u AND p.pageid=%u",
@@ -234,7 +234,7 @@ class WiwiRevision {
 			"UPDATE %s SET views=%u, lastviewed='%s' WHERE pageid=%u",
 			$this->db->prefix("wiwimod_pages"),
 			$this->views +1,
-			date(_DATESTRING),
+			date('Y/n/j G:i:s'),
 			$this->pageid
 			);
 		   $result = $this->db->query($sql);
