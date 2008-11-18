@@ -209,7 +209,7 @@ class WiwiRevision {
 			"#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#e",				// [[CamelCase title]]
 			"#\[\[(<a.*>)(.*)</a> (.+?)\]\]#i",						// [[www.mysite.org title]] and [[<a ... /a> title]]
 			"#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#e",					// [[free link | title]]
-			"#\[\[(.+?)\]\]#e",										// [[free link]]
+			"#\[\[(\S[^(\[)]*?)\]\]#e",										// [[free link]]
 	//        "#([\w.-]+@[\w.-]+)(?![\w.]*(\">|<))#",
 			"#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))(\">.*)</a>#Uie",	// link with href ending with ?page=
 			
