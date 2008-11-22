@@ -27,9 +27,9 @@ $modversion = array(
   'onUpdate' => 'include/onupdate.inc.php',
   'demo_site_url' => '',
   'demo_site_name' => '',
-  'support_site_url' => '',
-  'support_site_name' => '',
-  'submit_bug' => '',
+  'support_site_url' => 'http://community.impresscms.org/',
+  'support_site_name' => 'ImpressCMS Community',
+  'submit_bug' => 'https://sourceforge.net/tracker2/?group_id=205633&atid=1064496',
   'submit_feature' => '',
   'warning' => '',
   'author_word' => '_MI_WIWIMOD_AUTHOR_WORD' ); 

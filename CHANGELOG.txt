@@ -1,5 +1,6 @@
-== Wiwimod 0.8.3 Re-release ==
-Released: 
+== Wiwimod 0.83+  ==
+Status: Final
+Released: 23 November 2008
 
 Added
 * index.html to every directory without one
@@ -82,7 +83,8 @@ Contributors to this release
 * juancj/debianus
 * xoops-magazine
 * m0nty_
-* JAVesey
+* algalochkin
+* JAvesey
   
 == Wiwimod 0.8.3 ==
 
