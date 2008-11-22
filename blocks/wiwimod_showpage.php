@@ -55,8 +55,8 @@ function wiwimod_showpage ($options) {
 
 		$block['mayEdit'] = $pageObj->canWrite();
 		$block['EDIT'] = _EDIT;
-	}
 	$block['dirname'] = $wiwidir; 
+	}
 	return $block;
 }
 
@@ -99,8 +99,8 @@ function wiwimod_contextshow($options) {
 			}
 
 		}
-	}
 	$block['dirname'] = $wiwidir;
+	}
 	return $block;
 }
 
