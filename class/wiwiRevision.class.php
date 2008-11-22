@@ -127,7 +127,7 @@ class WiwiRevision {
 	 */
 	function add() {
 		global $xoopsUser;
-		$add_date = date('Y/n/j G:i:s'); //$this->created, in a format that MySQL can handle
+		$add_date = date('Y/n/j G:i:s'); //$this->created, in a format that MySQL can handle. In PHP 5.1.1+, this can be date(DATE_ATOM) or date(DATE_W3C)
 		if ($this->pageid == 0) { // only insert into the pages table if it is the first revision
 		$sql = sprintf(
 			"INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock)

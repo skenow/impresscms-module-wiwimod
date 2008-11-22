@@ -26,9 +26,9 @@ Contributors to this release
 * skenow
 * gibaphp
 
-== Wiwimod 0.8.3 Re-release ==
-Status: RC2
-Released: 
+== Wiwimod 0.83+ ==
+Status: Final
+Released: 23 November 2008
 
 Added
 * index.html to every directory without one
@@ -63,6 +63,7 @@ Improved
 * Profiles are saved as config options during the installation - no longer need to save a profile before setting default profile
 * All data inserts are now done in include/oninstall.php and are not in the SQL definitions 
 * Data validation for GET/POST/REQUEST variables
+* Regex for free link - an unpaired [[ could result in an improper wiwilink being created, (adding [[freelink title]] on the default home page after the open [[ already on the page demonstrates this)
 
 Language additions
 * blocks.php
@@ -111,6 +112,7 @@ Contributors to this release
 * xoops-magazine
 * m0nty_
 * algalochkin
+* JAVesey
   
 == Wiwimod 0.8.3 ==
 
