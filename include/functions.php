@@ -10,9 +10,11 @@
 if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 
 if(!defined("_GLOBAL_LEFT")){
-define('_GLOBAL_LEFT', _GLOBAL_LEFT);} // type here right in rtl languages
+define('_GLOBAL_LEFT', (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"right":"left")); // reproduces right in RTL languages and left in LTR languages
+}
 if(!defined("_GLOBAL_RIGHT")){
-define('_GLOBAL_RIGHT', (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"left":"right"));} // type here left in rtl languages
+define('_GLOBAL_RIGHT', (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"left":"right")); // reproduces left in RTL languages and right in LTR languages
+}
 $wiwidir = basename( dirname( dirname( __FILE__ ) ) );
 function getUserName($uid)
 {
