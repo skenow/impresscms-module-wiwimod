@@ -1,4 +1,3 @@
-/* New table structure, separating the page metadata from the revision details */
 CREATE TABLE wiwimod_pages (
   pageid int unsigned NOT NULL auto_increment COMMENT 'Unique integer ID for the page',
   keyword varchar(255) NOT NULL DEFAULT '' COMMENT 'Keyword/page name',

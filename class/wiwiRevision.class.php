@@ -80,7 +80,7 @@ class WiwiRevision {
 		$this->views = 0;
 		$this->creator = 0;
 		$this->created = null;
-		$this->revisions = 1;
+		$this->revisions = 0;
 		$this->lastviewed = null;
 		$this->allowComments = '1';
 /* new SQL, based on the new tables */
@@ -237,7 +237,7 @@ class WiwiRevision {
 			date('Y/n/j G:i:s'),
 			$this->pageid
 			);
-		   $result = $this->db->query($sql);
+		   $result = $this->db->queryF($sql);
 		return ($result ? true : false);
 	}
 

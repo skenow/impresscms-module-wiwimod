@@ -25,8 +25,18 @@
 	<{if $wiwimod.allowPDF}> <a href="wiwipdf.php?page=<{$wiwimod.encodedurl}>" target="_blank"><img src="images/pdf.gif" align="middle" alt="" /></a>&nbsp;<{/if}>
 	<{if $wiwimod.showHistory}> <input type="button" onclick="self.location.href='index.php?page=<{$wiwimod.encodedurl}>&amp;op=history';" value="<{$smarty.const._MD_WIWI_HISTORY_BTN}>" /><{/if}>
 	<{if $wiwimod.mayEdit}> <input type="button" onclick="self.location.href='index.php?page=<{$wiwimod.encodedurl}>&amp;op=edit';" value="<{$smarty.const._EDIT}>" /><{/if}></div>
-</td></tr></table>
-
+</td></tr>
+</table>
+<div id='writepage'>
+    <form name='addpage' method='post' action='index.php'>
+		<fieldset>
+			<legend><{$smarty.const._MD_WIWI_ADDPAGE}></legend>
+				<input type='text' name='page' />
+		        <input type='submit' value='<{$smarty.const._MD_WIWI_ADDPAGE_BTN}>' />
+		        <input type='hidden' name='op' value='edit' />
+		</fieldset>
+    </form>
+</div>
 <{if $wiwimod.showComments}>
 <br />
 <div ><fieldset><legend><{$smarty.const._COMMENTS}></legend>

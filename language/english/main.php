@@ -62,4 +62,6 @@ define('_MI_WIWIMOD_WIWI404','IllegalName');
 // Added in version 1.0
 define('_MI_WIWIMOD_REVISION_SUMMARY', 'Revision Summary');
 define('_MI_WIWIMOD_ALLOW_COMMENTS','Allow Comments');
+define('_MD_WIWI_ADDPAGE_BTN','Add Page');
+define('_MD_WIWI_ADDPAGE','Create a New Page');
 ?>

@@ -351,7 +351,6 @@ switch ($op) {
 		//
 		$xoopsOption['template_main'] = 'wiwimod_view.html';
 		include_once XOOPS_ROOT_PATH.'/header.php';
-		
 		if ($pageObj->canRead()) {
 		    $pagecontent = $pageObj->render();
         /*
@@ -417,7 +416,7 @@ switch ($op) {
 
 		$xoopsTpl->assign('parentlist',$pageObj->parentList());
 
-		$edArr = Array();
+		$edArr = array();
 		foreach (getAvailableEditors() as $ed) {
 			$edArr[] = array('value' => $ed[1], 'text' => $ed[0], 'options' => $ed[2]);
 		}

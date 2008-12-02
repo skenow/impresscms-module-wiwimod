@@ -59,4 +59,9 @@ define('_MD_WIWI_NOWRITEACCESS_MSG','<br><h4>Lo sentimos: no tiene permisos para
 if (!defined('_MI_WIWIMOD_WIWIHOME'){define('_MI_WIWIMOD_WIWIHOME','Inicio');} // Also need in modinfo.php
 define('_MI_WIWIMOD_WIWI404','Nombre no permitido');//Comprobar la validez del nombre
 
+// Added in version 1.0
+define('_MI_WIWIMOD_REVISION_SUMMARY', 'Revision Summary');
+define('_MI_WIWIMOD_ALLOW_COMMENTS','Allow Comments');
+define('_MD_WIWI_ADDPAGE_BTN','Add Page');
+define('_MD_WIWI_ADDPAGE','Create a New Page');
 ?>

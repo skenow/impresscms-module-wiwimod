@@ -1,4 +1,4 @@
-==Wiwimod 1.0==
+== SimplyWiki 1.1 ==
 Status: Beta
 Released:
 
@@ -7,6 +7,7 @@ Added
 * Update function to migrate data to new tables
 * Functions to update new fields - visited (Gibaphp)
 * Summary information to RecentChanges rendering, also available in History view
+* 'Add New Page' field to easily create new pages
 
 Fixed
 
@@ -19,16 +20,24 @@ Language additions
 * main.php
   + define('_MI_WIWIMOD_REVISION_SUMMARY', 'Revision Summary');
   + define('_MI_WIWIMOD_ALLOW_COMMENTS','Allow Comments');
+  + define('_MD_WIWI_ADDPAGE_BTN','Add Page');
+  + define('_MD_WIWI_ADDPAGE','Create a New Page');
+
 
 * update.php (new file)
   
 Contributors to this release
 * skenow
 * gibaphp
+* mcdonald3072
+* pesian_stranger
+* juancj/debianus
+* xoops-magazine
+* algalochkin
 
-== Wiwimod 0.83+ ==
+== SimplyWiki 1.0/Wiwimod 0.83+ ==
 Status: Final
-Released: 23 November 2008
+Released: 3 December 2008
 
 Added
 * index.html to every directory without one

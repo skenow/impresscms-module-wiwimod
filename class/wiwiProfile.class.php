@@ -34,9 +34,9 @@ class WiwiProfile {
 	function WiwiProfile($prid = 0) {
 		$this->db =& Database::getInstance();
 		$this->name = '';
-		$this->readers = Array();
-		$this->writers = Array();
-		$this->administrators = Array();
+		$this->readers = array();
+		$this->writers = array();
+		$this->administrators = array();
 		$this->prid = $prid;
 		$this->commentslevel = 0;
 		$this->historylevel = _WI_WRITE;
@@ -58,9 +58,9 @@ class WiwiProfile {
 		//
 		// retrieve groups info
 		//
-		$this->readers = Array();
-		$this->writers = Array();
-		$this->administrators = Array();
+		$this->readers = array();
+		$this->writers = array();
+		$this->administrators = array();
 		$member_handler =& xoops_gethandler('member');
 		$grps =& $member_handler->getGroupList();
 		$sql = 'SELECT gid, priv FROM '.$this->db->prefix('wiwimod_prof_groups').' WHERE prid='. (int) $prid.' ORDER BY priv';
@@ -168,7 +168,7 @@ class WiwiProfile {
 	function getAllProfiles() {
 		$sql = 'SELECT prname, prid FROM '.$this->db->prefix('wiwimod_profiles');
 		$res = $this->db->query($sql);
-		$prlist = Array();
+		$prlist = array();
 		while ($rows = $this->db->fetchArray($res)) {
 			$prlist[$rows['prid']] = $rows['prname'];
 		}
@@ -180,7 +180,7 @@ class WiwiProfile {
 	//
 	function getAdminProfiles($user) {
 		$member_handler =& xoops_gethandler('member');
-		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : Array(XOOPS_GROUP_ANONYMOUS);
+		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(XOOPS_GROUP_ANONYMOUS);
 		if (in_array(XOOPS_GROUP_ADMIN , $usergroups)) {
 			$prlist = $this->getAllProfiles();
 		} else {
@@ -189,7 +189,7 @@ class WiwiProfile {
 			$sql = sprintf('SELECT DISTINCT %s.prid, prname FROM %s LEFT JOIN %s ON %s.prid = %s.prid WHERE gid IN (%s) AND priv = %u',
 				$t1, $t2, $t1, $t2, $t1, implode(',' , $usergroups), _WI_ADMIN);
 			$res = $this->db->query($sql);
-			$prlist=Array();
+			$prlist=array();
 			while ($rows = $this->db->fetchArray($res)) {
 				$prlist[$rows['prid']] = $rows['prname'];
 			}
@@ -206,8 +206,9 @@ class WiwiProfile {
 		global $xoopsUser;
 		$member_handler =& xoops_gethandler('member');
 		if ($user == '') $user = $xoopsUser;
-		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : Array(XOOPS_GROUP_ANONYMOUS);
-		$priv = Array();
+		//$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(XOOPS_GROUP_ANONYMOUS);
+		$usergroups = $xoopsUser ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		$priv = array();
 		$priv[_WI_ADMIN] = in_array(XOOPS_GROUP_ADMIN , $usergroups) || ( count(array_intersect ($usergroups, array_keys($this->administrators))) > 0 );
 		$priv[_WI_WRITE] = $priv[_WI_ADMIN] || ( count(array_intersect ($usergroups, array_keys($this->writers))) > 0 );
 		$priv[_WI_READ] = $priv[_WI_WRITE]  || ( count(array_intersect ($usergroups, array_keys($this->readers))) > 0 );

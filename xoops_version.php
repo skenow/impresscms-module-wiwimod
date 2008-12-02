@@ -39,7 +39,8 @@ if (defined('ICMS_VERSION_NAME')) {
 }
 // Tables created by the SQL file (without prefix!)
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
-$modversion['tables'][0] = 'wiwimod';
+$modversion['tables'][0] = 'wiwimod_pages';
+$modversion['tables'][] = 'wiwimod_revisions';
 $modversion['tables'][] = 'wiwimod_profiles';
 $modversion['tables'][] = 'wiwimod_prof_groups';
 
