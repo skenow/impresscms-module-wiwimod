@@ -28,12 +28,12 @@
 </td></tr>
 </table>
 <div id='writepage'>
-    <form name='addpage' method='post' action='index.php'>
+    <form name='addpage' method='get' action='index.php'>
 		<fieldset>
 			<legend><{$smarty.const._MD_WIWI_ADDPAGE}></legend>
 				<input type='text' name='page' />
 		        <input type='submit' value='<{$smarty.const._MD_WIWI_ADDPAGE_BTN}>' />
-		        <input type='hidden' name='op' value='edit' />
+          		<input type='hidden' name='back' value='<{$wiwimod.encodedurl}>' />
 		</fieldset>
     </form>
 </div>
