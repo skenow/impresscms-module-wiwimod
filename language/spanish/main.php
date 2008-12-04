@@ -60,8 +60,8 @@ if (!defined('_MI_WIWIMOD_WIWIHOME'){define('_MI_WIWIMOD_WIWIHOME','Inicio');} /
 define('_MI_WIWIMOD_WIWI404','Nombre no permitido');//Comprobar la validez del nombre
 
 // Added in version 1.0
-define('_MI_WIWIMOD_REVISION_SUMMARY', 'Revision Summary');
-define('_MI_WIWIMOD_ALLOW_COMMENTS','Allow Comments');
-define('_MD_WIWI_ADDPAGE_BTN','Add Page');
-define('_MD_WIWI_ADDPAGE','Create a New Page');
+define('_MI_WIWIMOD_REVISION_SUMMARY', 'Resumen de revisiones');
+define('_MI_WIWIMOD_ALLOW_COMMENTS','Permitir comentarios');
+define('_MD_WIWI_ADDPAGE_BTN','Añadir página');
+define('_MD_WIWI_ADDPAGE','Crear página');
 ?>
