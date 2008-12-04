@@ -8,7 +8,8 @@
  *  _FLD	: title of form elements
  *  _DESC	: description under the title for form elements
  *  _MSG	: messages, alerts ...
- *
+ * @package Wiwimod 
+ * @version $Id$ 
  */
 
 define('_MD_WIWI_MODIFIED_TXT', 'Aktualisierung ');		
@@ -52,7 +53,6 @@ define('_MD_WIWI_EDITCONFLICT_MSG','Ungültige Angaben! - Die &Auml;nderungen wu
 define('_MD_WIWI_NOREADACCESS_MSG','<br><h4>Entschuldigung, die Ansicht dieser Seite erfordert weitergehende Benutzerrechte.</h4><br>');
 define('_MD_WIWI_NOWRITEACCESS_MSG','<br><h4>Entschuldigung, Sie haben keine Berechtigung zum Bearbeiten dieser Seite.</h4><br>');
 
-
 // Wiwi special pages - 
 // Change these names, if you want a different homepage and error page
 // for this language - just make sure that they are legal WiwiLink names.
@@ -60,8 +60,8 @@ if (!defined('_MI_WIWIMOD_WIWIHOME')){define('_MI_WIWIMOD_WIWIHOME','WiwiHome');
 define('_MI_WIWIMOD_WIWI404','IllegalName');
 
 // Added in version 1.0
-define('_MI_WIWIMOD_REVISION_SUMMARY', 'Revision Summary');
-define('_MI_WIWIMOD_ALLOW_COMMENTS','Allow Comments');
-define('_MD_WIWI_ADDPAGE_BTN','Add Page');
-define('_MD_WIWI_ADDPAGE','Create a New Page');
+define('_MI_WIWIMOD_REVISION_SUMMARY', 'Zusammenfassung der Änderung(en)');
+define('_MI_WIWIMOD_ALLOW_COMMENTS','Kommantare zulassen');
+define('_MD_WIWI_ADDPAGE_BTN','Seite hinzufügen');
+define('_MD_WIWI_ADDPAGE','Neue Seite erstellen');
 ?>
