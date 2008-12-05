@@ -1,8 +1,8 @@
 <?php
 /**
- * xoops_version: Main configuration file for wiwimod
+ * Main configuration file for SimplyWiki
  * 
- * @package Wiwimod
+ * @package SimplyWiki
  * @author Xavier JIMENEZ
  * @author Gizmhail
  *
@@ -10,10 +10,10 @@
  * @version $Id$  
  */
 $modversion = array(
-  'name' => _MI_WIWIMOD_NAME,
+  'name' => _MI_SWIKI_NAME,
   'version' => '1.0',
   'status' => 'Beta',
-  'description' => _MI_WIWIMOD_DESC,
+  'description' => _MI_SWIKI_DESC,
   'author' => 'Xavier JIMENEZ',
   'credits' => '',
   'license' => 'GNU General Public License',
@@ -32,17 +32,17 @@ $modversion = array(
   'submit_bug' => 'https://sourceforge.net/tracker2/?group_id=205633&atid=1064496',
   'submit_feature' => '',
   'warning' => '',
-  'author_word' => '_MI_WIWIMOD_AUTHOR_WORD' ); 
+  'author_word' => '_MI_SWIKI_AUTHOR_WORD' ); 
 
 if (defined('ICMS_VERSION_NAME')) {
   $modversion['image'] = 'images/wiwimod.png';
 }
 // Tables created by the SQL file (without prefix!)
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
-$modversion['tables'][0] = 'wiwimod_pages';
-$modversion['tables'][] = 'wiwimod_revisions';
-$modversion['tables'][] = 'wiwimod_profiles';
-$modversion['tables'][] = 'wiwimod_prof_groups';
+$modversion['tables'][0] = 'wiki_pages';
+$modversion['tables'][] = 'wiki_revisions';
+$modversion['tables'][] = 'wiki_profiles';
+$modversion['tables'][] = 'wiki_prof_groups';
 
 // Administration tools
 $modversion['hasAdmin'] = 1;
@@ -55,16 +55,16 @@ $modversion['hasMain'] = 1;
 // Templates
 $modversion['templates'][1] = array(
   'file' => 'wiwimod_view.html',
-  'description' => _MI_WIWIMOD_TEMPLATE_VIEW_DESC);
+  'description' => _MI_SWIKI_TEMPLATE_VIEW_DESC);
 $modversion['templates'][] = array(
   'file' => 'wiwimod_edit.html',
-  'description' => _MI_WIWIMOD_TEMPLATE_EDIT_DESC);
+  'description' => _MI_SWIKI_TEMPLATE_EDIT_DESC);
 $modversion['templates'][]= array(
   'file' => 'wiwimod_history.html',
-  'description' => _MI_WIWIMOD_TEMPLATE_HISTORY_DESC);
+  'description' => _MI_SWIKI_TEMPLATE_HISTORY_DESC);
 $modversion['templates'][] = array(
   'file' => 'wiwimod_pdf.html',
-  'description' => _MI_WIWIMOD_TEMPLATE_PDF_DESC);
+  'description' => _MI_SWIKI_TEMPLATE_PDF_DESC);
 
 // Search
 $modversion['hasSearch'] = 1;
@@ -79,15 +79,15 @@ $modversion['comments']['pageName'] = 'index.php';
 // Blocks
 $modversion['blocks'][1] = array(
   'file' => 'wiwimod_toc.php',
-  'name' => _MI_WIWIMOD_BLOCK_TOC_NAME,
-  'description' => _MI_WIWIMOD_BLOCK_TOC_DESC,
+  'name' => _MI_SWIKI_BLOCK_TOC_NAME,
+  'description' => _MI_SWIKI_BLOCK_TOC_DESC,
   'show_func' => 'wiwimod_toc',
   'template' => 'wiwimod_toc.html');
 
 $modversion['blocks'][] = array(
   'file' => 'wiwimod_recent.php',
-  'name' => _MI_WIWIMOD_BLOCK_RECENT_NAME,
-  'description' => _MI_WIWIMOD_BLOCK_RECENT_DESC,
+  'name' => _MI_SWIKI_BLOCK_RECENT_NAME,
+  'description' => _MI_SWIKI_BLOCK_RECENT_DESC,
   'show_func' => 'wiwimod_recent',
   'edit_func' => 'wiwimod_recent_blockedit',
   'options' => '5',
@@ -95,18 +95,18 @@ $modversion['blocks'][] = array(
 
 $modversion['blocks'][] = array(
   'file' => 'wiwimod_showpage.php',
-  'name' => _MI_WIWIMOD_BLOCK_RELATED_NAME,
-  'description' => _MI_WIWIMOD_BLOCK_RELATED_DESC,
+  'name' => _MI_SWIKI_BLOCK_RELATED_NAME,
+  'description' => _MI_SWIKI_BLOCK_RELATED_DESC,
   'show_func' => 'wiwimod_contextshow',
   'template' => 'wiwimod_context.html');
 
 $modversion['blocks'][] = array(
   'file' => 'wiwimod_showpage.php',
-  'name' => _MI_WIWIMOD_BLOCK_SHOWPAGE_NAME,
-  'description' => _MI_WIWIMOD_BLOCK_SHOWPAGE_DESC,
+  'name' => _MI_SWIKI_BLOCK_SHOWPAGE_NAME,
+  'description' => _MI_SWIKI_BLOCK_SHOWPAGE_DESC,
   'show_func' => 'wiwimod_showpage',
   'edit_func' => 'wiwimod_showpage_blockedit',
-  'options' => _MI_WIWIMOD_WIWIHOME,
+  'options' => _MI_SWIKI_HOME,
   'template' => 'wiwimod_showpage.html');
 
 // Admin preferences items
@@ -115,10 +115,10 @@ $modversion['blocks'][] = array(
 $modversion['config'][1]['name'] = 'Editor';
 
 // title of this config option displayed in config settings form
-$modversion['config'][1]['title'] = '_MI_WIWIMOD_EDITOR';
+$modversion['config'][1]['title'] = '_MI_SWIKI_EDITOR';
 
 // description of this config option displayed under title
-$modversion['config'][1]['description'] = '_MI_WIWIMOD_EDITOR_DESC';
+$modversion['config'][1]['description'] = '_MI_SWIKI_EDITOR_DESC';
 
 // form element type used in config form for this option. can be one of either textbox, textarea, select, select_multi, yesno, group, group_multi
 $modversion['config'][1]['formtype'] = 'select';
@@ -140,8 +140,8 @@ $modversion['config'][1]['options'] = array('Xoops Standard' => 0, 'XoopsEditor'
 
 $modversion['config'][2] = array(
   'name' => 'XoopsEditor',
-  'title' => '_MI_WIWIMOD_XOOPSEDITOR',
-  'description' => '_MI_WIWIMOD_XOOPSEDITOR_DESC',
+  'title' => '_MI_SWIKI_XOOPSEDITOR',
+  'description' => '_MI_SWIKI_XOOPSEDITOR_DESC',
   'formtype' => 'select',
   'valuetype' => 'text',
   'default' => 0);
@@ -156,8 +156,8 @@ else $modversion['config'][2]['options'] = array();
 
 $modversion['config'][]  = array(
   'name' => 'DefaultProfile',
-  'title' => '_MI_WIWIMOD_DEFAULTPROFILE',
-  'description' => '_MI_WIWIMOD_DEFAULTPROFILE_DESC',
+  'title' => '_MI_SWIKI_DEFAULTPROFILE',
+  'description' => '_MI_SWIKI_DEFAULTPROFILE_DESC',
   'formtype' => 'select',
   'valuetype' => 'int',
   'default' => 0,
@@ -165,24 +165,24 @@ $modversion['config'][]  = array(
 
 $modversion['config'][] = array(
   'name' => 'allowPDF',
-  'title' => '_MI_WIWIMOD_ALLOWPDF',
-  'description' => '_MI_WIWIMOD_ALLOWPDF_DESC',
+  'title' => '_MI_SWIKI_ALLOWPDF',
+  'description' => '_MI_SWIKI_ALLOWPDF_DESC',
   'formtype' => 'yesno',
   'valuetype' => 'int',
   'default' => 0);
 
 $modversion['config'][] = array(
   'name' => 'ShowTitles',
-  'title' => '_MI_WIWIMOD_SHOWTITLES',
-  'description' => '_MI_WIWIMOD_SHOWTITLES_DESC',
+  'title' => '_MI_SWIKI_SHOWTITLES',
+  'description' => '_MI_SWIKI_SHOWTITLES_DESC',
   'formtype' => 'yesno',
   'valuetype' => 'int',
   'default' => 0);
 
 $modversion['config'][] = array(
   'name' => 'ShowCamelCase',
-  'title' => '_MI_WIWIMOD_USECAMELCASE',
-  'description' => '_MI_WIWIMOD_USECAMELCASE_DESC',
+  'title' => '_MI_SWIKI_USECAMELCASE',
+  'description' => '_MI_SWIKI_USECAMELCASE_DESC',
   'formtype' => 'yesno',
   'valuetype' => 'int',
   'default' => 0);
@@ -196,35 +196,35 @@ $modversion['notification'] = array(
 
 $modversion['notification']['category'][1] = array(
   'name' => 'page',
-  'title' => _MI_WIWIMOD_PAGENOTIFYCAT_TITLE,
-  'description' => '_MI_WIWIMOD_PAGENOTIFYCAT_DESC',
+  'title' => _MI_SWIKI_PAGENOTIFYCAT_TITLE,
+  'description' => '_MI_SWIKI_PAGENOTIFYCAT_DESC',
   'subscribe_from' => array('index.php'),
   'allow_bookmark' => 1,
   'item_name' => 'pageid'); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php 
 
 $modversion['notification']['category'][] = array(
   'name' => 'global',
-  'title' => _MI_WIWIMOD_GLOBALNOTIFYCAT_TITLE,
-  'description' => '_MI_WIWIMOD_GLOBALNOTIFYCAT_DESC',
+  'title' => _MI_SWIKI_GLOBALNOTIFYCAT_TITLE,
+  'description' => '_MI_SWIKI_GLOBALNOTIFYCAT_DESC',
   'subscribe_from' => array('index.php'),
   'item_name' => ''); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php 
 
 $modversion['notification']['event'][1] = array(
   'name' => 'page_modified',
   'category' => 'page',
-  'title' => _MI_WIWIMOD_PAGENOTIFY_TITLE,
-  'caption' => _MI_WIWIMOD_PAGENOTIFY_CAPTION,
-  'description' => '_MI_WIWIMOD_PAGENOTIFY_DESC',
+  'title' => _MI_SWIKI_PAGENOTIFY_TITLE,
+  'caption' => _MI_SWIKI_PAGENOTIFY_CAPTION,
+  'description' => '_MI_SWIKI_PAGENOTIFY_DESC',
   'mail_template' => 'global_pagemodified_notify',
-  'mail_subject' => '_MI_WIWIMOD_PAGENOTIFY_SUBJECT');
+  'mail_subject' => '_MI_SWIKI_PAGENOTIFY_SUBJECT');
 
 $modversion['notification']['event'][] = array(
   'name' => 'page_modified',
   'category' => 'global',
-  'title' => _MI_WIWIMOD_GLOBALNOTIFY_TITLE,
-  'caption' => _MI_WIWIMOD_GLOBALNOTIFY_CAPTION,
-  'description' => '_MI_WIWIMOD_GLOBALNOTIFY_DESC',
+  'title' => _MI_SWIKI_GLOBALNOTIFY_TITLE,
+  'caption' => _MI_SWIKI_GLOBALNOTIFY_CAPTION,
+  'description' => '_MI_SWIKI_GLOBALNOTIFY_DESC',
   'mail_template' => 'global_pagemodified_notify',
-  'mail_subject' => '_MI_WIWIMOD_GLOBALNOTIFY_SUBJECT');
+  'mail_subject' => '_MI_SWIKI_GLOBALNOTIFY_SUBJECT');
 
 ?>

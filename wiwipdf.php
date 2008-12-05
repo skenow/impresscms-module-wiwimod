@@ -2,7 +2,7 @@
 /**
  * Create PDF for a page
  * 
- * @package Wiwimod
+ * @package SimplyWiki
  * @author Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -39,7 +39,7 @@ function printPage(&$pageObj,&$pdf) {
 	 * get content
 	 */
 	$pagecontent = $pageObj->render();
-	$xoopsTpl->assign('wiwimod', array(
+	$xoopsTpl->assign('swiki', array(
 		'keyword' => $pageObj->keyword, 
 		'title' => $pageObj->title, 
 		'body' => $pagecontent, 
@@ -71,7 +71,7 @@ function printPagesRecurr($page, &$pdf, $followLinks, &$retcode, &$printedPages)
 		return true;						// at least one page did'nt exist
 		}
 	if (!$pageObj->canRead()) {
-		$retcode = _MD_WIWI_NOREADACCESS_MSG;
+		$retcode = _MD_SWIKI_NOREADACCESS_MSG;
 		return true;						// at least one page had restricted access
 		}
 	if (!printPage($pageObj, $pdf)) {

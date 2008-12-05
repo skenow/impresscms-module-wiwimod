@@ -12,9 +12,9 @@
  *
  */
 
-define('_MB_WIWI_WIWIHOME',"WiwiHome");
-define('_MB_WIWI_PAGENOTFOUND_MSG',"<br />A Página não existe em nosso banco de dados<br />");
-define('_MB_WIWI_NOREADACCESS_MSG',"<br /><h4>Lamentamos, mas este acesso é restrito</h4><br />");
-define('_MB_WIWI_NUM_DISP_DESC','Número de itens a exibir');
-define('_MB_WIWI_SHOWPAGE_DESC','Mostrar Página');
+define('_MB_SWIKI_HOME',"HomePage");
+define('_MB_SWIKI_PAGENOTFOUND_MSG',"<br />A Página não existe em nosso banco de dados<br />");
+define('_MB_SWIKI_NOREADACCESS_MSG',"<br /><h4>Lamentamos, mas este acesso é restrito</h4><br />");
+define('_MB_SWIKI_NUM_DISP_DESC','Número de itens a exibir');
+define('_MB_SWIKI_SHOWPAGE_DESC','Mostrar Página');
 ?>

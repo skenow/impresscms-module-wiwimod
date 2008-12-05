@@ -2,7 +2,7 @@
 /**
  * remember listpage filters
  * 
- * @package Wiwimod
+ * @package SimplyWiki
  * @author Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)

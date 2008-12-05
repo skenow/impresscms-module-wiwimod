@@ -1,9 +1,9 @@
 
-<{$smarty.const._MD_WIWI_HISTORY_TXT}> : <{$wiwimod.keyword}> 
-<input type="button" onclick="self.location.href='index.php?page=<{$wiwimod.keyword}>';" value="<{$smarty.const._MD_WIWI_PAGEVIEW_BTN}>" />
+<{$smarty.const._MD_SWIKI_HISTORY_TXT}> : <{$swiki.keyword}>
+<input type="button" onclick="self.location.href='index.php?page=<{$swiki.keyword}>';" value="<{$smarty.const._MD_SWIKI_PAGEVIEW_BTN}>" />
 
-<h2><{$wiwimod.title}></h2>
-<{$wiwimod.body}>
+<h2><{$swiki.title}></h2>
+<{$swiki.body}>
 
 <script type="text/javascript">
     <!--
@@ -16,8 +16,8 @@
 </script>
 <form id="restore" name="restore" action="index.php" method="post">
 	<input type="hidden" id="op" name="op" value="restore" />
-	<input type="hidden" id="page" name="page" value="<{$wiwimod.keyword}>" />
-	<input type="hidden" id="id" name="id" value="<{$wiwimod.revid}>" />
+	<input type="hidden" id="page" name="page" value="<{$swiki.keyword}>" />
+	<input type="hidden" id="id" name="id" value="<{$swiki.revid}>" />
 </form>
 
 <style>
@@ -25,19 +25,19 @@ tr.highlitedrevision td {background-color: #FFCC66; padding: 5px;}
 </style>
 
 <table border="0" cellpadding="0" cellspacing="1" width="100%" class="outer">
-	<tr class="head"><td></td><td><b><{$smarty.const._MD_WIWI_TITLE_COL}></b></td><td width="20%"><b><{$smarty.const._MD_WIWI_MODIFIED_COL}></b></td><td width="10%"><b><{$smarty.const._MD_WIWI_AUTHOR_COL}></b></td><td width=""><b><{$smarty.const._MI_WIWIMOD_REVISION_SUMMARY}></b></td><td width="30%"><b><{$smarty.const._MD_WIWI_ACTION_COL}></b></td></tr>
+	<tr class="head"><td></td><td><b><{$smarty.const._MD_SWIKI_TITLE_COL}></b></td><td width="20%"><b><{$smarty.const._MD_SWIKI_MODIFIED_COL}></b></td><td width="10%"><b><{$smarty.const._MD_SWIKI_AUTHOR_COL}></b></td><td width=""><b><{$smarty.const._MI_SWIKI_REVISION_SUMMARY}></b></td><td width="30%"><b><{$smarty.const._MD_SWIKI_ACTION_COL}></b></td></tr>
 	<{foreach from=$hist item=revision}>
-		<tr <{if $revision.id == $wiwimod.revid}>class="highlitedrevision"<{else}>class="<{cycle values=even,odd}>"<{/if}> >
-		<td width=10 style="color: #FF0000; font-weight:bold"><{if $revision.id == $wiwimod.revid}><img src="images/hand.gif" alt='' /><{else}>&nbsp;<{/if}></td>
+		<tr <{if $revision.id == $swiki.revid}>class="highlitedrevision"<{else}>class="<{cycle values=even,odd}>"<{/if}> >
+		<td width=10 style="color: #FF0000; font-weight:bold"><{if $revision.id == $swiki.revid}><img src="images/hand.gif" alt='' /><{else}>&nbsp;<{/if}></td>
 		<td><a href="?op=history&amp;page=<{$revision.keyword}>&amp;id=<{$revision.id}>"><{$revision.title}></a></td>
 		<td><{$revision.lastmodified}></td>
 		<td><{$revision.username}></td>
 		<td><{$revision.rev_summary}></td>
 		<td>
-			<a href="?op=history&amp;page=<{$revision.keyword}>&amp;id=<{$revision.id}>"><{$smarty.const._MD_WIWI_VIEW_BTN}></a> | 
-			<a href="?op=diff&amp;page=<{$revision.keyword}>&amp;id=<{$revision.id}>"><{$smarty.const._MD_WIWI_COMPARE_BTN}></a>
-			<{if $allowRestore}> | <a href="javascript:restoreRevision('<{$revision.id}>');"><{$smarty.const._MD_WIWI_RESTORE_BTN}></a><{/if}>
+			<a href="?op=history&amp;page=<{$revision.keyword}>&amp;id=<{$revision.id}>"><{$smarty.const._MD_SWIKI_VIEW_BTN}></a> | 
+			<a href="?op=diff&amp;page=<{$revision.keyword}>&amp;id=<{$revision.id}>"><{$smarty.const._MD_SWIKI_COMPARE_BTN}></a>
+			<{if $allowRestore}> | <a href="javascript:restoreRevision('<{$revision.id}>');"><{$smarty.const._MD_SWIKI_RESTORE_BTN}></a><{/if}>
 			</tr>
 	<{/foreach}>
 </table>
-<p align='<{$smarty.const._GLOBAL_RIGHT}>'><input type='button' onclick="self.location.href='index.php?page=<{$wiwimod.keyword}>';" value="<{$smarty.const._MD_WIWI_PAGEVIEW_BTN}>" /></p>
+<p align='<{$smarty.const._GLOBAL_RIGHT}>'><input type='button' onclick="self.location.href='index.php?page=<{$swiki.keyword}>';" value="<{$smarty.const._MD_SWIKI_PAGEVIEW_BTN}>" /></p>

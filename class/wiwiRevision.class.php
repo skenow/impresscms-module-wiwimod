@@ -1,8 +1,8 @@
 <?php
 /**
- * Revision class of wiwimod
+ * Revision class of SimplyWiki
  *
- * @package Wiwimod
+ * @package SimplyWiki
  * @author Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -12,12 +12,12 @@
 if (!defined('XOOPS_ROOT_PATH')&& !defined('ICMS_ROOT_PATH')) exit();
 if (!defined('_WIWIPAGE')) {
 define ('_WIWIPAGE', 1);
-$wiwidir = basename(dirname( dirname(__FILE__)));
-$modversion['dirname'] = $wiwidir;
+$wikiModDir = basename(dirname( dirname(__FILE__)));
+$modversion['dirname'] = $wikiModDir;
 
 include_once 'wiwiProfile.class.php';
-include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/include/functions.php';
-include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/include/diff.php';
+include_once XOOPS_ROOT_PATH.'/modules/' . $wikiModDir . '/include/functions.php';
+include_once XOOPS_ROOT_PATH.'/modules/' . $wikiModDir . '/include/diff.php';
 
 class WiwiRevision {
 
@@ -35,7 +35,7 @@ class WiwiRevision {
   
   var $db;				// private usage;
   var $ts;				// private usage;
-  var $wiwiConfig;		// private usage : used to get Wiwimod configs, even when called from other modules
+  var $wiwiConfig;		// private usage : used to get SimplyWiki configs, even when called from other modules
   var $summary;           // revision summary
   var $views;                // number of times the page was viewed
   var $creator;  // creator of the page
@@ -60,10 +60,10 @@ class WiwiRevision {
 
 		$modhandler =& xoops_gethandler('module');
 		$config_handler =& xoops_gethandler('config');
-		$wiwiMod = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));
-		$this->wiwiConfig =& $config_handler->getConfigsByCat(0, $wiwiMod->getVar('mid'));
+		$SimplyWiki = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));
+		$this->wiwiConfig =& $config_handler->getConfigsByCat(0, $SimplyWiki->getVar('mid'));
 
-		if (($page == '') && ($id == 0) && ($pageid == 0)) $page = _MI_WIWIMOD_WIWIHOME;
+		if (($page == '') && ($id == 0) && ($pageid == 0)) $page = _MI_SWIKI_HOME;
 
 		$this->keyword = $page;
 		$this->title = '';
@@ -84,7 +84,7 @@ class WiwiRevision {
 		$this->lastviewed = null;
 		$this->allowComments = '1';
 /* new SQL, based on the new tables */
-   $sql = 'SELECT * FROM '.$this->db->prefix('wiwimod_pages').' p,' .$this->db->prefix('wiwimod_revisions') .' r';
+   $sql = 'SELECT * FROM '.$this->db->prefix('wiki_pages').' p,' .$this->db->prefix('wiki_revisions') .' r';
 		if ($id != 0) {
 			$sql .= ' WHERE revid = '.$id.' AND p.pageid = r.pageid';
 		} elseif ($page != ''){
@@ -132,7 +132,7 @@ class WiwiRevision {
 		$sql = sprintf(
 			"INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock)
                 VALUES('%s', '%s', '%s', %u, %u, %u, '%s', '%s', '%s', '%s')",
-			$this->db->prefix('wiwimod_pages'),
+			$this->db->prefix('wiki_pages'),
 			addslashes($this->keyword),
 			$this->ts->addSlashes($this->title),
 			$add_date,						  //-- lastmodified is Now
@@ -151,7 +151,7 @@ class WiwiRevision {
 			$sql = sprintf(
                "INSERT INTO %s (pageid, summary, body, userid, modified)
 	               VALUES (%u, '%s', '%s', %u, '%s')",
-				$this->db->prefix('wiwimod_revisions'),
+				$this->db->prefix('wiki_revisions'),
 				$this->pageid,
 				$this->ts->addSlashes($this->summary),
 				$this->ts->addSlashes($this->body),
@@ -162,7 +162,7 @@ class WiwiRevision {
 			if (!$result) return false;
 		$sql = sprintf(
                "UPDATE %s SET revisions=%u, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s' WHERE pageid=%u",
-				$this->db->prefix('wiwimod_pages'),
+				$this->db->prefix('wiki_pages'),
 				$this->revisions + 1,
 				$add_date,
 				addslashes($this->parent),
@@ -188,8 +188,8 @@ class WiwiRevision {
 		$sql = sprintf(
 			"UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=%u, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s'
                WHERE revid=%u AND p.pageid=%u",
-				$this->db->prefix('wiwimod_pages'),
-				$this->db->prefix('wiwimod_revisions'),
+				$this->db->prefix('wiki_pages'),
+				$this->db->prefix('wiki_revisions'),
 				$this->ts->addSlashes($this->body),
 				$save_date,
 				$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
@@ -232,7 +232,7 @@ class WiwiRevision {
 
 		$sql = sprintf(
 			"UPDATE %s SET views=%u, lastviewed='%s' WHERE pageid=%u",
-			$this->db->prefix("wiwimod_pages"),
+			$this->db->prefix("wiki_pages"),
 			$this->views +1,
 			date('Y/n/j G:i:s'),
 			$this->pageid
@@ -405,14 +405,14 @@ class WiwiRevision {
 	 * Utilities for page rendering ;
 	 */
 	function render_wiwiLink($pg,$a,$txt) {
-    $wiwidir = basename( dirname(  dirname( __FILE__ ) ) ) ;
-		return $a."&amp;back=".$this->keyword.$txt.($this->pageExists($pg)?"":"<img src='".XOOPS_URL."/modules/' . $wiwidir . '/images/nopage.gif' alt='' />")."</a>";
+    $wikiModDir = basename( dirname(  dirname( __FILE__ ) ) ) ;
+		return $a."&amp;back=".$this->keyword.$txt.($this->pageExists($pg)?"":"<img src='".XOOPS_URL."/modules/' . $wikiModDir . '/images/nopage.gif' alt='' />")."</a>";
 	}
 
 	function render_wikiLink($keyword, $customTitle = '', $show_titles = false )	{
-		$wiwidir = basename( dirname(  dirname( __FILE__ ) ) ) ;
+		$wikiModDir = basename( dirname(  dirname( __FILE__ ) ) ) ;
 		$normKeyword = $this->normalize($keyword);
-		$sql = 'SELECT title FROM '.$this->db->prefix('wiwimod_pages') .' WHERE keyword="'.addslashes($normKeyword).'"';
+		$sql = 'SELECT title FROM '.$this->db->prefix('wiki_pages') .' WHERE keyword="'.addslashes($normKeyword).'"';
 		$dbresult = $this->db->query($sql);
 		if ($this->db->getRowsNum($dbresult) > 0) {
 			$pageExists = true;
@@ -423,7 +423,7 @@ class WiwiRevision {
 			$txt = ($customTitle != '' ? $customTitle : $normKeyword);
 		}
 
-		return sprintf('<a href="%s">%s%s</a>',XOOPS_URL.'/modules/' . $wiwidir . '/index.php?page='.$this->encode($normKeyword).'&amp;back='.$this->encode($this->keyword), stripslashes($txt), ($pageExists ? "" : '<img src="'.XOOPS_URL.'/modules/' . $wiwidir . '/images/nopage.gif" alt="" />'));
+		return sprintf('<a href="%s">%s%s</a>',XOOPS_URL.'/modules/' . $wikiModDir . '/index.php?page='.$this->encode($normKeyword).'&amp;back='.$this->encode($this->keyword), stripslashes($txt), ($pageExists ? "" : '<img src="'.XOOPS_URL.'/modules/' . $wikiModDir . '/images/nopage.gif" alt="" />'));
 
 	}
 
@@ -454,7 +454,7 @@ class WiwiRevision {
 		);
 		$cfg = $settings[$type];
 
-		$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM '.$this->db->prefix('wiwimod_pages').' p, ' . $this->db->prefix('wiwimod_revisions') . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified '.$cfg[0];
+		$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM '.$this->db->prefix('wiki_pages').' p, ' . $this->db->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified '.$cfg[0];
 		$result = $this->db->query($sql);
 
 		$body = '' ; $counter = '[';
@@ -479,7 +479,7 @@ class WiwiRevision {
 	 * Note : this was formerly an inline function, but php5 doesn't seem to accept it recursively.
 	 */
 	function parentList_recurr($child, &$parlist, &$db) {
-		$sql = 'SELECT parent FROM '.$db->prefix('wiwimod_pages').' WHERE keyword="'.addslashes($child).'"';
+		$sql = 'SELECT parent FROM '.$db->prefix('wiki_pages').' WHERE keyword="'.addslashes($child).'"';
 		$result = $db->query($sql);
 		list($parent) = $db->fetchRow($result);
 		if (($parent != '')&&(!in_array($parent, $parlist))) {
@@ -503,7 +503,7 @@ class WiwiRevision {
 
 	function history($limit = 0, $start = 0)
 	{
-		$sql = 'SELECT keyword, revid as id, title, body, modified as lastmodified, userid as u_id, summary FROM '.$this->db->prefix('wiwimod_revisions').' r, '. $this->db->prefix('wiwimod_pages') .' p WHERE p.keyword="'.addslashes($this->keyword).'" AND p.pageid=r.pageid ORDER BY id DESC';
+		$sql = 'SELECT keyword, revid as id, title, body, modified as lastmodified, userid as u_id, summary FROM '.$this->db->prefix('wiki_revisions').' r, '. $this->db->prefix('wiki_pages') .' p WHERE p.keyword="'.addslashes($this->keyword).'" AND p.pageid=r.pageid ORDER BY id DESC';
 		$result = $this->db->query($sql, $limit, $start);
 
 		$hist = array();
@@ -515,7 +515,7 @@ class WiwiRevision {
 
 	function historyNum()
 	{
-		$sql = 'SELECT revisions FROM '.$this->db->prefix('wiwimod_pages').' WHERE keyword="'.addslashes($this->keyword).'"';
+		$sql = 'SELECT revisions FROM '.$this->db->prefix('wiki_pages').' WHERE keyword="'.addslashes($this->keyword).'"';
 		$result = $this->db->query($sql);
 		list($maxcount) = $this->db->fetchRow($result);
 		return $maxcount;
@@ -526,7 +526,7 @@ class WiwiRevision {
 		//
 		// Get the latest revision contents
 		//
-		$sql = 'SELECT title, body FROM '.$this->db->prefix('wiwimod_revisions').' r, '.$this->db->prefix('wiwimod_pages').' p WHERE p.pageid="'.$this->pageid.'" AND r.pageid="'.$this->pageid.'" ORDER BY revid DESC LIMIT 1';
+		$sql = 'SELECT title, body FROM '.$this->db->prefix('wiki_revisions').' r, '.$this->db->prefix('wiki_pages').' p WHERE p.pageid="'.$this->pageid.'" AND r.pageid="'.$this->pageid.'" ORDER BY revid DESC LIMIT 1';
 		$result = $this->db->query($sql);
 		list ($title, $body) = $this->db->fetchRow($result);
 
@@ -578,7 +578,7 @@ class WiwiRevision {
 	 */
 	function concurrentlySaved () {
  return false;
-		$sql = "SELECT lastmodified FROM ".$this->db->prefix("wiwimod_pages")." WHERE keyword='".addslashes($this->keyword)."'";
+		$sql = "SELECT lastmodified FROM ".$this->db->prefix("wiki_pages")." WHERE keyword='".addslashes($this->keyword)."'";
 		$result = $this->db->query($sql);
 		$rowsnum = $this->db->getRowsNum($result);
 
@@ -595,11 +595,11 @@ class WiwiRevision {
 	function pageExists ($page="", $id = 0) {
 		$page = addslashes($this->normalize($page));
 		if ($id > 0) {
-			$sql = "SELECT keyword FROM ".$this->db->prefix("wiwimod_pages")." WHERE pageid = $id";
+			$sql = "SELECT keyword FROM ".$this->db->prefix("wiki_pages")." WHERE pageid = $id";
 		} elseif (($page != "") && (intval($page == 0))){
-			$sql = "SELECT keyword FROM ".$this->db->prefix("wiwimod_pages")." WHERE keyword='$page'";
+			$sql = "SELECT keyword FROM ".$this->db->prefix("wiki_pages")." WHERE keyword='$page'";
 		} elseif ($page != "") {
-		    $sql = "SELECT keyword FROM ".$this->db->prefix("wiwimod_pages")." WHERE pageid=$page";
+		    $sql = "SELECT keyword FROM ".$this->db->prefix("wiki_pages")." WHERE pageid=$page";
 		} else {
 			return false;
 		}
@@ -618,7 +618,7 @@ class WiwiRevision {
 		if ($order == "") $order = "keyword ASC";
 		$fieldlist = "keyword|title|body|lastmodified|u_id|parent|visible|contextBlock|prid|id";
 
-		$sql_a =  "SELECT p.*, body, summary, contextBlock, r.userid as u_id, revid as id FROM ".$this->db->prefix("wiwimod_pages")." AS p, ".$this->db->prefix("wiwimod_revisions")." AS r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified";
+		$sql_a =  "SELECT p.*, body, summary, contextBlock, r.userid as u_id, revid as id FROM ".$this->db->prefix("wiki_pages")." AS p, ".$this->db->prefix("wiki_revisions")." AS r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified";
 
 		/*
 		 * the passed "where" clause has to be adapted because of he jointure : fields must be prefixed with "w1."
@@ -664,7 +664,7 @@ class WiwiRevision {
 	{
 		$fieldlist = "keyword|title|body|lastmodified|u_id|parent|visible|contextBlock|prid|id";
 
-		$sql_a =  "SELECT count(p.pageid) as count FROM ".$this->db->prefix("wiwimod_pages").' p, '.$this->db->prefix("wiwimod_revisions").' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified';
+		$sql_a =  "SELECT count(p.pageid) as count FROM ".$this->db->prefix("wiki_pages").' p, '.$this->db->prefix("wiki_revisions").' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified';
 
 		if ($where != "") {
 			$sql_a .= " AND ".$where;
@@ -693,7 +693,7 @@ class WiwiRevision {
 	 */
 	function fix()
 	{
-		$sql = 'DELETE FROM '.$this->db->prefix('wiwimod_revisions').' WHERE pageid="'.addslashes($this->pageid).'" AND modified < "'.$this->lastmodified.'"';
+		$sql = 'DELETE FROM '.$this->db->prefix('wiki_revisions').' WHERE pageid="'.addslashes($this->pageid).'" AND modified < "'.$this->lastmodified.'"';
 		$success = $this->db->query($sql);
 		return $success;
 	}
@@ -701,7 +701,7 @@ class WiwiRevision {
 	function cleanPagesHistory() {
 		global $xoopsDB;
 		$success = true;
-		$sql = "SELECT pageid, MAX(revid) AS id FROM ".$xoopsDB->prefix("wiwimod_revisions")." WHERE modified<'".formatTimestamp(time() - 61 * 24 * 3600, _DATESTRING)."' GROUP BY pageid";
+		$sql = "SELECT pageid, MAX(revid) AS id FROM ".$xoopsDB->prefix("wiki_revisions")." WHERE modified<'".formatTimestamp(time() - 61 * 24 * 3600, _DATESTRING)."' GROUP BY pageid";
 		$result = $xoopsDB->query($sql);
 		while ($content = $xoopsDB->fetcharray($result)) {
 			$rev = new wiwiRevision("",$content['id']);
@@ -711,7 +711,7 @@ class WiwiRevision {
 	}
 
 	function deletePage() {
-	    $sql = 'DELETE r.*, p.* FROM '.$this->db->prefix('wiwimod_revisions').' r, '.$this->db->prefix('wiwimod_pages').' p WHERE r.pageid="'.$this->pageid.'" AND p.pageid="'.$this->pageid.'"';
+	    $sql = 'DELETE r.*, p.* FROM '.$this->db->prefix('wiki_revisions').' r, '.$this->db->prefix('wiki_pages').' p WHERE r.pageid="'.$this->pageid.'" AND p.pageid="'.$this->pageid.'"';
 	    $success = $this->db->query($sql);
 		if ($success) {
       $this->id = 0;

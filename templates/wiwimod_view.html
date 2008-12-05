@@ -1,7 +1,7 @@
 <table class="PageTitle">
  <tr>
   <td style="text-align:<{$smarty.const._GLOBAL_RIGHT}>">
-	[<{foreach from=$parentlist item=pg}><{$pg}>&nbsp;::&nbsp;<{/foreach}><{$smarty.const._MD_WIWI_THISPAGE}>]
+	[<{foreach from=$parentlist item=pg}><{$pg}>&nbsp;::&nbsp;<{/foreach}><{$smarty.const._MD_SWIKI_THISPAGE}>]
 		<{if $nav}>&nbsp;<{$nav.html}><{/if}>
   </td>
  </tr>
@@ -13,31 +13,31 @@
  </tr>
  <{/if}>
  <tr>
-  <td><h2><{$wiwimod.title}></h2></td>
+  <td><h2><{$swiki.title}></h2></td>
  </tr>
 </table>
-<{$wiwimod.body}>
+<{$swiki.body}>
 <table><tr><td>
 	<{if $nav}><{$nav.html}><{/if}>
 </td><td align='<{$smarty.const._GLOBAL_RIGHT}>'>
 	<div style="text-align: <{$smarty.const._GLOBAL_RIGHT}>; padding: 3px; margin: 0px; color : #8090B1"><span style = "border-top: 1px solid #8090B1; padding: 3px; font-style:italic; font-size:small;" >
-	<{$smarty.const._MD_WIWI_MODIFIED_TXT}> <{$wiwimod.lastmodified}> <{$smarty.const._MD_WIWI_BY}> <span class="itemPoster"><{$wiwimod.author}></span></span>
-	<{if $wiwimod.allowPDF}> <a href="wiwipdf.php?page=<{$wiwimod.encodedurl}>" target="_blank"><img src="images/pdf.gif" align="middle" alt="" /></a>&nbsp;<{/if}>
-	<{if $wiwimod.showHistory}> <input type="button" onclick="self.location.href='index.php?page=<{$wiwimod.encodedurl}>&amp;op=history';" value="<{$smarty.const._MD_WIWI_HISTORY_BTN}>" /><{/if}>
-	<{if $wiwimod.mayEdit}> <input type="button" onclick="self.location.href='index.php?page=<{$wiwimod.encodedurl}>&amp;op=edit';" value="<{$smarty.const._EDIT}>" /><{/if}></div>
+	<{$smarty.const._MD_SWIKI_MODIFIED_TXT}> <{$swiki.lastmodified}> <{$smarty.const._MD_SWIKI_BY}> <span class="itemPoster"><{$swiki.author}></span></span>
+	<{if $swiki.allowPDF}> <a href="wiwipdf.php?page=<{$swiki.encodedurl}>" target="_blank"><img src="images/pdf.gif" align="middle" alt="" /></a>&nbsp;<{/if}>
+	<{if $swiki.showHistory}> <input type="button" onclick="self.location.href='index.php?page=<{$swiki.encodedurl}>&amp;op=history';" value="<{$smarty.const._MD_SWIKI_HISTORY_BTN}>" /><{/if}>
+	<{if $swiki.mayEdit}> <input type="button" onclick="self.location.href='index.php?page=<{$swiki.encodedurl}>&amp;op=edit';" value="<{$smarty.const._EDIT}>" /><{/if}></div>
 </td></tr>
 </table>
 <div id='writepage'>
     <form name='addpage' method='get' action='index.php'>
 		<fieldset>
-			<legend><{$smarty.const._MD_WIWI_ADDPAGE}></legend>
-				<input type='text' name='page' />
-		        <input type='submit' value='<{$smarty.const._MD_WIWI_ADDPAGE_BTN}>' />
-          		<input type='hidden' name='back' value='<{$wiwimod.encodedurl}>' />
+			<legend><{$smarty.const._MD_SWIKI_ADDPAGE}></legend>
+				<input type='text' name='page' size='60' />
+		        <input type='submit' value='<{$smarty.const._MD_SWIKI_ADDPAGE_BTN}>' />
+          		<input type='hidden' name='back' value='<{$swiki.encodedurl}>' />
 		</fieldset>
     </form>
 </div>
-<{if $wiwimod.showComments}>
+<{if $swiki.showComments}>
 <br />
 <div ><fieldset><legend><{$smarty.const._COMMENTS}></legend>
 <div style="margin: 3px; padding: 3px;">

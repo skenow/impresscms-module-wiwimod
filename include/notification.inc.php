@@ -1,8 +1,8 @@
 <?php
 /**
- * Notification function for wiwimod
+ * Notification function for SimplyWiki
  * 
- * @package Wiwimod
+ * @package SimplyWiki
  * @author Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -13,10 +13,10 @@ if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 function wiwimod_notify_iteminfo($category, $item_id)
 {
 	global $xoopsModule, $xoopsModuleConfig, $xoopsConfig;
-  $wiwidir = basename(dirname(dirname(__FILE__)));
-	if (empty($xoopsModule) || $xoopsModule->getVar('dirname') !== $wiwidir) {	
+  $wikiModDir = basename(dirname(dirname(__FILE__)));
+	if (empty($xoopsModule) || $xoopsModule->getVar('dirname') !== $wikiModDir) {	
 		$module_handler =& xoops_gethandler('module');
-		$module =& $module_handler->getByDirname($wiwidir);
+		$module =& $module_handler->getByDirname($wikiModDir);
 		$config_handler =& xoops_gethandler('config');
 		$config =& $config_handler->getConfigsByCat(0,$module->getVar('mid'));
 	} else {
@@ -31,7 +31,7 @@ function wiwimod_notify_iteminfo($category, $item_id)
 		$result = $xoopsDB->query($sql); // TODO: error check
 		$result_array = $xoopsDB->fetchArray($result);
 		$item['name'] = $result_array['title'];
-		$item['url'] = XOOPS_URL . '/modules/'.$wiwidir.'/index.php?page=' . $result_array['keyword'];
+		$item['url'] = XOOPS_URL . '/modules/'.$wikiModDir.'/index.php?page=' . $result_array['keyword'];
 		return $item;
 	}
 	}

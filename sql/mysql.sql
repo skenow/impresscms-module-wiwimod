@@ -1,10 +1,10 @@
-CREATE TABLE wiwimod_pages (
+CREATE TABLE wiki_pages (
   pageid int unsigned NOT NULL auto_increment COMMENT 'Unique integer ID for the page',
   keyword varchar(255) NOT NULL DEFAULT '' COMMENT 'Keyword/page name',
   title varchar(255) NOT NULL DEFAULT '' COMMENT 'Title of the page',
   creator mediumint(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Userid for the user that created the page, from users.uid',
   createdate datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Datetime the page was created',
-  prid int NOT NULL DEFAULT 0 COMMENT 'Profile id to control page access, defined in wiwimod_profiles.prid',
+  prid int NOT NULL DEFAULT 0 COMMENT 'Profile id to control page access, defined in wiki_profiles.prid',
   parent varchar(255) DEFAULT '' COMMENT 'Keyword/page name of the parent page for the page',
   views int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Number of times this page has been viewed',
   visible int DEFAULT 0 COMMENT 'Determines if the page is visible in the index and its sort order (weight)',
@@ -17,9 +17,9 @@ CREATE TABLE wiwimod_pages (
   UNIQUE KEY (keyword)
 ) TYPE=MyISAM COMMENT 'Holds the list of pages and their properties';
 
-CREATE TABLE wiwimod_revisions (
+CREATE TABLE wiki_revisions (
   revid int UNSIGNED NOT NULL AUTO_INCREMENT,
-  pageid int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Link to wiwimod_pages.pageid',
+  pageid int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Link to wiki_pages.pageid',
   body mediumtext NOT NULL COMMENT 'Text for this revision',
   summary tinytext COMMENT 'Summary of the revision by the author',
   modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Timestamp for the revision',
@@ -27,7 +27,7 @@ CREATE TABLE wiwimod_revisions (
   PRIMARY KEY page (revid)
 ) TYPE=MyISAM COMMENT 'Holds details of the individual revisions to each page';
 
-CREATE TABLE wiwimod_profiles (
+CREATE TABLE wiki_profiles (
    prid integer not null auto_increment,
    prname varchar(20) not null default '',
    commentslevel integer default 0,
@@ -35,7 +35,7 @@ CREATE TABLE wiwimod_profiles (
    PRIMARY KEY (prid) 
 ) TYPE=MyISAM;
 
-CREATE TABLE wiwimod_prof_groups (
+CREATE TABLE wiki_prof_groups (
    prid integer,
    gid integer,
    priv smallint

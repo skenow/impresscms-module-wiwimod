@@ -65,9 +65,9 @@ Language additions
   + define('_MI_WIWIMOD_AUTHOR_WORD','<h4>About Wiwi 0.8.3</h4><br />Wiwi is GPL software ; visit Wiwi home page at <a href="http://www.zonatim.com/modules/wiwimod?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> to support or get help.<br /><br />If you\'ve just migrated from an older Wiwi version (0.7.1 or less), please click here : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
 
 * include/oninstall.inc.php (constants in language/<language>/install.php) (new)
-  + define('_MI_WIWIMOD_PROFILE1','Open Content');
-  + define('_MI_WIWIMOD_PROFILE2','Public Content');
-  + define('_MI_WIWIMOD_PROFILE3','Private Content');
+  + define('_MI_wiki_profile1','Open Content');
+  + define('_MI_wiki_profile2','Public Content');
+  + define('_MI_wiki_profile3','Private Content');
   + define('_MI_WIWIMOD_WIWIHOME_TITLE','Your Wiwi home page');
   + define('_MI_WIWIMOD_WIWIHOME_TEXT','<p>\r\n<table border=\'0\'>\r\n<tbody>\r\n<tr>\r\n<td>\r\n<p>Welcome;<br />This is Wiwi\'s default home page. Feel free to edit and modify it. To create new pages, type in anywhere a page name and surround it with double square brackets ( [[ ). When you save this page, the brackets will be replaced by a link to your new page.</p>\r\n<p>Check <a href=\'manual.html\' target=_blank>the manual</a> for an in depth view of editing features.</p></td>\r\n<td><img src=\'images/wiwilogo.gif\' /></td></tr></tbody></table></p>\r\n<p>\r\n<table cellspacing=\'5\' cellpadding=\'5\' width=\'100%\' border=\'0\'>\r\n<tbody>\r\n<tr>\r\n<td bgcolor=\'#e4e4e4\'>Pages index</td>\r\n<td bgcolor=\'#e4e4e4\'>Recently modified pages</td></tr>\r\n<tr>\r\n<td bgcolor=\'#f6f6f6\'>&lt;[PageIndex]&gt;</td>\r\n<td bgcolor=\'#f6f6f6\'>&lt;[RecentChanges]&gt;</td></tr></tbody></table><br /><br /></p>');
 
@@ -112,7 +112,7 @@ v0.8.2 :
 	NOTICE : the former [[relative_url title]] tag does not work any more (usually used as [[?page=MyPage title]])
 - enhancement : modified <[page index]> to show page titles instead of page names (shows page name if no title)
 - enhancement : added portuguese (brazilian) locale (thanks to Rafael Sahb) ; updated nederlands locale (thanks to Shine)
-- enhancement : creates a default WiwiHome page at install time, with some kick-start content.
+- enhancement : creates a default HomePage page at install time, with some kick-start content.
 
 - bugfix : while the "preferences" tab of wiwi admin was active, standard xoops admin menus were corrupted
 - bugfix : added proper handling of &lt; and < in wiki parser (<PageIndex> didn't work on some configs)

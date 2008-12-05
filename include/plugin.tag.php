@@ -27,7 +27,7 @@ if (!defined('XOOPS_ROOT_PATH')){ exit(); }
  * 
  */
 
-function wiwimod_tag_iteminfo(&$items)
+function wiki_tag_iteminfo(&$items)
 {
 	if(empty($items) || !is_array($items)){
 		return false;
@@ -40,9 +40,9 @@ function wiwimod_tag_iteminfo(&$items)
 	$items_id = array();
 	foreach(array_keys($items) as $cat_id){
 		// Some handling here to build the link upon catid
-			// catid is not used in wiwimod, so just skip it
+			// catid is not used in SimplyWiki, so just skip it
 		foreach(array_keys($items[$cat_id]) as $item_id){
-			// In wiwimod, the item_id is "pageid"
+			// In SimplyWiki, the item_id is "pageid"
 			$taggedPage =  new WiwiRevision('',0,$item_id);
                         $items[$cat_id][$item_id] = array(
                                 'title'         => $myts->htmlSpecialChars( $taggedPage->title ) ,
@@ -57,7 +57,7 @@ function wiwimod_tag_iteminfo(&$items)
 /* This will create a function with a name based on the installation directory, if it is not wiwimod */
 $myInstallDir = basename(dirname(dirname(__FILE__)));
 if (!function_exists($myInstallDir.'_tag_iteminfo')){
- $myfunc = 'function '.$myInstallDir.'_tag_iteminfo () { return wiwimod_tag_iteminfo();}';
+ $myfunc = 'function '.$myInstallDir.'_tag_iteminfo () { return wiki_tag_iteminfo();}';
  eval($myfunc);
 }
 /**
@@ -66,7 +66,7 @@ if (!function_exists($myInstallDir.'_tag_iteminfo')){
  * @return	boolean
  * 
  */
-function wiwimod_tag_synchronization($mid)
+function wiki_tag_synchronization($mid)
 {
    //Optional	
 }

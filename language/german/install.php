@@ -1,21 +1,21 @@
 <?php
 /**
- * Language definitions used during installation of Wiwimod
+ * Language definitions used during installation of SimplyWiki
  * 
- * @package Wiwimod
+ * @package SimplyWiki
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
- /** include the modinfo constants, so we don't have to define them again (specifically, _MI_WIWIMOD_WIWIHOME) */
+ /** include the modinfo constants, so we don't have to define them again (specifically, _MI_SWIKI_HOME) */
  include_once 'modinfo.php';
 
- define('_MI_WIWIMOD_PROFILE1','Offener Inhalt');
- define('_MI_WIWIMOD_PROFILE2','Öffentlicher Inhalt');
- define('_MI_WIWIMOD_PROFILE3','Privater Inhalt'); 
- define('_MI_WIWIMOD_WIWIHOME_TITLE','Ihre Wiwi Startseite');
+ define('_MI_SWIKI_PROFILE1','Offener Inhalt');
+ define('_MI_SWIKI_PROFILE2','Öffentlicher Inhalt');
+ define('_MI_SWIKI_PROFILE3','Privater Inhalt'); 
+ define('_MI_SWIKI_HOME_TITLE','Ihre SimplyWiki Startseite');
 
- define('_MI_WIWIMOD_WIWIHOME_TEXT',
+ define('_MI_SWIKI_HOME_TEXT',
      "<p><table border=\'0\'>
      <tbody><tr><td>
      <p>Willkommen;<br />Das ist die Wiwi-Standard-Startseite. Fühlen Sie sich frei zu bearbeiten und zu verändern. 

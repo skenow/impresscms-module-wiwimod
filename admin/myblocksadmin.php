@@ -1,9 +1,9 @@
 <?php
 /**
- * Block admin for wiwimod
+ * Block admin for SimplyWiki
  *  
  * @todo Get the core block admin form so it is always current
- * @package Wiwimod
+ * @package SimplyWiki
  * @author GIJOE <http://www.peak.ne.jp/>
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -234,7 +234,7 @@ if( ! empty( $_POST['submit'] ) ) {
 
 include '../include/functions.php';
 xoops_cp_header() ;
-echo getAdminMenu (3,_AM_WIWI_BLOCKSNGROUPS_NAV);
+echo getAdminMenu (3,_AM_SWIKI_BLOCKSNGROUPS_NAV);
 if( file_exists( './mymenu.php' ) ) include( './mymenu.php' ) ;
 
 echo "<h3 style='text-align:left;'>".$xoopsModule->name()."</h3>\n" ;

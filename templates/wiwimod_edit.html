@@ -1,15 +1,15 @@
-<{$wiwimodform.javascript}>
-<form id="<{$wiwimodform.name}>" name="<{$wiwimodform.name}>" action="<{$wiwimodform.action}>" method="<{$wiwimodform.method}>" <{$wiwimodform.extra}>>
+<{$swikiform.javascript}>
+<form id="<{$swikiform.name}>" name="<{$swikiform.name}>" action="<{$swikiform.action}>" method="<{$swikiform.method}>" <{$swikiform.extra}>>
 <table class="outer" cellspacing="1">
     <tr>
-    <th colspan="2"><{$wiwimodform.title}></th>
+    <th colspan="2"><{$swikiform.title}></th>
     </tr>
     <!-- start of form elements loop -->
-    <{foreach item=element from=$wiwimodform.elements}>
+    <{foreach item=element from=$swikiform.elements}>
         <{if $element.hidden != true}>
 			<tr>
 			<{if $element.name == "body"}>
-					<td class="head" colspan=2 onContextmenu="return showmenuie5(event)"><{$element.caption}>&nbsp;<span style="font-style: italic; font-weight:normal; font-size:10px; border-bottom: 1px dotted blue; cursor:hand;"><{$smarty.const._MD_WIWI_SELEDITOR_BTN}></span></td></tr><tr>
+					<td class="head" colspan=2 onContextmenu="return showmenuie5(event)"><{$element.caption}>&nbsp;<span style="font-style: italic; font-weight:normal; font-size:10px; border-bottom: 1px dotted blue; cursor:hand;"><{$smarty.const._MD_SWIKI_SELEDITOR_BTN}></span></td></tr><tr>
 					<td colspan=2 class="<{cycle values="even,odd"}>"><{$element.body}></td>
 			<{else}>
 					<td class="head"><{$element.caption}></td>
@@ -24,9 +24,9 @@
 </table>
 </form>
 
-<{if $wiwimod}>
-<h1><{$wiwimod.title}></h1>
-<{$wiwimod.body}><{/if}>
+<{if $swiki}>
+<h1><{$swiki.title}></h1>
+<{$swiki.body}><{/if}>
 
 <style>
 <!--
@@ -116,10 +116,10 @@ padding-right:10px;
 		if (firingobj.className=="menuitems"||ns6&&firingobj.parentNode.className=="menuitems"){
 			if (ns6&&firingobj.parentNode.className=="menuitems") 
 				firingobj=firingobj.parentNode
-			document.forms.wiwimodform.editor.value=firingobj.getAttribute("value"); 
-			document.forms.wiwimodform.editoptions.value=firingobj.getAttribute("options"); 
-			document.forms.wiwimodform.op.value="preview";
-			document.forms.wiwimodform.submit.click();
+			document.forms.swikiform.editor.value=firingobj.getAttribute("value");
+			document.forms.swikiform.editoptions.value=firingobj.getAttribute("options");
+			document.forms.swikiform.op.value="preview";
+			document.forms.swikiform.submit.click();
 		}
 	}
 

@@ -1,22 +1,22 @@
 <?php
 /**
- * Portuguese Language definitions used during installation of Wiwimod
+ * Portuguese Language definitions used during installation of SimplyWiki
  * 
- * @package Wiwimod
+ * @package SimplyWiki
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  * Translation: GibaPhp - http://br.impresscms.org
  */
- /** include the modinfo constants, so we don't have to define them again (specifically, _MI_WIWIMOD_WIWIHOME) */
+ /** include the modinfo constants, so we don't have to define them again (specifically, _MI_SWIKI_HOME) */
  include_once 'modinfo.php';
  
- define('_MI_WIWIMOD_PROFILE1','Conteúdo Aberto');
- define('_MI_WIWIMOD_PROFILE2','Conteúdo Público');
- define('_MI_WIWIMOD_PROFILE3','Conteúdo Privado');
- define('_MI_WIWIMOD_WIWIHOME_TITLE','Sua página principal no Wiwi');
+ define('_MI_SWIKI_PROFILE1','Conteúdo Aberto');
+ define('_MI_SWIKI_PROFILE2','Conteúdo Público');
+ define('_MI_SWIKI_PROFILE3','Conteúdo Privado');
+ define('_MI_SWIKI_HOME_TITLE','Sua página principal no SimplyWiki');
 
- define('_MI_WIWIMOD_WIWIHOME_TEXT',
+ define('_MI_SWIKI_HOME_TEXT',
      "<p><table border=\'0\'>
      <tbody><tr><td>
      <p>Bemvindo;<br />Este é a página padrão deste Wiki. Sinta-se livre para editar e modificar esta página. 

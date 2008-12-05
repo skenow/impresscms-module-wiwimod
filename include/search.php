@@ -1,8 +1,8 @@
 <?php
 /**
- * Search function for wiwimod
+ * Search function for SimplyWiki
  * 
- * @package Wiwimod
+ * @package SimplyWiki
  * @author Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -10,8 +10,8 @@
  */ 
 if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 
-$wiwidir = basename( dirname( dirname( __FILE__ ) ) );
-include_once XOOPS_ROOT_PATH.'/modules/'. $wiwidir .'/class/wiwiProfile.class.php';
+$wikiModDir = basename( dirname( dirname( __FILE__ ) ) );
+include_once XOOPS_ROOT_PATH.'/modules/'. $wikiModDir .'/class/wiwiProfile.class.php';
 
 function wiwimod_search($queryarray, $andor, $limit, $offset, $userid)
 {

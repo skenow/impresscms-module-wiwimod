@@ -1,8 +1,8 @@
 <?php
 /**
- * Main index page of wiwimod - displays all pages on the user side
+ * Main index page of SimplyWiki - displays all pages on the user side
  * 
- * @package Wiwimod
+ * @package SimplyWiki
  * @author Xavier JIMENEZ
  * @author Gizmhail
  *
@@ -116,9 +116,9 @@ switch ($op) {
 		 *  save page modifications and redirect
 		 */
 		if ($pageObj->concurrentlySaved()) {
-			redirect_header('index.php?page='.urlencode($pageObj->keyword), 2, _MD_WIWI_EDITCONFLICT_MSG);
+			redirect_header('index.php?page='.urlencode($pageObj->keyword), 2, _MD_SWIKI_EDITCONFLICT_MSG);
 		} elseif (!$pageObj->canWrite()) {
-			redirect_header('index.php?page='.urlencode($pageObj->keyword), 2, _MD_WIWI_NOWRITEACCESS_MSG);
+			redirect_header('index.php?page='.urlencode($pageObj->keyword), 2, _MD_SWIKI_NOWRITEACCESS_MSG);
 		} else {
 			$success = ($op == 'insert') ? $pageObj->add() : $pageObj->save();
 
@@ -137,7 +137,7 @@ switch ($op) {
 				$notification_handler =& xoops_gethandler('notification');
 				$notification_handler->triggerEvent('page', $pageObj->pageid, 'page_modified', $tags);
 			}
-			redirect_header('index.php?page='.urlencode($pageObj->keyword), 2, ($success)?_MD_WIWI_DBUPDATED_MSG:_MD_WIWI_ERRORINSERT_MSG);
+			redirect_header('index.php?page='.urlencode($pageObj->keyword), 2, ($success)?_MD_SWIKI_DBUPDATED_MSG:_MD_SWIKI_ERRORINSERT_MSG);
 			echo 'index.php?page='.$pageObj->keyword;
 		}
 		exit();
@@ -150,7 +150,7 @@ switch ($op) {
 		//
 		if (!$pageObj->canWrite()) {
 			include_once XOOPS_ROOT_PATH.'/header.php';
-			echo "<br /><br /><center><table style='align:center; border: 1px solid gray; width:50%; background:#F0F0F0'; ><tr><td align='center'><br />"._MD_WIWI_PAGENOTFOUND_MSG."<br /><br /></td></tr></table><br /><br /><input type='button' value="._CANCEL." onclick='history.back();'></center>";
+			echo "<br /><br /><center><table style='align:center; border: 1px solid gray; width:50%; background:#F0F0F0'; ><tr><td align='center'><br />"._MD_SWIKI_PAGENOTFOUND_MSG."<br /><br /></td></tr></table><br /><br /><input type='button' value="._CANCEL." onclick='history.back();'></center>";
 			include_once XOOPS_ROOT_PATH.'/footer.php';
 			break;
 		}
@@ -167,7 +167,7 @@ switch ($op) {
 			$pageObj->title = $myts->stripSlashesGPC($pageObj->title);
 			$pageObj->body = $myts->stripSlashesGPC($pageObj->body);
 
-			$xoopsTpl->assign('wiwimod', array(
+			$xoopsTpl->assign('swiki', array(
 				'keyword' => $pageObj->keyword, 
 				'title' => $pageObj->title, 
 				'body' => $pageObj->render()));
@@ -176,7 +176,7 @@ switch ($op) {
 		/*
 		 * Build form
 		 */
-		$form = new XoopsThemeForm(_MD_WIWI_EDIT_TXT.': '.$page, 'wiwimodform', 'index.php');
+		$form = new XoopsThemeForm(_MD_SWIKI_EDIT_TXT.': '.$page, 'swikiform', 'index.php');
 		$btn_tray = new XoopsFormElementTray('', ' ');
 	
 		$form->addElement(new XoopsFormHidden('op', 'insert'));
@@ -186,7 +186,7 @@ switch ($op) {
 		$form->addElement(new XoopsFormHidden('uid', ($xoopsUser)?$xoopsUser->getVar('uid'):0));
 		$form->addElement(new XoopsFormHidden('lastmodified', $pageObj->lastmodified));
 
-		$form->addElement(new XoopsFormText(_MD_WIWI_TITLE_FLD, 'title', 80, 250, $myts->htmlSpecialChars($pageObj->title)));
+		$form->addElement(new XoopsFormText(_MD_SWIKI_TITLE_FLD, 'title', 80, 250, $myts->htmlSpecialChars($pageObj->title)));
 
 		$edArr = Array();
 		foreach (getAvailableEditors() as $ed) {
@@ -201,7 +201,7 @@ switch ($op) {
 		switch ($editor) {
 			default:
 			case 0 : // standard xoops
-				$t_area = new XoopsFormDhtmlTextArea(_MD_WIWI_BODY_FLD, 'body', $pageObj->body, '30', '70');
+				$t_area = new XoopsFormDhtmlTextArea(_MD_SWIKI_BODY_FLD, 'body', $pageObj->body, '30', '70');
 
 				break;
 			case 1 : // XoopsEditor
@@ -209,7 +209,7 @@ switch ($op) {
 				$editorhandler = new XoopsEditorHandler();
 				$editor_name = ($editOptions != '') ? $editOptions : $xoopsModuleConfig['XoopsEditor'];
 
-				$options['caption'] = _MD_WIWI_BODY_FLD;
+				$options['caption'] = _MD_SWIKI_BODY_FLD;
 				$options['name'] ='body';
 				$options['value'] = $pageObj->body;
 				$options['rows'] = 25;
@@ -230,37 +230,37 @@ switch ($op) {
 
 			case 2 : // Spaw class
 				include XOOPS_ROOT_PATH.'/class/spaw/formspaw.php';
-				$t_area = new XoopsFormSpaw(_MD_WIWI_BODY_FLD, 'body', $pageObj->body, '100%', '400px');
+				$t_area = new XoopsFormSpaw(_MD_SWIKI_BODY_FLD, 'body', $pageObj->body, '100%', '400px');
 				break;
 			case 3 : // HTMLArea class
 				include XOOPS_ROOT_PATH.'/class/htmlarea/formhtmlarea.php';
-				$t_area = new XoopsFormHtmlarea(_MD_WIWI_BODY_FLD, 'body', $pageObj->body, '100%', '400px');
+				$t_area = new XoopsFormHtmlarea(_MD_SWIKI_BODY_FLD, 'body', $pageObj->body, '100%', '400px');
 				break;
 			case 4 : // Koivi
 				include XOOPS_ROOT_PATH . '/class/wysiwyg/formwysiwygtextarea.php';
-				$t_area  = new XoopsFormWysiwygTextArea( _MD_WIWI_BODY_FLD, 'body', $pageObj->body , '100%', '400px','');
+				$t_area  = new XoopsFormWysiwygTextArea( _MD_SWIKI_BODY_FLD, 'body', $pageObj->body , '100%', '400px','');
 				break;
 			case 5 : // FCK class
 				include XOOPS_ROOT_PATH.'/class/fckeditor/formfckeditor.php';
-				$t_area = new XoopsFormFckeditor(_MD_WIWI_BODY_FLD, 'body', $pageObj->body, '100%', '400px');
+				$t_area = new XoopsFormFckeditor(_MD_SWIKI_BODY_FLD, 'body', $pageObj->body, '100%', '400px');
 				break;
 		}
 		$form->addElement($t_area);
 
-		$form->addElement(new XoopsFormText(_MD_WIWI_PARENT_FLD, 'parent', 15, 100, $myts->htmlSpecialChars($pageObj->parent))); 
+		$form->addElement(new XoopsFormText(_MD_SWIKI_PARENT_FLD, 'parent', 15, 100, $myts->htmlSpecialChars($pageObj->parent))); 
 
 		if ($pageObj->canAdministrate()) {
 			$prflst = $pageObj->profile->getAdminProfiles($xoopsUser);
-			$prfsel = new XoopsFormSelect(_MD_WIWI_PROFILE_FLD, 'prid',$pageObj->profile->prid);
+			$prfsel = new XoopsFormSelect(_MD_SWIKI_PROFILE_FLD, 'prid',$pageObj->profile->prid);
 			$prfsel->addOptionArray($prflst);
 			$form->addElement($prfsel);
 		} else {
-			$form->addElement(new XoopsFormLabel(_MD_WIWI_PROFILE_FLD,$pageObj->profile->name));
+			$form->addElement(new XoopsFormLabel(_MD_SWIKI_PROFILE_FLD,$pageObj->profile->name));
 			$form->addElement(new XoopsFormHidden('prid', $pageObj->profile->prid));
 		}
 		
-		$form->addElement(new XoopsFormText(_MD_WIWI_VISIBLE_FLD, 'visible', 3, 3, $pageObj->visible));
-		$form->addElement( new XoopsFormText(_MD_WIWI_CONTEXTBLOCK_FLD,'contextBlock',15,100,$myts->htmlSpecialChars($pageObj->contextBlock)));
+		$form->addElement(new XoopsFormText(_MD_SWIKI_VISIBLE_FLD, 'visible', 3, 3, $pageObj->visible));
+		$form->addElement( new XoopsFormText(_MD_SWIKI_CONTEXTBLOCK_FLD,'contextBlock',15,100,$myts->htmlSpecialChars($pageObj->contextBlock)));
 		/* Tag module support (Gizmhail) */
 		if(isTagModuleActivated())
 		{
@@ -269,22 +269,22 @@ switch ($op) {
 		}
 		/* Tag module support end*/
 
-		$form->addElement( new XoopsFormText(_MI_WIWIMOD_REVISION_SUMMARY,'summary',60,255,''));
-/*		$allowComments_checkbox =	 new XoopsFormCheckBox(_MI_WIWIMOD_ALLOW_COMMENTS, 'allowComments',);
+		$form->addElement( new XoopsFormText(_MI_SWIKI_REVISION_SUMMARY,'summary',60,255,''));
+/*		$allowComments_checkbox =	 new XoopsFormCheckBox(_MI_SWIKI_ALLOW_COMMENTS, 'allowComments',);
 		$allowComments_checkbox->addOption ($allowComments, $pageObj->allowComments);
 		$option_tray = new XoopsFormElementTray('Options','<br />');
 		$option_tray->addElement($allowComments_checkbox);
 		$form->addElement($allowComments_checkbox);*/
 
 		$preview_btn = new XoopsFormButton('', 'preview', _PREVIEW, 'button');
-        $preview_btn->setExtra("onclick='document.forms.wiwimodform.op.value=\"preview\"; document.forms.wiwimodform.submit.click();'");
+        $preview_btn->setExtra("onclick='document.forms.swikiform.op.value=\"preview\"; document.forms.swikiform.submit.click();'");
         $btn_tray->addElement($preview_btn);
 
-		$btn_tray->addElement(new XoopsFormButton('', 'submit', _MD_WIWI_SUBMITREVISION_BTN, 'submit'));
+		$btn_tray->addElement(new XoopsFormButton('', 'submit', _MD_SWIKI_SUBMITREVISION_BTN, 'submit'));
 
 		if ($pageObj->id > 0) {
-			$quietsave_btn = new XoopsFormButton('', 'quietsave', _MD_WIWI_QUIETSAVE_BTN, 'button');
-			$quietsave_btn->setExtra("onclick='document.forms.wiwimodform.op.value=\"quietsave\"; document.forms.wiwimodform.submit.click();'");
+			$quietsave_btn = new XoopsFormButton('', 'quietsave', _MD_SWIKI_QUIETSAVE_BTN, 'button');
+			$quietsave_btn->setExtra("onclick='document.forms.swikiform.op.value=\"quietsave\"; document.forms.swikiform.submit.click();'");
 			$btn_tray->addElement($quietsave_btn);
 		}
 
@@ -305,7 +305,7 @@ switch ($op) {
 
 		$pageObj = new wiwiRevision($page, (isset($id) ? $id : 0));
 		if ($op == 'history') {
-			$xoopsTpl->assign('wiwimod', array(
+			$xoopsTpl->assign('swiki', array(
 				'keyword' => $pageObj->keyword, 
 				'encodedurl' => $pageObj->encode($pageObj->keyword),
 				'revid' => $pageObj->id,
@@ -314,7 +314,7 @@ switch ($op) {
 				));
 		} else {
 			$pageObj->diff($bodyDiff, $titleDiff);
-			$xoopsTpl->assign('wiwimod', array(
+			$xoopsTpl->assign('swiki', array(
 				'keyword' => $pageObj->keyword, 
 				'encodedurl' => $pageObj->encode($pageObj->keyword),
 				'revid' => $pageObj->id,
@@ -342,7 +342,7 @@ switch ($op) {
 		$pageObj->body = addslashes($restoredRevision->body);
 		$pageObj->contextBlock = $restoredRevision->contextBlock;
 		$success = $pageObj->add();
-		redirect_header('index.php?page='.$pageObj->keyword.'&amp;op=history', 2, ($success)?_MD_WIWI_DBUPDATED_MSG:_MD_WIWI_ERRORINSERT_MSG);
+		redirect_header('index.php?page='.$pageObj->keyword.'&amp;op=history', 2, ($success)?_MD_SWIKI_DBUPDATED_MSG:_MD_SWIKI_ERRORINSERT_MSG);
 		break;
 
 	default:
@@ -373,7 +373,7 @@ switch ($op) {
         /* End modification to count visits */
         
 		} else {
-		    $pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>"._MD_WIWI_NOREADACCESS_MSG."</td></tr></table></center><br /><br />";
+		    $pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>"._MD_SWIKI_NOREADACCESS_MSG."</td></tr></table></center><br /><br />";
 		}
 
 		//
@@ -401,7 +401,7 @@ switch ($op) {
 		}	
 		/* Tag module support end*/
 
-		$xoopsTpl->assign('wiwimod', array(
+		$xoopsTpl->assign('swiki', array(
 			'keyword' => $pageObj->keyword, 
 			'encodedurl' => $pageObj->encode($pageObj->keyword),
 			'title' => $pageObj->title, 

@@ -1,8 +1,8 @@
 <?php
 /**
- * Main admin page for wiwimod
+ * Main admin page for SimplyWiki
  * 
- * @package Wiwimod
+ * @package SimplyWiki
  * @author Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -86,7 +86,7 @@ if ($admintest != 0) {
 }
 if (false != $error) {
 	xoops_cp_header();
-	echo '<h4>'._AM_WIWI_SYS_CFG.'</h4>';
+	echo '<h4>'._AM_SWIKI_SYS_CFG.'</h4>';
 	echo '<table class="outer" cellpadding="4" cellspacing="1">';
 	echo '<tr>';
 	$groups = $xoopsUser->getGroups();

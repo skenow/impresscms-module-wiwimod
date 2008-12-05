@@ -1,21 +1,21 @@
 <?php
 /**
- * Language definitions used during installation of Wiwimod
+ * Language definitions used during installation of SimplyWiki
  * 
- * @package Wiwimod
+ * @package SimplyWiki
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
- /** include the modinfo constants, so we don't have to define them again (specifically, _MI_WIWIMOD_WIWIHOME) */
+ /** include the modinfo constants, so we don't have to define them again (specifically, _MI_SWIKI_HOME) */
  include_once 'modinfo.php';
 
- define('_MI_WIWIMOD_PROFILE1','محتوای آزاد');
- define('_MI_WIWIMOD_PROFILE2','محتوای عمومی');
- define('_MI_WIWIMOD_PROFILE3','محتوای خصوصی'); 
- define('_MI_WIWIMOD_WIWIHOME_TITLE','صفحه‌ی آغاز ویوی');
+ define('_MI_SWIKI_PROFILE1','محتوای آزاد');
+ define('_MI_SWIKI_PROFILE2','محتوای عمومی');
+ define('_MI_SWIKI_PROFILE3','محتوای خصوصی'); 
+ define('_MI_SWIKI_HOME_TITLE','صفحه‌ی آغاز ویوی');
 
- define('_MI_WIWIMOD_WIWIHOME_TEXT',
+ define('_MI_SWIKI_HOME_TEXT',
      "<p><table border=\'0\'>
      <tbody><tr><td>
      <p>خوش آمدید؛<br />این صفحه‌ی پیشفرض ویوی می‌باشد. شما می‌تانید با خیال راحت این را ویرایش کنید و تغییر دهید. 

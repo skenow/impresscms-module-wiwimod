@@ -11,9 +11,9 @@
  *
  */
 
-define('_MB_WIWI_WIWIHOME',"ущмЕ²&#1740; гуА&#1740; Ф&#1740;Ф&#1740;");
-define('_MB_WIWI_PAGENOTFOUND_MSG',"<br />г&#1740;Д ущмЕ оя │г&#1740;░гЕ огоЕ ФлФо Догяо<br />");
-define('_MB_WIWI_NOREADACCESS_MSG',"<br /><h4>хг зяж │Фрт║ осйяс&#1740; ЦФяо Д&#1740;гр яг Догя&#1740;о</h4><br />");
-define('_MB_WIWI_NUM_DISP_DESC','йзого ЦФгяо оя хАФ≤');
-define('_MB_WIWI_SHOWPAGE_DESC','ущмгй чгхА ДЦг&#1740;т');
+define('_MB_SWIKI_HOME',"ущмЕ²&#1740; гуА&#1740; Ф&#1740;Ф&#1740;");
+define('_MB_SWIKI_PAGENOTFOUND_MSG',"<br />г&#1740;Д ущмЕ оя │г&#1740;░гЕ огоЕ ФлФо Догяо<br />");
+define('_MB_SWIKI_NOREADACCESS_MSG',"<br /><h4>хг зяж │Фрт║ осйяс&#1740; ЦФяо Д&#1740;гр яг Догя&#1740;о</h4><br />");
+define('_MB_SWIKI_NUM_DISP_DESC','йзого ЦФгяо оя хАФ≤');
+define('_MB_SWIKI_SHOWPAGE_DESC','ущмгй чгхА ДЦг&#1740;т');
 ?>

@@ -2,7 +2,7 @@
 /**
  * List of revisions for a page
  * 
- * @package Wiwimod
+ * @package SimplyWiki
  * @author Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -21,16 +21,16 @@
 
 	$page = stripslashes($page);
 
-	if ($page == '') redirect_header('javascript:history.go(-1)', 2, _AM_WIWI_NOPAGESPECIFIED_MSG);
+	if ($page == '') redirect_header('javascript:history.go(-1)', 2, _AM_SWIKI_NOPAGESPECIFIED_MSG);
 
 	$pageObj = new WiwiRevision(($id==0 ? $page : ''),$id);
 	$hist = $pageObj->history($limit, $starthist);
 	$maxcount = $pageObj->historyNum();
 
-	echo '<br><br><input type=button onclick="javascript:submitaction(\'op=listpages&startlist='.$startlist.'\');" value="'._AM_WIWI_LISTPAGES_BTN.'"><br><br>';
+	echo '<br><br><input type=button onclick="javascript:submitaction(\'op=listpages&startlist='.$startlist.'\');" value="'._AM_SWIKI_LISTPAGES_BTN.'"><br><br>';
 	echo '<style>tr.highlitedrevision td {background-color: #FFCC66; padding: 5px;}</style>';
 	echo '<table border="0" cellpadding="0" cellspacing="1" width="100%" class="outer">
-		<tr class="head"><td></td><td><b>'._MD_WIWI_TITLE_COL.'</b></td><td width="20%"><b>'._MD_WIWI_MODIFIED_COL.'</b></td><td width="10%"><b>'._MD_WIWI_AUTHOR_COL.'</b></td><td width="30%"><b>'._MD_WIWI_ACTION_COL.'</b></td></tr>';
+		<tr class="head"><td></td><td><b>'._MD_SWIKI_TITLE_COL.'</b></td><td width="20%"><b>'._MD_SWIKI_MODIFIED_COL.'</b></td><td width="10%"><b>'._MD_SWIKI_AUTHOR_COL.'</b></td><td width="30%"><b>'._MD_SWIKI_ACTION_COL.'</b></td></tr>';
 
 	foreach ($hist as $i=>$rev) {
 		$encodedKeyword = $pageObj->encode($rev['keyword']);
@@ -40,7 +40,7 @@
 		echo '<td>'.formatTimestamp( strtotime($rev['lastmodified']), _MEDIUMDATESTRING ).'</td>';
 		echo '<td>'.getUserName($rev['u_id']).'</td>';
 		
-		echo '<td><a href="#" onclick="javascript:submitaction(\'page='.$encodedKeyword.'&op=history&id='.$rev['id'].'\');">'._MD_WIWI_VIEW_BTN.'</a> | <a href="#" onclick="javascript:submitaction(\'page='.$encodedKeyword.'&op=diff&id='.$rev['id'].'\');">'._MD_WIWI_COMPARE_BTN.'</a> | <a href="javascript:submitaction(\'op=restore&id='.$rev['id'].'\');">'._MD_WIWI_RESTORE_BTN.'</a> | <a href="javascript:submitaction(\'page='.urlencode($encodedKeyword).'&amp;op=fix&amp;id='.$rev['id'].'\');">'._MD_WIWI_FIX_BTN.'</a></td></tr>';
+		echo '<td><a href="#" onclick="javascript:submitaction(\'page='.$encodedKeyword.'&op=history&id='.$rev['id'].'\');">'._MD_SWIKI_VIEW_BTN.'</a> | <a href="#" onclick="javascript:submitaction(\'page='.$encodedKeyword.'&op=diff&id='.$rev['id'].'\');">'._MD_SWIKI_COMPARE_BTN.'</a> | <a href="javascript:submitaction(\'op=restore&id='.$rev['id'].'\');">'._MD_SWIKI_RESTORE_BTN.'</a> | <a href="javascript:submitaction(\'page='.urlencode($encodedKeyword).'&amp;op=fix&amp;id='.$rev['id'].'\');">'._MD_SWIKI_FIX_BTN.'</a></td></tr>';
 	}
 	echo '</table>';
 
@@ -53,10 +53,10 @@
 	echo '<hr />';
 	echo "<br /><fieldset><legend style='font-weight: bold; color: #900;'>";
 	if ($op == 'history') {
-		echo _MD_WIWI_BODY_TXT.' :</legend><br />';
+		echo _MD_SWIKI_BODY_TXT.' :</legend><br />';
 		echo $pageObj->render();
 	} else {
-		echo _MD_WIWI_DIFF_TXT.' :</legend><br />';
+		echo _MD_SWIKI_DIFF_TXT.' :</legend><br />';
 		$bodyDiff = $titleDiff = '';
 		$pageObj->diff($bodyDiff, $titleDiff);
 		echo '<h4>'.$titleDiff.'</h4>';

@@ -2,7 +2,7 @@
 /**
  * update script from previous versions
  * 
- * @package Wiwimod
+ * @package SimplyWiki
  * @author Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -105,30 +105,30 @@ if (!$xoopsDB->queryF($sql)) {
 
 
 /*
- *  Create table wiwimod_profiles (v0.7)
+ *  Create table wiki_profiles (v0.7)
  */
 if ($errno == 0) {
-	$sql = "CREATE TABLE ".$xoopsDB->prefix("wiwimod_profiles")." (prid integer not null auto_increment, prname varchar(20) not null default '', commentslevel integer default 0, PRIMARY KEY (prid) ) TYPE=MyISAM";
+	$sql = "CREATE TABLE ".$xoopsDB->prefix("wiki_profiles")." (prid integer not null auto_increment, prname varchar(20) not null default '', commentslevel integer default 0, PRIMARY KEY (prid) ) TYPE=MyISAM";
 	if (!$xoopsDB->queryF($sql)) {
 		$errno = $xoopsDB->errno();
 		if ($errno == 1050) $errno = 0;   //-- Table already exists 
 		if ($errno != 0) $errorstr .= $errno." : ".$xoopsDB->error()."<br>";
 	} else {
-		$resultStr .= "table '".$xoopsDB->prefix("wiwimod_profiles")."' created.<BR />";
+		$resultStr .= "table '".$xoopsDB->prefix("wiki_profiles")."' created.<BR />";
 	}
 }
 
 /*
- *  Create table wiwimod_prof_groups (v0.7)
+ *  Create table wiki_prof_groups (v0.7)
  */
 if ($errno == 0) {
-	$sql = "CREATE TABLE ".$xoopsDB->prefix("wiwimod_prof_groups")." (prid integer, gid integer, priv smallint )  TYPE=MyISAM";
+	$sql = "CREATE TABLE ".$xoopsDB->prefix("wiki_prof_groups")." (prid integer, gid integer, priv smallint )  TYPE=MyISAM";
 	if (!$xoopsDB->queryF($sql)) {
 		$errno = $xoopsDB->errno();
 		if ($errno == 1050) $errno = 0;   //-- Table already exists 
 		if ($errno != 0) $errorstr .= $errno." : ".$xoopsDB->error()."<br>";
 	} else {
-		$resultStr .= "table '".$xoopsDB->prefix("wiwimod_prof_groups")."' created.<BR />";
+		$resultStr .= "table '".$xoopsDB->prefix("wiki_prof_groups")."' created.<BR />";
 	}
 }
 
@@ -137,7 +137,7 @@ if ($errno == 0) {
  * field historylevel (v0.7.1)
  */
 if ($errno == 0) {
-	$sql = "ALTER TABLE ".$xoopsDB->prefix("wiwimod_profiles")." ADD (historylevel integer default 0)";
+	$sql = "ALTER TABLE ".$xoopsDB->prefix("wiki_profiles")." ADD (historylevel integer default 0)";
 	if (!$xoopsDB->queryF($sql)) {
 		$errno = $xoopsDB->errno();
 		if ($errno == 1060) $errno = 0;   //-- duplicate column : the column has already been created
@@ -147,7 +147,7 @@ if ($errno == 0) {
 	}
 }
 
-//$sql = "DROP TABLE ".$xoopsDB->prefix("wiwimod_profiles");
+//$sql = "DROP TABLE ".$xoopsDB->prefix("wiki_profiles");
 //$xoopsDB->queryF($sql);
 
 

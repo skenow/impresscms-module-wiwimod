@@ -12,17 +12,18 @@ Added
 Fixed
 
 Improved
-* DB structure: split wiwimod table into wiwimod_pages and wiwimod_revisions. Overall DB size is reduced while the amount of information is increased
+* DB structure: split wiwimod table into wiki_pages and wiki_revisions. Overall DB size is reduced while the amount of information is increased
 * Code layout of the parser - thanks to work found in 0.8.9 beta release (Gizhmail/Xavier/others)
 * Size of body field increased to mediumtext, allowing for larger pages
+* All language constants now reflect SimplyWiki naming
+* Added page title as 2nd sort field for TOC
 
 Language additions
 * main.php
-  + define('_MI_WIWIMOD_REVISION_SUMMARY', 'Revision Summary');
-  + define('_MI_WIWIMOD_ALLOW_COMMENTS','Allow Comments');
-  + define('_MD_WIWI_ADDPAGE_BTN','Add Page');
-  + define('_MD_WIWI_ADDPAGE','Create a New Page');
-
+  + define('_MI_SWIKI_REVISION_SUMMARY', 'Revision Summary');
+  + define('_MI_SWIKI_ALLOW_COMMENTS','Allow Comments');
+  + define('_MD_SWIKI_ADDPAGE_BTN','Add Page');
+  + define('_MD_SWIKI_ADDPAGE','Create a New Page');
 
 * update.php (new file)
   
@@ -104,9 +105,9 @@ Language additions
   + define('_MI_WIWIMOD_AUTHOR_WORD','<h4>About Wiwi 0.8.3</h4><br />Wiwi is GPL software ; visit Wiwi home page at <a href="http://www.zonatim.com/modules/wiwimod?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> to support or get help.<br /><br />If you\'ve just migrated from an older Wiwi version (0.7.1 or less), please click here : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
 
 * include/oninstall.inc.php (constants in language/<language>/install.php) (new)
-  + define('_MI_WIWIMOD_PROFILE1','Open Content');
-  + define('_MI_WIWIMOD_PROFILE2','Public Content');
-  + define('_MI_WIWIMOD_PROFILE3','Private Content');
+  + define('_MI_wiki_profile1','Open Content');
+  + define('_MI_wiki_profile2','Public Content');
+  + define('_MI_wiki_profile3','Private Content');
   + define('_MI_WIWIMOD_WIWIHOME_TITLE','Your Wiwi home page');
   + define('_MI_WIWIMOD_WIWIHOME_TEXT','<p>\r\n<table border=\'0\'>\r\n<tbody>\r\n<tr>\r\n<td>\r\n<p>Welcome;<br />This is Wiwi\'s default home page. Feel free to edit and modify it. To create new pages, type in anywhere a page name and surround it with double square brackets ( [[ ). When you save this page, the brackets will be replaced by a link to your new page.</p>\r\n<p>Check <a href=\'manual.html\' target=_blank>the manual</a> for an in depth view of editing features.</p></td>\r\n<td><img src=\'images/wiwilogo.gif\' /></td></tr></tbody></table></p>\r\n<p>\r\n<table cellspacing=\'5\' cellpadding=\'5\' width=\'100%\' border=\'0\'>\r\n<tbody>\r\n<tr>\r\n<td bgcolor=\'#e4e4e4\'>Pages index</td>\r\n<td bgcolor=\'#e4e4e4\'>Recently modified pages</td></tr>\r\n<tr>\r\n<td bgcolor=\'#f6f6f6\'>&lt;[PageIndex]&gt;</td>\r\n<td bgcolor=\'#f6f6f6\'>&lt;[RecentChanges]&gt;</td></tr></tbody></table><br /><br /></p>');
 

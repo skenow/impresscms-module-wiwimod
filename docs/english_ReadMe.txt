@@ -96,7 +96,7 @@ v0.8.2 :
 	NOTICE : the former [[relative_url title]] tag does not work any more (usually used as [[?page=MyPage title]])
 - enhancement : modified <[page index]> to show page titles instead of page names (shows page name if no title)
 - enhancement : added portuguese (brazilian) locale (thanks to Rafael Sahb) ; updated nederlands locale (thanks to Shine)
-- enhancement : creates a default WiwiHome page at install time, with some kick-start content.
+- enhancement : creates a default HomePage page at install time, with some kick-start content.
 
 - bugfix : while the "preferences" tab of wiwi admin was active, standard xoops admin menus were corrupted
 - bugfix : added proper handling of &lt; and < in wiki parser (<PageIndex> didn't work on some configs)

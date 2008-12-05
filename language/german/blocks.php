@@ -11,9 +11,9 @@
  *
  */
 
-define('_MB_WIWI_WIWIHOME',"WiwiHome");
-define('_MB_WIWI_PAGENOTFOUND_MSG',"<br />Die Seite existiert bisher nicht.<br />");
-define('_MB_WIWI_NOREADACCESS_MSG',"<br /><h4>Entschuldigung, die Ansicht dieser Seite erfordert weitergehende Benutzerrechte</h4><br />");
-define('_MB_WIWI_NUM_DISP_DESC','Number of items to display');
-define('_MB_WIWI_SHOWPAGE_DESC','Page to display');
+define('_MB_SWIKI_WIWIHOME',"HomePage");
+define('_MB_SWIKI_PAGENOTFOUND_MSG',"<br />Die Seite existiert bisher nicht.<br />");
+define('_MB_SWIKI_NOREADACCESS_MSG',"<br /><h4>Entschuldigung, die Ansicht dieser Seite erfordert weitergehende Benutzerrechte</h4><br />");
+define('_MB_SWIKI_NUM_DISP_DESC','Number of items to display');
+define('_MB_SWIKI_SHOWPAGE_DESC','Page to display');
 ?>

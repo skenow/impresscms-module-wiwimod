@@ -4,7 +4,7 @@
  * 
  * Page selection is done within block administration (TODO)
  * if the reader has modification privilege, shows the "edit" button (TODO) >> see bug
- * @package Wiwimod
+ * @package SimplyWiki
  * @author Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -13,25 +13,25 @@
 
 //  Bugs :	- language constants aren't initialized...
 
-$wiwidir = basename(dirname(dirname( __FILE__ )));
-include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/header.php';
-include_once XOOPS_ROOT_PATH.'/modules/' . $wiwidir . '/class/wiwiRevision.class.php';
+$wikiModDir = basename(dirname(dirname( __FILE__ )));
+include_once XOOPS_ROOT_PATH.'/modules/' . $wikiModDir . '/header.php';
+include_once XOOPS_ROOT_PATH.'/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
 function wiwimod_showpage ($options) {
 	global $xoopsDB, $xoopsModuleConfig, $xoopsUser, $myts;
-	$wiwidir = basename(dirname(dirname( __FILE__ ))) ;
+	$wikiModDir = basename(dirname(dirname( __FILE__ ))) ;
    
 	$block = array();
 	$pageObj = new wiwiRevision($options[0]);
 	if ($pageObj->id == 0) {
 		$block['notfound'] = true;
-		$block['_MD_WIWIMOD_PAGENOTFOUND'] = _MB_WIWI_PAGENOTFOUND_MSG;
+		$block['_MD_WIWIMOD_PAGENOTFOUND'] = _MB_SWIKI_PAGENOTFOUND_MSG;
 	} else {
 		$block['notfound'] = false;
 		if ($pageObj->canRead()) {
 			$pagecontent = $pageObj->render();
 		} else {
-			$pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>"._MB_WIWI_NOREADACCESS_MSG."</td></tr></table></center><br><br>";
+			$pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>"._MB_SWIKI_NOREADACCESS_MSG."</td></tr></table></center><br><br>";
 		}
 
 		//
@@ -55,14 +55,14 @@ function wiwimod_showpage ($options) {
 
 		$block['mayEdit'] = $pageObj->canWrite();
 		$block['EDIT'] = _EDIT;
-	$block['dirname'] = $wiwidir;
+	$block['dirname'] = $wikiModDir;
 	}
 	return $block;
 }
 
 function wiwimod_contextshow($options) {
 	global $xoopsDB, $xoopsModuleConfig, $xoopsUser, $myts;
-	$wiwidir = basename(dirname(dirname( __FILE__ ))) ;
+	$wikiModDir = basename(dirname(dirname( __FILE__ ))) ;
 	//
 	// Get content to display
 	//
@@ -71,10 +71,10 @@ function wiwimod_contextshow($options) {
 	$block = array();
 	if (preg_match("#\?page=([^&]+)#ie", htmlspecialchars($GLOBALS['xoopsRequestUri'], ENT_QUOTES),  $preg_res)) {
 		$page = urldecode($preg_res[1]);
-	} else $page=_MB_WIWI_WIWIHOME;
+	} else $page=_MB_SWIKI_HOME;
 
 	//$sql = 'SELECT contextBlock FROM '.$xoopsDB->prefix('wiwimod').' WHERE keyword="'.$page.'" ORDER BY id DESC LIMIT 1';
-	$sql = 'SELECT contextBlock FROM '.$xoopsDB->prefix('wiwimod_pages').' WHERE keyword="'.$page.'" ORDER BY pageid DESC LIMIT 1';
+	$sql = 'SELECT contextBlock FROM '.$xoopsDB->prefix('wiki_pages').' WHERE keyword="'.$page.'" ORDER BY pageid DESC LIMIT 1';
 	$result = $xoopsDB->query($sql);
 	list($sidePage) = $xoopsDB->fetchRow($result);
 	if ($sidePage != '') {
@@ -92,7 +92,7 @@ function wiwimod_contextshow($options) {
 			} else {
 				$block['keyword'] = $sidePage;
 				$block['title'] = '';
-				$block['body'] = _MB_WIWI_NOREADACCESS_MSG;
+				$block['body'] = _MB_SWIKI_NOREADACCESS_MSG;
 				$block['lastmodified'] = '';
 				$block['author'] = '';
 				$block['mayEdit'] = false;
@@ -100,13 +100,13 @@ function wiwimod_contextshow($options) {
 			}
 
 		}
-	$block['dirname'] = $wiwidir;
+	$block['dirname'] = $wikiModDir;
 	}
 	return $block;
 }
 
 function wiwimod_showpage_blockedit ($options) {
-    $form = _MB_WIWI_SHOWPAGE_DESC."&nbsp;:&nbsp;<input type='text' name='options[0]' value='".$options[0]."' />";
+    $form = _MB_SWIKI_SHOWPAGE_DESC."&nbsp;:&nbsp;<input type='text' name='options[0]' value='".$options[0]."' />";
 	return $form;
 
 }

@@ -1,8 +1,8 @@
 <?php
 /**
- * Block admin for wiwimod
+ * Block admin for SimplyWiki
  *  
- * @package Wiwimod
+ * @package SimplyWiki
  * @author Kazumi Ono (AKA onokazu) <http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/>
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
