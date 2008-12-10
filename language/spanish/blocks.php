@@ -10,11 +10,11 @@
  *  _MSG	: messages, alerts ...
  *
  */
-//Traducción por debianus
+//TraducciÃ³n por debianus
 
-define('_MB_SWIKI_HOME',"HomePage");
-define('_MB_SWIKI_PAGENOTFOUND_MSG',"<br>Esta página no existe en la base de datos.<br>");
-define('_MB_SWIKI_NOREADACCESS_MSG',"<br><h4>Lo sentimos: esta página tiene el acceso protegido.</h4><br>");
-define('_MB_SWIKI_NUM_DISP_DESC','Número de ítems a mostrar');
-define('_MB_SWIKI_SHOWPAGE_DESC','Página a mostrar');
+define('_MB_WIWI_HOME',"HomePage");
+define('_MB_WIWI_PAGENOTFOUND_MSG',"<br>Esta pÃ¡gina no existe en la base de datos.<br>");
+define('_MB_WIWI_NOREADACCESS_MSG',"<br><h4>Lo sentimos: esta pÃ¡gina tiene el acceso protegido.</h4><br>");
+define('_MB_WIWI_NUM_DISP_DESC','NÃºmero de items a mostrar');
+define('_MB_WIWI_SHOWPAGE_DESC','PÃ¡gina a mostrar');
 ?>
