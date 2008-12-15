@@ -17,6 +17,7 @@ Improved
 * Size of body field increased to mediumtext, allowing for larger pages
 * All language constants now reflect SimplyWiki naming
 * Added page title as 2nd sort field for TOC
+* Added rel='nofollow' to PDF link to prevent searchbots from indexing the PDF versions of the page
 
 Language additions
 * main.php

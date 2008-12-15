@@ -22,7 +22,7 @@
 </td><td align='<{$smarty.const._GLOBAL_RIGHT}>'>
 	<div style="text-align: <{$smarty.const._GLOBAL_RIGHT}>; padding: 3px; margin: 0px; color : #8090B1"><span style = "border-top: 1px solid #8090B1; padding: 3px; font-style:italic; font-size:small;" >
 	<{$smarty.const._MD_SWIKI_MODIFIED_TXT}> <{$swiki.lastmodified}> <{$smarty.const._MD_SWIKI_BY}> <span class="itemPoster"><{$swiki.author}></span></span>
-	<{if $swiki.allowPDF}> <a href="wiwipdf.php?page=<{$swiki.encodedurl}>" target="_blank"><img src="images/pdf.gif" align="middle" alt="" /></a>&nbsp;<{/if}>
+	<{if $swiki.allowPDF}> <a href="wiwipdf.php?page=<{$swiki.encodedurl}>" target="_blank" rel="nofollow"><img src="images/pdf.gif" align="middle" alt="" /></a>&nbsp;<{/if}>
 	<{if $swiki.showHistory}> <input type="button" onclick="self.location.href='index.php?page=<{$swiki.encodedurl}>&amp;op=history';" value="<{$smarty.const._MD_SWIKI_HISTORY_BTN}>" /><{/if}>
 	<{if $swiki.mayEdit}> <input type="button" onclick="self.location.href='index.php?page=<{$swiki.encodedurl}>&amp;op=edit';" value="<{$smarty.const._EDIT}>" /><{/if}></div>
 </td></tr>
