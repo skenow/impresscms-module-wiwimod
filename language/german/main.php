@@ -59,9 +59,11 @@ define('_MD_SWIKI_NOWRITEACCESS_MSG','<br><h4>Entschuldigung, Sie haben keine Be
 if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','HomePage'); }// Also need in modinfo.php
 define('_MI_SWIKI_404','IllegalName');
 
-// Added in version 1.0
+// Added in version 1.1
 define('_MI_SWIKI_REVISION_SUMMARY', 'Zusammenfassung der Änderung(en)');
 define('_MI_SWIKI_ALLOW_COMMENTS','Kommantare zulassen');
 define('_MD_SWIKI_ADDPAGE_BTN','Seite hinzufügen');
 define('_MD_SWIKI_ADDPAGE','Neue Seite erstellen');
+define('_MD_SWIKI_PDF_ERROR_MSG','Error creating PDF');
+define('_MD_SWIKI_NOPAGE_MSG','Could not create PDF - at least one of the pages did not exist');
 ?>

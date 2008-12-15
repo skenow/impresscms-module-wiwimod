@@ -3,7 +3,7 @@
  * Create PDF for a page
  * 
  * @package SimplyWiki
- * @author Xavier JIMENEZ
+ * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
@@ -67,7 +67,7 @@ function printPagesRecurr($page, &$pdf, $followLinks, &$retcode, &$printedPages)
 	}
 	$pageObj = new wiwiRevision($page);
 	if ($pageObj->id == 0) {
-		$retcode = _MD_WIWI_NOPAGE_MSG;
+		$retcode = _MD_SWIKI_NOPAGE_MSG;
 		return true;						// at least one page did'nt exist
 		}
 	if (!$pageObj->canRead()) {
@@ -75,7 +75,7 @@ function printPagesRecurr($page, &$pdf, $followLinks, &$retcode, &$printedPages)
 		return true;						// at least one page had restricted access
 		}
 	if (!printPage($pageObj, $pdf)) {
-		$retcode = _MD_WIWI_PDF_ERROR_MSG;
+		$retcode = _MD_SWIKI_PDF_ERROR_MSG;
 		return false;
 		}
 	$links = $pageObj->getLinks();

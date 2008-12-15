@@ -7,15 +7,15 @@
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
- /** include the modinfo constants, so we don't have to define them again (specifically, _MI_WIWIMOD_HOME) */
+ /** include the modinfo constants, so we don't have to define them again (specifically, _MI_SWIKI_HOME) */
  include_once 'modinfo.php';
 
- define('_MI_WIWIMOD_PROFILE1','Contenido público');
- define('_MI_WIWIMOD_PROFILE2','Contenido público2');
- define('_MI_WIWIMOD_PROFILE3','Contenido privado'); 
- define('_MI_WIWIMOD_HOME_TITLE','Inicio');
+ define('_MI_SWIKI_PROFILE1','Contenido público');
+ define('_MI_SWIKI_PROFILE2','Contenido público2');
+ define('_MI_SWIKI_PROFILE3','Contenido privado'); 
+ define('_MI_SWIKI_HOME_TITLE','Inicio');
 
- define('_MI_WIWIMOD_HOME_TEXT',
+ define('_MI_SWIKI_HOME_TEXT',
      "<p><table border=\'0\'>
      <tbody><tr><td>
      <p>Bienvenido;<br />Esta es la página predeterminada de inicio de SimplyWiki. Puede modificarla como desee. Para crear nuevas páginas, seleccione un nombre y colóquelo dentro de paréntesis de esta forma: ( [[ ). cuando guarda la página, los paréntesis serán cambiados por un enlace a su nueva página.</p>

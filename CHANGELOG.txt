@@ -24,6 +24,8 @@ Language additions
   + define('_MI_SWIKI_ALLOW_COMMENTS','Allow Comments');
   + define('_MD_SWIKI_ADDPAGE_BTN','Add Page');
   + define('_MD_SWIKI_ADDPAGE','Create a New Page');
+  + define('_MD_SWIKI_PDF_ERROR_MSG','Error creating PDF');
+  + define('_MD_SWIKI_NOPAGE_MSG','Could not create PDF - at least one of the pages did not exist');
 
 * update.php (new file)
   

@@ -60,9 +60,11 @@ define('_MD_SWIKI_NOWRITEACCESS_MSG','<br /><h4>Lamento, você não tem permiss�
 if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','HomePage');} // Also need in modinfo.php
 define('_MI_SWIKI_404','Nome Ilegal');
 
-// Added in version 1.0
+// Added in version 1.1
 define('_MI_SWIKI_REVISION_SUMMARY', 'Revision Summary');
 define('_MI_SWIKI_ALLOW_COMMENTS','Allow Comments');
 define('_MD_SWIKI_ADDPAGE_BTN','Add Page');
 define('_MD_SWIKI_ADDPAGE','Create a New Page');
+define('_MD_SWIKI_PDF_ERROR_MSG','Error creating PDF');
+define('_MD_SWIKI_NOPAGE_MSG','Could not create PDF - at least one of the pages did not exist');
 ?>
