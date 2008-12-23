@@ -3,7 +3,7 @@
  * Permissions manager for SimplyWiki
  * 
  * @package SimplyWiki
- * @author Xavier JIMENEZ
+ * @author Wiwimod: Xavier JIMENEZ
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
@@ -18,7 +18,7 @@ $op = $prid = $newprf = $profile = null;
 $allowed_get = array(
   'profile' => 'int',
   'newprf' => 'int');
-$clean_GET = wiwi_cleanVars ($_GET,$allowed_get);
+$clean_GET = swiki_cleanVars ($_GET,$allowed_get);
 extract($clean_GET);
 
 $allowed_postvars = array(
@@ -31,7 +31,7 @@ $allowed_postvars = array(
   'prf_historylevel' => 'int',
   'op' => 'string');
 if (!empty($_POST)) {
-     $clean_POST = wiwi_cleanVars($_POST, $allowed_postvars);
+     $clean_POST = swiki_cleanVars($_POST, $allowed_postvars);
      extract($clean_POST);
 }
 

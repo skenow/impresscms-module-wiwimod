@@ -3,7 +3,7 @@
  * Common functions for SimplyWiki
  * 
  * @package SimplyWiki
- * @author Xavier JIMENEZ
+ * @author Wiwimod: Xavier JIMENEZ
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id
  */ 
@@ -36,7 +36,7 @@ function getUserName($uid)
 }
 
 //ok >> rename to ??? , and check block access rights for current user.
-function wiwimod_getXoopsBlock ($blkname) {  // block title or id
+function swiki_getXoopsBlock ($blkname) {  // block title or id
 	global $xoopsUser;
 	global $xoopsDB;
   $wikiModDir = basename( dirname(  dirname( __FILE__ ) ) ) ;
@@ -89,9 +89,9 @@ function wiwimod_getXoopsBlock ($blkname) {  // block title or id
 }
 
 //ok >> rename to render_block
-function wiwiShowBlock ($blkname) {
+function swikiShowBlock ($blkname) {
   
-	$blk = wiwimod_getXoopsBlock($blkname);
+	$blk = swiki_getXoopsBlock($blkname);
 	return "<table><tr><td>".$blk['content']."</td></tr></table>";
 }
 
@@ -220,7 +220,7 @@ function isTagModuleActivated()
  * @return array Array of validated and sanitized variables
  */
  
- function wiwi_cleanVars ($input_var, $valid_vars) {
+ function swiki_cleanVars ($input_var, $valid_vars) {
  $clean_var = array();
  foreach ($valid_vars as $key=>$type){
   if ( empty($input_var[$key])) {

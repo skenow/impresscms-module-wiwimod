@@ -3,7 +3,7 @@
  * List of pages
  * 
  * @package SimplyWiki
- * @author Xavier JIMENEZ
+ * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
@@ -22,12 +22,12 @@ $allowed_postvars = array (
   'post_profile' => 'int',
   'post_selorderby' => 'plaintext',
   'post_selorderdir' => 'plaintext');
-$clean_POST = wiwi_cleanVars($_POST, $allowed_postvars);
+$clean_POST = swiki_cleanVars($_POST, $allowed_postvars);
 extract($clean_POST);
 
 $allowed_getvars = array (
   'startlist' => 'int');
-$clean_GET = wiwi_cleanVars($_GET, $allowed_getvars);
+$clean_GET = swiki_cleanVars($_GET, $allowed_getvars);
 extract($clean_GET);
 
 	$pgitemsnum = 15;  // numbre of items per result page.

@@ -59,7 +59,7 @@ define('_MI_SWIKI_BLOCK_RELATED_NAME','WikiSideContent');
 define('_MI_SWIKI_BLOCK_RELATED_DESC','Side block for extra content on Wiki pages');
 define('_MI_SWIKI_BLOCK_SHOWPAGE_NAME','WikiShowPage');
 define('_MI_SWIKI_BLOCK_SHOWPAGE_DESC','Show a wiki page');
-define('_MI_SWIKI_AUTHOR_WORD','<h4>Help About SimpyWiwi</h4><br />SimplyWiki is GPL software ; visit Wiwi home page at <a href="http://www.zonatim.com/modules/wiwimod?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> to support or get help.<br /><br />If you\'ve just migrated from an older Wiwi version (0.7.1 or less), please click here : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
+define('_MI_SWIKI_AUTHOR_WORD','<h4>Help About SimpyWiki</h4><br />SimplyWiki is GPL software ; visit Wiwi home page at <a href="http://www.zonatim.com/modules/wiwimod?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> to support or get help.<br /><br />If you\'ve just migrated from an older Wiwi version (0.7.1 or less), please click here : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
 define('_MI_SWIKI_DEFAULTPROFILE_DESC','Default profile assigned to new pages');
 if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','HomePage');}
 ?>

@@ -3,15 +3,15 @@
  * Revision class of SimplyWiki
  *
  * @package SimplyWiki
- * @author Xavier JIMENEZ
+ * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$
  */
 
 if (!defined('XOOPS_ROOT_PATH')&& !defined('ICMS_ROOT_PATH')) exit();
-if (!defined('_WIWIPAGE')) {
-define ('_WIWIPAGE', 1);
+if (!defined('_SWIKIPAGE')) {
+define ('_SWIKIPAGE', 1);
 $wikiModDir = basename(dirname( dirname(__FILE__)));
 $modversion['dirname'] = $wikiModDir;
 
@@ -35,7 +35,7 @@ class WiwiRevision {
   
   var $db;				// private usage;
   var $ts;				// private usage;
-  var $wiwiConfig;		// private usage : used to get SimplyWiki configs, even when called from other modules
+  var $swikiConfig;		// private usage : used to get SimplyWiki configs, even when called from other modules
   var $summary;           // revision summary
   var $views;                // number of times the page was viewed
   var $creator;  // creator of the page
@@ -61,9 +61,11 @@ class WiwiRevision {
 		$modhandler =& xoops_gethandler('module');
 		$config_handler =& xoops_gethandler('config');
 		$SimplyWiki = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));
-		$this->wiwiConfig =& $config_handler->getConfigsByCat(0, $SimplyWiki->getVar('mid'));
+		$this->swikiConfig =& $config_handler->getConfigsByCat(0, $SimplyWiki->getVar('mid'));
 
-		if (($page == '') && ($id == 0) && ($pageid == 0)) $page = _MI_SWIKI_HOME;
+		if (($page == '') && ($id == 0) && ($pageid == 0)) {
+            $page = $this->swikiConfig['TopPage'] == NULL ? _MI_SWIKI_HOME : $this->swikiConfig['TopPage'];
+		}
 
 		$this->keyword = $page;
 		$this->title = '';
@@ -309,22 +311,22 @@ class WiwiRevision {
             $replace[] = '<img src="\\1" alt="\\3" />';
       // CamelCase
 			$search[] = "#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#e";
-            $replace[] = '"$1".$this->render_wikiLink("$2" , "",'.$this->wiwiConfig['ShowTitles'].')';
+            $replace[] = '"$1".$this->render_wikiLink("$2" , "",'.$this->swikiConfig['ShowTitles'].')';
       // escaped CamelCase
 			$search[] = "#(^|\s|>)~(([A-Z][a-z]+){2,}\d*)\b#";
             $replace[] = '\\1\\2';
       // [[CamelCase title]]
 			$search[] = "#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#e";
-            $replace[] = '$this->render_wikiLink("$1" ,"$3", '.$this->wiwiConfig['ShowTitles'].')';
+            $replace[] = '$this->render_wikiLink("$1" ,"$3", '.$this->swikiConfig['ShowTitles'].')';
       // [[www.mysite.org title]] and [[<a ... /a> title]]
 			$search[] = "#\[\[(<a.*>)(.*)</a> (.+?)\]\]#i";
             $replace[] = '$1$3</a>';
       // [[free link | title]]
 			$search[] = "#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#e";
-            $replace[] = '$this->render_wikiLink("$1" ,"$2", '.$this->wiwiConfig['ShowTitles'].')';
+            $replace[] = '$this->render_wikiLink("$1" ,"$2", '.$this->swikiConfig['ShowTitles'].')';
       // [[free link]]
 			$search[] = "#\[\[(.+?)\]\]#e";
-            $replace[] = '$this->render_wikiLink("$1" ,"", '.$this->wiwiConfig['ShowTitles'].')';
+            $replace[] = '$this->render_wikiLink("$1" ,"", '.$this->swikiConfig['ShowTitles'].')';
 		//        "#([\w.-]+@[\w.-]+)(?![\w.]*(\">|<))#";
 		//        '<a href="mailto:\\1">\\1</a>';
 		// link with href ending with ?page=
@@ -394,7 +396,7 @@ class WiwiRevision {
             $replace[] = "";
 
 		if ($body == '') $body = $this->body;
-		if ($this->wiwiConfig['ShowCamelCase'] == 0) {  // remove CamelCase parsing.
+		if ($this->swikiConfig['ShowCamelCase'] == 0) {  // remove CamelCase parsing.
 			array_splice($search,8,3);
 			array_splice($replace,8,3);
 		}
@@ -470,7 +472,7 @@ class WiwiRevision {
 	}
 
 	function render_block($blkname) {
-		$blk = wiwimod_getXoopsBlock($blkname);
+		$blk = swiki_getXoopsBlock($blkname);
 		return "<table><tr><td>".$blk['content']."</td></tr></table>";
 	}
 
@@ -497,7 +499,7 @@ class WiwiRevision {
 		if ($this->keyword != '') {
 			$this->parentList_recurr($this->keyword, $parlist, $this->db);
 		}
-		foreach($parlist as $key=>$parent) $parlist[$key] = $this->render_wikiLink($parent, '', $this->wiwiConfig['ShowTitles']);
+		foreach($parlist as $key=>$parent) $parlist[$key] = $this->render_wikiLink($parent, '', $this->swikiConfig['ShowTitles']);
 		return array_reverse($parlist);
 	}
 

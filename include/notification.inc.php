@@ -3,14 +3,14 @@
  * Notification function for SimplyWiki
  * 
  * @package SimplyWiki
- * @author Xavier JIMENEZ
+ * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id
  */ 
 if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 
-function wiwimod_notify_iteminfo($category, $item_id)
+function swiki_notify_iteminfo($category, $item_id)
 {
 	global $xoopsModule, $xoopsModuleConfig, $xoopsConfig;
   $wikiModDir = basename(dirname(dirname(__FILE__)));

@@ -3,8 +3,8 @@
  * Main index page of SimplyWiki - displays all pages on the user side
  * 
  * @package SimplyWiki
- * @author Xavier JIMENEZ
- * @author Gizmhail
+ * @author Wiwimod: Xavier JIMENEZ
+ * @author Wiwimod: Gizmhail
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
@@ -47,7 +47,7 @@ $allowed_postvars = array (
      'item_tag'=>'plaintext',
      'summary' => 'plaintext',
      'allowComments' => 'plaintext');
-$clean_GET = wiwi_cleanVars($_GET, $allowed_getvars);
+$clean_GET = swiki_cleanVars($_GET, $allowed_getvars);
 extract($clean_GET);
 
 // valid values for op: preview, insert, quietsave, edit, history, diff, restore
@@ -55,7 +55,7 @@ $valid_ops = array('preview', 'insert', 'quietsave', 'edit', 'history', 'diff', 
 $op = (in_array($op, $valid_ops, true)) ? $op : '';
 
 if (!empty($_POST)) {
-     $clean_POST = wiwi_cleanVars($_POST, $allowed_postvars);
+     $clean_POST = swiki_cleanVars($_POST, $allowed_postvars);
      extract($clean_POST);
 }
 

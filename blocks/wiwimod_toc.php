@@ -3,7 +3,7 @@
  * This block displays the Wiwi index.
  * 
  * @package SimplyWiki
- * @author Xavier JIMENEZ
+ * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
@@ -13,7 +13,7 @@ $wikiModDir = basename( dirname( dirname( __FILE__ ) ) );
 include_once XOOPS_ROOT_PATH.'/modules/' . $wikiModDir . '/header.php';
 include_once XOOPS_ROOT_PATH.'/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
-function wiwimod_toc () {
+function swiki_toc () {
 	global $xoopsDB, $xoopsUser;
 	$wikiModDir = basename( dirname(  dirname( __FILE__ ) ) ) ;
 	$block = array();

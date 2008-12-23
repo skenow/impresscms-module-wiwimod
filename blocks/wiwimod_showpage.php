@@ -5,7 +5,7 @@
  * Page selection is done within block administration (TODO)
  * if the reader has modification privilege, shows the "edit" button (TODO) >> see bug
  * @package SimplyWiki
- * @author Xavier JIMENEZ
+ * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
@@ -17,7 +17,7 @@ $wikiModDir = basename(dirname(dirname( __FILE__ )));
 include_once XOOPS_ROOT_PATH.'/modules/' . $wikiModDir . '/header.php';
 include_once XOOPS_ROOT_PATH.'/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
-function wiwimod_showpage ($options) {
+function swiki_showpage ($options) {
 	global $xoopsDB, $xoopsModuleConfig, $xoopsUser, $myts;
 	$wikiModDir = basename(dirname(dirname( __FILE__ ))) ;
    
@@ -25,7 +25,7 @@ function wiwimod_showpage ($options) {
 	$pageObj = new wiwiRevision($options[0]);
 	if ($pageObj->id == 0) {
 		$block['notfound'] = true;
-		$block['_MD_WIWIMOD_PAGENOTFOUND'] = _MB_SWIKI_PAGENOTFOUND_MSG;
+		$block['_MD_SWIKI_PAGENOTFOUND'] = _MB_SWIKI_PAGENOTFOUND_MSG;
 	} else {
 		$block['notfound'] = false;
 		if ($pageObj->canRead()) {
@@ -60,7 +60,7 @@ function wiwimod_showpage ($options) {
 	return $block;
 }
 
-function wiwimod_contextshow($options) {
+function swiki_contextshow($options) {
 	global $xoopsDB, $xoopsModuleConfig, $xoopsUser, $myts;
 	$wikiModDir = basename(dirname(dirname( __FILE__ ))) ;
 	//
@@ -105,7 +105,7 @@ function wiwimod_contextshow($options) {
 	return $block;
 }
 
-function wiwimod_showpage_blockedit ($options) {
+function swiki_showpage_blockedit ($options) {
     $form = _MB_SWIKI_SHOWPAGE_DESC."&nbsp;:&nbsp;<input type='text' name='options[0]' value='".$options[0]."' />";
 	return $form;
 

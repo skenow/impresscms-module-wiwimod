@@ -81,4 +81,6 @@ define('_MD_SWIKI_ADDPAGE_BTN','Add Page');
 define('_MD_SWIKI_ADDPAGE','Create a New Page');
 define('_MD_SWIKI_PDF_ERROR_MSG','Error creating PDF');
 define('_MD_SWIKI_NOPAGE_MSG','Could not create PDF - at least one of the pages did not exist');
+define('_MI_SWIKI_TOPPAGE', 'Index Page');
+define('_MI_SWIKI_TOPPAGE_DESC', 'Page to be shown on the main page of the module');
 ?>

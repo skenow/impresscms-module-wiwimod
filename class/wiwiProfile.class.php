@@ -5,7 +5,7 @@
  * @todo remove any $xoopsModule or $xoopsModuleConfig references, to enable the class being used from within any other module. 
  *   
  * @package SimplyWiki
- * @author Xavier JIMENEZ
+ * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
@@ -89,8 +89,8 @@ class WiwiProfile {
 		$modhandler =& xoops_gethandler('module');				
 		$config_handler =& xoops_gethandler('config');
         $wiwiModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));  
-		$wiwiConfig =& $config_handler->getConfigsByCat(0, $wiwiModule->getVar('mid'));
-		$prid = $wiwiConfig['DefaultProfile'];
+		$swikiConfig =& $config_handler->getConfigsByCat(0, $wiwiModule->getVar('mid'));
+		$prid = $swikiConfig['DefaultProfile'];
 		return $prid;
 	}
 	//

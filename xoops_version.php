@@ -3,15 +3,15 @@
  * Main configuration file for SimplyWiki
  * 
  * @package SimplyWiki
- * @author Xavier JIMENEZ
- * @author Gizmhail
+ * @author Wiwimod: Xavier JIMENEZ
+ * @author Wiwimod: Gizmhail
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
 $modversion = array(
   'name' => _MI_SWIKI_NAME,
-  'version' => '1.0',
+  'version' => '1.1',
   'status' => 'Beta',
   'description' => _MI_SWIKI_DESC,
   'author' => 'Xavier JIMENEZ',
@@ -69,7 +69,7 @@ $modversion['templates'][] = array(
 // Search
 $modversion['hasSearch'] = 1;
 $modversion['search']['file'] = 'include/search.php';
-$modversion['search']['func'] = 'wiwimod_search';
+$modversion['search']['func'] = 'swiki_search';
 
 // Comments
 $modversion['hasComments'] = 1;
@@ -81,15 +81,15 @@ $modversion['blocks'][1] = array(
   'file' => 'wiwimod_toc.php',
   'name' => _MI_SWIKI_BLOCK_TOC_NAME,
   'description' => _MI_SWIKI_BLOCK_TOC_DESC,
-  'show_func' => 'wiwimod_toc',
+  'show_func' => 'swiki_toc',
   'template' => 'wiwimod_toc.html');
 
 $modversion['blocks'][] = array(
   'file' => 'wiwimod_recent.php',
   'name' => _MI_SWIKI_BLOCK_RECENT_NAME,
   'description' => _MI_SWIKI_BLOCK_RECENT_DESC,
-  'show_func' => 'wiwimod_recent',
-  'edit_func' => 'wiwimod_recent_blockedit',
+  'show_func' => 'swiki_recent',
+  'edit_func' => 'swiki_recent_blockedit',
   'options' => '5',
   'template' => 'wiwimod_recent.html');
 
@@ -97,15 +97,15 @@ $modversion['blocks'][] = array(
   'file' => 'wiwimod_showpage.php',
   'name' => _MI_SWIKI_BLOCK_RELATED_NAME,
   'description' => _MI_SWIKI_BLOCK_RELATED_DESC,
-  'show_func' => 'wiwimod_contextshow',
+  'show_func' => 'swiki_contextshow',
   'template' => 'wiwimod_context.html');
 
 $modversion['blocks'][] = array(
   'file' => 'wiwimod_showpage.php',
   'name' => _MI_SWIKI_BLOCK_SHOWPAGE_NAME,
   'description' => _MI_SWIKI_BLOCK_SHOWPAGE_DESC,
-  'show_func' => 'wiwimod_showpage',
-  'edit_func' => 'wiwimod_showpage_blockedit',
+  'show_func' => 'swiki_showpage',
+  'edit_func' => 'swiki_showpage_blockedit',
   'options' => _MI_SWIKI_HOME,
   'template' => 'wiwimod_showpage.html');
 
@@ -187,12 +187,20 @@ $modversion['config'][] = array(
   'valuetype' => 'int',
   'default' => 0);
 
+$modversion['config'][] = array(
+  'name' => 'TopPage',
+  'title' => '_MI_SWIKI_TOPPAGE',
+  'description' => '_MI_SWIKI_TOPPAGE_DESC',
+  'formtype' => 'textbox',
+  'valuetype' => 'text',
+  'default' => _MI_SWIKI_HOME);
+
 // Notification
 
 $modversion['hasNotification'] = 1;
 $modversion['notification'] = array(
   'lookup_file' => 'include/notification.inc.php',
-  'lookup_func' => 'wiwimod_notify_iteminfo');
+  'lookup_func' => 'swiki_notify_iteminfo');
 
 $modversion['notification']['category'][1] = array(
   'name' => 'page',

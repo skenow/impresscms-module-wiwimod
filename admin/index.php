@@ -3,7 +3,7 @@
  * Admin area index page
  * 
  * @package SimplyWiki
- * @author Xavier JIMENEZ
+ * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
@@ -22,7 +22,7 @@ global $myts;
 $op = $id = $starthist = $page = NULL;
 $valid_getvars = array('op' => 'string', 'id' => 'int', 'starthist' => 'int', 'page' => 'string');
 /* This will provide a cleaned variable array to use instead of the $_GET variable */
-$clean_GET = wiwi_cleanVars($_GET, $valid_getvars);
+$clean_GET = swiki_cleanVars($_GET, $valid_getvars);
 /* This will explode the valid variables for use everywhere */
 extract($clean_GET);
 $page = stripslashes($page);

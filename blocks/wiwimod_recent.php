@@ -3,7 +3,7 @@
  * This block displays recent changes to Wiwi pages
  * 
  * @package SimplyWiki
- * @author Xavier JIMENEZ
+ * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
@@ -13,7 +13,7 @@ $wikiModDir = basename( dirname(  dirname( __FILE__ ) ) ) ;
 include_once XOOPS_ROOT_PATH.'/modules/' . $wikiModDir . '/header.php';
 include_once XOOPS_ROOT_PATH.'/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
-function wiwimod_recent ($options) {
+function swiki_recent ($options) {
 	global $xoopsDB;
 	$wikiModDir = basename( dirname(  dirname( __FILE__ ) ) ) ;
 	$limit = intval($options[0]);
@@ -45,7 +45,7 @@ function wiwimod_recent ($options) {
 	return $block;
 }
 
-function wiwimod_recent_blockedit ($options) {
+function swiki_recent_blockedit ($options) {
     $form = _MB_SWIKI_NUM_DISP_DESC."&nbsp;:&nbsp;<input type='text' name='options[0]' value='".$options[0]."' />";
 	return $form;
 }
