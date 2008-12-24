@@ -56,7 +56,7 @@ define('_MD_WIWI_NOWRITEACCESS_MSG','<br><h4>Lo sentimos: no tiene permisos para
 // Wiwi special pages - 
 // Change these names, if you want a different homepage and error page
 // for this language - just make sure that they are legal WiwiLink names.
-if (!defined('_MI_WIWIMOD_WIWIHOME'){define('_MI_WIWIMOD_WIWIHOME','Inicio');} // Also need in modinfo.php
+if (!defined('_MI_WIWIMOD_WIWIHOME')){define('_MI_WIWIMOD_WIWIHOME','Inicio');} // Also need in modinfo.php
 define('_MI_WIWIMOD_WIWI404','Nombre no permitido');//Comprobar la validez del nombre
 
 ?>

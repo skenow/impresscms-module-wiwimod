@@ -1,6 +1,19 @@
-== Wiwimod 0.83+  ==
+== SimplyWiki 1.0.1 ==
+Status: RC 1
+Released:
+
+Fixed
+* Missing ) in Spanish language file
+* Blocksadmin: edit block wasn't saving changes
+* Incorrect SQL definition for wiwimod.body
+
+Contributors to this release
+* skenow
+* mcdonald3072
+
+== SimplyWiki 1.0/Wiwimod 0.83+  ==
 Status: Final
-Released: 23 November 2008
+Released: 3 December 2008
 
 Added
 * index.html to every directory without one

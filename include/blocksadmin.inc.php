@@ -135,9 +135,9 @@ if ( $op == 'update' ) {
      if (!$adv_pages) {// -- XOOPS 2.0.x, 2.3.x and ImpressCMS 1.0.x
 	$msg = myblocksadmin_update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options); // GIJ c
      } else { // -- ImpressCMS 1.1+
-          $msg = icms_update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $option=array());
+          $msg = icms_update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options);
 	}
-	redirect_header('myblocksadmin.php',1,$msg); // GIJ +
+	redirect_header('myblocksadmin.php',1,_AM_DBUPDATED); // GIJ +
 }
 
 
