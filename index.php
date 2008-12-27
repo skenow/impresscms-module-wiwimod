@@ -411,7 +411,11 @@ switch ($op) {
 			'mayEdit' => $pageObj->canWrite(), 
 			'showComments' => $pageObj->canViewComments() && ($xoopsModuleConfig['com_rule'] != 0),
 			'showHistory' => $pageObj->canViewHistory(),
-			'allowPDF' => $xoopsModuleConfig['allowPDF']
+			'allowPDF' => $xoopsModuleConfig['allowPDF'],
+			'created' => sprintf(_MD_SWIKI_CREATED, getUserName($pageObj->creator), formatTimestamp(strtotime($pageObj->created), _SHORTDATESTRING)),
+			'views' => sprintf(_MD_SWIKI_VIEWS, $pageObj->views),
+			'lastviewed' => sprintf(_MD_SWIKI_LASTVIEWED, formatTimestamp(strtotime($pageObj->lastviewed), _SHORTDATESTRING)),
+			'revisions' => sprintf(_MD_SWIKI_REVISIONS, $pageObj->revisions)
 			));
 
 		$xoopsTpl->assign('parentlist',$pageObj->parentList());

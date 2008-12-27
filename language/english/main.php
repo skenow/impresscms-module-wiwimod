@@ -12,16 +12,14 @@
  * @version $Id$ 
  */
 
-define('_MD_SWIKI_MODIFIED_TXT', 'Last modified:');		
+define('_MD_SWIKI_MODIFIED_TXT', 'Last modified on');
 define('_MD_SWIKI_BY','by');								
 define('_MD_SWIKI_HISTORY_TXT','History of page');		
-define('_MD_SWIKI_EDIT_TXT','Edit Wiwi Page');
+define('_MD_SWIKI_EDIT_TXT','Edit Wiki Page');
 define('_MD_SWIKI_BODY_TXT','Page content');
 define('_MD_SWIKI_DIFF_TXT','Differences between current and latest revisions');
 define('_MD_SWIKI_THISPAGE','This page');
 
-//define('_MD_WIWI_EDIT_BTN','Edit');						
-//define('_MD_WIWI_PREVIEW_BTN','Preview');
 define('_MD_SWIKI_SUBMITREVISION_BTN','New revision');
 define('_MD_SWIKI_QUIETSAVE_BTN','Save');
 define('_MD_SWIKI_HISTORY_BTN','History');				
@@ -53,13 +51,13 @@ define('_MD_SWIKI_EDITCONFLICT_MSG','Conflicting modifications! - All changes ha
 define('_MD_SWIKI_NOREADACCESS_MSG','<br /><h4>Sorry, restricted access page.</h4><br />');
 define('_MD_SWIKI_NOWRITEACCESS_MSG','<br /><h4>Sorry, you don\'t have write access on this page.</h4><br />');
 
-// Wiwi special pages - 
+// Simply Wiki special pages -
 // Change these names, if you want a different homepage and error page
 // for this language - just make sure that they are legal WiwiLink names.
 if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','HomePage');}// Also need in modinfo.php
 define('_MI_SWIKI_404','IllegalName');
 
-// Added in version 1.0
+// Added in version 1.1
 define('_MI_SWIKI_REVISION_SUMMARY', 'Revision Summary');
 define('_MI_SWIKI_ALLOW_COMMENTS','Allow Comments');
 define('_MD_SWIKI_ADDPAGE_BTN','Add Page');
@@ -68,4 +66,8 @@ define('_MD_SWIKI_PDF_ERROR_MSG','Error creating PDF');
 define('_MD_SWIKI_NOPAGE_MSG','Could not create PDF - at least one of the pages did not exist');
 define('_MI_SWIKI_TOPPAGE', 'Index Page');
 define('_MI_SWIKI_TOPPAGE_DESC', 'Page to be shown on the main page of the module');
+define('_MD_SWIKI_CREATED','This page was created on %2$s by %1$s');
+define('_MD_SWIKI_REVISIONS','This page has been revised %u time(s)');
+define('_MD_SWIKI_LASTVIEWED','This page was last viewed on %s');
+define('_MD_SWIKI_VIEWS','This page has been viewed %u time(s)');
 ?>

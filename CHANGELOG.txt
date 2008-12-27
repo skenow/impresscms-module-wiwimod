@@ -11,10 +11,11 @@ Added
 * Configuration option to select the top page for the module
 
 Fixed
+* Blocksadmin: Edit block now saves options in ImpressCMS 1.1+ (mcdonald3072)
 
 Improved
 * DB structure: split wiwimod table into wiki_pages and wiki_revisions. Overall DB size is reduced while the amount of information is increased
-* Code layout of the parser - thanks to work found in 0.8.9 beta release (Gizhmail/Xavier/others)
+* Code layout of the parser - thanks to work found in 0.8.9 beta release (Gizmhail/Xavier/others)
 * Size of body field increased to mediumtext, allowing for larger pages
 * All language constants now reflect SimplyWiki naming
 * Added page title as 2nd sort field for TOC
@@ -30,6 +31,11 @@ Language additions
   + define('_MD_SWIKI_NOPAGE_MSG','Could not create PDF - at least one of the pages did not exist');
   + define('_MI_SWIKI_TOPPAGE', 'Index Page');
   + define('_MI_SWIKI_TOPPAGE_DESC', 'Page to be shown on the main page of the module');
+  + define('_MD_SWIKI_CREATED','This page was created on %2$s by %1$s');
+  + define('_MD_SWIKI_REVISIONS','This page has been revised %u time(s)');
+  + define('_MD_SWIKI_LASTVIEWED','This page was last viewed on %s');
+  + define('_MD_SWIKI_VIEWS','This page has been viewed %u time(s)');
+
 
 * update.php (new file)
   
