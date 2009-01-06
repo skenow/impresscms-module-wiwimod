@@ -1,17 +1,17 @@
 <?php
 /**
  * xoops_version: Main configuration file for wiwimod
- * 
+ *
  * @package Wiwimod
  * @author Xavier JIMENEZ
  * @author Gizmhail
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$  
+ * @version $Id$
  */
 $modversion = array(
   'name' => _MI_WIWIMOD_NAME,
-  'version' => '0.83',
+  'version' => '1.01',
   'description' => _MI_WIWIMOD_DESC,
   'author' => 'Xavier JIMENEZ',
   'credits' => '',
@@ -22,7 +22,7 @@ $modversion = array(
   'iconbig' => 'images/wiwimod.png', /* big icon for ImpressCMS, 37x35 px */
   'iconsmall' => 'images/wiwimod-small.png', /* small icon for ImpressCMS, 16x16 px */
   'dirname' => basename(dirname(__FILE__)),
-  'status' => 'Final',
+  'status' => 'RC1',
   'onInstall' => 'include/oninstall.inc.php',
   'onUpdate' => 'include/onupdate.inc.php',
   'demo_site_url' => '',
@@ -32,7 +32,7 @@ $modversion = array(
   'submit_bug' => 'https://sourceforge.net/tracker2/?group_id=205633&atid=1064496',
   'submit_feature' => '',
   'warning' => '',
-  'author_word' => '_MI_WIWIMOD_AUTHOR_WORD' ); 
+  'author_word' => '_MI_WIWIMOD_AUTHOR_WORD' );
 
 if (defined('ICMS_VERSION_NAME')) {
   $modversion['image'] = 'images/wiwimod.png';
@@ -150,7 +150,7 @@ if (file_exists(XOOPS_ROOT_PATH.'/class/xoopseditor/xoopseditor.php')) {
 	$editor_name = !empty($_GET['editor_name'])?$_GET['editor_name']:'';
 	$editorhandler = new XoopsEditorHandler();
 	$modversion['config'][2]['options'] = array_flip($editorhandler->getList());
-	} 
+	}
 else $modversion['config'][2]['options'] = array();
 
 $modversion['config'][]  = array(
@@ -199,14 +199,14 @@ $modversion['notification']['category'][1] = array(
   'description' => '_MI_WIWIMOD_PAGENOTIFYCAT_DESC',
   'subscribe_from' => array('index.php'),
   'allow_bookmark' => 1,
-  'item_name' => 'pageid'); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php 
+  'item_name' => 'pageid'); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php
 
 $modversion['notification']['category'][] = array(
   'name' => 'global',
   'title' => _MI_WIWIMOD_GLOBALNOTIFYCAT_TITLE,
   'description' => '_MI_WIWIMOD_GLOBALNOTIFYCAT_DESC',
   'subscribe_from' => array('index.php'),
-  'item_name' => ''); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php 
+  'item_name' => ''); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php
 
 $modversion['notification']['event'][1] = array(
   'name' => 'page_modified',
