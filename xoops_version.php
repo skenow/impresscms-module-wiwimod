@@ -195,6 +195,19 @@ $modversion['config'][] = array(
   'valuetype' => 'text',
   'default' => _MI_SWIKI_HOME);
 
+$modversion['config'][] = array(
+	'name' => 'ShowPageInfo',
+	'title' => '_MI_SWIKI_PAGEINFO',
+	'description' => '_MI_SWIKI_PAGEINFO_DESC',
+	'formtype' => 'select_multi',
+	'valuetype' => 'array',
+	'options' => array( '_MI_SWIKI_SHOWREVISIONS' => 'ShowRevisions',
+						'_MI_SWIKI_SHOWVIEWS' => 'ShowViews',
+						'_MI_SWIKI_SHOWCREATED' => 'ShowCreated' ,
+						'_MI_SWIKI_SHOWLASTREVISED' => 'ShowLastRevised',
+						'_MI_SWIKI_LASTVIEWED' => 'ShowLastViewed'),
+	'default' => 'ShowLastRevised'	);
+
 // Notification
 
 $modversion['hasNotification'] = 1;

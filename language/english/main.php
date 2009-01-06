@@ -70,4 +70,9 @@ define('_MD_SWIKI_CREATED','This page was created on %2$s by %1$s');
 define('_MD_SWIKI_REVISIONS','This page has been revised %u time(s)');
 define('_MD_SWIKI_LASTVIEWED','This page was last viewed on %s');
 define('_MD_SWIKI_VIEWS','This page has been viewed %u time(s)');
+define('_MI_SWIKI_SHOWREVISIONS','Show number of revisions');
+define('_MI_SWIKI_SHOWVIEWS','Show number of views');
+define('_MI_SWIKI_SHOWCREATED','Show date created and creator');
+define('_MI_SWIKI_SHOWLASTREVISED','Show date of last revision');
+define('_MI_SWIKI_LASTVIEWED','Show date last viewed');
 ?>

@@ -1,7 +1,7 @@
 <?php
 /*
  * Module and admin language definition
- * 
+ *
  *	_BTN	: text within buttons or action links
  *  _COL	: column headers
  *  _TXT	: "verbose" text (probably within content)
@@ -53,7 +53,7 @@ define('_MD_SWIKI_NOREADACCESS_MSG','<br><h4>Lo sentimos: la página tiene el ac
 define('_MD_SWIKI_NOWRITEACCESS_MSG','<br><h4>Lo sentimos: no tiene permisos para modificar esta página.</h4><br>');
 
 
-// Wiwi special pages - 
+// Wiwi special pages -
 // Change these names, if you want a different homepage and error page
 // for this language - just make sure that they are legal WiwiLink names.
 if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','Inicio');} // Also need in modinfo.php
@@ -68,4 +68,13 @@ define('_MD_SWIKI_PDF_ERROR_MSG','Error creating PDF');
 define('_MD_SWIKI_NOPAGE_MSG','Could not create PDF - at least one of the pages did not exist');
 define('_MI_SWIKI_TOPPAGE', 'Index Page');
 define('_MI_SWIKI_TOPPAGE_DESC', 'Page to be shown on the main page of the module');
+define('_MD_SWIKI_CREATED','This page was created on %2$s by %1$s');
+define('_MD_SWIKI_REVISIONS','This page has been revised %u time(s)');
+define('_MD_SWIKI_LASTVIEWED','This page was last viewed on %s');
+define('_MD_SWIKI_VIEWS','This page has been viewed %u time(s)');
+define('_MI_SWIKI_SHOWREVISIONS','Show number of revisions');
+define('_MI_SWIKI_SHOWVIEWS','Show number of views');
+define('_MI_SWIKI_SHOWCREATED','Show date created and creator');
+define('_MI_SWIKI_SHOWLASTREVISED','Show date of last revision');
+define('_MI_SWIKI_LASTVIEWED','Show date last viewed');
 ?>
