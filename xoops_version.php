@@ -1,13 +1,13 @@
 <?php
 /**
  * Main configuration file for SimplyWiki
- * 
+ *
  * @package SimplyWiki
  * @author Wiwimod: Xavier JIMENEZ
  * @author Wiwimod: Gizmhail
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$  
+ * @version $Id$
  */
 $modversion = array(
   'name' => _MI_SWIKI_NAME,
@@ -32,7 +32,7 @@ $modversion = array(
   'submit_bug' => 'https://sourceforge.net/tracker2/?group_id=205633&atid=1064496',
   'submit_feature' => '',
   'warning' => '',
-  'author_word' => '_MI_SWIKI_AUTHOR_WORD' ); 
+  'author_word' => '_MI_SWIKI_AUTHOR_WORD' );
 
 if (defined('ICMS_VERSION_NAME')) {
   $modversion['image'] = 'images/wiwimod.png';
@@ -151,7 +151,7 @@ if (file_exists(XOOPS_ROOT_PATH.'/class/xoopseditor/xoopseditor.php')) {
 	$editor_name = !empty($_GET['editor_name'])?$_GET['editor_name']:'';
 	$editorhandler = new XoopsEditorHandler();
 	$modversion['config'][2]['options'] = array_flip($editorhandler->getList());
-	} 
+	}
 else $modversion['config'][2]['options'] = array();
 
 $modversion['config'][]  = array(
@@ -208,6 +208,14 @@ $modversion['config'][] = array(
 						'_MI_SWIKI_LASTVIEWED' => 'ShowLastViewed'),
 	'default' => 'ShowLastRevised'	);
 
+$modversion['config'][] = array(
+	'name' => 'Captcha',
+	'title' => '_MI_SWIKI_USECAPTCHA',
+	'description' => '_MI_SWIKI_USECAPTCHA_DESC',
+	'formtype' => 'yesno',
+	'valuetype' => 'int',
+	'default' => 1);
+
 // Notification
 
 $modversion['hasNotification'] = 1;
@@ -221,14 +229,14 @@ $modversion['notification']['category'][1] = array(
   'description' => '_MI_SWIKI_PAGENOTIFYCAT_DESC',
   'subscribe_from' => array('index.php'),
   'allow_bookmark' => 1,
-  'item_name' => 'pageid'); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php 
+  'item_name' => 'pageid'); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php
 
 $modversion['notification']['category'][] = array(
   'name' => 'global',
   'title' => _MI_SWIKI_GLOBALNOTIFYCAT_TITLE,
   'description' => '_MI_SWIKI_GLOBALNOTIFYCAT_DESC',
   'subscribe_from' => array('index.php'),
-  'item_name' => ''); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php 
+  'item_name' => ''); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/nofitication_functions.php
 
 $modversion['notification']['event'][1] = array(
   'name' => 'page_modified',

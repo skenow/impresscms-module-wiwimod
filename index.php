@@ -1,16 +1,16 @@
 <?php
 /**
  * Main index page of SimplyWiki - displays all pages on the user side
- * 
+ *
  * @package SimplyWiki
  * @author Wiwimod: Xavier JIMENEZ
  * @author Wiwimod: Gizmhail
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$  
+ * @version $Id$
  */
 
-/** Include the page header for the module */    
+/** Include the page header for the module */
 include_once 'header.php';
 /** Include the class for the page objects (revisions) */
 include_once 'class/wiwiRevision.class.php';
@@ -18,7 +18,7 @@ include_once 'class/wiwiRevision.class.php';
 /*
  * extract all header variables to corresponding php variables ---
  * @todo : - $xoopsUser can be overriden by post variables >> security fix ?
- */      
+ */
 $id = $pageid = $visible = $editor = $allowComments = 0;
 $page = $contextBlock = $parent = $op = $summary = $item_tag = '';
 $allowed_getvars = array (
@@ -34,12 +34,12 @@ $allowed_postvars = array (
      'page'=>'string',
      'pageid'=>'int',
      'id'=>'int',
-     'uid'=>'int', 
-     'lastmodified'=>'plaintext', 
-     'title'=>'plaintext', 
-     'editor'=>'int', 
+     'uid'=>'int',
+     'lastmodified'=>'plaintext',
+     'title'=>'plaintext',
+     'editor'=>'int',
      'editoptions'=>'plaintext',
-     'body'=>'string', 
+     'body'=>'string',
      'parent'=>'plaintext',
      'prid'=>'int',
      'visible'=>'int',
@@ -120,6 +120,27 @@ switch ($op) {
 		} elseif (!$pageObj->canWrite()) {
 			redirect_header('index.php?page='.urlencode($pageObj->keyword), 2, _MD_SWIKI_NOWRITEACCESS_MSG);
 		} else {
+
+		if ( $xoopsModuleConfig['captcha'] ) {
+			// Captcha Hack
+			// Verify entered code
+			if ( class_exists( 'XoopsFormCaptcha' ) ) {
+				if ( @include_once ICMS_ROOT_PATH . '/class/captcha/captcha.php' ) {
+					$xoopsCaptcha = XoopsCaptcha::instance();
+					if ( ! $xoopsCaptcha -> verify( true ) ) {
+						redirect_header( 'index.php', 2, $xoopsCaptcha -> getMessage() );
+					}
+				}
+			} elseif ( class_exists( 'IcmsFormCaptcha' ) ) {
+				if ( @include_once ICMS_ROOT_PATH . '/class/captcha/captcha.php' ) {
+					$icmsCaptcha = IcmsCaptcha::instance();
+					if ( ! $icmsCaptcha -> verify( true ) ) {
+						redirect_header( 'index.php', 2, $icmsCaptcha -> getMessage() );
+					}
+				}
+			}
+			// Captcha Hack
+		}
 			$success = ($op == 'insert') ? $pageObj->add() : $pageObj->save();
 
 			if ($success) {
@@ -159,7 +180,7 @@ switch ($op) {
 		 */
 		$xoopsOption['template_main'] = 'wiwimod_edit.html';
 		include_once XOOPS_ROOT_PATH.'/header.php';
-		
+
 		if ($op == 'preview') {
 			/*
 			 * Note : content came through "post" >> Strip eventual slashes (depending on the magic_quotes_gpc() value)
@@ -168,17 +189,17 @@ switch ($op) {
 			$pageObj->body = $myts->stripSlashesGPC($pageObj->body);
 
 			$xoopsTpl->assign('swiki', array(
-				'keyword' => $pageObj->keyword, 
-				'title' => $pageObj->title, 
+				'keyword' => $pageObj->keyword,
+				'title' => $pageObj->title,
 				'body' => $pageObj->render()));
 		}
-		
+
 		/*
 		 * Build form
 		 */
 		$form = new XoopsThemeForm(_MD_SWIKI_EDIT_TXT.': '.$page, 'swikiform', 'index.php');
 		$btn_tray = new XoopsFormElementTray('', ' ');
-	
+
 		$form->addElement(new XoopsFormHidden('op', 'insert'));
 		$form->addElement(new XoopsFormHidden('page', $myts->htmlSpecialChars($pageObj->keyword)));
 		$form->addElement(new XoopsFormHidden('pageid', $pageObj->pageid));
@@ -197,7 +218,7 @@ switch ($op) {
 		$editOptions = isset($clean_POST['editoptions']) ? $clean_POST['editoptions'] : "" ;
 		$form->addElement(new XoopsFormHidden('editor', $editor));
 		$form->addElement(new XoopsFormHidden('editoptions', $editOptions));
-		
+
 		switch ($editor) {
 			default:
 			case 0 : // standard xoops
@@ -247,7 +268,7 @@ switch ($op) {
 		}
 		$form->addElement($t_area);
 
-		$form->addElement(new XoopsFormText(_MD_SWIKI_PARENT_FLD, 'parent', 15, 100, $myts->htmlSpecialChars($pageObj->parent))); 
+		$form->addElement(new XoopsFormText(_MD_SWIKI_PARENT_FLD, 'parent', 15, 100, $myts->htmlSpecialChars($pageObj->parent)));
 
 		if ($pageObj->canAdministrate()) {
 			$prflst = $pageObj->profile->getAdminProfiles($xoopsUser);
@@ -258,7 +279,7 @@ switch ($op) {
 			$form->addElement(new XoopsFormLabel(_MD_SWIKI_PROFILE_FLD,$pageObj->profile->name));
 			$form->addElement(new XoopsFormHidden('prid', $pageObj->profile->prid));
 		}
-		
+
 		$form->addElement(new XoopsFormText(_MD_SWIKI_VISIBLE_FLD, 'visible', 3, 3, $pageObj->visible));
 		$form->addElement( new XoopsFormText(_MD_SWIKI_CONTEXTBLOCK_FLD,'contextBlock',15,100,$myts->htmlSpecialChars($pageObj->contextBlock)));
 		/* Tag module support (Gizmhail) */
@@ -288,6 +309,16 @@ switch ($op) {
 			$btn_tray->addElement($quietsave_btn);
 		}
 
+		if ( $xoopsModuleConfig['captcha'] ) {
+			// Captcha Hack
+			if ( class_exists( 'XoopsFormCaptcha' ) ) {
+				$sform -> addElement( new XoopsFormCaptcha() );
+			} elseif ( class_exists( 'IcmsFormCaptcha' ) ) {
+				$sform -> addElement( new IcmsFormCaptcha() );
+			}
+			// Captcha Hack
+		}
+
 		$cancel_btn = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
 		$cancel_btn->setExtra(($op == 'edit')?"onclick='history.back();'":"onclick='document.location.href=\"index.php".(($pageObj->id != 0)?"?page=".$pageObj->keyword : "")."\"'");
 		$btn_tray->addElement($cancel_btn);
@@ -306,19 +337,19 @@ switch ($op) {
 		$pageObj = new wiwiRevision($page, (isset($id) ? $id : 0));
 		if ($op == 'history') {
 			$xoopsTpl->assign('swiki', array(
-				'keyword' => $pageObj->keyword, 
+				'keyword' => $pageObj->keyword,
 				'encodedurl' => $pageObj->encode($pageObj->keyword),
 				'revid' => $pageObj->id,
-				'title' => $pageObj->title, 
+				'title' => $pageObj->title,
 				'body' => $pageObj->render()
 				));
 		} else {
 			$pageObj->diff($bodyDiff, $titleDiff);
 			$xoopsTpl->assign('swiki', array(
-				'keyword' => $pageObj->keyword, 
+				'keyword' => $pageObj->keyword,
 				'encodedurl' => $pageObj->encode($pageObj->keyword),
 				'revid' => $pageObj->id,
-				'title' => $titleDiff, 
+				'title' => $titleDiff,
 				'body' => $bodyDiff
 				));
 		}
@@ -371,7 +402,7 @@ switch ($op) {
                $pageObj->visited(); // no user registered - count visit
           }
         /* End modification to count visits */
-        
+
 		} else {
 		    $pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>"._MD_SWIKI_NOREADACCESS_MSG."</td></tr></table></center><br /><br />";
 		}
@@ -382,8 +413,8 @@ switch ($op) {
 		$cpages = explode ("[pagebreak]", $pagecontent);
 		if (isset($clean_GET['startpage'])) $startpage = (int) $clean_GET['startpage'] ; else $startpage = 0;
 		if (count($cpages) > 0) {
-			include_once XOOPS_ROOT_PATH . '/class/pagenav.php'; 
-			$pagenav = new XoopsPageNav(count($cpages), 1, $startpage, 'startpage', 'page='.$pageObj->keyword); 
+			include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+			$pagenav = new XoopsPageNav(count($cpages), 1, $startpage, 'startpage', 'page='.$pageObj->keyword);
 			$xoopsTpl->assign('nav' , array(
 				'startpage' => $startpage,
 				'html' => $pagenav->RenderNav()
@@ -398,17 +429,17 @@ switch ($op) {
 			include_once XOOPS_ROOT_PATH.'/modules/tag/include/tagbar.php';
 			$itemid = $pageObj->pageid;
 			$xoopsTpl->assign('tagbar', tagBar($itemid, $catid = 0));
-		}	
+		}
 		/* Tag module support end*/
 
 		$xoopsTpl->assign('swiki', array(
-			'keyword' => $pageObj->keyword, 
+			'keyword' => $pageObj->keyword,
 			'encodedurl' => $pageObj->encode($pageObj->keyword),
-			'title' => $pageObj->title, 
-			'body' => $pagecontent, 
-			'lastmodified' => formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING), 
-			'author' => getUserName($pageObj->u_id), 
-			'mayEdit' => $pageObj->canWrite(), 
+			'title' => $pageObj->title,
+			'body' => $pagecontent,
+			'lastmodified' => formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING),
+			'author' => getUserName($pageObj->u_id),
+			'mayEdit' => $pageObj->canWrite(),
 			'showComments' => $pageObj->canViewComments() && ($xoopsModuleConfig['com_rule'] != 0),
 			'showHistory' => $pageObj->canViewHistory(),
 			'allowPDF' => $xoopsModuleConfig['allowPDF'],

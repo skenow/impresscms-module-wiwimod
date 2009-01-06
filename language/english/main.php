@@ -1,20 +1,20 @@
 <?php
 /*
  * Module and admin language definition
- * 
+ *
  *	_BTN	: text within buttons or action links
  *  _COL	: column headers
  *  _TXT	: "verbose" text (probably within content)
  *  _FLD	: title of form elements
  *  _DESC	: description under the title for form elements
  *  _MSG	: messages, alerts ...
- * @package SimplyWiki 
- * @version $Id$ 
+ * @package SimplyWiki
+ * @version $Id$
  */
 
 define('_MD_SWIKI_MODIFIED_TXT', 'Last modified on');
-define('_MD_SWIKI_BY','by');								
-define('_MD_SWIKI_HISTORY_TXT','History of page');		
+define('_MD_SWIKI_BY','by');
+define('_MD_SWIKI_HISTORY_TXT','History of page');
 define('_MD_SWIKI_EDIT_TXT','Edit Wiki Page');
 define('_MD_SWIKI_BODY_TXT','Page content');
 define('_MD_SWIKI_DIFF_TXT','Differences between current and latest revisions');
@@ -22,23 +22,23 @@ define('_MD_SWIKI_THISPAGE','This page');
 
 define('_MD_SWIKI_SUBMITREVISION_BTN','New revision');
 define('_MD_SWIKI_QUIETSAVE_BTN','Save');
-define('_MD_SWIKI_HISTORY_BTN','History');				
-define('_MD_SWIKI_PAGEVIEW_BTN','Back to page view');	
+define('_MD_SWIKI_HISTORY_BTN','History');
+define('_MD_SWIKI_PAGEVIEW_BTN','Back to page view');
 define('_MD_SWIKI_VIEW_BTN','View');
 define('_MD_SWIKI_RESTORE_BTN','Restore');
 define('_MD_SWIKI_FIX_BTN','Fix');
 define('_MD_SWIKI_COMPARE_BTN','Compare');
 define('_MD_SWIKI_SELEDITOR_BTN','(right-click to select another editor)');
 
-define('_MD_SWIKI_TITLE_FLD','Title');					
+define('_MD_SWIKI_TITLE_FLD','Title');
 define('_MD_SWIKI_BODY_FLD','Content');
 define('_MD_SWIKI_VISIBLE_FLD','Visible');
 define('_MD_SWIKI_CONTEXTBLOCK_FLD','Side content');
 define('_MD_SWIKI_PARENT_FLD','Parent page');
 define('_MD_SWIKI_PROFILE_FLD','Privileges profile');
 
-define('_MD_SWIKI_TITLE_COL','Title');					
-define('_MD_SWIKI_MODIFIED_COL','Modified');				
+define('_MD_SWIKI_TITLE_COL','Title');
+define('_MD_SWIKI_MODIFIED_COL','Modified');
 define('_MD_SWIKI_AUTHOR_COL','Author');
 define('_MD_SWIKI_ACTION_COL','Action');
 define('_MD_SWIKI_KEYWORD_COL','Page ID');
@@ -75,4 +75,6 @@ define('_MI_SWIKI_SHOWVIEWS','Show number of views');
 define('_MI_SWIKI_SHOWCREATED','Show date created and creator');
 define('_MI_SWIKI_SHOWLASTREVISED','Show date of last revision');
 define('_MI_SWIKI_LASTVIEWED','Show date last viewed');
+define('_MI_SWIKI_USECAPTCHA','Enable CAPTCHA');
+define('_MI_SWIKI_USECAPTCHA_DESC', 'Display CAPTCHA on edit form')
 ?>

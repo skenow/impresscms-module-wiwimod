@@ -77,4 +77,6 @@ define('_MI_SWIKI_SHOWVIEWS','Show number of views');
 define('_MI_SWIKI_SHOWCREATED','Show date created and creator');
 define('_MI_SWIKI_SHOWLASTREVISED','Show date of last revision');
 define('_MI_SWIKI_LASTVIEWED','Show date last viewed');
+define('_MI_SWIKI_USECAPTCHA','Enable CAPTCHA');
+define('_MI_SWIKI_USECAPTCHA_DESC', 'Display CAPTCHA on edit form')
 ?>
