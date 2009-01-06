@@ -10,7 +10,8 @@ Added
 * 'Add New Page' field to easily create new pages
 * Configuration option to select the top page for the module
 * Configuration option to select which page information to display
-* CAPTCHA added to edit form and config option to enable/disable - borrowed code from imLinks (mcdonald3072)
+* CAPTCHA added to edit form and config option to enable/disable - borrowed code from imLinks (thanks, mcdonald3072)
+* Config option to enable/disable Quick Add
 
 Fixed
 * Blocksadmin: Edit block now saves options in ImpressCMS 1.1+ (mcdonald3072)
@@ -37,6 +38,8 @@ Language additions
   + define('_MD_SWIKI_REVISIONS','This page has been revised %u time(s)');
   + define('_MD_SWIKI_LASTVIEWED','This page was last viewed on %s');
   + define('_MD_SWIKI_VIEWS','This page has been viewed %u time(s)');
+  + define('_MI_SWIKI_PAGEINFO','Show Page Information');
+  + define('_MI_SWIKI_PAGEINFO_DESC', 'Select which page details to display with the page');
   + define('_MI_SWIKI_SHOWREVISIONS','Show number of revisions');
   + define('_MI_SWIKI_SHOWVIEWS','Show number of views');
   + define('_MI_SWIKI_SHOWCREATED','Show date created and creator');
@@ -44,8 +47,8 @@ Language additions
   + define('_MI_SWIKI_LASTVIEWED','Show date last viewed');
   + define('_MI_SWIKI_USECAPTCHA','Enable CAPTCHA');
   + define('_MI_SWIKI_USECAPTCHA_DESC', 'Display CAPTCHA on edit form')
-
-
+  + define('_MI_SWIKI_SHOWQUICKADD','Enable the Quick Add feature');
+  + define('_MI_SWIKI_SHOWQUICKADD_DESC', 'Setting to <em>Yes</em> displays the Quick Add field, allowing the editors to type a page name and go directly to editing the page');
 
 * update.php (new file)
 

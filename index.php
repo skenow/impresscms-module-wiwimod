@@ -447,7 +447,8 @@ switch ($op) {
 			'views' => sprintf(_MD_SWIKI_VIEWS, $pageObj->views),
 			'lastviewed' => sprintf(_MD_SWIKI_LASTVIEWED, formatTimestamp(strtotime($pageObj->lastviewed), _SHORTDATESTRING)),
 			'revisions' => sprintf(_MD_SWIKI_REVISIONS, $pageObj->revisions),
-			'ShowPageInfo' => array_flip($xoopsModuleConfig['ShowPageInfo'])
+			'ShowPageInfo' => array_flip($xoopsModuleConfig['ShowPageInfo']),
+			'ShowQuickAdd' => $xoopsModuleConfig['ShowQuickAdd']
 			));
 
 		$xoopsTpl->assign('parentlist',$pageObj->parentList());

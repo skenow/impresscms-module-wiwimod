@@ -216,6 +216,14 @@ $modversion['config'][] = array(
 	'valuetype' => 'int',
 	'default' => 1);
 
+$modversion['config'][] = array(
+	'name' => 'ShowQuickAdd',
+	'title' => '_MI_SWIKI_SHOWQUICKADD',
+	'description' => '_MI_SWIKI_SHOWQUICKADD_DESC',
+	'formtype' => 'yesno',
+	'valuetype' => 'int',
+	'default' => 1);
+
 // Notification
 
 $modversion['hasNotification'] = 1;
