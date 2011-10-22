@@ -1,3 +1,18 @@
+== SimplyWiki 1.2 ==
+Status: Beta
+Released: unreleased
+
+Added
+
+Improved
+* #131 Editor selection now based on installed editors
+
+Fixed
+
+Language additions
+
+Contributors to this release
+
 == Wiwimod 0.8.3 Re-release ==
 Released: 
 

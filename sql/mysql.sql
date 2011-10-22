@@ -15,7 +15,7 @@ CREATE TABLE wiki_pages (
   contextBlock varchar(255) DEFAULT '' COMMENT 'Keyword/page name for the related content block',
   PRIMARY KEY (pageid),
   UNIQUE KEY (keyword)
-) TYPE=MyISAM COMMENT 'Holds the list of pages and their properties';
+) COMMENT 'Holds the list of pages and their properties';
 
 CREATE TABLE wiki_revisions (
   revid int UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -25,7 +25,7 @@ CREATE TABLE wiki_revisions (
   modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Timestamp for the revision',
   userid mediumint(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Userid for the user that modified the page, from users.uid',
   PRIMARY KEY page (revid)
-) TYPE=MyISAM COMMENT 'Holds details of the individual revisions to each page';
+) COMMENT 'Holds details of the individual revisions to each page';
 
 CREATE TABLE wiki_profiles (
    prid integer not null auto_increment,
@@ -33,10 +33,10 @@ CREATE TABLE wiki_profiles (
    commentslevel integer default 0,
    historylevel integer default 1,
    PRIMARY KEY (prid) 
-) TYPE=MyISAM;
+);
 
 CREATE TABLE wiki_prof_groups (
    prid integer,
    gid integer,
    priv smallint
-)  TYPE=MyISAM;
+);

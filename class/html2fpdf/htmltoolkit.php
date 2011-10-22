@@ -26,9 +26,9 @@ function ConvertColor($color="#000000"){
   }
   else //case of RGB(r,g,b)
   {
-  	$color = str_replace("rgb(",'',$color); //remove ´rgb(´
-  	$color = str_replace("RGB(",'',$color); //remove ´RGB(´ -- PHP < 5 does not have str_ireplace
-  	$color = str_replace(")",'',$color); //remove ´)´
+  	$color = str_replace("rgb(",'',$color); //remove ï¿½rgb(ï¿½
+  	$color = str_replace("RGB(",'',$color); //remove ï¿½RGB(ï¿½ -- PHP < 5 does not have str_ireplace
+  	$color = str_replace(")",'',$color); //remove ï¿½)ï¿½
     $cores = explode(",", $color);
     $color = array();
 	  $color['R']=$cores[0];
@@ -41,7 +41,7 @@ function ConvertColor($color="#000000"){
 function ConvertSize($size=5,$maxsize=0){
 // Depends of maxsize value to make % work properly. Usually maxsize == pagewidth
 
-  //Identify size (remember: we are using ´mm´ units here)
+  //Identify size (remember: we are using ï¿½mmï¿½ units here)
   if ( strstr($size,'px') ) $size *= 0.2645; //pixels
   elseif ( strstr($size,'cm') ) $size *= 10; //centimeters
   elseif ( strstr($size,'mm') ) $size += 0; //millimeters
@@ -62,17 +62,17 @@ function lesser_entity_decode($html)
 {
 //supports the most used entity codes
  	$html = str_replace("&nbsp;"," ",$html); 
- 	$html = str_replace("&#380;","¿",$html);
+ 	$html = str_replace("&#380;","ï¿½",$html);
  	$html = str_replace("&amp;","&",$html);
  	$html = str_replace("&lt;","<",$html);
  	$html = str_replace("&gt;",">",$html);
- 	$html = str_replace("&#728;","¢",$html); 
- 	$html = str_replace("&#321;","£",$html); 
- 	$html = str_replace("&euro;","€",$html);
- 	$html = str_replace("&#260;","¥",$html); 
- 	$html = str_replace("&trade;","™",$html);
- 	$html = str_replace("&copy;","©",$html); 
- 	$html = str_replace("&reg;","®",$html); 
+ 	$html = str_replace("&#728;","ï¿½",$html); 
+ 	$html = str_replace("&#321;","ï¿½",$html); 
+ 	$html = str_replace("&euro;","ï¿½",$html);
+ 	$html = str_replace("&#260;","ï¿½",$html); 
+ 	$html = str_replace("&trade;","ï¿½",$html);
+ 	$html = str_replace("&copy;","ï¿½",$html); 
+ 	$html = str_replace("&reg;","ï¿½",$html); 
   return $html;
 }
 
@@ -125,7 +125,7 @@ function AdjustHTML(&$html,$usepre=true)
   	$html = str_replace("\n",'',$html); //replace linefeed by nothing
   	$html = str_replace("\t",' ',$html); //replace tabs by spaces
   }
-  $html = str_replace("< IMPRIMIR >",'',$html); //remover especial desta versão
+  $html = str_replace("< IMPRIMIR >",'',$html); //remover especial desta versï¿½o
 	$regexp = '/\\s{2,}/s'; // turn 2+ consecutive spaces into one 
 	$html = preg_replace($regexp,' ',$html);
   //Avoid crashing the script on PHP 4.0

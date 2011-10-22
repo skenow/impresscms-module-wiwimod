@@ -1,28 +1,123 @@
+== SimplyWiki 1.2 ==
+Status: Final
+Released: 1 September 2011
+
+RC Released: 12 August 2011
+
+Added
+* Italian language files
+* <[Children]> tag added to show children of the specified page
+* <[Siblings]> tag added to show siblings (same parent) of the specified page
+* RSS feeds are available
+* Global notification option
+* Notification for restoration of a page
+* <[Headings]> tag to create a table of contents built from heading tags in the document
+
+Improved
+* Editor selection now based on installed editors
+* Compliant with PHP5.3 (strict)
+* Reduced dependency on internal functions, using core functions instead
+* Reduced memory used, including other files only when needed
+* Only parse and render the page section being displayed for multi-page documents
+* Tags and Revision Summary are preserved when previewing a page
+* Classes refactored to reduce DB queries
+* Rendering on the PageIndex and RecentChanges tags
+* List of pages in admin now shows the number of views
+* Special tags are now case-insensitive (TinyMCE converts everything between < and > to lowercase)
+
+Fixed
+* Revision summary can now contain quotes
+* Commenting on a page resulted in the edit form being diplayed for the page
+ 
+Language additions/changes
+* modinfo.php
+	+ define('_MI_SWIKI_PAGERESTORE_TITLE','Page restored');
+	+ define('_MI_SWIKI_PAGERESTORE_CAPTION','Notify me when a previous version of this page is restored');
+	+ define('_MI_SWIKI_PAGERESTORE_DESC','Receive notification when any user restores a previous vesion of this page');
+	+ define('_MI_SWIKI_PAGERESTORE_SUBJECT','[{X_SITENAME}] {X_MODULE} auto-notify : page restored');
+	+ define('_MI_SWIKI_GLOBALPAGERESTORE_TITLE','Page restored');
+	+ define('_MI_SWIKI_GLOBALPAGERESTORE_CAPTION','Notify me when a previous version of any page is restored');
+	+ define('_MI_SWIKI_GLOBALPAGERESTORE_DESC','Receive notification when any user restores a previous vesion of any page');
+	+ define('_MI_SWIKI_GLOBALPAGERESTORE_SUBJECT','[{X_SITENAME}] {X_MODULE} auto-notify : page restored');
+
+* main.php
+	! define('_MD_SWIKI_VIEWS', 'Views');
+	+ define('_MD_SWIKI_VIEWED','This page has been viewed %u time(s)');
+
+* admin.php
+	+ define('_AM_SWIKI_GOTO_MODULE', 'Go to module');
+	+ define('_AM_SWIKI_UPDATE_MODULE', 'Update module');
+
+Contributors to this release
+* skenow
+* sato-san/bluaer-fisch
+* evoc
+* debianus/juancj
+* underdogg
+* lotusonlinede
+
+== SimplyWiki 1.1.1 ==
+Status: Final
+Released: 30 December 2009
+
+RC Release: 29 April 2009
+
+Fixed
+* #122 Error when deleting a profile
+* #123 Error when getting notifications
+* #124 Error when adding a new comment
+* #133 Subject lines for notifications are not parsed
+
+Improved
+* Blocksadmin now works in ImpressCMS 1.2
+
+Contributors to this release
+* skenow
+* greywolf/cath22
+
 == SimplyWiki 1.1 ==
-Status: Beta
-Released:
+Status: Final	
+Released: 13 April 2009
+
+RC Release: 20 March 2009
+Beta Release: 14 February 2009
 
 Added
 * New data fields: creator, create date, views, last viewed, revisions (count), summary, allow comments
 * Update function to migrate data to new tables
 * Functions to update new fields - visited (Gibaphp)
+* Revision summary can be entered for each page revision
 * Summary information to RecentChanges rendering, also available in History view
-* 'Add New Page' field to easily create new pages
+* 'Add New Page' field to easily create new pages - user must have write privileges for the form to display
+* Config option to enable/disable Quick Add
 * Configuration option to select the top page for the module
 * Configuration option to select which page information to display
-* CAPTCHA added to edit form and config option to enable/disable - borrowed code from imLinks (thanks, mcdonald3072)
-* Config option to enable/disable Quick Add
+* CAPTCHA added to edit form and config option to enable/disable - borrowed code from imLinks (mcdonald3072)
+* New block: Page List - options to list by create date, modified date, last viewed date or number of revisions, different display modes and customizable date format
+* New block: Add Page - can be placed anywhere on your site to add a new wiki page. Block only displays if the user has write privileges in the wiki
+* New blocks: Tag Cloud and Top Tags (can only be used if the Tag module is installed)
 
 Fixed
-* Blocksadmin: Edit block now saves options in ImpressCMS 1.1+ (mcdonald3072)
+* Blocksadmin: Edit block now saves options in ImpressCMS 1.1+ (thanks mcdonald3072)
+* Missing ) in Spanish language file
+* Missing ) in French language file
+* Corrections/additions in Dutch language file
+* Date display in admin area for other date formats
+* Moved all date formatting to output and not in data retrieval
+* #35: Global notification event was not being triggered
+* #21: Index tags need absolute URLs
+* #54: No search results returned
+* #55: Search results have improper date/time values
 
 Improved
 * DB structure: split wiwimod table into wiki_pages and wiki_revisions. Overall DB size is reduced while the amount of information is increased
 * Code layout of the parser - thanks to work found in 0.8.9 beta release (Gizmhail/Xavier/others)
-* Size of body field increased to mediumtext, allowing for larger pages
+* Size of body field increased to mediumtext, allowing for larger pages (up to 16,777,215 characters, less if multibyte characters are used)
 * All language constants now reflect SimplyWiki naming
 * Added page title as 2nd sort field for TOC
 * Added rel='nofollow' to PDF link to prevent searchbots from indexing the PDF versions of the page
+* Visibility in blocksadmin - based on imLinks (thanks mcdonald3072)
+* Added 'can_clone' property to all blocks
 
 Language additions
 * main.php
@@ -32,12 +127,20 @@ Language additions
   + define('_MD_SWIKI_ADDPAGE','Create a New Page');
   + define('_MD_SWIKI_PDF_ERROR_MSG','Error creating PDF');
   + define('_MD_SWIKI_NOPAGE_MSG','Could not create PDF - at least one of the pages did not exist');
-  + define('_MI_SWIKI_TOPPAGE', 'Index Page');
-  + define('_MI_SWIKI_TOPPAGE_DESC', 'Page to be shown on the main page of the module');
   + define('_MD_SWIKI_CREATED','This page was created on %2$s by %1$s');
   + define('_MD_SWIKI_REVISIONS','This page has been revised %u time(s)');
   + define('_MD_SWIKI_LASTVIEWED','This page was last viewed on %s');
   + define('_MD_SWIKI_VIEWS','This page has been viewed %u time(s)');
+
+* modinfo.php
+  + define('_MI_SWIKI_BLOCK_LISTPAGES_NAME','List Pages');
+  + define('_MI_SWIKI_BLOCK_LISTPAGES_DESC','Display a list of pages');
+  + define('_MI_SWIKI_BLOCK_ADDPAGE_NAME','Add Page');
+  + define('_MI_SWIKI_BLOCK_ADDPAGE_DESC','Add a wiki page from anywhere on your site');
+  + define('_MI_SWIKI_BLOCK_TAGCLOUD_NAME','Wiki Tag Cloud');
+  + define('_MI_SWIKI_BLOCK_TAGCLOUD_DESC','A tag cloud for SimplyWiki');
+  + define('_MI_SWIKI_BLOCK_TAG_NAME','Wiki Top Tags');
+  + define('_MI_SWIKI_BLOCK_TAG_DESC','A list of top tags for SimplyWiki');
   + define('_MI_SWIKI_PAGEINFO','Show Page Information');
   + define('_MI_SWIKI_PAGEINFO_DESC', 'Select which page details to display with the page');
   + define('_MI_SWIKI_SHOWREVISIONS','Show number of revisions');
@@ -49,8 +152,28 @@ Language additions
   + define('_MI_SWIKI_USECAPTCHA_DESC', 'Display CAPTCHA on edit form')
   + define('_MI_SWIKI_SHOWQUICKADD','Enable the Quick Add feature');
   + define('_MI_SWIKI_SHOWQUICKADD_DESC', 'Setting to <em>Yes</em> displays the Quick Add field, allowing the editors to type a page name and go directly to editing the page');
+  + define('_MI_SWIKI_TOPPAGE', 'Index Page');
+  + define('_MI_SWIKI_TOPPAGE_DESC', 'Page to be shown on the main page of the module');
 
-* update.php (new file)
+* blocks.php
+  + define('_MB_SWIKI_CREATE_DATE', 'Create Date');
+  + define('_MB_SWIKI_MODIFIED_DATE','Modified Date');
+  + define('_MB_SWIKI_LASTVIEWED_DATE','Last Viewed Date');
+  + define('_MB_SWIKI_REVISIONS','Number of Revisions');
+  + define('_MB_SWIKI_ASCENDING','Ascending');
+  + define('_MB_SWIKI_DESCENDING','Descending');
+  + define('_MB_SWIKI_FIELD_DESC','Which field to use');
+  + define('_MB_SWIKI_SORT_OPTION','Sort option');
+  + define('_MB_SWIKI_DISPLAY_MODE','Display mode');
+  + define('_MB_SWIKI_DISPLAY_COMPACT','Page Name Only');
+  + define('_MB_SWIKI_DISPLAY_LIGHT','Page Name + Date or Count');
+  + define('_MB_SWIKI_DISPLAY_FULL','Page Name + Author + Date or Count');
+  + define('_MB_SWIKI_DATETIME_FORMAT','Date format');
+  + define('_MB_SWIKI_DATETIME_FORMAT_INFO','<strong>Default: blank</strong> - uses the short date string, as defined in /language/(language)/global.php. See <a href="http://www.php.net/manual/en/function.date.php" target="_blank">PHP manual</a> for other options');
+  + define('_MB_SWIKI_VIEWS','Number of page views');
+
+* update.php (all new file)
+	includes modinfo.php
 
 Contributors to this release
 * skenow
@@ -58,8 +181,11 @@ Contributors to this release
 * mcdonald3072
 * pesian_stranger
 * juancj/debianus
-* xoops-magazine
+* xoops-magazine/sato
 * algalochkin
+* kilaam
+* greywolf/cath22
+* javesey
 
 == SimplyWiki 1.0/Wiwimod 0.83+ ==
 Status: Final
@@ -130,9 +256,9 @@ Language additions
   + define('_MI_WIWIMOD_AUTHOR_WORD','<h4>About Wiwi 0.8.3</h4><br />Wiwi is GPL software ; visit Wiwi home page at <a href="http://www.zonatim.com/modules/wiwimod?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> to support or get help.<br /><br />If you\'ve just migrated from an older Wiwi version (0.7.1 or less), please click here : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
 
 * include/oninstall.inc.php (constants in language/<language>/install.php) (new)
-  + define('_MI_wiki_profile1','Open Content');
-  + define('_MI_wiki_profile2','Public Content');
-  + define('_MI_wiki_profile3','Private Content');
+  + define('_MI_WIWIMOD_PROFILE1','Open Content');
+  + define('_MI_WIWIMOD_PROFILE2','Public Content');
+  + define('_MI_WIWIMOD_PROFILE3','Private Content');
   + define('_MI_WIWIMOD_WIWIHOME_TITLE','Your Wiwi home page');
   + define('_MI_WIWIMOD_WIWIHOME_TEXT','<p>\r\n<table border=\'0\'>\r\n<tbody>\r\n<tr>\r\n<td>\r\n<p>Welcome;<br />This is Wiwi\'s default home page. Feel free to edit and modify it. To create new pages, type in anywhere a page name and surround it with double square brackets ( [[ ). When you save this page, the brackets will be replaced by a link to your new page.</p>\r\n<p>Check <a href=\'manual.html\' target=_blank>the manual</a> for an in depth view of editing features.</p></td>\r\n<td><img src=\'images/wiwilogo.gif\' /></td></tr></tbody></table></p>\r\n<p>\r\n<table cellspacing=\'5\' cellpadding=\'5\' width=\'100%\' border=\'0\'>\r\n<tbody>\r\n<tr>\r\n<td bgcolor=\'#e4e4e4\'>Pages index</td>\r\n<td bgcolor=\'#e4e4e4\'>Recently modified pages</td></tr>\r\n<tr>\r\n<td bgcolor=\'#f6f6f6\'>&lt;[PageIndex]&gt;</td>\r\n<td bgcolor=\'#f6f6f6\'>&lt;[RecentChanges]&gt;</td></tr></tbody></table><br /><br /></p>');
 

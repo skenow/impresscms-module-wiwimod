@@ -12,9 +12,8 @@
 include_once 'admin_header.php';
 
 xoops_cp_header();
-echo getAdminMenu (5,'help');
+echo getAdminMenu(5, 'help');
 echo "in development...";
 
 xoops_cp_footer();
 
-?>

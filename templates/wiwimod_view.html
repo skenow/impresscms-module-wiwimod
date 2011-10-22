@@ -31,13 +31,12 @@
 	<{if $swiki.mayEdit}> <input type="button" onclick="self.location.href='index.php?page=<{$swiki.encodedurl}>&amp;op=edit';" value="<{$smarty.const._EDIT}>" /><{/if}>
 </td></tr>
 </table>
-<{if $swiki.ShowQuickAdd}><div id='writepage'>
+<{if $swiki.ShowQuickAdd && $swiki.WritePrivileges !== 0}><div id='writepage'>
     <form name='addpage' method='get' action='index.php'>
 		<fieldset>
 			<legend><{$smarty.const._MD_SWIKI_ADDPAGE}></legend>
 				<input type='text' name='page' size='60' />
 		        <input type='submit' value='<{$smarty.const._MD_SWIKI_ADDPAGE_BTN}>' />
-          		<input type='hidden' name='back' value='<{$swiki.encodedurl}>' />
 		</fieldset>
     </form>
 </div><{/if}>

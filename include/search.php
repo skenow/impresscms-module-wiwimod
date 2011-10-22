@@ -1,50 +1,48 @@
 <?php
 /**
  * Search function for SimplyWiki
- * 
+ *
  * @package SimplyWiki
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id
- */ 
-if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
+ * @version $Id$
+ */
+if (!defined('ICMS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 
-$wikiModDir = basename( dirname( dirname( __FILE__ ) ) );
-include_once XOOPS_ROOT_PATH.'/modules/'. $wikiModDir .'/class/wiwiProfile.class.php';
+$wikiModDir = basename(dirname(dirname(__FILE__)));
+include_once ICMS_ROOT_PATH . '/modules/'. $wikiModDir .'/class/wiwiProfile.class.php';
 
-function swiki_search($queryarray, $andor, $limit, $offset, $userid)
-{
+function swiki_search($queryarray, $andor, $limit, $offset, $userid) {
     global $xoopsDB;
-    
-    $sql = 'SELECT w1.* FROM '.$xoopsDB->prefix('wiwimod').' AS w1 LEFT JOIN '.$xoopsDB->prefix('wiwimod').' AS w2 ON w1.keyword=w2.keyword AND w1.id<w2.id WHERE w2.id IS NULL';
+
+    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('wiki_pages') . ' p, ' . $xoopsDB->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified';
     if (is_array($queryarray) && ($count = count($queryarray))) {
-        $sql .= ' AND (w1.title LIKE '.$queryarray[0].' OR w1.body LIKE '.$queryarray[0].')';
+        $sql .= ' AND (p.title LIKE "%' . $queryarray[0] . '%" OR r.body LIKE "%' . $queryarray[0] . '%")';
         for($i = 1; $i < $count; $i++) {
-            $sql .= ' $andor (w1.title LIKE '.$queryarray[$i].' OR w1.body LIKE '.$queryarray[$i].')';
+            $sql .= ' $andor (p.title LIKE "%' . $queryarray[$i] . '%" OR r.body LIKE "%' . $queryarray[$i] . '%")';
         }
     } else {
-        $sql .= ' AND w1.u_id='.$userid.'';
+        $sql .= ' AND r.userid=' . $userid . '';
     }
-    $sql .= ' ORDER BY w1.lastmodified DESC';
-    
+    $sql .= ' ORDER BY r.modified DESC';
+
     $items = array();
 	$prf = new WiwiProfile();
     $result = $xoopsDB->query($sql, $limit, $offset);
      while($myrow = $xoopsDB->fetchArray($result)) {
-		$prf->load($myrow['prid']); 
+		$prf->load($myrow['prid']);
 		if ($prf->canRead()) {
 			$items[] = array(
 				 'title' => $myrow['title'],
-				 'link' => 'index.php?page='.$myrow['keyword'],
-				 'time' => formatTimestamp(strtotime($myrow['lastmodified']), _SHORTDATESTRING),
-				 'uid' => $myrow['u_id'],
+				 'link' => 'index.php?page=' . $myrow['keyword'],
+				 'time' => strtotime($myrow['modified']),
+				 'uid' => $myrow['userid'],
 				 'image' => '../../images/quote.gif'
-			 );
+			);
 		}
     }
-    
+
     return $items;
 }
 
-?>

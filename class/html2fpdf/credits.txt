@@ -2,16 +2,16 @@
 				       *CREDITS*
 __________			       *********
 Thanks to:
-¯¯¯¯¯¯¯¯¯¯
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 -Olivier Plathey for the fpdf.php class (http://www.fpdf.org)
 
--Clément Lavoillotte for HTML-oriented FPDF idea
+-Clï¿½ment Lavoillotte for HTML-oriented FPDF idea
 
 -Yamasoft for the gif.php class (http://www.yamasoft.com/)
 
 -Yukihiro O. for the SetDash() function (mailto:yukihiro_o@infoseek.jp)
 
--Jérôme Fenal for the _parsegif() function
+-Jï¿½rï¿½me Fenal for the _parsegif() function
 
 -Ron Korving for the WordWrap() function
 
@@ -21,7 +21,7 @@ Thanks to:
 (mailto:vncommando@yahoo.com)
 __________________
 Special Thanks to:
-¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 --- Montfort - Cultural Association (http://www.montfort.org.br) (the site for which I generated this script)
 
 (More info can be found on the site: html2fpdf.sourceforge.net)

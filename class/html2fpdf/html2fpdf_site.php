@@ -68,7 +68,7 @@ function PutTitle($titulo)
   $this->divwidth = $this->pgwidth;
   $this->divheight = 8.5;
 
-  //Custom Word Wrap (para melhorar organização das palvras no titulo)
+  //Custom Word Wrap (para melhorar organizaï¿½ï¿½o das palvras no titulo)
   $maxwidth = $this->divwidth;
   $titulo = trim($titulo);
   $words = preg_split('/ +/', $titulo);
@@ -85,7 +85,7 @@ function PutTitle($titulo)
     $nextwordwidth = $this->GetStringWidth($nextword);
     if((strlen($word) <= 3) and ($nextword != '') and ($width + $wordwidth + $nextwordwidth > $maxwidth))
     {
-       //Para não ficar um artigo/preposição esquecido(a) no final de uma linha
+       //Para nï¿½o ficar um artigo/preposiï¿½ï¿½o esquecido(a) no final de uma linha
        $width = $wordwidth + $space;
        $titulo = rtrim($titulo)."\n".$word.' ';
     }
@@ -94,7 +94,7 @@ function PutTitle($titulo)
        $width += $wordwidth + $space;
        $titulo .= $word.' ';
     }
-    else //Palavra não cabe, pular linha e inserir na outra linha
+    else //Palavra nï¿½o cabe, pular linha e inserir na outra linha
     {
        $width = $wordwidth + $space;
        $titulo = rtrim($titulo)."\n".$word.' ';
@@ -144,10 +144,10 @@ function Footer()
 //! @return void
     //Position at 1.0 cm from bottom
     $this->SetY(-10);
-    //Copyright //especial para esta versão
+    //Copyright //especial para esta versï¿½o
     $this->SetFont('Arial','B',9);
   	$this->SetTextColor(0);
-    $texto = "Copyright ".chr(169)." 1999-".date('Y')."  -  Associação Cultural Montfort  -  ";
+    $texto = "Copyright ".chr(169)." 1999-".date('Y')."  -  Associaï¿½ï¿½o Cultural Montfort  -  ";
     $this->Cell($this->GetStringWidth($texto),10,$texto,0,0,'L');
   	$this->SetTextColor(0,0,255);
    	$this->SetStyle('U',true);
@@ -158,7 +158,7 @@ function Footer()
     //Arial italic 9
     $this->SetFont('Arial','I',9);
     //Page number
-    $this->Cell(0,10,'Pág. '.$this->PageNo().'/{nb}',0,0,'R');
+    $this->Cell(0,10,'Pï¿½g. '.$this->PageNo().'/{nb}',0,0,'R');
     //Return Font to normal
     $this->SetFont('Arial','',11);
 }

@@ -16,5 +16,3 @@ echo getAdminMenu (4,'about');
 echo _MI_SWIKI_AUTHOR_WORD;
 
 xoops_cp_footer();
-
-?>

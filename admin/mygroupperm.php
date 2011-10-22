@@ -9,7 +9,7 @@
  * @version $Id$  
  */
 
-if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
+if (!defined('ICMS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 
 function myDeleteByModule($DB, $gperm_modid, $gperm_name = null, $gperm_itemid = null)
 {
@@ -31,13 +31,13 @@ function myDeleteByModule($DB, $gperm_modid, $gperm_name = null, $gperm_itemid =
 $modid = isset($_POST['modid']) ? (int) $_POST['modid'] : 1;
 // we dont want system module permissions to be changed here ( 1 -> 0 GIJ)
 if ($modid <= 0 || !is_object($xoopsUser) || !$xoopsUser->isAdmin($modid)) {
-	redirect_header(XOOPS_URL.'/user.php', 1, _NOPERM);
+	redirect_header(ICMS_URL.'/user.php', 1, _NOPERM);
 	exit();
 }
 $module_handler =& xoops_gethandler('module');
 $module =& $module_handler->get($modid);
 if (!is_object($module) || !$module->getVar('isactive')) {
-	redirect_header(XOOPS_URL.'/admin.php', 1, _MODULENOEXIST);
+	redirect_header(ICMS_URL.'/admin.php', 1, _MODULENOEXIST);
 	exit();
 }
 $member_handler =& xoops_gethandler('member');
@@ -62,7 +62,7 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
 							foreach ($parent_ids as $pid) {
 								if ($pid != 0 && !in_array($pid, array_keys($item_ids))) {
 									// one of the parent items were not selected, so skip this item
-									$msg[] = sprintf(_MD_AM_PERMADDNG, '<b>'.$perm_name.'</b>', '<b>'.$perm_data['itemname'][$item_id].'</b>', '<b>'.$group_list[$group_id].'</b>').' ('._MD_AM_PERMADDNGP.')';
+									$msg[] = sprintf(_MD_AM_PERMADDNG, '<strong>'.$perm_name.'</strong>', '<strong>'.$perm_data['itemname'][$item_id].'</strong>', '<strong>'.$group_list[$group_id].'</strong>').' ('._MD_AM_PERMADDNGP.')';
 									continue 2;
 								}
 							}
@@ -73,9 +73,9 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
 						$gperm->setVar('gperm_modid', $modid);
 						$gperm->setVar('gperm_itemid', $item_id);
 						if (!$gperm_handler->insert($gperm)) {
-							$msg[] = sprintf(_MD_AM_PERMADDNG, '<b>'.$perm_name.'</b>', '<b>'.$perm_data['itemname'][$item_id].'</b>', '<b>'.$group_list[$group_id].'</b>');
+							$msg[] = sprintf(_MD_AM_PERMADDNG, '<strong>'.$perm_name.'</strong>', '<strong>'.$perm_data['itemname'][$item_id].'</strong>', '<strong>'.$group_list[$group_id].'</strong>');
 						} else {
-							$msg[] = sprintf(_MD_AM_PERMADDOK, '<b>'.$perm_name.'</b>', '<b>'.$perm_data['itemname'][$item_id].'</b>', '<b>'.$group_list[$group_id].'</b>');
+							$msg[] = sprintf(_MD_AM_PERMADDOK, '<strong>'.$perm_name.'</strong>', '<strong>'.$perm_data['itemname'][$item_id].'</strong>', '<strong>'.$group_list[$group_id].'</strong>');
 						}
 						unset($gperm);
 					}
@@ -86,17 +86,3 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
 		}
 	}
 }
-/*
-$backlink = XOOPS_URL.'/admin.php';
-if ($module->getVar('hasadmin')) {
-	$adminindex = $module->getInfo('adminindex');
-	if ($adminindex) {
-		$backlink = XOOPS_URL.'/modules/'.$module->getVar('dirname').'/'.$adminindex;
-	}
-}
-
-$msg[] = '<br /><br /><a href="'.$backlink.'">'._BACK.'</a>';
-xoops_cp_header();
-xoops_result($msg);
-xoops_cp_footer();  GIJ */
-?>

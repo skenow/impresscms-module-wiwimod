@@ -10,7 +10,7 @@
  */
 include_once 'header.php';
 include_once 'class/wiwiRevision.class.php';
-require_once XOOPS_ROOT_PATH.'/class/template.php';
+require_once ICMS_ROOT_PATH.'/class/template.php';
 define('FPDF_FONTPATH','class/html2fpdf/font/');
 require 'class/html2fpdf/html2fpdf.php';
 if (isset($_GET['page'])) $page = $_GET['page']; else $page="";
@@ -28,7 +28,7 @@ function printPage(&$pageObj,&$pdf) {
 	// Meta tags
 	$config_handler =& xoops_gethandler('config');
 	$criteria = new CriteriaCompo(new Criteria('conf_modid', 0));
-	$criteria->add(new Criteria('conf_catid', XOOPS_CONF_METAFOOTER));
+	$criteria->add(new Criteria('conf_catid', ICMS_CONF_METAFOOTER));
 	$config =& $config_handler->getConfigs($criteria, true);
 	foreach (array_keys($config) as $i) {
 		// prefix each tag with 'xoops_'
@@ -44,7 +44,7 @@ function printPage(&$pageObj,&$pdf) {
 		'title' => $pageObj->title, 
 		'body' => $pagecontent, 
 		'lastmodified' => formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING), 
-		'author' => getUserName($pageObj->u_id), 
+		'author' => xoops_getLinkedUnameFromId($pageObj->u_id), 
 		));
 	ob_start();
 		$xoopsTpl->xoops_setCaching(0);
@@ -121,13 +121,13 @@ if (!printPages($page, $pdf, true, $msg)) {
 	exit();
 } 
 // create a temp file
-//$file=tempnam(XOOPS_ROOT_PATH.'/uploads','wiwitmp');
+//$file=tempnam(ICMS_ROOT_PATH.'/uploads','wiwitmp');
 //rename($file,$file.'.pdf');
 //$file.='.pdf';
 //$pdf->Output($file);
 $pdf->Output();
 // cleanup old temp files (more than one hour old)
-//cleanupDir(XOOPS_ROOT_PATH.'/uploads');
+//cleanupDir(ICMS_ROOT_PATH.'/uploads');
 // redirect page to the newly created pdf.
-//echo "<HTML><SCRIPT>document.location='".XOOPS_URL."/uploads/".basename($file)."';</SCRIPT></HTML>"; 
+//echo "<HTML><SCRIPT>document.location='".ICMS_URL."/uploads/".basename($file)."';</SCRIPT></HTML>"; 
 ?>

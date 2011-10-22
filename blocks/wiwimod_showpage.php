@@ -1,26 +1,26 @@
 <?php
 /**
  * This block displays a Wiwi page.
- * 
+ *
  * Page selection is done within block administration (TODO)
  * if the reader has modification privilege, shows the "edit" button (TODO) >> see bug
  * @package SimplyWiki
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$  
+ * @version $Id$
  */
 
 //  Bugs :	- language constants aren't initialized...
 
-$wikiModDir = basename(dirname(dirname( __FILE__ )));
-include_once XOOPS_ROOT_PATH.'/modules/' . $wikiModDir . '/header.php';
-include_once XOOPS_ROOT_PATH.'/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
+$wikiModDir = basename(dirname(dirname(__FILE__)));
+include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/header.php';
+include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
 function swiki_showpage ($options) {
 	global $xoopsDB, $xoopsModuleConfig, $xoopsUser, $myts;
-	$wikiModDir = basename(dirname(dirname( __FILE__ ))) ;
-   
+	$wikiModDir = basename(dirname(dirname(__FILE__))) ;
+	 
 	$block = array();
 	$pageObj = new wiwiRevision($options[0]);
 	if ($pageObj->id == 0) {
@@ -28,44 +28,38 @@ function swiki_showpage ($options) {
 		$block['_MD_SWIKI_PAGENOTFOUND'] = _MB_SWIKI_PAGENOTFOUND_MSG;
 	} else {
 		$block['notfound'] = false;
-		if ($pageObj->canRead()) {
-			$pagecontent = $pageObj->render();
+		if (!$pageObj->canRead()) {
+			$pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>" . _MB_SWIKI_NOREADACCESS_MSG . "</td></tr></table></center><br><br>";
 		} else {
-			$pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>"._MB_SWIKI_NOREADACCESS_MSG."</td></tr></table></center><br><br>";
+			// Handle pagebreaks
+			$cpages = explode ("[pagebreak]", $pagecontent);
+			if (isset($_GET['wiwistartpage'])) $startpage = (int) $_GET['wiwistartpage'] ; else $startpage = 0;
+			if (count($cpages) > 0) {
+				include_once ICMS_ROOT_PATH . '/class/pagenav.php';
+				$pagenav = new XoopsPageNav(count($cpages), 1, $startpage, 'wiwistartpage', '');
+				$block['nav'] = $pagenav->RenderNav();
+				$pagecontent = $cpages[$startpage];
+			}
+			$pagecontent = $pageObj->render($pagecontent);
 		}
-
-		//
-		// Handle pagebreaks
-		//
-		$cpages = explode ("[pagebreak]", $pagecontent);
-		if (isset($_GET['wiwistartpage'])) $startpage = intval($_GET['wiwistartpage']) ; else $startpage = 0;
-		if (count($cpages) > 0) {
-			include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-			$pagenav = new XoopsPageNav(count($cpages), 1, $startpage, 'wiwistartpage', ''); 
-			$block['nav'] = $pagenav->RenderNav();
-			$pagecontent = $cpages[$startpage];
-		}
-		
 		$block['keyword'] = $pageObj->keyword;
 		$block['encodedurl'] = $pageObj->encode($pageObj->keyword);
 		$block['title'] = $pageObj->title;
 		$block['body'] = $pagecontent;
 		$block['lastmodified'] = formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING);
-		$block['author'] = getUserName($pageObj->u_id);
+		$block['author'] = xoops_getLinkedUnameFromId($pageObj->u_id);
 
 		$block['mayEdit'] = $pageObj->canWrite();
 		$block['EDIT'] = _EDIT;
-	$block['dirname'] = $wikiModDir;
+		$block['dirname'] = $wikiModDir;
 	}
 	return $block;
 }
 
 function swiki_contextshow($options) {
 	global $xoopsDB, $xoopsModuleConfig, $xoopsUser, $myts;
-	$wikiModDir = basename(dirname(dirname( __FILE__ ))) ;
-	//
+	$wikiModDir = basename(dirname(dirname(__FILE__))) ;
 	// Get content to display
-	//
 	$preg_res = array();
 	$sidePage = '';
 	$block = array();
@@ -73,8 +67,7 @@ function swiki_contextshow($options) {
 		$page = urldecode($preg_res[1]);
 	} else $page=_MB_SWIKI_HOME;
 
-	//$sql = 'SELECT contextBlock FROM '.$xoopsDB->prefix('wiwimod').' WHERE keyword="'.$page.'" ORDER BY id DESC LIMIT 1';
-	$sql = 'SELECT contextBlock FROM '.$xoopsDB->prefix('wiki_pages').' WHERE keyword="'.$page.'" ORDER BY pageid DESC LIMIT 1';
+	$sql = 'SELECT contextBlock FROM ' . $xoopsDB->prefix('wiki_pages') . ' WHERE keyword="' . $page . '" ORDER BY pageid DESC LIMIT 1';
 	$result = $xoopsDB->query($sql);
 	list($sidePage) = $xoopsDB->fetchRow($result);
 	if ($sidePage != '') {
@@ -86,7 +79,7 @@ function swiki_contextshow($options) {
 				$block['title'] = $pageObj->title;
 				$block['body'] = $pageObj->render();
 				$block['lastmodified'] = formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING);
-				$block['author'] = getUserName($pageObj->u_id);
+				$block['author'] = xoops_getLinkedUnameFromId($pageObj->u_id);
 				$block['mayEdit'] = $pageObj->canWrite();
 				$block['EDIT'] = _EDIT;
 			} else {
@@ -98,17 +91,15 @@ function swiki_contextshow($options) {
 				$block['mayEdit'] = false;
 				$block['EDIT'] = _EDIT;
 			}
-
 		}
-	$block['dirname'] = $wikiModDir;
+		$block['dirname'] = $wikiModDir;
 	}
 	return $block;
 }
 
 function swiki_showpage_blockedit ($options) {
-    $form = _MB_SWIKI_SHOWPAGE_DESC."&nbsp;:&nbsp;<input type='text' name='options[0]' value='".$options[0]."' />";
+	$form = _MB_SWIKI_SHOWPAGE_DESC . "&nbsp;:&nbsp;<input type='text' name='options[0]' value='" . $options[0] . "' />";
 	return $form;
 
 }
 
-?>

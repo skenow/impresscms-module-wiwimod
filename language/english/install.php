@@ -29,4 +29,3 @@
           <tr><td bgcolor=\'#f6f6f6\'>&lt;[PageIndex]&gt;</td>
           <td bgcolor=\'#f6f6f6\'>&lt;[RecentChanges]&gt;</td></tr></tbody></table>
      </p>");
-?>

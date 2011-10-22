@@ -34,4 +34,3 @@ $adminmenu[] = array(
      'link'  => 'admin/help.php',
      'icon' => 'images/help.png',
      'small' => 'images/help_small.png');
-?>

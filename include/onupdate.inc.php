@@ -9,17 +9,17 @@
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$  
  */
-if (!defined("XOOPS_ROOT_PATH") && !defined('ICMS_ROOT_PATH')) exit("Root path not defined");
+if (!defined("ICMS_ROOT_PATH") && !defined('ICMS_ROOT_PATH')) exit("Root path not defined");
 
 function xoops_module_update_wiwimod (){ 
      $wikiInstallDir = dirname(dirname(__FILE__));
      $wikiModDir = basename(dirname(dirname(__FILE__)));
      global $xoopsConfig;
           
-     if (@file_exists($wikiInstallDir.'/language/'.$xoopsConfig['language'].'/update.php')){
-          include $wikiInstallDir.'/language/'.$xoopsConfig['language'].'/update.php';
+     if (@file_exists($wikiInstallDir . '/language/' . $xoopsConfig['language'] . '/update.php')){
+          include $wikiInstallDir . '/language/' . $xoopsConfig['language'] . '/update.php';
      } else {
-          include $wikiInstallDir.'/language/english/update.php';
+          include $wikiInstallDir . '/language/english/update.php';
      }
      
      $db =& Database::getInstance();
@@ -66,7 +66,7 @@ function xoops_module_update_wiwimod (){
           $db->query($sql);
 
 	/* The initial insert of data pulls the first record and for some columns we want the last record. This will accomplish that */
-     $sql = 'UPDATE '.$db->prefix('wiki_pages') .' p, '. $db->prefix('wiwimod') .' w 
+     $sql = 'UPDATE ' . $db->prefix('wiki_pages') .' p, '. $db->prefix('wiwimod') .' w 
        SET p.visible = w.visible, p.prid = w.prid, p.parent = w.parent, p.title = w.title, p.contextBlock = w.contextBlock
        WHERE p.pageid = w.pageid AND p.lastmodified = w.lastmodified';
      $db->query($sql);  
@@ -89,7 +89,7 @@ function xoops_module_update_wiwimod (){
      $sql = 'SELECT pageid FROM '. $db->prefix('wiki_revisions');
      $result = $db->query($sql);
      if ($db->getRowsNum($result) < 1) {
-          $sql = 'INSERT INTO '. $db->prefix('wiki_revisions').' (pageid, body, modified, userid)
+          $sql = 'INSERT INTO '. $db->prefix('wiki_revisions') . ' (pageid, body, modified, userid)
                SELECT pageid, body, lastmodified, u_id 
                FROM '. $db->prefix('wiwimod');
           $db->query($sql);
@@ -107,7 +107,7 @@ function xoops_module_update_wiwimod (){
 	$sql = 'SELECT prid FROM '. $db->prefix('wiki_profiles');
 	$result = $db->query($sql);
 	if ($db->getRowsNum($result) < 1) {
-		$sql = 'INSERT INTO '. $db->prefix('wiki_profiles').'
+		$sql = 'INSERT INTO '. $db->prefix('wiki_profiles') . '
 			SELECT * FROM '. $db->prefix('wiwimod_profiles') ;
 		$db->query($sql);
 	}
@@ -122,7 +122,7 @@ function xoops_module_update_wiwimod (){
 	$sql = 'SELECT prid FROM '. $db->prefix('wiki_prof_groups');
 	$result = $db->query($sql);
 	if ($db->getRowsNum($result) < 1) {
-		$sql = 'INSERT INTO '. $db->prefix('wiki_prof_groups').'
+		$sql = 'INSERT INTO '. $db->prefix('wiki_prof_groups') . '
 			SELECT * FROM '. $db->prefix('wiwimod_prof_groups') ;
 		$db->query($sql);
 	}
@@ -130,21 +130,20 @@ function xoops_module_update_wiwimod (){
 /* After the pages and revisions are moved, the notifications and comments tables need to be updated, and the tag module, if that is installed */
      
 /* Remove old tables */
-       $sql = 'DROP TABLE IF EXISTS '. $db->prefix('wiwimod').', '.$db->prefix('wiwimod_profiles').', '.$db->prefix('wiwimod_prof_groups');
+       $sql = 'DROP TABLE IF EXISTS '. $db->prefix('wiwimod') . ', ' . $db->prefix('wiwimod_profiles') . ', ' . $db->prefix('wiwimod_prof_groups');
        $db->query($sql);
 
 /* Because of the way profiles are generated, the config options need to be updated */
- include_once $wikiInstallDir.'/class/wiwiProfile.class.php';
+ include_once $wikiInstallDir . '/class/wiwiProfile.class.php';
  $prof = new WiwiProfile();
  $prof->updateModuleConfig();
  
- return true;
+ return TRUE;
 }
 
 /* This will create a function with a name based on the installation directory, if it is not in SimplyWiki */
      $wikiModDir = basename(dirname(dirname(__FILE__)));
-     if (!function_exists('xoops_module_update_'.$wikiModDir)) {
-      $myfunc = "function xoops_module_update_".$wikiModDir."() { return xoops_module_update_wiwimod();}";
+     if (!function_exists('xoops_module_update_' . $wikiModDir)) {
+      $myfunc = "function xoops_module_update_" . $wikiModDir . "() { return xoops_module_update_wiwimod();}";
       eval($myfunc);
      }
-?>

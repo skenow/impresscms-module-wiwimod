@@ -78,8 +78,8 @@ define('_AM_SWIKI_ACLADMIN_NAV','privileges (ACL)');
 define("_AM_SWIKI_BLOCKSNGROUPS_NAV", "blocks and groups");
 
 define('_AM_SWIKI_NOPAGESPECIFIED_MSG','Please select a page');
-define('_AM_SWIKI_CONFIRMDEL_MSG','Do you really want to delete this Wiwi page?');
-define('_AM_SWIKI_CONFIRMFIX_MSG','Do you really want to fix this Wiwi page?');
+define('_AM_SWIKI_CONFIRMDEL_MSG','Do you really want to delete this Wiki page?');
+define('_AM_SWIKI_CONFIRMFIX_MSG','Do you really want to fix this Wiki page?');
 define('_AM_SWIKI_CONFIRMCLEAN_MSG','Do you really want to clean up the database?');
 define('_AM_SWIKI_PRFSAVESUCCESS_MSG','Profile successfully saved on database');
 define('_AM_SWIKI_PRFSAVEFAILED_MSG','Error while storing profile. Database NOT updated');
@@ -87,4 +87,7 @@ define('_AM_SWIKI_ERRDELETE_MSG','Error : unable to delete profile');
 define('_AM_SWIKI_PRFDELSUCCESS_MSG','Profile deleted from the database.');
 define('_AM_SWIKI_PRFDELFAILED_MSG','Error while deleting profile. Database NOT updated');
 define('_AM_SWIKI_SYS_CFG','System Configuration');
-?>
+
+//added in version 1.2
+define('_AM_SWIKI_GOTO_MODULE', 'Go to module');
+define('_AM_SWIKI_UPDATE_MODULE', 'Update module');

@@ -9,7 +9,7 @@ define('_MI_SWIKI_NAME','ویوی');
 define('_MI_SWIKI_DESC','دانشنامه‌ای برای ایمپرس سی‌ام‌اس.');
 
 // Admin menu
-define('_MI_SWIKI_ADMENU1','صفحات');
+define('_MI_SWIKI_ADMENU1','ص�?حات');
 define('_MI_SWIKI_ADMENU2','دسترسی‌ها');
 define('_MI_SWIKI_ADMENU3','بلوک‌ها/گروه‌ها');
 define('_MI_SWIKI_ADMENU4','درباره‌ی سازنده');
@@ -59,7 +59,30 @@ define('_MI_SWIKI_BLOCK_RELATED_NAME','WiwiSideContent');
 define('_MI_SWIKI_BLOCK_RELATED_DESC','Side block for extra content on Wiwi pages');
 define('_MI_SWIKI_BLOCK_SHOWPAGE_NAME','WiwiShowPage');
 define('_MI_SWIKI_BLOCK_SHOWPAGE_DESC','Show a wiwi page');
-define('_MI_SWIKI_AUTHOR_WORD','<h4>About Wiwi 0.8.3</h4><br />Wiwi is GPL software ; visit Wiwi home page at <a href="http://www.zonatim.com/modules/wiwimod?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> to support or get help.<br /><br />If you\'ve just migrated from an older Wiwi version (0.7.1 or less), please click here : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
+define('_MI_SWIKI_AUTHOR_WORD','<h4>Help About SimpyWiki</h4><br />SimplyWiki is GPL software ; visit the community support page at <a href="http://community.impresscms.org/" target="_blank">community.impresscms.org</a> to support or get help.<br /><br />If you\'ve just migrated from an older Wiwi version (0.7.1 or less), please click here : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
 define('_MI_SWIKI_DEFAULTPROFILE_DESC','Default profile assigned to new pages');
-if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','صفحه‌ی آغاز');}
+if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','ص�?حه‌ی آغاز');}
+
+// Added in SimplyWiki 1.1
+define('_MI_SWIKI_BLOCK_LISTPAGES_NAME','List Pages');
+define('_MI_SWIKI_BLOCK_LISTPAGES_DESC','Display a list of pages');
+define('_MI_SWIKI_BLOCK_ADDPAGE_NAME','Add Page');
+define('_MI_SWIKI_BLOCK_ADDPAGE_DESC','Add a wiki page from anywhere on your site');
+define('_MI_SWIKI_BLOCK_TAGCLOUD_NAME','Wiki Tag Cloud');
+define('_MI_SWIKI_BLOCK_TAGCLOUD_DESC','A tag cloud for SimplyWiki');
+define('_MI_SWIKI_BLOCK_TAG_NAME','Wiki Top Tags');
+define('_MI_SWIKI_BLOCK_TAG_DESC','A list of top tags for SimplyWiki');
+define('_MI_SWIKI_PAGEINFO','Show Page Information');
+define('_MI_SWIKI_PAGEINFO_DESC', 'Select which page details to display with the page');
+define('_MI_SWIKI_SHOWREVISIONS','Show number of revisions');
+define('_MI_SWIKI_SHOWVIEWS','Show number of views');
+define('_MI_SWIKI_SHOWCREATED','Show date created and creator');
+define('_MI_SWIKI_SHOWLASTREVISED','Show date of last revision');
+define('_MI_SWIKI_LASTVIEWED','Show date last viewed');
+define('_MI_SWIKI_USECAPTCHA','Enable CAPTCHA');
+define('_MI_SWIKI_USECAPTCHA_DESC', 'Display CAPTCHA on edit form');
+define('_MI_SWIKI_SHOWQUICKADD','Enable the Quick Add feature');
+define('_MI_SWIKI_SHOWQUICKADD_DESC', 'Setting to <em>Yes</em> displays the Quick Add field, allowing the editors to type a page name and go directly to editing the page');
+define('_MI_SWIKI_TOPPAGE', 'Index Page');
+define('_MI_SWIKI_TOPPAGE_DESC', 'Page to be shown on the main page of the module');
 ?>

@@ -12,7 +12,7 @@
 /*
  * derived from standard XoopsPageNav, to use a custom function to change current page.
  */
-include_once XOOPS_ROOT_PATH . '/class/pagenav.php'; 
+include_once ICMS_ROOT_PATH . '/class/pagenav.php'; 
 
 class wiwiPageNav extends XoopsPageNav {
 
@@ -56,10 +56,10 @@ class wiwiPageNav extends XoopsPageNav {
 				}
 			}
 			$counter = 1;
-			$current_page = intval(floor(($this->current + $this->perpage) / $this->perpage));
+			$current_page = (int) floor(($this->current + $this->perpage) / $this->perpage);
 			while ( $counter <= $total_pages ) {
 				if ( $counter == $current_page ) {
-					$ret .= '<b>('.$counter.')</b> ';
+					$ret .= '<strong>('.$counter.')</strong> ';
 				} elseif ( ($counter > $current_page-$offset && $counter < $current_page + $offset ) || $counter == 1 || $counter == $total_pages ) {
 					if ( $counter == $total_pages && $current_page < $total_pages - $offset ) {
 						$ret .= '... ';
@@ -88,4 +88,3 @@ class wiwiPageNav extends XoopsPageNav {
 	}
 
 }
-?>

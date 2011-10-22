@@ -13,30 +13,30 @@
 
 
 define('_AM_SWIKI_ADMIN_TXT','Administration du module');
-define('_AM_SWIKI_PAGESFILTER_TXT','Afficher les pages où ');
+define('_AM_SWIKI_PAGESFILTER_TXT','Afficher les pages oï¿½ ');
 define('_AM_SWIKI_LIKE_TXT','contient');
 define('_AM_SWIKI_PROFILEIS_TXT','est');
-define('_AM_SWIKI_ORDERBY_TXT',', classé par');
-define('_AM_SWIKI_LISTPAGES_RESULTS_TXT','pages trouvées');
+define('_AM_SWIKI_ORDERBY_TXT',', classï¿½ par');
+define('_AM_SWIKI_LISTPAGES_RESULTS_TXT','pages trouvï¿½es');
 
 define('_AM_SWIKI_SELECTACL_BOX','');
 define('_AM_SWIKI_SELECTACL_TXT','Modifiez un profil :');
-define('_AM_SWIKI_CREATEACL_TXT','ou créez-en un nouveau :');
+define('_AM_SWIKI_CREATEACL_TXT','ou crï¿½ez-en un nouveau :');
 define('_AM_SWIKI_EDITACL_TXT','Informations sur le profil');
 define('_AM_SWIKI_ACLHELP_TXT','
-	<p>Le système de contrôle d\'accès s\'appuie sur des "profils" nommés, qui énumèrent les groupes Xoops ayant le droit de lire/éditer/administrer les pages correspondantes.</p>
+	<p>Le systï¿½me de contrï¿½le d\'accï¿½s s\'appuie sur des "profils" nommï¿½s, qui ï¿½numï¿½rent les groupes Xoops ayant le droit de lire/ï¿½diter/administrer les pages correspondantes.</p>
 	<ul>
-		<li>Les&nbspéditeurs&nbsp;peuvent modifier la page affichée, et créer de nouvelles pages avec le même profil.</li>
-		<li>Les administrateurs peuvent changer le profil de la page affichée, et lui affecter un autre profil pour lequel ils disposent également de droits d\'administration.</li></ul>
-	<p>Le profil par défaut des nouvelles pages est celui de la page à partir de laquelle elles ont été créées.</p>
-	<p>Les profils déterminent également l\'accès aux commentaires. Cela est utile notamment pour permettre des commentaires privés sur des pages publiques.</p>
-	<p>Note : Les webmasters Xoops ont un accès complet à toutes les pages.</p>
+		<li>Les&nbspï¿½diteurs&nbsp;peuvent modifier la page affichï¿½e, et crï¿½er de nouvelles pages avec le mï¿½me profil.</li>
+		<li>Les administrateurs peuvent changer le profil de la page affichï¿½e, et lui affecter un autre profil pour lequel ils disposent ï¿½galement de droits d\'administration.</li></ul>
+	<p>Le profil par dï¿½faut des nouvelles pages est celui de la page ï¿½ partir de laquelle elles ont ï¿½tï¿½ crï¿½ï¿½es.</p>
+	<p>Les profils dï¿½terminent ï¿½galement l\'accï¿½s aux commentaires. Cela est utile notamment pour permettre des commentaires privï¿½s sur des pages publiques.</p>
+	<p>Note : Les webmasters Xoops ont un accï¿½s complet ï¿½ toutes les pages.</p>
 	');
 define('_AM_SWIKI_DELCONFIRMTITLE_TXT','CONFIRMATION DE SUPPRESSION');
 define('_AM_SWIKI_DELCONFIRM_TXT','Vous allez supprimer un profil. Veuillez confirmer ce choix en cochant la case ci-contre.');
-define('_AM_SWIKI_DELREDIR_TXT','Choisissez un nouveau profil pour les pages actuellement liées à celui-ci.');
+define('_AM_SWIKI_DELREDIR_TXT','Choisissez un nouveau profil pour les pages actuellement liï¿½es ï¿½ celui-ci.');
 
-define('_AM_SWIKI_LISTPAGES_BTN','<< Retour à la liste de pages');
+define('_AM_SWIKI_LISTPAGES_BTN','<< Retour ï¿½ la liste de pages');
 define('_AM_SWIKI_CREATEACL_BTN','Nouveau');
 define('_AM_SWIKI_EDITACL_SAVE_BTN','Enregistrer');
 define('_AM_SWIKI_EDITACL_DELETE_BTN','Supprimer');
@@ -47,7 +47,7 @@ define('_AM_SWIKI_CLEANUPDB_BTN','Purger la base documentaire');
 define('_AM_SWIKI_ACLNAME_FLD','Nom du profil');
 define('_AM_SWIKI_ACLDESC_FLD','Description');
 define('_AM_SWIKI_READERS_FLD','Groupes "simples lecteurs"');
-define('_AM_SWIKI_WRITERS_FLD','Groupes "éditeurs"');
+define('_AM_SWIKI_WRITERS_FLD','Groupes "ï¿½diteurs"');
 define('_AM_SWIKI_ADMINISTRATORS_FLD','Groupes "administrateurs"');
 define('_AM_SWIKI_COMMENTS_FLD','Qui peut lire/poster des commentaires :');
 define('_AM_SWIKI_HISTORY_FLD','Qui peut voir l\'historique des pages :');
@@ -68,23 +68,25 @@ define('_AM_SWIKI_LISTPAGES_BODY_OPT','contenu');
 define('_AM_SWIKI_LISTPAGES_UID_OPT','dernier auteur');
 define('_AM_SWIKI_LISTPAGES_PARENT_OPT','parent');
 define('_AM_SWIKI_LISTPAGES_PRID_OPT','profil');
-define('_AM_SWIKI_LISTPAGES_LASTMODIFIED_OPT','modifiée');
-define('_AM_SWIKI_LISTPAGES_ORDERDESC_OPT','décroissant');
+define('_AM_SWIKI_LISTPAGES_LASTMODIFIED_OPT','modifiï¿½e');
+define('_AM_SWIKI_LISTPAGES_ORDERDESC_OPT','dï¿½croissant');
 define('_AM_SWIKI_LISTPAGES_ORDERASC_OPT','croissant');
 
 define('_AM_SWIKI_LISTPAGE_NAV','pages');
 define('_AM_SWIKI_HISTORY_NAV','historique');
-define('_AM_SWIKI_ACLADMIN_NAV','privilèges (ACL)');
+define('_AM_SWIKI_ACLADMIN_NAV','privilï¿½ges (ACL)');
 define("_AM_SWIKI_BLOCKSNGROUPS_NAV", "blocs et groupes");
 
 define('_AM_SWIKI_NOPAGESPECIFIED_MSG','Veuillez choisir une page');
 define('_AM_SWIKI_CONFIRMDEL_MSG','Souhaitez-vous vraiment supprimer cette page ?');
-define('_AM_SWIKI_CONFIRMFIX_MSG','Souhaitez-vous vraiment effacer les révisions antérieures à celle-ci ?');
-define('_AM_SWIKI_CONFIRMCLEAN_MSG','Souhaite-vous vraiment purger la base documentaire des anciennes révisions ?');
-define('_AM_SWIKI_PRFSAVESUCCESS_MSG','Profil enregistré avec succès');
+define('_AM_SWIKI_CONFIRMFIX_MSG','Souhaitez-vous vraiment effacer les rï¿½visions antï¿½rieures ï¿½ celle-ci ?');
+define('_AM_SWIKI_CONFIRMCLEAN_MSG','Souhaite-vous vraiment purger la base documentaire des anciennes rï¿½visions ?');
+define('_AM_SWIKI_PRFSAVESUCCESS_MSG','Profil enregistrï¿½ avec succï¿½s');
 define('_AM_SWIKI_PRFSAVEFAILED_MSG','Echec lors de l\'enregistrement du profil');
 define('_AM_SWIKI_ERRDELETE_MSG','Erreur : impossible de supprimer le profil');
-define('_AM_SWIKI_PRFDELSUCCESS_MSG','Profile effacé de la base de données.');
+define('_AM_SWIKI_PRFDELSUCCESS_MSG','Profile effacï¿½ de la base de donnï¿½es.');
 define('_AM_SWIKI_PRFDELFAILED_MSG','Erreur lors de l\'effacement du profil.');
 
-?>
+//added in version 1.2
+define('_AM_SWIKI_GOTO_MODULE', 'Go to module');
+define('_AM_SWIKI_UPDATE_MODULE', 'Update module');

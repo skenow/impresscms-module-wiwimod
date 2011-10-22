@@ -28,20 +28,20 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
+if (!defined('ICMS_ROOT_PATH') && !defined('XOOPS_ROOT_PATH')) exit();
 
-require_once XOOPS_ROOT_PATH.'/class/xoopsform/formelement.php';
-require_once XOOPS_ROOT_PATH.'/class/xoopsform/formhidden.php';
-require_once XOOPS_ROOT_PATH.'/class/xoopsform/formbutton.php';
-require_once XOOPS_ROOT_PATH.'/class/xoopsform/formelementtray.php';
-require_once XOOPS_ROOT_PATH.'/class/xoopsform/form.php';
+require_once ICMS_ROOT_PATH.'/class/xoopsform/formelement.php';
+require_once ICMS_ROOT_PATH.'/class/xoopsform/formhidden.php';
+require_once ICMS_ROOT_PATH.'/class/xoopsform/formbutton.php';
+require_once ICMS_ROOT_PATH.'/class/xoopsform/formelementtray.php';
+require_once ICMS_ROOT_PATH.'/class/xoopsform/form.php';
 
 /**
  * Renders a form for setting module specific group permissions
- * 
+ *
  * @author	Kazumi Ono	<onokazu@myweb.ne.jp>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * 
+ *
  * @package     kernel
  * @subpackage  form
  */
@@ -79,9 +79,9 @@ class MyXoopsGroupPermForm extends XoopsForm
 	 */
 	function MyXoopsGroupPermForm($title, $modid, $permname, $permdesc)
 	{
-//		$this->XoopsForm($title, 'groupperm_form', XOOPS_URL.'/modules/system/admin/groupperm.php', 'post'); GIJ
+//		$this->XoopsForm($title, 'groupperm_form', ICMS_URL.'/modules/system/admin/groupperm.php', 'post'); GIJ
 		$this->XoopsForm($title, 'groupperm_form', '' , 'post');
-		$this->_modid = intval($modid);
+		$this->_modid = (int) $modid;
 		$this->_permName = $permname;
 		$this->_permDesc = $permdesc;
 		$this->addElement(new XoopsFormHidden('modid', $this->_modid));
@@ -201,14 +201,20 @@ class MyXoopsGroupPermForm extends XoopsForm
 		$ret .= '</table></form>';
 		return $ret;
 	}
+
+	/**
+	 * This must be implemented for the abstract parent class
+	 */
+	public function insertBreak( $extra = NULL ){
+	}
 }
 
 /**
  * Renders checkbox options for a group permission form
- * 
+ *
  * @author	Kazumi Ono	<onokazu@myweb.ne.jp>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * 
+ *
  * @package     kernel
  * @subpackage  form
  */
@@ -370,4 +376,3 @@ class MyXoopsGroupFormCheckBox extends XoopsFormElement
 		}
 	}
 }
-?>

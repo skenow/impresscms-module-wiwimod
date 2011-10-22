@@ -1825,7 +1825,7 @@ function _parsepng($file)
 
 function _parsegif($file) //EDITEI - updated
 { 
-	//Function by Jérôme Fenal
+	//Function by Jï¿½rï¿½me Fenal
 	require_once 'gif.php'; //GIF class in pure PHP from Yamasoft (formerly at http://www.yamasoft.com)
 
 	$h=0;

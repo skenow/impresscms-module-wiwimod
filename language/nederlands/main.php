@@ -20,8 +20,6 @@ define('_MD_SWIKI_BODY_TXT','Pagina content');
 define('_MD_SWIKI_DIFF_TXT','Verschillen tussen de huidige en laatst gereviseerde pagina');
 define('_MD_SWIKI_THISPAGE','Deze pagina');
 
-//define('_MD_WIWI_EDIT_BTN','Bewerk');
-//define('_MD_WIWI_PREVIEW_BTN','Voorbeeld');
 define('_MD_SWIKI_SUBMITREVISION_BTN','Nieuwe revisie');
 define('_MD_SWIKI_QUIETSAVE_BTN','Opslaan');
 define('_MD_SWIKI_HISTORY_BTN','Geschiedenis');
@@ -45,7 +43,6 @@ define('_MD_SWIKI_AUTHOR_COL','Auteur');
 define('_MD_SWIKI_ACTION_COL','Actie');
 define('_MD_SWIKI_KEYWORD_COL','Pagina ID');
 
-
 define('_MD_SWIKI_PAGENOTFOUND_MSG',"Deze pagina bestaat nog niet.");
 define('_MD_SWIKI_DBUPDATED_MSG','De Database is successvol bijgewerkt!');
 define('_MD_SWIKI_ERRORINSERT_MSG','FOUT: Er is een fout opgetreden tijdens het bijwerken van de database!');
@@ -61,7 +58,6 @@ define('_MD_SWIKI_AUTHOR_COL','Author');
 define('_MD_SWIKI_ACTION_COL','Action');
 define('_MD_SWIKI_KEYWORD_COL','Page ID');
 
-
 define('_MD_SWIKI_PAGENOTFOUND_MSG',"This page doesn't exist yet.");
 define('_MD_SWIKI_DBUPDATED_MSG','Database successfully updated!');
 define('_MD_SWIKI_ERRORINSERT_MSG','Error while updating database!');
@@ -74,6 +70,7 @@ define('_MD_SWIKI_NOWRITEACCESS_MSG','<br /><h4>Sorry, you don\'t have write acc
 // for this language - just make sure that they are legal WiwiLink names.
 if (!defined('_MI_SWIKI_HOME')) {define('_MI_SWIKI_HOME','HomePage');} // Also need in modinfo.php
 define('_MI_SWIKI_404','IllegalName');
+
 // Added in version 1.1
 define('_MI_SWIKI_REVISION_SUMMARY', 'Revision Summary');
 define('_MI_SWIKI_ALLOW_COMMENTS','Allow Comments');
@@ -81,21 +78,10 @@ define('_MD_SWIKI_ADDPAGE_BTN','Add Page');
 define('_MD_SWIKI_ADDPAGE','Create a New Page');
 define('_MD_SWIKI_PDF_ERROR_MSG','Error creating PDF');
 define('_MD_SWIKI_NOPAGE_MSG','Could not create PDF - at least one of the pages did not exist');
-define('_MI_SWIKI_TOPPAGE', 'Index Page');
-define('_MI_SWIKI_TOPPAGE_DESC', 'Page to be shown on the main page of the module');
 define('_MD_SWIKI_CREATED','This page was created on %2$s by %1$s');
 define('_MD_SWIKI_REVISIONS','This page has been revised %u time(s)');
 define('_MD_SWIKI_LASTVIEWED','This page was last viewed on %s');
-define('_MD_SWIKI_VIEWS','This page has been viewed %u time(s)');
-define('_MI_SWIKI_PAGEINFO','Show Page Information');
-define('_MI_SWIKI_PAGEINFO_DESC', 'Select which page details to display with the page');
-define('_MI_SWIKI_SHOWREVISIONS','Show number of revisions');
-define('_MI_SWIKI_SHOWVIEWS','Show number of views');
-define('_MI_SWIKI_SHOWCREATED','Show date created and creator');
-define('_MI_SWIKI_SHOWLASTREVISED','Show date of last revision');
-define('_MI_SWIKI_LASTVIEWED','Show date last viewed');
-define('_MI_SWIKI_USECAPTCHA','Enable CAPTCHA');
-define('_MI_SWIKI_USECAPTCHA_DESC', 'Display CAPTCHA on edit form');
-define('_MI_SWIKI_SHOWQUICKADD','Enable the Quick Add feature');
-define('_MI_SWIKI_SHOWQUICKADD_DESC', 'Setting to <em>Yes</em> displays the Quick Add field, allowing the editors to type a page name and go directly to editing the page');
-?>
+define('_MD_SWIKI_VIEWED','This page has been viewed %u time(s)');
+
+//Added in version 1.2
+define('_MD_SWIKI_VIEWS', 'Views');

@@ -10,4 +10,3 @@
  /** include the modinfo constants, so we don't have to define them again (specifically, _MI_SWIKI_HOME) */
  include_once 'modinfo.php';
  
-?>

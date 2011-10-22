@@ -88,4 +88,6 @@ define('_AM_SWIKI_PRFDELSUCCESS_MSG','Profile deleted from the database.');
 define('_AM_SWIKI_PRFDELFAILED_MSG','Error while deleting profile. Database NOT updated');
 define('_AM_SWIKI_SYS_CFG','System Configuration');
 
-?>
+//added in version 1.2
+define('_AM_SWIKI_GOTO_MODULE', 'Go to module');
+define('_AM_SWIKI_UPDATE_MODULE', 'Update module');

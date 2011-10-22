@@ -60,7 +60,30 @@ define('_MI_SWIKI_BLOCK_RELATED_NAME','WiwiSideContent');
 define('_MI_SWIKI_BLOCK_RELATED_DESC','bloquear o conteúdo lateral extra sobre as páginas do Wiki');
 define('_MI_SWIKI_BLOCK_SHOWPAGE_NAME','WiwiShowPage');
 define('_MI_SWIKI_BLOCK_SHOWPAGE_DESC','Mostrar uma página do Wiki');
-define('_MI_SWIKI_AUTHOR_WORD','<h4>Sobre o Wiwi 0.8.3</h4><br />Wiwi é um software GPL ; visite a página inicial do Wiwi no <a href="http://www.zonatim.com/modules/SimplyWiki?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> para suporte ou conseguir ajuda.<br /><br />Se você estiver migrando da versão (0.7.1 ou menor), favor clicar aqui : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Leia o Manual</a> e <a href=\'../ReadMe.txt\' target=\'_blank\'>notas sobre a atualização</a> para começar.');
+define('_MI_SWIKI_AUTHOR_WORD','<h4>Sobre o SimplyWiki</h4><br />SimplyWiki é um software GPL ; visite a página inicial do Wiwi no <a href="http://community.impresscms.org/" target="_blank">community.impresscms.org</a> para suporte ou conseguir ajuda.<br /><br />Se você estiver migrando da versão (0.7.1 ou menor), favor clicar aqui : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Leia o Manual</a> e <a href=\'../ReadMe.txt\' target=\'_blank\'>notas sobre a atualização</a> para começar.');
 define('_MI_SWIKI_DEFAULTPROFILE_DESC','Perfil predefinido e atribuído para novas páginas');
 if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','HomePage');}
+
+// Added in SimplyWiki 1.1
+define('_MI_SWIKI_BLOCK_LISTPAGES_NAME','List Pages');
+define('_MI_SWIKI_BLOCK_LISTPAGES_DESC','Display a list of pages');
+define('_MI_SWIKI_BLOCK_ADDPAGE_NAME','Add Page');
+define('_MI_SWIKI_BLOCK_ADDPAGE_DESC','Add a wiki page from anywhere on your site');
+define('_MI_SWIKI_BLOCK_TAGCLOUD_NAME','Wiki Tag Cloud');
+define('_MI_SWIKI_BLOCK_TAGCLOUD_DESC','A tag cloud for SimplyWiki');
+define('_MI_SWIKI_BLOCK_TAG_NAME','Wiki Top Tags');
+define('_MI_SWIKI_BLOCK_TAG_DESC','A list of top tags for SimplyWiki');
+define('_MI_SWIKI_PAGEINFO','Show Page Information');
+define('_MI_SWIKI_PAGEINFO_DESC', 'Select which page details to display with the page');
+define('_MI_SWIKI_SHOWREVISIONS','Show number of revisions');
+define('_MI_SWIKI_SHOWVIEWS','Show number of views');
+define('_MI_SWIKI_SHOWCREATED','Show date created and creator');
+define('_MI_SWIKI_SHOWLASTREVISED','Show date of last revision');
+define('_MI_SWIKI_LASTVIEWED','Show date last viewed');
+define('_MI_SWIKI_USECAPTCHA','Enable CAPTCHA');
+define('_MI_SWIKI_USECAPTCHA_DESC', 'Display CAPTCHA on edit form');
+define('_MI_SWIKI_SHOWQUICKADD','Enable the Quick Add feature');
+define('_MI_SWIKI_SHOWQUICKADD_DESC', 'Setting to <em>Yes</em> displays the Quick Add field, allowing the editors to type a page name and go directly to editing the page');
+define('_MI_SWIKI_TOPPAGE', 'Index Page');
+define('_MI_SWIKI_TOPPAGE_DESC', 'Page to be shown on the main page of the module');
 ?>

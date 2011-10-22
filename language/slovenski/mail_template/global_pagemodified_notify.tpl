@@ -8,10 +8,10 @@ Sledi temu linku za ogled sprememb:
 
 -----------
 
-To esporoèilo ste prejeli, ker ste izbrali obvešèanje ob spremembi strani.
+To esporoï¿½ilo ste prejeli, ker ste izbrali obveï¿½ï¿½anje ob spremembi strani.
 
-Èe mislite, da ste to esporoèilo prejeli po pomoti ali si obvestil ne želite sprejemati veè,
-prosimo spremenite vaše naroèilo z obiskom spodnje povezave: 
+ï¿½e mislite, da ste to esporoï¿½ilo prejeli po pomoti ali si obvestil ne ï¿½elite sprejemati veï¿½,
+prosimo spremenite vaï¿½e naroï¿½ilo z obiskom spodnje povezave: 
 
 {X_UNSUBSCRIBE_URL}
 

@@ -9,7 +9,7 @@
  *  _DESC	: description under the title for form elements
  *  _MSG	: messages, alerts ...
  * @package Wiwimod
- * @version $Id$
+ * @version $Id: main.php 8225 2009-04-02 09:49:39Z sato $
  */
 
 define('_MD_SWIKI_MODIFIED_TXT', 'Aktualisierung ');
@@ -20,9 +20,7 @@ define('_MD_SWIKI_BODY_TXT','Inhalt');
 define('_MD_SWIKI_DIFF_TXT','Unterschied zwischen aktueller und letzter Revisions');
 define('_MD_SWIKI_THISPAGE','Dieser Seite');
 
-//define('_MD_WIWI_EDIT_BTN','Edit');
-//define('_MD_WIWI_PREVIEW_BTN','Preview');
-define('_MD_SWIKI_SUBMITREVISION_BTN','Neue Revision');
+define('_MD_SWIKI_SUBMITREVISION_BTN','Neue Version');
 define('_MD_SWIKI_QUIETSAVE_BTN','Speichern');
 define('_MD_SWIKI_HISTORY_BTN','Historie');
 define('_MD_SWIKI_PAGEVIEW_BTN','Zurück zu Seitenansicht');
@@ -45,11 +43,10 @@ define('_MD_SWIKI_AUTHOR_COL','Autor');
 define('_MD_SWIKI_ACTION_COL','Aktion');
 define('_MD_SWIKI_KEYWORD_COL','Seiten ID');
 
-
 define('_MD_SWIKI_PAGENOTFOUND_MSG',"Die Seite existiert bisher nicht.");
 define('_MD_SWIKI_DBUPDATED_MSG','Datenbank erfolgreich aktualisiert!');
 define('_MD_SWIKI_ERRORINSERT_MSG','Fehler beim Aktualisieren der Datenbank!');
-define('_MD_SWIKI_EDITCONFLICT_MSG','Ungültige Angaben! - Die &Auml;nderungen wurden abgelehnt!');
+define('_MD_SWIKI_EDITCONFLICT_MSG','Ungültige Angaben! - Die Änderungen wurden abgelehnt!');
 define('_MD_SWIKI_NOREADACCESS_MSG','<br><h4>Entschuldigung, die Ansicht dieser Seite erfordert weitergehende Benutzerrechte.</h4><br>');
 define('_MD_SWIKI_NOWRITEACCESS_MSG','<br><h4>Entschuldigung, Sie haben keine Berechtigung zum Bearbeiten dieser Seite.</h4><br>');
 
@@ -60,27 +57,16 @@ if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','HomePage'); }// Also ne
 define('_MI_SWIKI_404','IllegalName');
 
 // Added in version 1.1
-define('_MI_SWIKI_REVISION_SUMMARY', 'Zusammenfassung der Änderung(en)');
-define('_MI_SWIKI_ALLOW_COMMENTS','Kommantare zulassen');
-define('_MD_SWIKI_ADDPAGE_BTN','Seite hinzufügen');
-define('_MD_SWIKI_ADDPAGE','Neue Seite erstellen');
-define('_MD_SWIKI_PDF_ERROR_MSG','Error creating PDF');
-define('_MD_SWIKI_NOPAGE_MSG','Could not create PDF - at least one of the pages did not exist');
-define('_MI_SWIKI_TOPPAGE', 'Index Page');
-define('_MI_SWIKI_TOPPAGE_DESC', 'Page to be shown on the main page of the module');
-define('_MD_SWIKI_CREATED','This page was created on %2$s by %1$s');
-define('_MD_SWIKI_REVISIONS','This page has been revised %u time(s)');
-define('_MD_SWIKI_LASTVIEWED','This page was last viewed on %s');
-define('_MD_SWIKI_VIEWS','This page has been viewed %u time(s)');
-define('_MI_SWIKI_PAGEINFO','Show Page Information');
-define('_MI_SWIKI_PAGEINFO_DESC', 'Select which page details to display with the page');
-define('_MI_SWIKI_SHOWREVISIONS','Show number of revisions');
-define('_MI_SWIKI_SHOWVIEWS','Show number of views');
-define('_MI_SWIKI_SHOWCREATED','Show date created and creator');
-define('_MI_SWIKI_SHOWLASTREVISED','Show date of last revision');
-define('_MI_SWIKI_LASTVIEWED','Show date last viewed');
-define('_MI_SWIKI_USECAPTCHA','Enable CAPTCHA');
-define('_MI_SWIKI_USECAPTCHA_DESC', 'Display CAPTCHA on edit form');
-define('_MI_SWIKI_SHOWQUICKADD','Enable the Quick Add feature');
-define('_MI_SWIKI_SHOWQUICKADD_DESC', 'Setting to <em>Yes</em> displays the Quick Add field, allowing the editors to type a page name and go directly to editing the page');
-?>
+define('_MI_SWIKI_REVISION_SUMMARY', 'Zusammenfassung der Version');
+define('_MI_SWIKI_ALLOW_COMMENTS','Kommentare zulassen');
+define('_MD_SWIKI_ADDPAGE_BTN','Erstellen einer neuen Seite');
+define('_MD_SWIKI_ADDPAGE','Erstellen einer neuen Seite');
+define('_MD_SWIKI_PDF_ERROR_MSG','Fehler beim Erstellen der PDF');
+define('_MD_SWIKI_NOPAGE_MSG','Fehler beim Erstellen der PDF - mindestens eine der Seiten existiert nicht');
+define('_MD_SWIKI_CREATED','Diese Seite wurde erstellt am %2$s von %1$s');
+define('_MD_SWIKI_REVISIONS','Diese Seite wurde %u Mal geändert');
+define('_MD_SWIKI_LASTVIEWED','Diese Seite wurde zuletzt gesehen am %s');
+define('_MD_SWIKI_VIEWED','Diese Seite wurde %u Mal angesehen');
+
+//Added in version 1.2
+define('_MD_SWIKI_VIEWS', 'gelesen');

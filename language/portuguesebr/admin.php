@@ -47,9 +47,9 @@ define('_AM_SWIKI_CLEANUPDB_BTN','Limpar o banco de dados'); //Esta operação p
 
 define('_AM_SWIKI_ACLNAME_FLD','Nome do Perfil');
 define('_AM_SWIKI_ACLDESC_FLD','Descrição do Perfil');
-define('_AM_SWIKI_READERS_FLD','Grupos com acesso de <b>leitura</b>');
-define('_AM_SWIKI_WRITERS_FLD','Grupos com acesso de <b>escrita</b>');
-define('_AM_SWIKI_ADMINISTRATORS_FLD','Grupos com acesso <b>Administrativo</b>');
+define('_AM_SWIKI_READERS_FLD','Grupos com acesso de <strong>leitura</strong>');
+define('_AM_SWIKI_WRITERS_FLD','Grupos com acesso de <strong>escrita</strong>');
+define('_AM_SWIKI_ADMINISTRATORS_FLD','Grupos com acesso <strong>Administrativo</strong>');
 define('_AM_SWIKI_COMMENTS_FLD','Quem poderá ler e enviar comentários :');
 define('_AM_SWIKI_HISTORY_FLD','Quem tem acesso nas páginas do histórico de revisões :');
 define('_AM_SWIKI_DELREDIR_FLD','Substituição de perfil :');
@@ -89,4 +89,6 @@ define('_AM_SWIKI_PRFDELSUCCESS_MSG','Perfil excluído do banco de dados.');
 define('_AM_SWIKI_PRFDELFAILED_MSG','Erro ao excluir o perfil. Base de dados não foi atualizada');
 define('_AM_SWIKI_SYS_CFG','Configuração do sistema');
 
-?>
+//added in version 1.2
+define('_AM_SWIKI_GOTO_MODULE', 'Go to module');
+define('_AM_SWIKI_UPDATE_MODULE', 'Update module');

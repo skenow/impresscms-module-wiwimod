@@ -22,7 +22,7 @@ TODO:
 - paragraphs (<p>) wont split when they exceed page size, they skip the remaining
 space and appear on the other page...
 - CSS + align = bug!
-- obs: para textos de mais de 1 página, talvez tenha que juntar varios $texto_artigo
+- obs: para textos de mais de 1 pï¿½gina, talvez tenha que juntar varios $texto_artigo
 antes de mandar gerar o PDF, para que o PDF gerado seja completo.
 - Alignment not working properly in all cases
 - Make CSS available to more tags (only works on p,b,u,i,div). 
@@ -230,7 +230,7 @@ function Footer()
 //! @return void
     //Position at 1.0 cm from bottom
     $this->SetY(-10);
-    //Copyright //especial para esta versão
+    //Copyright //especial para esta versï¿½o
     $this->SetFont('Arial','B',9);
   	$this->SetTextColor(0);
     //Arial italic 9
@@ -548,7 +548,7 @@ function OpenTag($tag,$attr)
 			$this->SetStyle('B',true);
       $this->SetFontSize(8); 
 		  break;
-		case 'HR': //editado para esta versão
+		case 'HR': //editado para esta versï¿½o
 //			if( $attr['WIDTH'] != '' )	$Width = $attr['WIDTH'];
 //			else $Width = $this->w - $this->lMargin - $this->rMargin;
 			$x = $this->GetX();
@@ -628,7 +628,7 @@ function OpenTag($tag,$attr)
       }
 			if(isset($attr['SRC'])){
 				//-- XJ : hack to handle relative and full urls
-				if (substr($attr['SRC'],0,7) != "http://") $attr['SRC'] = XOOPS_URL . (substr($attr['SRC'],0,1) == "/" ? "" : "/" ) . $attr['SRC'];  
+				if (substr($attr['SRC'],0,7) != "http://") $attr['SRC'] = ICMS_URL . (substr($attr['SRC'],0,1) == "/" ? "" : "/" ) . $attr['SRC'];  
 
 				if(!isset($attr['WIDTH'])) $attr['WIDTH'] = 0;
 				else $attr['WIDTH'] /= 4;
@@ -646,7 +646,7 @@ function OpenTag($tag,$attr)
 				if ($sizesarray['X'] < $this->x) $this->x = $this->lMargin;
 				if ($this->tablestart)
 				{
-   				$this->cell[$this->row][$this->col]['textbuffer'][] = array("¬¤¶"/*unique string to be parsed later*/.$sizesarray['OUTPUT'],$this->HREF,$this->currentstyle,$this->colorarray,$this->currentfont,$this->SUP,$this->SUB,''/*internal link*/,$sizesarray['HEIGHT']/*img height*/);
+   				$this->cell[$this->row][$this->col]['textbuffer'][] = array("ï¿½ï¿½ï¿½"/*unique string to be parsed later*/.$sizesarray['OUTPUT'],$this->HREF,$this->currentstyle,$this->colorarray,$this->currentfont,$this->SUP,$this->SUB,''/*internal link*/,$sizesarray['HEIGHT']/*img height*/);
           if (!isset($this->cell[$this->row][$this->col]['w'])) $this->cell[$this->row][$this->col]['w'] = $sizesarray['WIDTH'] + 3;
           if (!isset($this->cell[$this->row][$this->col]['h'])) $this->cell[$this->row][$this->col]['h'] = $sizesarray['HEIGHT'] + 3;
 				}
@@ -661,7 +661,7 @@ function OpenTag($tag,$attr)
 			else $this->Ln(5);
 			break;
 		case 'P':
-  		if ($this->tablestart) break; //especial para esta versão
+  		if ($this->tablestart) break; //especial para esta versï¿½o
 		  $this->pbegin=true;
 			if ($this->x != $this->lMargin) $this->Ln(10);
 			elseif (!$this->pjustfinished) $this->Ln(5);
@@ -1219,9 +1219,9 @@ $notn .= $vetor[0];
       	$this->SetTextColor(0,0,255);
       	$this->SetStyle('U',true);
       }
-      if ($vetor[0]{0} == '¬' and $vetor[0]{1} == '¤' and $vetor[0]{2} == '¶') //in order to recognize an image in a cell
+      if ($vetor[0]{0} == 'ï¿½' and $vetor[0]{1} == 'ï¿½' and $vetor[0]{2} == 'ï¿½') //in order to recognize an image in a cell
       {
-        $vetor[0] = str_replace('¬¤¶','',$vetor[0]); //decode
+        $vetor[0] = str_replace('ï¿½ï¿½ï¿½','',$vetor[0]); //decode
         //Is this the best way of fixing x,y coords? More tests are needed...
         $fix_x = ($this->x+2) * $this->k; //+2 margin
         $fix_y = ($this->h - (($this->y+2) + $vetor[8])) * $this->k;//+2 margin

@@ -13,11 +13,11 @@
 
 
 define('_AM_SWIKI_ADMIN_TXT','Module Benutzerrechte (ACL)');
-define('_AM_SWIKI_PAGESFILTER_TXT','Show pages where');
-define('_AM_SWIKI_LIKE_TXT','contains');
-define('_AM_SWIKI_PROFILEIS_TXT','is');
+define('_AM_SWIKI_PAGESFILTER_TXT','Zeige Seite von');
+define('_AM_SWIKI_LIKE_TXT','enthält');
+define('_AM_SWIKI_PROFILEIS_TXT','ist');
 define('_AM_SWIKI_ORDERBY_TXT',', sortiert nach');
-define('_AM_SWIKI_LISTPAGES_RESULTS_TXT','results');
+define('_AM_SWIKI_LISTPAGES_RESULTS_TXT','Ergebnis');
 
 define('_AM_SWIKI_SELECTACL_BOX','');
 define('_AM_SWIKI_SELECTACL_TXT','Profil bearbeiten:');
@@ -36,7 +36,7 @@ define('_AM_SWIKI_DELCONFIRMTITLE_TXT','Bestätigung der Profillöschung');
 define('_AM_SWIKI_DELCONFIRM_TXT','Konten-Löschung durch Aktivierung der Checkbox bestätigen.');
 define('_AM_SWIKI_DELREDIR_TXT','Neues Profil für die entsprechenden Seiten.');
 
-define('_AM_SWIKI_LISTPAGES_BTN','<< Back to pages list');
+define('_AM_SWIKI_LISTPAGES_BTN','<< Zurück zur Seitenliste');
 define('_AM_SWIKI_CREATEACL_BTN','Neu');
 define('_AM_SWIKI_EDITACL_SAVE_BTN','Speichern');
 define('_AM_SWIKI_EDITACL_DELETE_BTN','Löschen');
@@ -50,10 +50,10 @@ define('_AM_SWIKI_READERS_FLD','Leseberechtigte');
 define('_AM_SWIKI_WRITERS_FLD','Schreibberechtigte');
 define('_AM_SWIKI_ADMINISTRATORS_FLD','Administratoren');
 define('_AM_SWIKI_COMMENTS_FLD','Lese- und Schreibberechtigung für Kommentare');
-define('_AM_SWIKI_HISTORY_FLD','Who can access page revisions history :');
+define('_AM_SWIKI_HISTORY_FLD','Wer hat Zugang zur Versionsgeschichte :');
 define('_AM_SWIKI_DELREDIR_FLD','Ersatzprofil:');
 
-define('_AM_SWIKI_SELECTACL_OPT','(wähle)');
+define('_AM_SWIKI_SELECTACL_OPT','(Auswählen)');
 define('_AM_SWIKI_READERS_OPT','Leseberechtigung');
 define('_AM_SWIKI_WRITERS_OPT','Schreibberechtigung');
 define('_AM_SWIKI_ADMINISTRATORS_OPT','Administrationsberechtigung');
@@ -66,15 +66,15 @@ define('_AM_SWIKI_LISTPAGES_KEYWORD_OPT','Name');
 define('_AM_SWIKI_LISTPAGES_TITLE_OPT','Titel');
 define('_AM_SWIKI_LISTPAGES_BODY_OPT','Inhalt');
 define('_AM_SWIKI_LISTPAGES_UID_OPT','Letzter Autor');
-define('_AM_SWIKI_LISTPAGES_PARENT_OPT','parent');
-define('_AM_SWIKI_LISTPAGES_PRID_OPT','profile');
+define('_AM_SWIKI_LISTPAGES_PARENT_OPT','Eltern');
+define('_AM_SWIKI_LISTPAGES_PRID_OPT','Profile');
 define('_AM_SWIKI_LISTPAGES_LASTMODIFIED_OPT','Letzte Änderung');
 define('_AM_SWIKI_LISTPAGES_ORDERDESC_OPT','absteigend');
 define('_AM_SWIKI_LISTPAGES_ORDERASC_OPT','aufsteigend');
 
 define('_AM_SWIKI_LISTPAGE_NAV','browse pages');
-define('_AM_SWIKI_HISTORY_NAV','geschichte');
-define('_AM_SWIKI_ACLADMIN_NAV','privileges (ACL)');
+define('_AM_SWIKI_HISTORY_NAV','Historie');
+define('_AM_SWIKI_ACLADMIN_NAV','Privilegien (ACL)');
 define("_AM_SWIKI_BLOCKSNGROUPS_NAV", "Blöcke und Gruppen");
 
 define('_AM_SWIKI_NOPAGESPECIFIED_MSG','Bitte wählen Sie eine Seite');
@@ -87,4 +87,7 @@ define('_AM_SWIKI_ERRDELETE_MSG','Fehler: Profil konnte nicht gelöscht werden')
 define('_AM_SWIKI_PRFDELSUCCESS_MSG','Profil erfolgreich gelöscht');
 define('_AM_SWIKI_PRFDELFAILED_MSG','Fehler! Profil wurde nicht erfolgreich gelöscht');
 define('_AM_SWIKI_SYS_CFG','System-Konfiguration');
-?>
+
+//added in version 1.2
+define('_AM_SWIKI_GOTO_MODULE', 'Zum Module');
+define('_AM_SWIKI_UPDATE_MODULE', 'Modul aktualisieren');

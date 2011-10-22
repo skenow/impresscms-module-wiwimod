@@ -2,20 +2,20 @@
 /**
  * Main configuration file for SimplyWiki
  *
- * @package SimplyWiki
- * @author Wiwimod: Xavier JIMENEZ
- * @author Wiwimod: Gizmhail
- *
+ * @package	SimplyWiki
+ * @author	Steve Kenow <skenow@impresscms.org>
+ * @author	Wiwimod: Xavier JIMENEZ
+ * @author	Wiwimod: Gizmhail
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$
  */
 $modversion = array(
   'name' => _MI_SWIKI_NAME,
-  'version' => '1.1',
-  'status' => 'Beta',
+  'version' => '1.2',
+  'status' => 'Final',
   'description' => _MI_SWIKI_DESC,
-  'author' => 'Xavier JIMENEZ',
-  'credits' => '',
+  'author' => 'Steve Kenow <skenow@impresscms.org>',
+  'credits' => 'Based on Wiwimod by Xavier JIMENEZ; with further contributions by Gizmhail and GibaPHP',
   'license' => 'GNU General Public License',
   'help' => '',
   'official' => 0,
@@ -25,24 +25,31 @@ $modversion = array(
   'dirname' => basename(dirname(__FILE__)),
   'onInstall' => 'include/oninstall.inc.php',
   'onUpdate' => 'include/onupdate.inc.php',
-  'demo_site_url' => '',
-  'demo_site_name' => '',
+  'demo_site_url' => 'http://www.simplywiki.org/',
+  'demo_site_name' => 'SimplyWiki',
   'support_site_url' => 'http://community.impresscms.org/',
   'support_site_name' => 'ImpressCMS Community',
-  'submit_bug' => 'https://sourceforge.net/tracker2/?group_id=205633&atid=1064496',
+  'submit_bug' => 'http://sf.net/apps/trac/impresscms/newticket',
   'submit_feature' => '',
   'warning' => '',
-  'author_word' => '_MI_SWIKI_AUTHOR_WORD' );
+  'author_word' => '_MI_SWIKI_AUTHOR_WORD',
+);
 
-if (defined('ICMS_VERSION_NAME')) {
+if (defined('ICMS_URL')) {
   $modversion['image'] = 'images/wiwimod.png';
+} else {
+	/* These are here for cross-platform compatibility */
+	define('ICMS_URL', XOOPS_URL);
+	define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
 }
 // Tables created by the SQL file (without prefix!)
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
-$modversion['tables'][0] = 'wiki_pages';
-$modversion['tables'][] = 'wiki_revisions';
-$modversion['tables'][] = 'wiki_profiles';
-$modversion['tables'][] = 'wiki_prof_groups';
+$modversion['tables'] = array(
+	'wiki_pages',
+	'wiki_revisions',
+	'wiki_profiles',
+	'wiki_prof_groups',
+);
 
 // Administration tools
 $modversion['hasAdmin'] = 1;
@@ -68,13 +75,17 @@ $modversion['templates'][] = array(
 
 // Search
 $modversion['hasSearch'] = 1;
-$modversion['search']['file'] = 'include/search.php';
-$modversion['search']['func'] = 'swiki_search';
+$modversion['search'] = array(
+	'file' => 'include/search.php',
+	'func' => 'swiki_search',
+);
 
 // Comments
 $modversion['hasComments'] = 1;
-$modversion['comments']['itemName'] = 'pageid';
-$modversion['comments']['pageName'] = 'index.php';
+$modversion['comments'] = array(
+	'itemName' => 'pageid',
+	'pageName' => 'index.php',
+);
 
 // Blocks
 $modversion['blocks'][1] = array(
@@ -82,7 +93,8 @@ $modversion['blocks'][1] = array(
   'name' => _MI_SWIKI_BLOCK_TOC_NAME,
   'description' => _MI_SWIKI_BLOCK_TOC_DESC,
   'show_func' => 'swiki_toc',
-  'template' => 'wiwimod_toc.html');
+  'template' => 'wiwimod_toc.html',
+  'can_clone' => true);
 
 $modversion['blocks'][] = array(
   'file' => 'wiwimod_recent.php',
@@ -91,14 +103,16 @@ $modversion['blocks'][] = array(
   'show_func' => 'swiki_recent',
   'edit_func' => 'swiki_recent_blockedit',
   'options' => '5',
-  'template' => 'wiwimod_recent.html');
+  'template' => 'wiwimod_recent.html',
+  'can_clone' => true);
 
 $modversion['blocks'][] = array(
   'file' => 'wiwimod_showpage.php',
   'name' => _MI_SWIKI_BLOCK_RELATED_NAME,
   'description' => _MI_SWIKI_BLOCK_RELATED_DESC,
   'show_func' => 'swiki_contextshow',
-  'template' => 'wiwimod_context.html');
+  'template' => 'wiwimod_context.html',
+  'can_clone' => true);
 
 $modversion['blocks'][] = array(
   'file' => 'wiwimod_showpage.php',
@@ -107,8 +121,49 @@ $modversion['blocks'][] = array(
   'show_func' => 'swiki_showpage',
   'edit_func' => 'swiki_showpage_blockedit',
   'options' => _MI_SWIKI_HOME,
-  'template' => 'wiwimod_showpage.html');
+  'template' => 'wiwimod_showpage.html',
+  'can_clone' => true);
 
+$modversion['blocks'][] = array(
+  'file' => 'swiki_blocks.php',
+  'name' => _MI_SWIKI_BLOCK_LISTPAGES_NAME,
+  'description' => _MI_SWIKI_BLOCK_LISTPAGES_DESC,
+  'show_func' => 'swiki_listpages',
+  'edit_func' => 'swiki_listpages_blockedit',
+  'options' => '5|createdate|DESC|full|',
+  'template' => 'swiki_listpages.html',
+  'can_clone' => true);
+
+$modversion['blocks'][] = array(
+  'file' => 'swiki_blocks.php',
+  'name' => _MI_SWIKI_BLOCK_ADDPAGE_NAME,
+  'description' => _MI_SWIKI_BLOCK_ADDPAGE_DESC,
+  'show_func' => 'swiki_addpage',
+  'template' => 'swiki_addpage.html',
+  'can_clone' => true);
+
+include_once dirname(__FILE__) . '/include/functions.php';
+if (isTagModuleActivated()) {
+	$modversion['blocks'][] = array(
+	  'file' => 'swiki_blocks.php',
+	  'name' => _MI_SWIKI_BLOCK_TAGCLOUD_NAME,
+	  'description' => _MI_SWIKI_BLOCK_TAGCLOUD_DESC,
+	  'show_func' => 'swiki_tag_block_cloud_show',
+	  'edit_func' => 'swiki_tag_block_cloud_edit',
+	  'options' => '100|0|150|80',
+	  'template' => 'swiki_tag_block_cloud.html',
+	  'can_clone' => true );
+
+	$modversion['blocks'][] = array(
+	  'file' => 'swiki_blocks.php',
+	  'name' => _MI_SWIKI_BLOCK_TAG_NAME,
+	  'description' => _MI_SWIKI_BLOCK_TAG_DESC,
+	  'show_func' => 'swiki_tag_block_top_show',
+	  'edit_func' => 'swiki_tag_block_top_edit',
+	  'options' => '20|0|c',
+	  'template' => 'swiki_tag_block_tag.html',
+	  'can_clone' => true);
+}
 // Admin preferences items
 
 // name of config option for accessing its specified value. i.e. $xoopsModuleConfig['storyhome']
@@ -136,7 +191,17 @@ $modversion['config'][1]['default'] = 0;
 // required and valid for 'select' or 'select_multi' formtype option only
 // language constants can be used for array key, otherwise use integer
 //$modversion['config'][1]['options'] = array('5' => 5, '10' => 10, '15' => 15, '20' => 20, '25' => 25, '30' => 30);
-$modversion['config'][1]['options'] = array('Xoops Standard' => 0, 'XoopsEditor' => 1,'Spaw' => 2, 'HtmlArea' => 3, 'Koivi' => 4, 'FCK Editor' => 5);
+$modversion['config'][1]['options'] = array(
+	'Xoops Standard' => 0,
+	'XoopsEditor' => 1);
+if (file_exists(ICMS_ROOT_PATH.'/class/spaw/formspaw.php')){
+	$modversion['config'][1]['options']['Spaw'] = 2;}
+if (file_exists(ICMS_ROOT_PATH.'/class/htmlarea/formhtmlarea.php')){
+	$modversion['config'][1]['options']['HtmlArea'] = 3;}
+if (file_exists(ICMS_ROOT_PATH. '/class/wysiwyg/formwysiwygtextarea.php')){
+	$modversion['config'][1]['options']['Koivi'] = 4;}
+if (file_exists(ICMS_ROOT_PATH.'/class/fckeditor/formfckeditor.php')){
+	$modversion['config'][1]['options']['FCK Editor'] = 5;}
 
 $modversion['config'][2] = array(
   'name' => 'XoopsEditor',
@@ -145,10 +210,10 @@ $modversion['config'][2] = array(
   'formtype' => 'select',
   'valuetype' => 'text',
   'default' => 0);
-if (file_exists(XOOPS_ROOT_PATH.'/class/xoopseditor/xoopseditor.php')) {
-	include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
-	include_once XOOPS_ROOT_PATH.'/class/xoopseditor/xoopseditor.php';
-	$editor_name = !empty($_GET['editor_name'])?$_GET['editor_name']:'';
+if (file_exists(ICMS_ROOT_PATH . '/class/xoopseditor/xoopseditor.php')) {
+	include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
+	include_once ICMS_ROOT_PATH . '/class/xoopseditor/xoopseditor.php';
+	$editor_name = !empty($_GET['editor_name']) ? $_GET['editor_name'] : '';
 	$editorhandler = new XoopsEditorHandler();
 	$modversion['config'][2]['options'] = array_flip($editorhandler->getList());
 	}
@@ -251,17 +316,34 @@ $modversion['notification']['event'][1] = array(
   'category' => 'page',
   'title' => _MI_SWIKI_PAGENOTIFY_TITLE,
   'caption' => _MI_SWIKI_PAGENOTIFY_CAPTION,
-  'description' => '_MI_SWIKI_PAGENOTIFY_DESC',
+  'description' => _MI_SWIKI_PAGENOTIFY_DESC,
   'mail_template' => 'global_pagemodified_notify',
-  'mail_subject' => '_MI_SWIKI_PAGENOTIFY_SUBJECT');
+  'mail_subject' => _MI_SWIKI_PAGENOTIFY_SUBJECT);
 
 $modversion['notification']['event'][] = array(
   'name' => 'page_modified',
   'category' => 'global',
   'title' => _MI_SWIKI_GLOBALNOTIFY_TITLE,
   'caption' => _MI_SWIKI_GLOBALNOTIFY_CAPTION,
-  'description' => '_MI_SWIKI_GLOBALNOTIFY_DESC',
+  'description' => _MI_SWIKI_GLOBALNOTIFY_DESC,
   'mail_template' => 'global_pagemodified_notify',
-  'mail_subject' => '_MI_SWIKI_GLOBALNOTIFY_SUBJECT');
+  'mail_subject' => _MI_SWIKI_GLOBALNOTIFY_SUBJECT);
 
-?>
+$modversion['notification']['event'][] = array(
+  'name' => 'page_restored',
+  'category' => 'page',
+  'title' => _MI_SWIKI_PAGERESTORE_TITLE,
+  'caption' => _MI_SWIKI_PAGERESTORE_CAPTION,
+  'description' => _MI_SWIKI_PAGERESTORE_DESC,
+  'mail_template' => 'global_pagemodified_notify',
+  'mail_subject' => _MI_SWIKI_PAGERESTORE_SUBJECT);
+
+$modversion['notification']['event'][] = array(
+  'name' => 'page_restored',
+  'category' => 'global',
+  'title' => _MI_SWIKI_GLOBALPAGERESTORE_TITLE,
+  'caption' => _MI_SWIKI_GLOBALPAGERESTORE_CAPTION,
+  'description' => _MI_SWIKI_GLOBALPAGERESTORE_DESC,
+  'mail_template' => 'global_pagemodified_notify',
+  'mail_subject' => _MI_SWIKI_GLOBALPAGERESTORE_SUBJECT);
+

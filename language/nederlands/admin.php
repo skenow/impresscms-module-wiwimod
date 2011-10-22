@@ -22,7 +22,7 @@ define('_AM_SWIKI_LISTPAGES_RESULTS_TXT','resultaten');
 
 define('_AM_SWIKI_SELECTACL_BOX','');
 define('_AM_SWIKI_SELECTACL_TXT','bewerk een Wiwi profiel:');
-define('_AM_SWIKI_CREATEACL_TXT','of creër een nieuw profiel:');
+define('_AM_SWIKI_CREATEACL_TXT','of creï¿½r een nieuw profiel:');
 define('_AM_SWIKI_EDITACL_TXT','Profiel info');
 define('_AM_SWIKI_ACLHELP_TXT','
 	<p>Wiwi profielen zijn standaard wiwi pagina keuze instellingen waarmee je aangeeft welke pagina toegangs-/lees-/schrijf- en bewerk privileges toegekend krijgt. Je XOOPS-groep(en) ken je lees-/schrijf-/administratie rechten toe mbt de betreffende wiwi pagina\'s.</p>
@@ -31,8 +31,8 @@ define('_AM_SWIKI_ACLHELP_TXT','
 		<li>SCHRIJVERS toegang: kunnen de pagina\'s bewerken en een nieuwe pagina met datzelfde profiel aanmaken.</li>
 		<li>ADMINISTRATORS toegang: kunnen profielen veranderen/aanpassen naar ieder ander gewenst profiel waarvoor ze "admin" rechten.</li></ul>
 	<p>Nieuwe pagina\'s behoren standaard tot de "ouders" hun profiel.</p>
-	<p>Het profiel bepaalt ook wie commenta(a)r(en) mag lezen en schrijven. Dit kan handig zijn indien je privé-commenta(a)r(e)n wilt toe laten op publieke pagina\'s...</p>
-	<p>ATTENTIE: Xoops WEBMASTERS hebben altijd àlle privileges op iedere wiwi pagina.</p>
+	<p>Het profiel bepaalt ook wie commenta(a)r(en) mag lezen en schrijven. Dit kan handig zijn indien je privï¿½-commenta(a)r(e)n wilt toe laten op publieke pagina\'s...</p>
+	<p>ATTENTIE: Xoops WEBMASTERS hebben altijd ï¿½lle privileges op iedere wiwi pagina.</p>
 	');
 define('_AM_SWIKI_DELCONFIRMTITLE_TXT','BEVESTIG VERWIJDEREN VAN PROFIEL');
 define('_AM_SWIKI_DELCONFIRM_TXT','U gaat een profiel verwijderen. Bevestig dit verzoek door de checkbox aan te vinken.');
@@ -89,4 +89,6 @@ define('_AM_SWIKI_ERRDELETE_MSG','FOUT: het is niet mogelijk om dit profiel te v
 define('_AM_SWIKI_PRFDELSUCCESS_MSG','Het profiel is succesvol uit de database verwijderd');
 define('_AM_SWIKI_PRFDELFAILED_MSG','FOUT: Er is een fout opgetreden tijdens het opslaan van dit profiel. Het opslaan van dit profiel is niet gelukt!');
 
-?>
+//added in version 1.2
+define('_AM_SWIKI_GOTO_MODULE', 'Go to module');
+define('_AM_SWIKI_UPDATE_MODULE', 'Update module');

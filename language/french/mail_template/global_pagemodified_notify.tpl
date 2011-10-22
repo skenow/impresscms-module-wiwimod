@@ -1,6 +1,6 @@
 Bonjour {X_UNAME},
 
-Une page que vous suivez sur le site {X_SITENAME} a été mise à jour : "{PAGE_NAME}" .
+Une page que vous suivez sur le site {X_SITENAME} a ï¿½tï¿½ mise ï¿½ jour : "{PAGE_NAME}" .
 
 Suivez ce lien pour voir la nouvelle version :
 {PAGE_URL}
@@ -8,9 +8,9 @@ Suivez ce lien pour voir la nouvelle version :
 
 -----------
 
-Vous avez reçu ce message parceque vous avez choisi d'être notifié des mises à jour de cette page.
+Vous avez reï¿½u ce message parceque vous avez choisi d'ï¿½tre notifiï¿½ des mises ï¿½ jour de cette page.
 
-Si c'est une erreur, ou si vous ne désirez plus recevoir ces notifications, veuillez ajuster vos préférences en suivant ce lien : 
+Si c'est une erreur, ou si vous ne dï¿½sirez plus recevoir ces notifications, veuillez ajuster vos prï¿½fï¿½rences en suivant ce lien : 
 {X_UNSUBSCRIBE_URL}
 
 -----------
