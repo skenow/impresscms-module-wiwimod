@@ -166,7 +166,7 @@ switch ($op) {
 		//  show page in editor (after privileges check)
 		if (!$pageObj->canWrite()) {
 			include_once ICMS_ROOT_PATH . '/header.php';
-			echo "<br /><br /><center><table style='align:center; border: 1px solid gray; width:50%; background:#F0F0F0'; ><tr><td align='center'><br />" . _MD_SWIKI_PAGENOTFOUND_MSG . "<br /><br /></td></tr></table><br /><br /><input type='button' value=" . _CANCEL . " onclick='history.back();'></center>";
+			xoops_error(_MD_SWIKI_PAGENOTFOUND_MSG);
 			include_once ICMS_ROOT_PATH . '/footer.php';
 			break;
 		}
@@ -380,7 +380,7 @@ switch ($op) {
 		$xoopsOption['template_main'] = 'wiwimod_view.html';
 		include_once ICMS_ROOT_PATH . '/header.php';
 		if (!$pageObj->canRead()) {
-			$pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>" . _MD_SWIKI_NOREADACCESS_MSG . "</td></tr></table></center><br /><br />";
+			$pagecontent = xoops_warning(_MD_SWIKI_NOREADACCESS_MSG);
 		} else {
 			// Handle pagebreaks
 			$pagecontent = $pageObj->body;
