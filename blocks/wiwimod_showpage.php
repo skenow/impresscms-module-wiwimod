@@ -11,10 +11,10 @@
  * @version $Id$
  */
 
-//  Bugs :	- language constants aren't initialized...
+defined('ICMS_URL') || define('ICMS_URL', XOOPS_URL);
+defined('ICMS_ROOT_PATH') || define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
 
 $wikiModDir = basename(dirname(dirname(__FILE__)));
-include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/header.php';
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
 function swiki_showpage ($options) {
@@ -32,6 +32,7 @@ function swiki_showpage ($options) {
 			$pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>" . _MB_SWIKI_NOREADACCESS_MSG . "</td></tr></table></center><br><br>";
 		} else {
 			// Handle pagebreaks
+			$pagecontent = $pageObj->body;
 			$cpages = explode ("[pagebreak]", $pagecontent);
 			if (isset($_GET['wiwistartpage'])) $startpage = (int) $_GET['wiwistartpage'] ; else $startpage = 0;
 			if (count($cpages) > 0) {
@@ -102,4 +103,3 @@ function swiki_showpage_blockedit ($options) {
 	return $form;
 
 }
-

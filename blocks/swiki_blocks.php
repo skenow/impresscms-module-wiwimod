@@ -8,9 +8,12 @@
  * @version $Id$
  */
 
+/* These are here for cross-platform compatibility */
+defined('ICMS_URL') || define('ICMS_URL', XOOPS_URL);
+defined('ICMS_ROOT_PATH') || define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
+
 global $xoopsConfig;
 $wikiModDir = basename(dirname(dirname(__FILE__)));
-include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/header.php';
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 //I don't want to have this language constant in multiple files - just include the other file
 if (!defined('_MD_SWIKI_ADDPAGE_BTN')) {

@@ -13,11 +13,8 @@
  * Be sure mainfile has been included
  */
 include_once '../../mainfile.php';
-if (!defined('ICMS_VERSION_NAME')) {
-	/* These are here for cross-platform compatibility */
-	define('ICMS_URL', XOOPS_URL);
-	define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
-}
+defined('ICMS_URL') || define('ICMS_URL', XOOPS_URL);
+defined('ICMS_ROOT_PATH') || define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
 
 $myts =& MyTextSanitizer::getInstance();
 

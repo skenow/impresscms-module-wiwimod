@@ -9,8 +9,10 @@
  * @version $Id$
  */
 
+defined('ICMS_URL') || define('ICMS_URL', XOOPS_URL);
+defined('ICMS_ROOT_PATH') || define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
+
 $wikiModDir = basename(dirname(dirname(__FILE__))) ;
-include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/header.php';
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
 function swiki_recent ($options) {
@@ -50,4 +52,3 @@ function swiki_recent_blockedit ($options) {
 	$form = _MB_SWIKI_NUM_DISP_DESC . "&nbsp;:&nbsp;<input type='text' name='options[0]' value='" . $options[0] . "' />";
 	return $form;
 }
-
