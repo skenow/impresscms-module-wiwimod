@@ -57,7 +57,7 @@ define('_MI_SWIKI_BLOCK_RELATED_NAME','Contenido relacionado');
 define('_MI_SWIKI_BLOCK_RELATED_DESC','Bloque que muestra la página(s) cuyo nombre se haya indicado en el campo <em>Contenido relacionado</em> ');//Side block for extra content on Wiwi pages
 define('_MI_SWIKI_BLOCK_SHOWPAGE_NAME','Mostrar página');
 define('_MI_SWIKI_BLOCK_SHOWPAGE_DESC','Mostrar una página');
-define('_MI_SWIKI_AUTHOR_WORD','<h4>Sobre SimplyWiki</h4><br />SimplyWiki es software bajo licencia GPL; visite la página <a href="http://community.impresscms.org/" target="_blank">community.impresscms.org</a> para obtener ayuda o soporte.<br /><br />Si ha migrado desde una versión anterior de Wiwi (0.7.1 o inferior), haga clic aquí: <input type="button" value="Actualizar" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.phpl\' target=\'_blank\'>Lea el Manual</a> y <a href=\'../ReadMe.txt\' target=\'_blank\'>las Notas de la versión</a> para comenzar.');
+define('_MI_SWIKI_AUTHOR_WORD','<h4>Sobre SimplyWiki</h4><br />SimplyWiki es software bajo licencia GPL; visite la página <a href="http://community.impresscms.org/" target="_blank">community.impresscms.org</a> para obtener ayuda o soporte.<br /><br /><a href=\'../manual.php\' target=\'_blank\'>Lea el Manual</a> y <a href=\'../ReadMe.txt\' target=\'_blank\'>las Notas de la versión</a> para comenzar.');
 define('_MI_SWIKI_DEFAULTPROFILE_DESC','Perfil predeterminado asignado a las nuevas páginas');
 if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','Inicio');}
 
