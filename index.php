@@ -20,7 +20,7 @@ include_once 'class/wiwiRevision.class.php';
  * @todo : - $xoopsUser can be overriden by post variables >> security fix ?
  */
 $id = $pageid = $visible = $editor = $allowComments = $uid = 0;
-$contextBlock = $parent = $op = $summary = $item_tag = '';
+$contextBlock = $parent = $op = $summary = $item_tag = $page = '';
 $allowed_getvars = array(
 	'op'=>'plaintext',
 	'back'=>'string',
