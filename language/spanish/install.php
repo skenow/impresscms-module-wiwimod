@@ -19,7 +19,7 @@
      "<p><table border=\'0\'>
      <tbody><tr><td>
      <p>Bienvenido;<br />Esta es la página predeterminada de inicio de SimplyWiki; puede modificarla como desee. Para crear nuevas páginas seleccione un nombre y colóquelo dentro de paréntesis de esta forma: [[nombre de la página]]. Cuando guarde la página, los paréntesis serán cambiados por un enlace a su nueva página.</p>
-     <p>Compruebe el <a href=\'languages/spanish/manual.html\' target=_blank>manual</a> para obtener más información sobre las caracerísticas de edición, creación o modificación de páginas.</p></td>
+     <p>Compruebe el <a href=\'languages/spanish/http://www.simplywiki.org/modules/wiki/index.php?page=Wiki+Help\' target=_blank>manual</a> para obtener más información sobre las caracerísticas de edición, creación o modificación de páginas.</p></td>
      <td><img src=\'images/wiwilogo.gif\' /></td></tr></tbody></table></p>
      <p><table cellspacing=\'5\' cellpadding=\'5\' width=\'100%\' border=\'0\'>
           <tbody><tr><td bgcolor=\'#e4e4e4\'>Índice</td>

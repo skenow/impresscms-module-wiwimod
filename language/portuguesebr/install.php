@@ -22,7 +22,7 @@
      <p>Bemvindo;<br />Este é a página padrão deste Wiki. Sinta-se livre para editar e modificar esta página. 
      Para criar novas páginas, você precisa apenas incluir em qualquer lugar na sua página um colhete duplo ( [[ ). 
      Quando você salvar esta página, os parênteses ou colchetes serão substituídos por um link para sua nova página.</p>
-     <p>Verificar <a href=\'manual.html\' target=_blank>o manual</a> para uma visão mais profunda sobre os recursos de edição neste Wiki.</p></td>
+     <p>Verificar <a href=\'http://www.simplywiki.org/modules/wiki/index.php?page=Wiki+Help\' target=_blank>o manual</a> para uma visão mais profunda sobre os recursos de edição neste Wiki.</p></td>
      <td><img src=\'images/wiwilogo.gif\' /></td></tr></tbody></table></p>
      <p><table cellspacing=\'5\' cellpadding=\'5\' width=\'100%\' border=\'0\'>
           <tbody><tr><td bgcolor=\'#e4e4e4\'>Índice das Páginas</td>

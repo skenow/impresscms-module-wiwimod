@@ -21,7 +21,7 @@
      <p>خوش آمدید؛<br />این صفحه‌ی پیشفرض ویوی می‌باشد. شما می‌تانید با خیال راحت این را ویرایش کنید و تغییر دهید. 
      To create new pages, type in anywhere a page name and surround it with double square brackets ( [[ ). 
      When you save this page, the brackets will be replaced by a link to your new page.</p>
-     <p>Check <a href=\'manual.html\' target=_blank>the manual</a> for an in depth view of editing features.</p></td>
+     <p>Check <a href=\'http://www.simplywiki.org/modules/wiki/index.php?page=Wiki+Help\' target=_blank>the manual</a> for an in depth view of editing features.</p></td>
      <td><img src=\'images/wiwilogo.gif\' /></td></tr></tbody></table></p>
      <p><table cellspacing=\'5\' cellpadding=\'5\' width=\'100%\' border=\'0\'>
           <tbody><tr><td bgcolor=\'#e4e4e4\'>فهرست صفحات</td>

@@ -21,7 +21,7 @@ define ( '_MI_SWIKI_PROFILE1', 'Contenuto aperto');
      <p>Benvenuti;<br />Questa è la tua home page predefinita. Sentitevi liberi di modificarla.
      Per creare nuove pagine, digita dovunque in una pagina e racchiudi il testo con doppie parentesi quadre ( [[ ).
      Quando si salva questa pagina, le parentesi saranno sostituite da un link alla tua nuova pagina. </ P>
-     <p> Controlla <a href=\'manual.html\' target=_blank>il manuale</a> per un approfondimento della caratteristica.</p></td>
+     <p> Controlla <a href=\'http://www.simplywiki.org/modules/wiki/index.php?page=Wiki+Help\' target=_blank>il manuale</a> per un approfondimento della caratteristica.</p></td>
      <td><img src=\'images/wiwilogo.gif\' /></td></tr></tbody></table></p>
      <p><table cellspacing=\'5\' cellpadding=\'5\' width=\'100%\' border=\'0\'>
           <tbody><tr><td bgcolor=\'#e4e4e4\'>Pagina indice</td>

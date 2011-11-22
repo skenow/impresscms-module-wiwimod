@@ -59,7 +59,7 @@ define ( '_MI_SWIKI_BLOCK_RELATED_NAME', 'WikiSideContent');
 define ( '_MI_SWIKI_BLOCK_RELATED_DESC', 'Blocco laterale per i contenuti extra su pagine Wiki');
 define ( '_MI_SWIKI_BLOCK_SHOWPAGE_NAME', 'WikiShowPage');
 define ( '_MI_SWIKI_BLOCK_SHOWPAGE_DESC', 'Mostra una pagina wiki');
-define('_MI_SWIKI_AUTHOR_WORD','<h4>Aiuto su SimpyWiki</h4><br />SimplyWiki &egrave; GPL software; visita la pagina di supporto su <a href="http://community.impresscms.org/" target="_blank">community.impresscms.org</a> per dare o ricevere supporto.<br /><br />Se hai migrato da una vecchia versione di Wiwi (0.7.1 o minore) allora clicca qui: <input type="button" value="AGGIORNA" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Leggi il Manuale</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>note release</a> per iniziare.');
+define('_MI_SWIKI_AUTHOR_WORD','<h4>Aiuto su SimpyWiki</h4><br />SimplyWiki &egrave; GPL software; visita la pagina di supporto su <a href="http://community.impresscms.org/" target="_blank">community.impresscms.org</a> per dare o ricevere supporto.<br /><br />Se hai migrato da una vecchia versione di Wiwi (0.7.1 o minore) allora clicca qui: <input type="button" value="AGGIORNA" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'http://www.simplywiki.org/modules/wiki/index.php?page=Wiki+Help\' target=\'_blank\'>Leggi il Manuale</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>note release</a> per iniziare.');
 define('_MI_SWIKI_DEFAULTPROFILE_DESC','Profilo di default assegnato alle nuove pagine');
 if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','HomePage');}
 
