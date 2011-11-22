@@ -29,7 +29,7 @@ function swiki_showpage ($options) {
 	} else {
 		$block['notfound'] = false;
 		if (!$pageObj->canRead()) {
-			$pagecontent = "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>" . _MB_SWIKI_NOREADACCESS_MSG . "</td></tr></table></center><br><br>";
+			$pagecontent = xoops_warning(_MD_SWIKI_NOREADACCESS_MSG);
 		} else {
 			// Handle pagebreaks
 			$pagecontent = $pageObj->body;
