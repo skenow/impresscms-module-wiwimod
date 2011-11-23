@@ -102,7 +102,8 @@ function swiki_getXoopsBlock ($blkname) {
 	return $block;
 }
 
-/*
+/**
+ * @deprecated
  * code adapted from the excellent SmartFaq module (www.smartfactory.ca)
  */
 function w_adminMenu ($currentoption = 0, $breadcrumb = '') {
@@ -110,8 +111,9 @@ function w_adminMenu ($currentoption = 0, $breadcrumb = '') {
 	echo getAdminMenu($currentoption, $breadcrumb);
 }
 
-/*
+/**
  * code adapted from the excellent SmartFaq module (www.smartfactory.ca)
+ * @deprecated
  */
 function getAdminMenu ($currentoption = 0, $breadcrumb = '') {
 	$wikiModDir = basename(dirname(dirname(__FILE__)));
