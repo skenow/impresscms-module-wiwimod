@@ -42,7 +42,9 @@ if (in_array($op, $valid_ops, TRUE)) {
 		case 'edit':
 		default:
 			xoops_cp_header();
-			w_adminMenu (1, _AM_SWIKI_ACLADMIN_NAV);
+			if(method_exists($xoopsModule, 'displayAdminMenu')) {
+				$xoopsModule->displayAdminMenu (2, _AM_SWIKI_ACLADMIN_NAV);
+			}
 
 			//--- list profiles ---
 			$prf = new WiwiProfile();

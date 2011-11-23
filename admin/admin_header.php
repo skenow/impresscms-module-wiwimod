@@ -40,7 +40,8 @@ if (file_exists('../language/' . $xoopsConfig['language'] . '/main.php')) {
 }
 
 if ($xoopsUser) {
-    $icmsModule = $xoopsModule = XoopsModule::getByDirname($wikiModDir);
+    $icmsModule = XoopsModule::getByDirname($wikiModDir);
+    $xoopsModule =& $icmsModule;
     if (!$xoopsUser->isAdmin($xoopsModule->mid())) {
         redirect_header(ICMS_URL . '/', 3, _NOPERM);
         exit();

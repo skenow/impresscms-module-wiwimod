@@ -100,7 +100,7 @@ function list_blocks()
 		$class = 'style="background-color: #F5E3E3; color:inherit; border: 1px solid #CCCCCC; padding: 2px;"';}
 		$side_options = '';
 		$editLink = ICMS_URL . '/modules/system/admin.php?fct=blocksadmin&amp;op=edit&amp;bid=' ;
-		// Block positions - XOOPS 2.0.x, 2.3.x
+		// Block positions - XOOPS 2.0.x, 2.3.x, 2.4.x
 		if (!$adv_blocks){
 			$new_sides = array (
 			XOOPS_SIDEBLOCK_LEFT => _AM_SBLEFT,
@@ -146,7 +146,7 @@ function list_blocks()
 
 		$db =& Database::getInstance();
 		if (!$adv_pages){
-			// target modules - XOOPS 2.0.x, 2.3.x and ImpressCMS 1.0.x
+			// target modules - XOOPS 2.0.x, 2.3.x, 2.4.x and ImpressCMS 1.0.x
 			$result = $db->query( 'SELECT module_id FROM '.$db->prefix('block_module_link').' WHERE block_id="'.$bid.'"' ) ;
 			$selected_mids = array();
 			while ( list( $selected_mid ) = $db->fetchRow( $result ) ) {
@@ -254,7 +254,9 @@ if( ! empty( $_POST['submit'] ) ) {
 
 include '../include/functions.php';
 xoops_cp_header() ;
-echo getAdminMenu (3,_AM_SWIKI_BLOCKSNGROUPS_NAV);
+if(method_exists($xoopsModule, 'displayAdminMenu')) {
+	echo $xoopsModule->displayAdminMenu (3,_AM_SWIKI_BLOCKSNGROUPS_NAV);
+}
 if( file_exists( './mymenu.php' ) ) include( './mymenu.php' ) ;
 
 echo "<h3 style='text-align:left;'>".$xoopsModule->name()."</h3>\n" ;
@@ -262,4 +264,3 @@ echo "<h4 style='text-align:left;'>"._AM_BADMIN."</h4>\n" ;
 list_blocks() ;
 list_groups() ;
 xoops_cp_footer() ;
-

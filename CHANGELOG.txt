@@ -2,6 +2,25 @@
 Status: RC
 Released: 
 
+Added
+
+Improved
+* Rendering for [[CamelCase Title]]
+* Admin header rendering now is handled by the core, hardcoded HTML and styles are not used
+
+Fixed
+* Unnecessary inclusion of header.php in the block files
+* PATH and URL definition in the block files
+
+Removed
+* Static HTML manual
+* References to update.php
+
+Language additions/changes
+
+Contributors to this release
+* skenow
+
 == SimplyWiki 1.2 ==
 Status: Final
 Released: 1 September 2011

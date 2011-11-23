@@ -34,3 +34,23 @@ $adminmenu[] = array(
      'link'  => 'admin/help.php',
      'icon' => 'images/help.png',
      'small' => 'images/help_small.png');
+
+global $xoopsModule;
+$wikiModDir = basename(dirname(dirname(__FILE__)));
+	$headermenu[0] = array(
+	     'title' => _PREFERENCES,
+	     'link'  => ICMS_URL . "/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $xoopsModule->mid(),
+	);
+	
+/* cross platform issues on the latest version; not addressing the language translations here */
+defined('_AM_SWIKI_GOTO_MODULE') 
+	|| include_once ICMS_ROOT_PATH . "/modules/" . $wikiModDir . "/language/english/admin.php";
+
+$headermenu[] = array(
+	'title' => _AM_SWIKI_GOTO_MODULE,
+	'link'  => ICMS_URL . "/modules/" . $wikiModDir,
+);
+$headermenu[] = array(
+	'title' => _AM_SWIKI_UPDATE_MODULE,
+	'link'  => ICMS_URL . "/modules/system/admin.php?fct=modulesadmin&op=update&module=" . $wikiModDir,
+);

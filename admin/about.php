@@ -12,7 +12,9 @@
 include 'admin_header.php';
 
 xoops_cp_header();
-echo getAdminMenu (4,'about');
+if(method_exists($xoopsModule, 'displayAdminMenu')) {
+	echo $xoopsModule->displayAdminMenu (4,'about');
+}
 echo _MI_SWIKI_AUTHOR_WORD;
 
 xoops_cp_footer();
