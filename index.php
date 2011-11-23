@@ -286,7 +286,7 @@ switch ($op) {
 		}
 		/* Tag module support end*/
 		$rev_summary = $summary ? $summary : '';
-		$form->addElement(new XoopsFormText(_MI_SWIKI_REVISION_SUMMARY, 'summary', 60, 255, $rev_summary));
+		$form->addElement(new XoopsFormText(_MI_SWIKI_REVISION_SUMMARY, 'summary', 50, 255, $rev_summary));
 		/*		$allowComments_checkbox =	 new XoopsFormCheckBox(_MI_SWIKI_ALLOW_COMMENTS, 'allowComments',);
 		 $allowComments_checkbox->addOption ($allowComments, $pageObj->allowComments);
 		 $option_tray = new XoopsFormElementTray('Options','<br />');
