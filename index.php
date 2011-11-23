@@ -196,7 +196,7 @@ switch ($op) {
 		$form->addElement(new XoopsFormHidden('uid', ($xoopsUser) ? $xoopsUser->getVar('uid') : 0));
 		$form->addElement(new XoopsFormHidden('lastmodified', $pageObj->lastmodified));
 
-		$form->addElement(new XoopsFormText(_MD_SWIKI_TITLE_FLD, 'title', 80, 250, $myts->htmlSpecialChars($pageObj->title)));
+		$form->addElement(new XoopsFormText(_MD_SWIKI_TITLE_FLD, 'title', 50, 250, $myts->htmlSpecialChars($pageObj->title)));
 
 		$edArr = array();
 		foreach (getAvailableEditors() as $ed) {
