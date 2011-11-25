@@ -89,9 +89,9 @@ define('_MI_SWIKI_TOPPAGE_DESC', 'Page to be shown on the main page of the modul
 // Added in SimplyWiki 1.2
 define('_MI_SWIKI_PAGERESTORE_TITLE','Page restored');
 define('_MI_SWIKI_PAGERESTORE_CAPTION','Notify me when a previous version of this page is restored');
-define('_MI_SWIKI_PAGERESTORE_DESC','Receive notification when any user restores a previous vesion of this page');
+define('_MI_SWIKI_PAGERESTORE_DESC','Receive notification when any user restores a previous version of this page');
 define('_MI_SWIKI_PAGERESTORE_SUBJECT','[{X_SITENAME}] {X_MODULE} auto-notify : page restored');
 define('_MI_SWIKI_GLOBALPAGERESTORE_TITLE','Page restored');
 define('_MI_SWIKI_GLOBALPAGERESTORE_CAPTION','Notify me when a previous version of any page is restored');
-define('_MI_SWIKI_GLOBALPAGERESTORE_DESC','Receive notification when any user restores a previous vesion of any page');
+define('_MI_SWIKI_GLOBALPAGERESTORE_DESC','Receive notification when any user restores a previous version of any page');
 define('_MI_SWIKI_GLOBALPAGERESTORE_SUBJECT','[{X_SITENAME}] {X_MODULE} auto-notify : page restored');

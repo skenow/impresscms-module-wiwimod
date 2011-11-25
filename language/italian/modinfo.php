@@ -85,4 +85,13 @@ define ( '_MI_SWIKI_SHOWQUICKADD', 'Attiva la funzione Quick Add');
 define ( '_MI_SWIKI_SHOWQUICKADD_DESC', 'Imposta <em> S&igrave; </ em> visualizza il campo Quick Add, permettendo agli editori di digitare un nome della pagina e andare direttamente alla modifica della pagina');
 define ( '_MI_SWIKI_TOPPAGE', 'Pagina indice');
 define ( '_MI_SWIKI_TOPPAGE_DESC', 'Pagina da visualizzare come pagina principale del modulo');
-?>
+
+// Added in SimplyWiki 1.2
+define('_MI_SWIKI_PAGERESTORE_TITLE','Page restored');
+define('_MI_SWIKI_PAGERESTORE_CAPTION','Notify me when a previous version of this page is restored');
+define('_MI_SWIKI_PAGERESTORE_DESC','Receive notification when any user restores a previous version of this page');
+define('_MI_SWIKI_PAGERESTORE_SUBJECT','[{X_SITENAME}] {X_MODULE} auto-notify : page restored');
+define('_MI_SWIKI_GLOBALPAGERESTORE_TITLE','Page restored');
+define('_MI_SWIKI_GLOBALPAGERESTORE_CAPTION','Notify me when a previous version of any page is restored');
+define('_MI_SWIKI_GLOBALPAGERESTORE_DESC','Receive notification when any user restores a previous version of any page');
+define('_MI_SWIKI_GLOBALPAGERESTORE_SUBJECT','[{X_SITENAME}] {X_MODULE} auto-notify : page restored');
