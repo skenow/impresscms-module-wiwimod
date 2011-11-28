@@ -64,14 +64,14 @@ define('_MI_SWIKI_DEFAULTPROFILE_DESC','Standard Profil für neue Seiten');
 if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','HomePage');}
 
 // Added in SimplyWiki 1.1
-define('_MI_SWIKI_BLOCK_LISTPAGES_NAME','List Pages');
+define('_MI_SWIKI_BLOCK_LISTPAGES_NAME','Von A bis Z');
 define('_MI_SWIKI_BLOCK_LISTPAGES_DESC','Zeige eine Liste der Seiten');
 define('_MI_SWIKI_BLOCK_ADDPAGE_NAME','Erstellen einer neuen Seite');
 define('_MI_SWIKI_BLOCK_ADDPAGE_DESC','Add a wiki page from anywhere on your site');
 define('_MI_SWIKI_BLOCK_TAGCLOUD_NAME','Wiki Tag Cloud');
 define('_MI_SWIKI_BLOCK_TAGCLOUD_DESC','A tag cloud for SimplyWiki');
 define('_MI_SWIKI_BLOCK_TAG_NAME','Wiki Top Tags');
-define('_MI_SWIKI_BLOCK_TAG_DESC','A list of top tags for SimplyWiki');
+define('_MI_SWIKI_BLOCK_TAG_DESC','Eine Liste der meistbesuchten Seiten');
 define('_MI_SWIKI_PAGEINFO','Zeige Information zur Seite');
 define('_MI_SWIKI_PAGEINFO_DESC', 'Welche Details zur Seite sollen angezeigt werden.');
 define('_MI_SWIKI_SHOWREVISIONS','Zeige Versionsnummern');
@@ -91,7 +91,7 @@ define('_MI_SWIKI_PAGERESTORE_TITLE','Seite wiederhergestellt');
 define('_MI_SWIKI_PAGERESTORE_CAPTION','Notify me when a previous version of this page is restored');
 define('_MI_SWIKI_PAGERESTORE_DESC','Receive notification when any user restores a previous vesion of this page');
 define('_MI_SWIKI_PAGERESTORE_SUBJECT','[{X_SITENAME}] {X_MODULE} auto-notify : page restored');
-define('_MI_SWIKI_GLOBALPAGERESTORE_TITLE','Page restored');
+define('_MI_SWIKI_GLOBALPAGERESTORE_TITLE','Seite wiederhergestellt');
 define('_MI_SWIKI_GLOBALPAGERESTORE_CAPTION','Notify me when a previous version of any page is restored');
 define('_MI_SWIKI_GLOBALPAGERESTORE_DESC','Receive notification when any user restores a previous vesion of any page');
 define('_MI_SWIKI_GLOBALPAGERESTORE_SUBJECT','[{X_SITENAME}] {X_MODULE} auto-notify : page restored');
