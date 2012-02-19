@@ -307,7 +307,7 @@ class WiwiRevision {
 		
 		$lbr = "<p>|</p>|<hr />|<table>|</table>|<div>|</div>|<br />|<ul>|<li>|</li>|</ul>";
 		$nl = "^|" . $lbr;
-		$eol =$lbr . "|$";
+		$eol = $lbr . "|$";
 		$lt = "(?:&lt;|<)";
 		$gt = "(?:&gt;|>)";
 
@@ -337,7 +337,7 @@ class WiwiRevision {
 	// [[IMG url title]] : inline image ...
 		$search[] = "#\[\[IMG ([^\s\"\[>{}]+)( ([^\"<\n]+?))?\]\]#i";
 		$replace[] = '<img src="\\1" alt="\\3" />';
-	// link with href ending with ?page=
+	// link with href ending with ?page=CamelCase
 		$search[] = "#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))(\">.*)</a>#Uie";
 		$replace[] = '$this->render_wiwiLink("$2", "$1", "$4");';
 	// CamelCase
@@ -435,7 +435,7 @@ class WiwiRevision {
 	 * Utilities for page rendering ;
 	 */
 	public function render_wiwiLink($pg, $a, $txt) {
-		return $a . "&amp;back=" . $this->keyword . $txt . ($this->pageExists($pg) ? "" : "<img src='" . $this->_url . "images/nopage.gif' alt='' />") . "</a>";
+		return $a . $txt . ($this->pageExists($pg) ? "" : "<img src='" . $this->_url . "images/nopage.gif' alt='' />") . "</a>";
 	}
 
 	/**
@@ -457,7 +457,7 @@ class WiwiRevision {
 			$txt = ($customTitle != '' ? $customTitle : $normKeyword);
 		}
 
-		return sprintf('<a href="%s">%s%s</a>', $this->_url . 'index.php?page=' . $this->encode($normKeyword) . '&amp;back='.$this->encode($this->keyword), stripslashes($txt), ($pageExists ? "" : '<img src="' . $this->_url . 'images/nopage.gif" alt="" />'));
+		return sprintf('<a href="%s">%s%s</a>', $this->_url . 'index.php?page=' . $this->encode($normKeyword), stripslashes($txt), ($pageExists ? "" : '<img src="' . $this->_url . 'images/nopage.gif" alt="" />'));
 
 	}
 
