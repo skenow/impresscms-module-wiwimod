@@ -1,7 +1,7 @@
 <?php
 
-include("../../mainfile.php");
-include(ICMS_ROOT_PATH."/header.php");
+include_once "../../../../mainfile.php";
+include_once ICMS_ROOT_PATH . "/header.php";
 
 $meta_keywords = "simplywiki,manual,español";
 $meta_description = "Manual en castellano de SimplyWiki - Módulo de wiki para ImpressCMS";
@@ -11,11 +11,11 @@ if(isset($xoTheme) && is_object($xoTheme)) {
     $xoTheme->addMeta( 'meta', 'keywords', $meta_keywords);
     $xoTheme->addMeta( 'meta', 'description', $meta_description);
 } else {   
-    $icmsTpl->assign('xoops_meta_keywords', $meta_keywords);
-    $icmsTpl->assign('xoops_meta_description', $meta_description);
+    $icmsTpl->assign('icms_meta_keywords', $meta_keywords);
+    $icmsTpl->assign('icms_meta_description', $meta_description);
 }
 
-$xoopsTpl->assign('xoops_pagetitle', $pagetitle);
+$icmsTpl->assign('icms_pagetitle', $pagetitle);
 
 //this will only work if your theme is using this smarty variables
 $icmsTpl->assign( 'xoops_showlblock', 0); //set to 0 to hide left blocks
@@ -29,37 +29,7 @@ $icmsTpl->assign( 'xoops_showcblock', 0); //set to 0 to hide center blocks
   });
 </script>
 <style type="text/css">
-/*
- * jQuery UI CSS Framework 1.8.7
- *
- * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
- * Dual licensed under the MIT or GPL Version 2 licenses.
- * http://jquery.org/license
- *
- * http://docs.jquery.com/UI/Theming/API
- */
-
-
-/* Component containers
-----------------------------------*/
-.ui-widget { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1.1em; }
-.ui-widget .ui-widget { font-size: 1em; }
-.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1em; }
-.ui-widget-content { border: 1px solid #dddddd; background: #eeeeee url(images/ui-bg_highlight-soft_100_eeeeee_1x100.png) 50% top repeat-x; color: #333333; }
-.ui-widget-content a { color: #333333; }
-.ui-widget-header { border: 1px solid #e78f08; background: #f6a828 url(images/ui-bg_gloss-wave_35_f6a828_500x100.png) 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
 .ui-widget-header a { color: #ffffff; }
-
-/* Interaction states
-----------------------------------*/
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #cccccc; background: #f6f6f6 url(images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #1c94c4; }
-.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #1c94c4; text-decoration: none; }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #fbcb09; background: #fdf5ce url(images/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; }
-.ui-state-hover a, .ui-state-hover a:hover { color: #c77405; text-decoration: none; }
-.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: 1px solid #fbd850; background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #eb8f00; }
-.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #eb8f00; text-decoration: none; }
-.ui-widget :active { outline: none; }
-
 /* Corner radius */
 .ui-corner-tl { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; border-top-left-radius: 4px; }
 .ui-corner-tr { -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; border-top-right-radius: 4px; }
@@ -70,32 +40,17 @@ $icmsTpl->assign( 'xoops_showcblock', 0); //set to 0 to hide center blocks
 .ui-corner-right {  -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; border-top-right-radius: 4px; -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px; }
 .ui-corner-left { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; border-top-left-radius: 4px; -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; border-bottom-left-radius: 4px; }
 .ui-corner-all { -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; }
-
- * jQuery UI Tabs 1.8.7
- *
- * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
- * Dual licensed under the MIT or GPL Version 2 licenses.
- * http://jquery.org/license
- *
- * http://docs.jquery.com/UI/Tabs#theming
- */
 .ui-tabs { position: relative; padding: .2em; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
 .ui-tabs .ui-tabs-nav { margin: 0; padding: .2em .2em 0; }
-.ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 1px; margin: 0 .2em 1px 0; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
+.ui-tabs .ui-tabs-nav li { list-style: none !important; float: left; position: relative; top: 3px; margin: 0 .2em 1px 0; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
 .ui-tabs .ui-tabs-nav li a { float: left; padding: .5em 1em; text-decoration: none; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected { margin-bottom: 0; padding-bottom: 1px; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
 .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
 .ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 1em 1.4em; background: none; }
 .ui-tabs .ui-tabs-hide { display: none !important; }
-
-#Container {
-                        width: 780px;
-                        margin-left: auto;
-                        margin-right: auto; 
-                        margin-top:22px;
-                }
-                p, li {font-size:13px;line-height:150%;}
+#Container {width: 960px;margin-left: auto;margin-right: auto; margin-top:22px;}
+p, li {font-size:13px;line-height:150%;}
 .ui-tabs .ui-tabs-nav li a {font-weight:bold;}
 .ui-tabs .ui-tabs-nav {padding-left:13px;}
 .box-table-a{font-family:"Lucida Sans Unicode", "Lucida Grande",
@@ -114,14 +69,7 @@ solid transparent;padding:8px;}
  div.c3 {text-align: center}
  span.c2 {font-style: italic;}
  span.c1 {font-weight: bold;}
- #Title {
-			font-family: Verdana, Arial;
-			font-size: 22px;
-			font-weight: bold;
-			color: #ff9900;
-			margin-bottom: 10px;
-			text-shadow: 2px 2px 3px #aaa;
-}
+#Title {font-family: Verdana, Arial;font-size: 22px;font-weight: bold;color: #ff9900;margin-bottom: 20px;text-shadow: 2px 2px 3px #aaa;}
 </style>
 </head>
 <body>
@@ -359,5 +307,5 @@ De forma predeterminada el módulo contiene tres perfiles cuando se instala, los
 </html>
 
 <?php
-include(XOOPS_ROOT_PATH."/footer.php");
+include_once ICMS_ROOT_PATH . '/footer.php';
 ?>

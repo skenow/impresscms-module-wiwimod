@@ -89,4 +89,4 @@ define('_AM_SWIKI_PRFDELFAILED_MSG','Error durante la supresión del perfil.');
 
 //added in version 1.2
 define('_AM_SWIKI_GOTO_MODULE', 'Ir al módulo');
-define('_AM_SWIKI_UPDATE_MODULE', 'Actualizar módulo');
+define('_AM_SWIKI_UPDATE_MODULE', 'Actualizar');
