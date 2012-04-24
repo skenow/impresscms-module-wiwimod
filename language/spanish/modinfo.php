@@ -28,7 +28,7 @@ define('_MI_SWIKI_SHOWTITLES_DESC','Esta característica es relativa a los vínc
 define('_MI_SWIKI_USECAMELCASE','Interpretar el <em>CamelCase</em>');
 define('_MI_SWIKI_USECAMELCASE_DESC','Interpreta las palabras en <em>CamelCase</em> como vínculos hacia otras páginas del wiki.<em>CamelCase</em> es la práctica de escribir frases o palabras compuestas eliminando los espacios y poniendo en mayúscula la primera letra de cada palabra. El nombre viene del parecido de estas mayúsculas, entre las demás letras, con las jorobas de los camellos.');
 
-define('_MI_SWIKI_XOOPSEDITOR','Elija un editor');
+define('_MI_SWIKI_XOOPSEDITOR','Seleccione un editor');
 define('_MI_SWIKI_XOOPSEDITOR_DESC','');
 
 // Notification options
@@ -57,7 +57,7 @@ define('_MI_SWIKI_BLOCK_RELATED_NAME','Contenido relacionado');
 define('_MI_SWIKI_BLOCK_RELATED_DESC','Bloque que muestra la página(s) cuyo nombre se haya indicado en el campo <em>Contenido relacionado</em> ');//Side block for extra content on Wiwi pages
 define('_MI_SWIKI_BLOCK_SHOWPAGE_NAME','Mostrar página');
 define('_MI_SWIKI_BLOCK_SHOWPAGE_DESC','Mostrar una página');
-define('_MI_SWIKI_AUTHOR_WORD','<h4>Sobre SimplyWiki</h4><br />SimplyWiki es software bajo licencia GPL; visite la página <a href="http://community.impresscms.org/" target="_blank">community.impresscms.org</a> para obtener ayuda o soporte.<br /><br />Si ha migrado desde una versión anterior de Wiwi (0.7.1 o inferior), haga clic aquí: <input type="button" value="Actualizar" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.php\' target=\'_blank\'>Lea el Manual</a> y <a href=\'../ReadMe.txt\' target=\'_blank\'>las Notas de la versión</a> para comenzar.');
+define('_MI_SWIKI_AUTHOR_WORD','<h4>Sobre SimplyWiki</h4><br />SimplyWiki es software con licencia GPL. Visite la página <a href="http://community.impresscms.org/" target="_blank">community.impresscms.org</a> para obtener ayuda o soporte.<br /><br />Si ha migrado desde una versión anterior de Wiwi (0.7.1 o inferior), haga clic aquí: <input type="button" value="Actualizar" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../language/spanish/manual.php\' target=\'_blank\'>Lea el Manual</a> y <a href=\'../ReadMe.txt\' target=\'_blank\'>las Notas de la versión</a> para comenzar.');
 define('_MI_SWIKI_DEFAULTPROFILE_DESC','Perfil predeterminado asignado a las nuevas páginas');
 if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','Inicio');}
 
@@ -65,8 +65,8 @@ if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME','Inicio');}
 define('_MI_SWIKI_BLOCK_LISTPAGES_NAME','Lista de páginas');
 define('_MI_SWIKI_BLOCK_LISTPAGES_DESC','Muestra una lista con las páginas.');
 define('_MI_SWIKI_BLOCK_ADDPAGE_NAME','Añadir página');
-define('_MI_SWIKI_BLOCK_ADDPAGE_DESC','Añadir una página en el wiki desde cualquier lugar de su sitio.');
-define('_MI_SWIKI_BLOCK_TAGCLOUD_NAME','Eiquetas');
+define('_MI_SWIKI_BLOCK_ADDPAGE_DESC','Permite añadir una página en el wiki desde cualquier otra de su sitio.');
+define('_MI_SWIKI_BLOCK_TAGCLOUD_NAME','Etiquetas');
 define('_MI_SWIKI_BLOCK_TAGCLOUD_DESC','<em>Nube de etiquetas> de SimplyWiki');
 define('_MI_SWIKI_BLOCK_TAG_NAME','Etiquetas del wiki');
 define('_MI_SWIKI_BLOCK_TAG_DESC','Lista de las etiquetas más importantes de SimplyWiki.');
@@ -82,7 +82,7 @@ define('_MI_SWIKI_USECAPTCHA_DESC', 'Mostrar CAPTCHA en el formulario de edició
 define('_MI_SWIKI_SHOWQUICKADD','Activar la característica de <em>Añadir página</em>');
 define('_MI_SWIKI_SHOWQUICKADD_DESC', 'Si selecciona <em>Sí</em> se mostrará un campo de <em>Añadir página</em> que permite a los editores introducir el nombre de la nueva página y empezar a crearla directamente.');
 define('_MI_SWIKI_TOPPAGE', 'Página índice');
-define('_MI_SWIKI_TOPPAGE_DESC', 'Página que será mostrada como la inicial o principal del módulo.');
+define('_MI_SWIKI_TOPPAGE_DESC', 'Página que será mostrada como la de inicio del módulo.');
 // Added in SimplyWiki 1.2
 define('_MI_SWIKI_PAGERESTORE_TITLE','Página restaurada');
 define('_MI_SWIKI_PAGERESTORE_CAPTION','Notificarme cuando una versión anterior de esta página sea restaurada');

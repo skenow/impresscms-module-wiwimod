@@ -32,7 +32,7 @@ define('_AM_SWIKI_ACLHELP_TXT','
 	<p>Los perfiles tambien sirven para administrar el acceso a los comentarios. Esto permite, por ejemplo, admitir comentarios privados en páginas públicas.</p>
 	<p>Nota: los administradores tienen permisos como tales en todas las páginas.</p>
 	');
-define('_AM_SWIKI_DELCONFIRMTITLE_TXT','CONFIRMACION DE SUPRESIÓN');
+define('_AM_SWIKI_DELCONFIRMTITLE_TXT','Confirmación');
 define('_AM_SWIKI_DELCONFIRM_TXT','Va a suprimir un perfil: confirme su decisión.');
 define('_AM_SWIKI_DELREDIR_TXT','Elija un perfil para las páginas actualmente incluídas en el que está suprimiendo.');
 

@@ -159,7 +159,7 @@ Para usar dicha característica con TinyMCE y ahorrarnos usar este código, hay 
 </tr>
 <tr valign="top">
 <td width="30%">&lt;[Headings]&gt;</td>
-<td width="70%">Crea una tabla de contenido de la página..</td>
+<td width="70%">Crea una tabla de contenido de la página. Es necesario que haya al menos tres o más etiquetas para ello, h1, h2, h3 etc.</td>
 </tr>
 <tr valign="top">
 <td width="30%">Imágenes, archivos adjuntos, archivos de medios, etc.<br></td>
@@ -278,7 +278,7 @@ Ejemplo: podemos crear un perfil denominado <span class="c2">Acceso general</spa
 <td width="10%">Página</td>
 <td width="80%">Como administrador puedes ver el historial de cada página y restaurar la misma a una versión anterior o fijar un estado de forma que no se puede retroceder a otro anterior; para ello basta con borrar las revisiones anteriores.<br>
 También es posible buscar entre todas las páginas existentes en función de varios criterios (nombre, título, importancia, perfil, etc.) o borrar cualquiera de ellas.<br>
-Es una buena idea limpiar la base de datos de vez en cuando utilizando el botón existente: suprimirá todas las revisiones con más de dos meses de antiguedad; en función del número de revisiones o del contenido de la página es posible que se ocupe demasiado espacio innecesario en la base de datos, de hay la conveniencia de hacer limpieza.</td>
+Es una buena idea limpiar la base de datos de vez en cuando utilizando el botón existente: suprimirá todas las revisiones con más de dos meses de antiguedad; en función del número de revisiones y del contenido de la página es posible que se ocupe demasiado espacio innecesario en la base de datos, de ahí la conveniencia de hacer limpieza.</td>
 </tr>
 <tr valign="top">
 <td width="20%">Permisos</td>
@@ -295,7 +295,7 @@ De forma predeterminada el módulo contiene tres perfiles cuando se instala, los
 </tr>
 <tr valign="top">
 <td width="30%">Acerca de...<br></td>
-<td width="70%">Contiene información general sobre el módulo, permite actualizar desde versiones anteriores y los enlaces a este manual y a las notas de la versión del módulo.<br></td>
+<td width="70%">Contiene información general sobre el módulo, permite actualizar desde versiones anteriores e incluye los enlaces a este manual y a las notas de la versión del módulo.<br></td>
 </tr>
 </tbody>
 </table>
