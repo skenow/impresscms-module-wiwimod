@@ -197,9 +197,8 @@ class WiwiRevision {
 		$result = $this->db->query($sql);
 		if (!$result) return false;
 		$sql = sprintf(
-			"UPDATE %s SET revisions=%u, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s' WHERE pageid=%u",
+			"UPDATE %s SET revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s' WHERE pageid=%u",
 			$this->db->prefix('wiki_pages'),
-			$this->revisions + 1,
 			$add_date,
 			addslashes($this->parent),
 			$this->profile->prid,
@@ -223,7 +222,7 @@ class WiwiRevision {
 		global $xoopsUser;
 		$save_date = date('Y/n/j G:i:s');
 		$sql = sprintf(
-			"UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=%u, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s'
+			"UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s'
 				WHERE revid=%u AND p.pageid=%u",
 			$this->db->prefix('wiki_pages'),
 			$this->db->prefix('wiki_revisions'),
@@ -233,7 +232,6 @@ class WiwiRevision {
 			addslashes($this->contextBlock),
 			addslashes($this->summary),
 			$this->ts->addSlashes($this->title),
-			$this->revisions + 1,
 			$save_date,
 			addslashes($this->parent),
 			$this->profile->prid,
@@ -304,7 +302,7 @@ class WiwiRevision {
 	 */
 	public function render(&$body = '') {
 		if ($body == '') $body = $this->body;
-		
+
 		$lbr = "<p>|</p>|<hr />|<table>|</table>|<div>|</div>|<br />|<ul>|<li>|</li>|</ul>";
 		$nl = "^|" . $lbr;
 		$eol = $lbr . "|$";
@@ -426,7 +424,7 @@ class WiwiRevision {
 	// dummy string, to prevent recognition of special sequences (addition : Gizmhail)
 		$search[] = "#\._\.#ie";
 		$replace[] = "";
-		
+
 		$prelim = preg_replace($search, $replace, $this->ts->displayTarea($body, 1, 1, 1, 1, 0));
 		return $this->render_toc($prelim);
 	}
@@ -925,16 +923,16 @@ class WiwiRevision {
 
 	 /**
 	  * Create a linked table of contents for a page
-	  * This function locates all the heading tags and creates a linked list to assist with 
+	  * This function locates all the heading tags and creates a linked list to assist with
 	  * navigation and organiztion. The list will only be created if there are 3 or more headings
 	  * You must insert <[Headings]> in the page for your TOC to display
-	  * 
-	  * @return	string Unaltered body text if there are less than 3 headings, HTML inserted for the linked list otherwise	
+	  *
+	  * @return	string Unaltered body text if there are less than 3 headings, HTML inserted for the linked list otherwise
 	  */
 	 private function render_toc(&$body) {
 		$lt = "(?:&lt;|<)";
 		$gt = "(?:&gt;|>)";
-	 	
+
 	 	$search = '/<(h\d)>(.+?)<\/\1>/';
 	 	if (preg_match_all($search, $body, $matches, PREG_SET_ORDER) < 3) {
 	 		return $body;
@@ -942,7 +940,7 @@ class WiwiRevision {
 	 	    $headings = array();
 		 	foreach ($matches as $key=>$match) {
 		 		$body = str_replace(
-		 			$match[0], 
+		 			$match[0],
 		 			'<a name="heading' . $key . '"></a>' . $match[0],
 		 			$body
 		 		);
@@ -952,7 +950,7 @@ class WiwiRevision {
 	// <[Headings]>
 		$search = "#(<p>)*" . $lt . "\[Headings\]" . $gt . "(</p>)*#i";
 		$replace = "<div class='wiki_toc'>" . implode("<br />", $headings) . "</div>";
-	 	
+
 	 	return preg_replace($search, $replace, $body);
 	 }
 }  // end class wiwiRevision
