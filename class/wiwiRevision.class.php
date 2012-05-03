@@ -437,26 +437,53 @@ class WiwiRevision {
 	}
 
 	/**
+	 * Generate the text or link for a wiki tag
 	 *
-	 * @param $keyword
-	 * @param $customTitle
-	 * @param $show_titles
+	 * The tag will be a link only if the viewer has permission to read the page
+	 * or has the ability to edit the page. If the page does not exist, only users with
+	 * permissions to create the page will see the indicator icon
+	 *
+	 * @todo	reduce queries
+	 *
+	 * @param	str		$keyword
+	 * @param	str		$customTitle	Override page title/page name
+	 * @param	bool	$show_titles	Whether to show the page title or page name in the text
+	 * @return	str		text or link, depending on existence and user permissions for target page
 	 */
-	public function render_wikiLink($keyword, $customTitle = '', $show_titles = false )	{
+	public function render_wikiLink($keyword, $customTitle = '', $show_titles = FALSE )	{
 		$normKeyword = $this->normalize($keyword);
 		$sql = 'SELECT title FROM ' . $this->db->prefix('wiki_pages') .' WHERE keyword="' . addslashes($normKeyword) . '"';
 		$dbresult = $this->db->query($sql);
 		if ($this->db->getRowsNum($dbresult) > 0) {
-			$pageExists = true;
+			$pageExists = TRUE;
 			list($title) = $this->db->fetchRow($dbresult);
 			$txt = $customTitle == '' ? (($title != '') && $show_titles) ? $title : $normKeyword : $customTitle ;
+			$targetPage = new WiwiRevision($normKeyword);
+			$privileges = $targetPage->profile->getUserPrivileges();
+			$userCanWrite = $privileges[_WI_WRITE];
+			$userCanView = $privileges[_WI_READ];
 		} else {
-			$pageExists = false;
+			$pageExists = FALSE;
 			$txt = ($customTitle != '' ? $customTitle : $normKeyword);
+			$privileges = $this->profile->getUserPrivileges();
+			$userCanWrite = $privileges[_WI_WRITE];
+			$userCanView = $privileges[_WI_READ];
 		}
 
-		return sprintf('<a href="%s">%s%s</a>', $this->_url . 'index.php?page=' . $this->encode($normKeyword), stripslashes($txt), ($pageExists ? "" : '<img src="' . $this->_url . 'images/nopage.gif" alt="" />'));
+		if ($pageExists && $userCanView) {
+			$link = sprintf('<a href="%s" title="' . $title . '">%s</a>',
+				$this->_url . 'index.php?page=' . $this->encode($normKeyword),
+				stripslashes($txt));
+		} elseif (!$pageExists && $userCanWrite) {
+			$link = sprintf('<a href="%s" title="' . _MD_SWIKI_CREATE . '" >%s%s</a>',
+					$this->_url . 'index.php?page=' . $this->encode($normKeyword),
+					stripslashes($txt),
+					'<img src="' . $this->_url . 'images/nopage.gif" alt="" title="' . _MD_SWIKI_PAGENOTFOUND_MSG . '" />');
+		} else {
+			$link = $txt;
+		}
 
+		return $link;
 	}
 
 	/**
@@ -645,6 +672,7 @@ class WiwiRevision {
 	 *        user may have created a doc with the same "keyword" meanwhile ..
 	 */
 	public function concurrentlySaved() {
+		/** @todo returning false, because the logic is not working correctly */
 		return false;
 		$sql = "SELECT lastmodified FROM " . $this->db->prefix("wiki_pages") . " WHERE keyword='" . addslashes($this->keyword) . "'";
 		$result = $this->db->query($sql);
