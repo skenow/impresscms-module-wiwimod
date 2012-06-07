@@ -1,40 +1,40 @@
 <?php
 /**
  * Custom upgrade script
- *  
+ *
  * This file is loaded and executed at the end of the update module process
- *  
+ *
  * @package SimplyWiki
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$  
+ * @version $Id$
  */
 if (!defined("ICMS_ROOT_PATH") && !defined('ICMS_ROOT_PATH')) exit("Root path not defined");
 
-function xoops_module_update_wiwimod (){ 
+function xoops_module_update_wiwimod() {
      $wikiInstallDir = dirname(dirname(__FILE__));
      $wikiModDir = basename(dirname(dirname(__FILE__)));
      global $xoopsConfig;
-          
+
      if (@file_exists($wikiInstallDir . '/language/' . $xoopsConfig['language'] . '/update.php')){
           include $wikiInstallDir . '/language/' . $xoopsConfig['language'] . '/update.php';
      } else {
           include $wikiInstallDir . '/language/english/update.php';
      }
-     
+
      $db =& Database::getInstance();
      $modhandler =& xoops_gethandler('module');
      $config_handler =& xoops_gethandler('config');
      $SimplyWiki = $modhandler->getByDirname($wikiModDir);
- 
+
 /* Get current module version before proceeding */
- 
+
 /* Changes in 1.0
  * wiwimod table split into 2 tables - wiki_pages and wiki_revisions
- * How can I do this without having the SQL here - just pulling from sql/mysql.sql? 
- */ 
+ * How can I do this without having the SQL here - just pulling from sql/mysql.sql?
+ */
 
-/* Check for new table - wiki_pages - and add it if it doesn't exist */ 
+/* Check for new table - wiki_pages - and add it if it doesn't exist */
      $sql = "CREATE TABLE IF NOT EXISTS ". $db->prefix('wiki_pages') ." (
        pageid int unsigned NOT NULL auto_increment COMMENT 'Unique integer ID for the page',
        keyword varchar(255) NOT NULL DEFAULT '' COMMENT 'Keyword/page name',
@@ -55,23 +55,23 @@ function xoops_module_update_wiwimod (){
      ) ENGINE=MyISAM COMMENT 'Holds the list of pages and their properties';
      ";
      $db->query($sql);
-      
+
 /* Copy existing data to the new table, if it is empty */
      $sql = 'SELECT pageid FROM '. $db->prefix('wiki_pages');
      $result = $db->query($sql);
      if ($db->getRowsNum($result) < 1) {
-          $sql = 'INSERT INTO '. $db->prefix('wiki_pages') .' (pageid, keyword, creator, createdate, revisions, lastmodified, lastviewed) 
+          $sql = 'INSERT INTO '. $db->prefix('wiki_pages') .' (pageid, keyword, creator, createdate, revisions, lastmodified, lastviewed)
                SELECT w.pageid, w.keyword, w.u_id, min(w.lastmodified), count(w.id), max(w.lastmodified), max(w.lastmodified)
                FROM '. $db->prefix('wiwimod') .' w GROUP BY pageid';
           $db->query($sql);
 
 	/* The initial insert of data pulls the first record and for some columns we want the last record. This will accomplish that */
-     $sql = 'UPDATE ' . $db->prefix('wiki_pages') .' p, '. $db->prefix('wiwimod') .' w 
+     $sql = 'UPDATE ' . $db->prefix('wiki_pages') .' p, '. $db->prefix('wiwimod') .' w
        SET p.visible = w.visible, p.prid = w.prid, p.parent = w.parent, p.title = w.title, p.contextBlock = w.contextBlock
        WHERE p.pageid = w.pageid AND p.lastmodified = w.lastmodified';
-     $db->query($sql);  
+     $db->query($sql);
      }
-     
+
 /* Check for new table - wiki_revisions - and add it if it doesn't exist */
      $sql = "CREATE TABLE IF NOT EXISTS ". $db->prefix('wiki_revisions') ." (
        revid int UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -84,13 +84,13 @@ function xoops_module_update_wiwimod (){
      ) ENGINE=MyISAM COMMENT 'Holds details of the individual revisions to each page';
      ";
      $db->query($sql);
- 
+
 /* Copy existing data into new table, if the table is empty */
      $sql = 'SELECT pageid FROM '. $db->prefix('wiki_revisions');
      $result = $db->query($sql);
      if ($db->getRowsNum($result) < 1) {
           $sql = 'INSERT INTO '. $db->prefix('wiki_revisions') . ' (pageid, body, modified, userid)
-               SELECT pageid, body, lastmodified, u_id 
+               SELECT pageid, body, lastmodified, u_id
                FROM '. $db->prefix('wiwimod');
           $db->query($sql);
      }
@@ -118,7 +118,7 @@ function xoops_module_update_wiwimod (){
 		priv smallint(6) default NULL
 		) ENGINE = MYISAM ';
 		$db->query($sql);
-		
+
 	$sql = 'SELECT prid FROM '. $db->prefix('wiki_prof_groups');
 	$result = $db->query($sql);
 	if ($db->getRowsNum($result) < 1) {
@@ -127,8 +127,6 @@ function xoops_module_update_wiwimod (){
 		$db->query($sql);
 	}
 
-/* After the pages and revisions are moved, the notifications and comments tables need to be updated, and the tag module, if that is installed */
-     
 /* Remove old tables */
        $sql = 'DROP TABLE IF EXISTS '. $db->prefix('wiwimod') . ', ' . $db->prefix('wiwimod_profiles') . ', ' . $db->prefix('wiwimod_prof_groups');
        $db->query($sql);
@@ -137,7 +135,7 @@ function xoops_module_update_wiwimod (){
  include_once $wikiInstallDir . '/class/wiwiProfile.class.php';
  $prof = new WiwiProfile();
  $prof->updateModuleConfig();
- 
+
  return TRUE;
 }
 
