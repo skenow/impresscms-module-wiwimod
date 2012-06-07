@@ -25,15 +25,15 @@ if ($page == '') redirect_header('javascript:history.go(-1)', 2, _AM_SWIKI_NOPAG
 
 $pageObj = new WiwiRevision(($id==0 ? $page : ''), $id);
 $hist = $pageObj->history($limit, $starthist);
-$maxcount = $pageObj->historyNum();
+$maxcount = $pageObj->revisions;
 
-echo '<br /><br /><input type=button onclick="javascript:submitaction(\'op=listpages&startlist=' 
+echo '<br /><br /><input type=button onclick="javascript:submitaction(\'op=listpages&startlist='
 	. $startlist . '\');" value="' . _AM_SWIKI_LISTPAGES_BTN . '"><br /><br />'
 	. '<style>tr.highlitedrevision td {background-color: #FFCC66; padding: 5px;}</style>'
 	. '<table border="0" cellpadding="0" cellspacing="1" width="100%" class="outer"><tr class="head"><td></td><td><strong>'
-	. _MD_SWIKI_TITLE_COL . '</strong></td><td width="20%"><strong>' 
-	. _MD_SWIKI_MODIFIED_COL . '</strong></td><td width="10%"><strong>' 
-	. _MD_SWIKI_AUTHOR_COL . '</strong></td><td width="30%"><strong>' 
+	. _MD_SWIKI_TITLE_COL . '</strong></td><td width="20%"><strong>'
+	. _MD_SWIKI_MODIFIED_COL . '</strong></td><td width="10%"><strong>'
+	. _MD_SWIKI_AUTHOR_COL . '</strong></td><td width="30%"><strong>'
 	. _MD_SWIKI_ACTION_COL . '</strong></td></tr>';
 
 foreach ($hist as $i=>$rev) {
@@ -43,13 +43,13 @@ foreach ($hist as $i=>$rev) {
 		. '<td><a href="#" onclick="javascript:submitaction(\'page=' . $encodedKeyword . '&op=history&id=' . $rev['id'] . '\');">' . $myts->htmlSpecialChars($rev['title']) . '</a></td>'
 		. '<td>' . formatTimestamp(strtotime($rev['lastmodified']), _MEDIUMDATESTRING) . '</td>'
 		. '<td>' . xoops_getLinkedUnameFromId($rev['u_id']) . '</td>'
-		. '<td><a href="#" onclick="javascript:submitaction(\'page=' . $encodedKeyword 
-		. '&op=history&id=' . $rev['id'] . '\');">' . _MD_SWIKI_VIEW_BTN 
-		. '</a> | <a href="#" onclick="javascript:submitaction(\'page=' . $encodedKeyword 
-		. '&op=diff&id=' . $rev['id'] . '\');">' . _MD_SWIKI_COMPARE_BTN 
-		. '</a> | <a href="javascript:submitaction(\'op=restore&id=' . $rev['id'] . '\');">' 
-		. _MD_SWIKI_RESTORE_BTN . '</a> | <a href="javascript:submitaction(\'page=' 
-		. urlencode($encodedKeyword) . '&amp;op=fix&amp;id=' . $rev['id'] . '\');">' 
+		. '<td><a href="#" onclick="javascript:submitaction(\'page=' . $encodedKeyword
+		. '&op=history&id=' . $rev['id'] . '\');">' . _MD_SWIKI_VIEW_BTN
+		. '</a> | <a href="#" onclick="javascript:submitaction(\'page=' . $encodedKeyword
+		. '&op=diff&id=' . $rev['id'] . '\');">' . _MD_SWIKI_COMPARE_BTN
+		. '</a> | <a href="javascript:submitaction(\'op=restore&id=' . $rev['id'] . '\');">'
+		. _MD_SWIKI_RESTORE_BTN . '</a> | <a href="javascript:submitaction(\'page='
+		. urlencode($encodedKeyword) . '&amp;op=fix&amp;id=' . $rev['id'] . '\');">'
 		. _MD_SWIKI_FIX_BTN . '</a></td></tr>';
 }
 echo '</table>';
