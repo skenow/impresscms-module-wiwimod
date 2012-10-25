@@ -191,7 +191,7 @@ class WiwiRevision {
 			$this->pageid,
 			$this->ts->addSlashes($this->summary),
 			//$this->ts->addSlashes($this->body),
-			icms_core_DataFilter::filterHTMLinput($this->body),
+			addslashes(icms_core_DataFilter::filterHTMLinput($this->body)),
 			$xoopsUser ? $xoopsUser->getVar('uid') : 0,
 			$add_date
 		);
@@ -228,7 +228,7 @@ class WiwiRevision {
 			$this->db->prefix('wiki_pages'),
 			$this->db->prefix('wiki_revisions'),
 			//$this->ts->addSlashes($this->body),
-			icms_core_DataFilter::filterHTMLinput($this->body),
+			addslashes(icms_core_DataFilter::filterHTMLinput($this->body)),
 			$save_date,
 			$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
 			addslashes($this->contextBlock),
