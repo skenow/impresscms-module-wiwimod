@@ -3,14 +3,17 @@ Status: RC
 Released: 
 
 Added
+* Wiki link rendering based on permissions of viewer
 
 Improved
 * Rendering for [[CamelCase Title]]
 * Admin header rendering now is handled by the core, hardcoded HTML and styles are not used
+* Wiki links now have title attributes
 
 Fixed
 * Unnecessary inclusion of header.php in the block files
 * PATH and URL definition in the block files
+* Wiki tag <[PageIndexI]> was not working (an index list with page name and title)
 
 Removed
 * Static HTML manual
@@ -18,7 +21,9 @@ Removed
 * admin/preferences.php
 
 Language additions/changes
-
+* main.php
+	+ define('_MD_SWIKI_CREATE', 'Create this page');
+	
 Contributors to this release
 * skenow
 
