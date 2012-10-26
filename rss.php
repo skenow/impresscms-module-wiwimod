@@ -31,7 +31,7 @@ $wiki_feed->category = $module_name;
 
 /** Include the SimplyWiki class and create a new instance */
 include_once 'class/wiwiRevision.class.php';
-$wiki_page_handler = new WiwiRevisionHandler;
+$wiki_page_handler = new WiwiRevisionHandler();
 
 /** Establish a handler for determining the page author */
 $wiki_author_handler = new XoopsMemberHandler($xoopsDB);
