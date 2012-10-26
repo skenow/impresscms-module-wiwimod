@@ -10,10 +10,10 @@
  /** include the modinfo constants, so we don't have to define them again (specifically, _MI_SWIKI_HOME) */
  include_once 'modinfo.php';
  
- define('_MI_SWIKI_PROFILE1','Open Content');
- define('_MI_SWIKI_PROFILE2','Public Content');
- define('_MI_SWIKI_PROFILE3','Private Content');
- define('_MI_SWIKI_HOME_TITLE','Your SimplyWiki home page');
+ define('_MI_SWIKI_PROFILE1', 'Open Content');
+ define('_MI_SWIKI_PROFILE2', 'Public Content');
+ define('_MI_SWIKI_PROFILE3', 'Private Content');
+ define('_MI_SWIKI_HOME_TITLE', 'Your SimplyWiki home page');
 
  define('_MI_SWIKI_HOME_TEXT',
      "<p><table border=\'0\'>
