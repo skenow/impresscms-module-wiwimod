@@ -158,6 +158,7 @@ class WiwiRevision {
 
 	/**
 	 * Creates a new revision from current object.
+	 * @todo	remove cached version of page after successfully updating a revision
 	 */
 	public function add() {
 		global $xoopsUser;
@@ -211,11 +212,10 @@ class WiwiRevision {
 		);
 		$result = $this->db->query($sql);
 		return ($result ? true : false);
-
-		return true;
 	}
 
 	/**
+	 * @todo	Remove the cached version of a page after saving
 	 * Saves the current revision on the database.
 	 * a new query to update a revision and page - mysql allows updating multiple tables in a single query
 	 */
@@ -403,7 +403,7 @@ class WiwiRevision {
 		$search[] = "#niv([0-9]*)ul#";
 		$replace[] = "ul";
 	// <[PageIndex]> and <[RecentChanges]>
-		$search[] = "#(?:<p>)*" . $lt . "\[(PageIndex|RecentChanges)\]" . $gt . "(?:</p>)*#ie";
+		$search[] = "#(?:<p>)*" . $lt . "\[(PageIndexI*|RecentChanges)\]" . $gt . "(?:</p>)*#ie";
 		$replace[] = '$this->render_index("$1")';
 	// surrounds with <p> and </p> some lines .. hum, still useful ?
 		$search[] = "#^(?!\n|<h2>|<blockquote>|<hr />)(.*?)\n$#sm";
@@ -453,13 +453,16 @@ class WiwiRevision {
 	 * @return	str		text or link, depending on existence and user permissions for target page
 	 */
 	public function render_wikiLink($keyword, $customTitle = '', $show_titles = FALSE )	{
-		$normKeyword = $this->normalize($keyword);
-		$sql = 'SELECT title FROM ' . $this->db->prefix('wiki_pages') .' WHERE keyword="' . addslashes($normKeyword) . '"';
-		$dbresult = $this->db->query($sql);
-		if ($this->db->getRowsNum($dbresult) > 0) {
+		$normKeyword = addslashes($this->normalize($keyword));
+		$page = $this->getPages("keyword='" . $normKeyword . "'");
+		if (count($page) > 0) {
 			$pageExists = TRUE;
-			list($title) = $this->db->fetchRow($dbresult);
-			$txt = $customTitle == '' ? (($title != '') && $show_titles) ? $title : $normKeyword : $customTitle ;
+			$title = $this->title;
+			$txt = $customTitle == ''
+					? (($title != '') && $show_titles)
+						? $title
+						: $normKeyword
+					: $customTitle ;
 			$targetPage = new WiwiRevision($normKeyword);
 			$privileges = $targetPage->profile->getUserPrivileges();
 			$userCanWrite = $privileges[_WI_WRITE];
@@ -494,27 +497,27 @@ class WiwiRevision {
 	 */
 	public function render_index($type) {
 		$settings = array(
-		"pageindex" => array(
-			"ORDER BY title ASC",
-			"title",
-			1,
-			'"<br/><span class=\'wiwi_titre\' style=\"font-size:large;\">[$counter]</span><br/>"',
-			'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a><br/>"',
-			""),
-		"pageindexi" => array(
-			"ORDER BY keyword ASC",
-			"keyword",
-			1,
-			'"<br/><span class=\'wiwi_titre\'>$counter</span><br />"',
-			'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $content["keyword"] . "\">" . $content["keyword"] . "</a> : " . $content["title"] . "<br />"',
-			""),
-		"recentchanges" => array(
-			"ORDER BY lastmodified DESC LIMIT 20",
-			"lastmodified",
-			10,
-			'"<tr><td colspan=3><strong>" . formatTimestamp(strtotime($counter), _SHORTDATESTRING) . "</strong></td></tr>"',
-			'"<tr><td>&nbsp;" . formatTimestamp(strtotime($content["lastmodified"]), "H:i") . "</td><td><a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a></td><td>" . $content["summary"] . "</td><td><span class=\"itemPoster\">" . xoops_getLinkedUnameFromId($content["u_id"]) . "</span></td></tr>"',
-			"")
+			"pageindex" => array(
+				"ORDER BY title ASC",
+				"title",
+				1,
+				'"<br/><span class=\'wiwi_titre\' style=\"font-size:large;\">[$counter]</span><br/>"',
+				'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a><br/>"',
+				""),
+			"pageindexi" => array(
+				"ORDER BY keyword ASC",
+				"keyword",
+				1,
+				'"<br/><span class=\'wiwi_titre\'>$counter</span><br />"',
+				'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $content["keyword"] . "\">" . $content["keyword"] . "</a> : " . $content["title"] . "<br />"',
+				""),
+			"recentchanges" => array(
+				"ORDER BY lastmodified DESC LIMIT 20",
+				"lastmodified",
+				10,
+				'"<tr><td colspan=3><strong>" . formatTimestamp(strtotime($counter), _SHORTDATESTRING) . "</strong></td></tr>"',
+				'"<tr><td>&nbsp;" . formatTimestamp(strtotime($content["lastmodified"]), "H:i") . "</td><td><a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a></td><td>" . $content["summary"] . "</td><td><span class=\"itemPoster\">" . xoops_getLinkedUnameFromId($content["u_id"]) . "</span></td></tr>"',
+				"")
 		);
 		$cfg = $settings[strtolower($type)];
 
@@ -593,7 +596,7 @@ class WiwiRevision {
 	}
 
 	/**
-	 *
+	 * @deprecated	Use the revisions property, instead
 	 */
 	public function historyNum() {
 		$sql = 'SELECT revisions FROM ' . $this->db->prefix('wiki_pages') . ' WHERE keyword="' . addslashes($this->keyword) . '"';
@@ -827,14 +830,14 @@ class WiwiRevision {
 	 * Returns an array with all links on the current page.
 	 */
 	public function getLinks($allowExternals = false) {
-		$links = Array();
+		$links = array();
 		$search = array(
-			"#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#",					// CamelCase
-			"#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#",				// [[CamelCase title]]
-			"#\[\[<a href=\"([^\"]*)\"(?:[^>]*)>(.*)</a> (.+?)\]\]#i",						// [[www.mysite.org title]] and [[<a ... /a> title]]
-			"#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#",					// [[free link | title]]
-			"#\[\[(.+?)\]\]#",										// [[free link]]
-			"#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))\">(.*)</a>#Ui",	// link with href ending with ?page=
+			"#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#",						// CamelCase
+			"#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#",					// [[CamelCase title]]
+			"#\[\[<a href=\"([^\"]*)\"(?:[^>]*)>(.*)</a> (.+?)\]\]#i",	// [[www.mysite.org title]] and [[<a ... /a> title]]
+			"#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#",						// [[free link | title]]
+			"#\[\[(.+?)\]\]#",											// [[free link]]
+			"#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))\">(.*)</a>#Ui",		// link with href ending with ?page=
 		);
 		$replace = array(
 			array(2, 2, true),
@@ -847,7 +850,10 @@ class WiwiRevision {
 		foreach ($search as $key => $pattern) {
 			if (preg_match_all($pattern, $this->body, $matches, PREG_SET_ORDER)) {
 				foreach ($matches as $match) {
-					$links[] = array("url" => $match[$replace[$key][0]], "txt" => $match[$replace[$key][1]], "isWiwiPage" => $match[$replace[$key][2]]);
+					$links[] = array(
+						"url" => $match[$replace[$key][0]],
+						"txt" => $match[$replace[$key][1]],
+						"isWiwiPage" => $match[$replace[$key][2]]);
 				}
 			}
 		}
@@ -983,6 +989,16 @@ class WiwiRevision {
 
 	 	return preg_replace($search, $replace, $body);
 	 }
+
+	 /**
+	  * Determine the link title
+	  *
+	  * @param	str	$link
+	  * @return	str	Text to use for the title attribute of the link
+	  */
+	 public function getTitle($link) {
+
+	 }
 }  // end class wiwiRevision
 
 /**
@@ -994,17 +1010,20 @@ class WiwiRevision {
  * @since	SimplyWiki 1.2
  */
 class WiwiRevisionHandler {
+
+	public function __construct() {}
+
 	/**
 	 *
-	 * @param int $author
-	 * @param string $type
-	 * @param string $order
-	 * @param int $limit
-	 * @param int $start
-	 * @return array
+	 * @param	int	$author
+	 * @param	str $type
+	 * @param	str $order
+	 * @param	int $limit
+	 * @param	int $start
+	 * @return	arr
 	 */
 	public function getRevisions($author = false, $type = false, $order = 'DESC', $limit = 10, $start = 0  ) {
-		$revObj = new WiwiRevision;
+		$revObj = new WiwiRevision();
 		$where = $sort = '';
 		if( $type && $type == 'new' ) {
 			$sort = 'createdate ' . $order;
@@ -1017,8 +1036,7 @@ class WiwiRevisionHandler {
 				$where = 'userid = ' . $author;
 			}
 		}
-		$revisions = $revObj->getPages( $where, $sort, $limit, $start );
+		$revisions = $revObj->getPages($where, $sort, $limit, $start);
 		return $revisions;
 	}
 }
-
