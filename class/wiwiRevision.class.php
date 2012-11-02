@@ -457,13 +457,13 @@ class WiwiRevision {
 		$page = $this->getPages("keyword='" . $normKeyword . "'");
 		if (count($page) > 0) {
 			$pageExists = TRUE;
-			$title = $this->title;
+			$targetPage = new WiwiRevision($normKeyword);
+			$title = $targetPage->title;
 			$txt = $customTitle == ''
 					? (($title != '') && $show_titles)
 						? $title
 						: $normKeyword
 					: $customTitle ;
-			$targetPage = new WiwiRevision($normKeyword);
 			$privileges = $targetPage->profile->getUserPrivileges();
 			$userCanWrite = $privileges[_WI_WRITE];
 			$userCanView = $privileges[_WI_READ];
