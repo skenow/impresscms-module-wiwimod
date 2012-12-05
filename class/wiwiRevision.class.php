@@ -185,14 +185,19 @@ class WiwiRevision {
 			if (!$result) return false;
 			$this->pageid = $this->db->getInsertId();
 		}
+		/* need to do this because of new input filtering in ImpressCMS 1.3.3 */
+		if (defined("ICMS_VERSION_BUILD") && ICMS_VERSION_BUILD > 63) {
+			$body = addslashes(icms_core_DataFilter::filterHTMLinput($this->body));
+		} else {
+			$body = $this->ts->addSlashes($this->body);
+		}
 		$sql = sprintf(
 			"INSERT INTO %s (pageid, summary, body, userid, modified)
 				VALUES (%u, '%s', '%s', %u, '%s')",
 			$this->db->prefix('wiki_revisions'),
 			$this->pageid,
 			$this->ts->addSlashes($this->summary),
-			//$this->ts->addSlashes($this->body),
-			addslashes(icms_core_DataFilter::filterHTMLinput($this->body)),
+			$body,
 			$xoopsUser ? $xoopsUser->getVar('uid') : 0,
 			$add_date
 		);
@@ -222,13 +227,18 @@ class WiwiRevision {
 	public function save() {
 		global $xoopsUser;
 		$save_date = date('Y/n/j G:i:s');
+		/* need to do this because of new input filtering in ImpressCMS 1.3.3 */
+		if (defined("ICMS_VERSION_BUILD") && ICMS_VERSION_BUILD > 63) {
+			$body = addslashes(icms_core_DataFilter::filterHTMLinput($this->body));
+		} else {
+			$body = $this->ts->addSlashes($this->body);
+		}
 		$sql = sprintf(
 			"UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s'
 				WHERE revid=%u AND p.pageid=%u",
 			$this->db->prefix('wiki_pages'),
 			$this->db->prefix('wiki_revisions'),
-			//$this->ts->addSlashes($this->body),
-			addslashes(icms_core_DataFilter::filterHTMLinput($this->body)),
+			$body,
 			$save_date,
 			$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
 			addslashes($this->contextBlock),
