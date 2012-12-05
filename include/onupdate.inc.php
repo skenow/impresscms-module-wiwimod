@@ -156,6 +156,6 @@ function xoops_module_update_wiwimod($module = NULL, $prev_version = NULL) {
 /* This will create a function with a name based on the installation directory, if it is not in SimplyWiki */
 $wikiModDir = basename(dirname(dirname(__FILE__)));
 if (!function_exists('xoops_module_update_' . $wikiModDir)) {
-	$myfunc = "function xoops_module_update_" . $wikiModDir . "($module = NULL, $prev_version = NULL) { return xoops_module_update_wiwimod($module = NULL, $prev_version = NULL);}";
+	$myfunc = "function xoops_module_update_" . $wikiModDir . '($module = NULL, $prev_version = NULL) { return xoops_module_update_wiwimod($module, $prev_version);}';
 	eval($myfunc);
 }
