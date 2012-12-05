@@ -34,4 +34,7 @@ define('_MB_SWIKI_DISPLAY_FULL','Nombre de la página + autor + fecha o visitas'
 define('_MB_SWIKI_DATETIME_FORMAT','Formato de fecha');
 define('_MB_SWIKI_DATETIME_FORMAT_INFO','<strong>Predeterminado: blank</strong> - use el formato corto tal y como está definido en /language/spanish/global.php. Lea <a href="http://www.php.net/manual/es/function.date.php" target="_blank">Manual de PHP</a> para obtener más información');
 define('_MB_SWIKI_VIEWS','Número de páginas vistas');
-?>
+
+// Added in 1.2.1 RC
+define('_MB_SWIKI_SHOW_TITLE', 'Show title in block');
+define('_MB_SWIKI_SHOW_AUTHOR', 'Show author');

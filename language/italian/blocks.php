@@ -33,3 +33,7 @@ define( '_MB_SWIKI_DISPLAY_FULL', 'Nome pagina + Autore + Data o Conteggio');
 define( 'formato Data _MB_SWIKI_DATETIME_FORMAT', '');
 define( '_MB_SWIKI_DATETIME_FORMAT_INFO', '<strong> Default: blank </ strong> - utilizza la stringa di data breve, come definito in /language/(lingua)/global.php. Vedere <a href = "http://www.php.net/manual/en/function.date.php" target="_blank"> manuale PHP </a> per altre opzioni');
 define( '_MB_SWIKI_VIEWS', 'Numero di page viste');
+
+// Added in 1.2.1 RC
+define('_MB_SWIKI_SHOW_TITLE', 'Show title in block');
+define('_MB_SWIKI_SHOW_AUTHOR', 'Show author');

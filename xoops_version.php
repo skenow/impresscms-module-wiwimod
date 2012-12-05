@@ -29,7 +29,7 @@ $modversion = array(
   'demo_site_name' => 'SimplyWiki',
   'support_site_url' => 'http://community.impresscms.org/',
   'support_site_name' => 'ImpressCMS Community',
-  'submit_bug' => 'http://sf.net/apps/trac/impresscms/newticket',
+  'submit_bug' => '',
   'submit_feature' => '',
   'warning' => '',
   'author_word' => '_MI_SWIKI_AUTHOR_WORD',
@@ -120,7 +120,7 @@ $modversion['blocks'][] = array(
   'description' => _MI_SWIKI_BLOCK_SHOWPAGE_DESC,
   'show_func' => 'swiki_showpage',
   'edit_func' => 'swiki_showpage_blockedit',
-  'options' => _MI_SWIKI_HOME,
+  'options' => '_MI_SWIKI_HOME|0|0',
   'template' => 'wiwimod_showpage.html',
   'can_clone' => true);
 

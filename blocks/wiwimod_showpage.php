@@ -53,6 +53,8 @@ function swiki_showpage ($options) {
 		$block['mayEdit'] = $pageObj->canWrite();
 		$block['EDIT'] = _EDIT;
 		$block['dirname'] = $wikiModDir;
+		$block['showTitle'] = isset($options[1]);
+		$block['showAuthor'] = isset($options[2]);
 	}
 	return $block;
 }
@@ -99,7 +101,9 @@ function swiki_contextshow($options) {
 }
 
 function swiki_showpage_blockedit ($options) {
-	$form = _MB_SWIKI_SHOWPAGE_DESC . "&nbsp;:&nbsp;<input type='text' name='options[0]' value='" . $options[0] . "' />";
+	$form = _MB_SWIKI_SHOWPAGE_DESC . "&nbsp;:&nbsp;<input type='text' name='options[0]' value='" . $options[0] . "' /><br />";
+	$form .= _MB_SWIKI_SHOW_TITLE . "&nbsp;:&nbsp;<input type='checkbox' name='options[1]' value='1'" . (isset($options[1]) ? " checked='checked'" : "") . " /><br />";
+	$form .= _MB_SWIKI_SHOW_AUTHOR . "&nbsp;:&nbsp;<input type='checkbox' name='options[2]' value='1'" . (isset($options[2]) ? " checked='checked'" : "") . " />";
+	
 	return $form;
-
 }

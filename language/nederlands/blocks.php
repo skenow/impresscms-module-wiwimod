@@ -1,7 +1,7 @@
 <?php
 /*
  * Module and admin language definition
- * 
+ *
  *	_BTN	: text within buttons or action links
  *  _COL	: column headers
  *  _TXT	: "verbose" text (probably within content)
@@ -34,4 +34,7 @@ define('_MB_SWIKI_DISPLAY_FULL','Page Name + Author + Date or Count');
 define('_MB_SWIKI_DATETIME_FORMAT','Date format');
 define('_MB_SWIKI_DATETIME_FORMAT_INFO','<strong>Default: blank</strong> - uses the short date string, as defined in /language/(language)/global.php. See <a href="http://www.php.net/manual/en/function.date.php" target="_blank">PHP manual</a> for other options');
 define('_MB_SWIKI_VIEWS','Number of page views');
-?>
+
+// Added in 1.2.1 RC
+define('_MB_SWIKI_SHOW_TITLE', 'Show title in block');
+define('_MB_SWIKI_SHOW_AUTHOR', 'Show author');
