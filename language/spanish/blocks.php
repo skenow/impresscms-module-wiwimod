@@ -36,5 +36,5 @@ define('_MB_SWIKI_DATETIME_FORMAT_INFO','<strong>Predeterminado: blank</strong> 
 define('_MB_SWIKI_VIEWS','Número de páginas vistas');
 
 // Added in 1.2.1 RC
-define('_MB_SWIKI_SHOW_TITLE', 'Show title in block');
-define('_MB_SWIKI_SHOW_AUTHOR', 'Show author');
+define('_MB_SWIKI_SHOW_TITLE', 'Mostrar título en el bloque');
+define('_MB_SWIKI_SHOW_AUTHOR', 'Mostrar autor');
