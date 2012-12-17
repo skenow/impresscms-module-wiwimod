@@ -4,9 +4,13 @@
 <{if $block.showTitle}><h2><{$block.title}></h2><{/if}>
 <{$block.body}>
 <{if $block.nav}><div style="text-align:center"><{$block.nav}></div><br /><{/if}>
-<div style="text-align: <{$smarty.const._GLOBAL_RIGHT}>; padding: 3px; margin: 0px; color : #8090B1; clear: both;"><span style = "border-top: 1px solid #8090B1; padding: 3px; font-style:italic; font-size:small;" >
-<{if $block.showAuthor}><span class="itemPoster"><{$block.author}></span>, <{$block.lastmodified}><{/if}>
-<{if $block.mayEdit}> <input type="button" onclick="self.location.href='<{$xoops_url}>/modules/<{$block.dirname}>/index.php?page=<{$block.encodedurl}>&amp;op=edit';" value="<{$block.EDIT}>" />
+<div style="text-align: <{$smarty.const._GLOBAL_RIGHT}>; padding: 3px; margin: 0px; color : #8090B1; clear: both;">
+<{if $block.showAuthor || $block.mayEdit}>
+	<span style = "border-top: 1px solid #8090B1; padding: 3px; font-style:italic; font-size:small;" >
+	<{if $block.showAuthor}><span class="itemPoster"><{$block.author}></span>, <{$block.lastmodified}> <{/if}>
+	<{if $block.mayEdit}><input type="button" onclick="self.location.href='<{$xoops_url}>/modules/<{$block.dirname}>/index.php?page=<{$block.encodedurl}>&amp;op=edit';" value="<{$block.EDIT}>" />
+	<{/if}>
+	</span>
 <{/if}>
-</span></div>
+</div>
 <{/if}>
