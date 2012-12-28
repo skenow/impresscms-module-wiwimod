@@ -122,7 +122,7 @@ class WiwiRevision {
 		if ($id != 0) {
 			$sql .= ' WHERE revid = '. $id;
 		} elseif ($page !== NULL  ) {
-			$sql .= ' WHERE p.lastmodified = r.modified AND keyword="' . addslashes($page) . '" ';
+			$sql .= ' WHERE p.lastmodified = r.modified AND keyword="' . $this->ts->addSlashes($page) . '" ';
 		} elseif ($pageid != 0) {
 			$sql .= ' WHERE p.lastmodified = r.modified AND p.pageid=' . $pageid;
 		} else {
@@ -170,16 +170,16 @@ class WiwiRevision {
 				"INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock)
 					VALUES('%s', '%s', '%s', %u, %u, %u, '%s', '%s', '%s', '%s')",
 				$this->db->prefix('wiki_pages'),
-				addslashes($this->keyword),
+				$this->ts->addSlashes($this->keyword),
 				$this->ts->addSlashes($this->title),
 				$add_date,						  //-- lastmodified is Now
-				addslashes($this->parent),
+				$this->ts->addSlashes($this->parent),
 				$this->visible,
 				$this->profile->prid,
 				$xoopsUser ? $xoopsUser->getVar('uid') : 0, //$this->creator,
 				$add_date,
 				$this->allowComments,
-				addslashes($this->contextBlock)
+				$this->ts->addSlashes($this->contextBlock)
 			);
 			$result = $this->db->query($sql);
 			if (!$result) return false;
@@ -187,7 +187,8 @@ class WiwiRevision {
 		}
 		/* need to do this because of new input filtering in ImpressCMS 1.3.3 */
 		if (defined("ICMS_VERSION_BUILD") && ICMS_VERSION_BUILD > 63) {
-			$body = addslashes(icms_core_DataFilter::filterHTMLinput($this->body));
+			/* deliberate use of addslashes, here */
+			$body = addslashes(icms_core_DataFilter::checkVar($this->body, 'html', 'input'));
 		} else {
 			$body = $this->ts->addSlashes($this->body);
 		}
@@ -207,12 +208,12 @@ class WiwiRevision {
 			"UPDATE %s SET revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s' WHERE pageid=%u",
 			$this->db->prefix('wiki_pages'),
 			$add_date,
-			addslashes($this->parent),
+			$this->ts->addSlashes($this->parent),
 			$this->profile->prid,
 			$this->visible,
 			$this->allowComments,
 			$this->ts->addSlashes($this->title),
-			addslashes($this->contextBlock),
+			$this->ts->addSlashes($this->contextBlock),
 			$this->pageid
 		);
 		$result = $this->db->query($sql);
@@ -229,7 +230,8 @@ class WiwiRevision {
 		$save_date = date('Y/n/j G:i:s');
 		/* need to do this because of new input filtering in ImpressCMS 1.3.3 */
 		if (defined("ICMS_VERSION_BUILD") && ICMS_VERSION_BUILD > 63) {
-			$body = addslashes(icms_core_DataFilter::filterHTMLinput($this->body));
+			/* deliberate use of addslashes, here */
+			$body = addslashes(icms_core_DataFilter::checkVar($this->body, 'html', 'input'));
 		} else {
 			$body = $this->ts->addSlashes($this->body);
 		}
@@ -241,11 +243,11 @@ class WiwiRevision {
 			$body,
 			$save_date,
 			$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
-			addslashes($this->contextBlock),
-			addslashes($this->summary),
+			$this->ts->addSlashes($this->contextBlock),
+			$this->ts->addSlashes($this->summary),
 			$this->ts->addSlashes($this->title),
 			$save_date,
-			addslashes($this->parent),
+			$this->ts->addSlashes($this->parent),
 			$this->profile->prid,
 			$this->visible,
 			$this->allowComments,
@@ -463,7 +465,7 @@ class WiwiRevision {
 	 * @return	str		text or link, depending on existence and user permissions for target page
 	 */
 	public function render_wikiLink($keyword, $customTitle = '', $show_titles = FALSE )	{
-		$normKeyword = addslashes($this->normalize($keyword));
+		$normKeyword = $this->ts->addSlashes($this->normalize($keyword));
 		$page = $this->getPages("keyword='" . $normKeyword . "'");
 		if (count($page) > 0) {
 			$pageExists = TRUE;
@@ -563,7 +565,7 @@ class WiwiRevision {
 	 * Note : this was formerly an inline function, but php5 doesn't seem to accept it recursively.
 	 */
 	private function parentList_recurr($child, &$parlist, &$db) {
-		$sql = 'SELECT parent FROM ' . $db->prefix('wiki_pages') . ' WHERE keyword="' . addslashes($child) . '"';
+		$sql = 'SELECT parent FROM ' . $db->prefix('wiki_pages') . ' WHERE keyword="' . $this->ts->addSlashes($child) . '"';
 		$result = $db->query($sql);
 		list($parent) = $db->fetchRow($result);
 		if (($parent != '')&&(!in_array($parent, $parlist))) {
@@ -595,7 +597,7 @@ class WiwiRevision {
 	public function history($limit = 0, $start = 0) {
 		$sql = 'SELECT keyword, revid as id, title, body, modified as lastmodified, userid as u_id, summary FROM '
 			. $this->db->prefix('wiki_revisions') . ' r, '. $this->db->prefix('wiki_pages')
-			. ' p WHERE p.keyword="' . addslashes($this->keyword) . '" AND p.pageid=r.pageid ORDER BY id DESC';
+			. ' p WHERE p.keyword="' . $this->ts->addSlashes($this->keyword) . '" AND p.pageid=r.pageid ORDER BY id DESC';
 		$result = $this->db->query($sql, $limit, $start);
 
 		$hist = array();
@@ -609,7 +611,7 @@ class WiwiRevision {
 	 * @deprecated	Use the revisions property, instead
 	 */
 	public function historyNum() {
-		$sql = 'SELECT revisions FROM ' . $this->db->prefix('wiki_pages') . ' WHERE keyword="' . addslashes($this->keyword) . '"';
+		$sql = 'SELECT revisions FROM ' . $this->db->prefix('wiki_pages') . ' WHERE keyword="' . $this->ts->addSlashes($this->keyword) . '"';
 		$result = $this->db->query($sql);
 		list($maxcount) = $this->db->fetchRow($result);
 		return $maxcount;
@@ -689,7 +691,7 @@ class WiwiRevision {
 	public function concurrentlySaved() {
 		/** @todo returning false, because the logic is not working correctly */
 		return false;
-		$sql = "SELECT lastmodified FROM " . $this->db->prefix("wiki_pages") . " WHERE keyword='" . addslashes($this->keyword) . "'";
+		$sql = "SELECT lastmodified FROM " . $this->db->prefix("wiki_pages") . " WHERE keyword='" . $this->ts->addSlashes($this->keyword) . "'";
 		$result = $this->db->query($sql);
 		$rowsnum = $this->db->getRowsNum($result);
 
@@ -709,7 +711,7 @@ class WiwiRevision {
 	 * @param $id
 	 */
 	public function pageExists($page = "", $id = 0) {
-		$page = addslashes($this->normalize($page));
+		$page = $this->ts->addSlashes($this->normalize($page));
 		if ($id > 0) {
 			$sql = "SELECT keyword FROM " . $this->db->prefix("wiki_pages") . " WHERE pageid = $id";
 		} elseif (($page != "") && ((int) $page == 0)) {
@@ -793,8 +795,8 @@ class WiwiRevision {
 	public function restore() {
 		$latestRev = new wiwiRevision($this->keyword);
 
-		$latestRev->title = addslashes($this->title);
-		$latestRev->body = addslashes($this->body);
+		$latestRev->title = $this->ts->addSlashes($this->title);
+		$latestRev->body = $this->ts->addSlashes($this->body);
 		$latestRev->contextBlock = $this->contextBlock;
 		return $latestRev->add();
 	}
@@ -803,7 +805,7 @@ class WiwiRevision {
 	 * Deletes all revisions of current page, anterior to current revision.
 	 */
 	public function fix() {
-		$sql = 'DELETE FROM ' . $this->db->prefix('wiki_revisions') . ' WHERE pageid="' . addslashes($this->pageid) . '" AND modified < "' . $this->lastmodified . '"';
+		$sql = 'DELETE FROM ' . $this->db->prefix('wiki_revisions') . ' WHERE pageid="' . $this->ts->addSlashes($this->pageid) . '" AND modified < "' . $this->lastmodified . '"';
 		$success = $this->db->query($sql);
 		return $success;
 	}
