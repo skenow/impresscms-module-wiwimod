@@ -74,9 +74,12 @@ if (in_array($op, $valid_op, TRUE)) {
 
 		case 'restore' :
 			include 'listpages_hidden.inc.php';
-			$rev = new wiwiRevision('', $id);
-			$success = $rev->restore();
-			redirect_header("javascript:submitaction('page=" 
+			$restoredRevision = new wiwiRevision('', $id);
+			$pageObj->title = $myts->stripSlashesGPC($restoredRevision->title);
+			$pageObj->body = $myts->stripSlashesGPC($restoredRevision->body);
+			$pageObj->contextBlock = $restoredRevision->contextBlock;
+			$success = $pageObj->add();
+				redirect_header("javascript:submitaction('page=" 
 				. urlencode($rev->encode($rev->keyword)) . "&amp;op=history');", 2, 
 				($success) ? _MD_SWIKI_DBUPDATED_MSG : _MD_SWIKI_ERRORINSERT_MSG
 			);

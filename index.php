@@ -360,8 +360,8 @@ switch ($op) {
 	case 'restore' :
 		// Creates a new revision whom content is copied from the selected one, but with other data (parent, privileges etc..) untouched.
 		$restoredRevision = new wiwiRevision("", $id);
-		$pageObj->title = addslashes($restoredRevision->title);
-		$pageObj->body = addslashes($restoredRevision->body);
+		$pageObj->title = $myts->stripSlashesGPC($restoredRevision->title);
+		$pageObj->body = $myts->stripSlashesGPC($restoredRevision->body);
 		$pageObj->contextBlock = $restoredRevision->contextBlock;
 		$success = $pageObj->add();
 		if ($success){

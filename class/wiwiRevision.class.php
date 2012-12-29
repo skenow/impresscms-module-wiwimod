@@ -793,10 +793,8 @@ class WiwiRevision {
 	 * Creates a new revision whose content is copied from the selected one, but with other data (parent, privileges etc..) untouched.
 	 */
 	public function restore() {
-		$latestRev = new wiwiRevision($this->keyword);
-
-		$latestRev->title = $this->ts->addSlashes($this->title);
-		$latestRev->body = $this->ts->addSlashes($this->body);
+		$latestRev->title = $this->ts->stripSlashesGPC($this->title);
+		$latestRev->body = $this->ts->stripSlashesGPC($this->body);
 		$latestRev->contextBlock = $this->contextBlock;
 		return $latestRev->add();
 	}
