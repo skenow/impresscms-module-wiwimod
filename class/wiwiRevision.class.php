@@ -90,7 +90,7 @@ class WiwiRevision {
 		if ($page == '') $page = NULL;
 
 		$this->db =& Database::getInstance();
-		$this->ts =& MyTextSanitizer::getInstance();
+		$this->ts = MyTextSanitizer::getInstance();
 		$this->_dir = basename(dirname(dirname(__FILE__)));
 		$this->_url = ICMS_URL . '/modules/' . $this->_dir . '/';
 

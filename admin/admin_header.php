@@ -51,4 +51,4 @@ if ($xoopsUser) {
     exit();
 }
 
-$myts =& myTextSanitizer::getInstance();
+$myts = myTextSanitizer::getInstance();

@@ -66,7 +66,7 @@ class WiwiProfile {
 		$this->writers = array();
 		$this->administrators = array();
 		$member_handler =& xoops_gethandler('member');
-		$grps =& $member_handler->getGroupList();
+		$grps = $member_handler->getGroupList();
 		$sql = 'SELECT gid, priv FROM '.$this->db->prefix('wiki_prof_groups').' WHERE prid='. (int) $prid.' ORDER BY priv';
 		$res = $this->db->query($sql);
 		while ($rows = $this->db->fetchArray($res)) {

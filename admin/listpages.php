@@ -108,7 +108,7 @@ switch ($selWhere[$post_selwhere]['type']) {
 }
 
 $pageObj = new WiwiRevision();
-$pageArr =& $pageObj->getPages($wherexpr,$post_selorderby . ' ' . $post_selorderdir,$pgitemsnum,$startlist);
+$pageArr = $pageObj->getPages($wherexpr,$post_selorderby . ' ' . $post_selorderdir,$pgitemsnum,$startlist);
 $maxcount = $pageObj->getPagesNum($wherexpr/*,$post_selorderby . ' ' . $post_selorderdir*/);
 
 echo '<table border="0" cellpadding="0" cellspacing="1" width="100%" class="outer">'
