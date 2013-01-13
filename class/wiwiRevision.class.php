@@ -885,7 +885,7 @@ class WiwiRevision {
 	 *
 	 * @param $keyword
 	 */
-	public function encode($keyword) {
+	static public function encode($keyword) {
 		$search = array(	"\'",	"'",	'\"',	'"',	'&quot;',	' ',	'&nbsp;',	);
 		$replace = array(	'%27',	'%27',	'%22',	'%22',	'%22',		'+',	'+',		);
 		return str_replace($search, $replace, $keyword);

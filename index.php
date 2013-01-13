@@ -350,7 +350,7 @@ switch ($op) {
 		$hist = $pageObj->history();
 		foreach ($hist as $key=>$value) {
 			$hist[$key]['username'] = xoops_getLinkedUnameFromId($hist[$key]['u_id']);
-			$hist[$key]['keyword'] = wiwiRevision::encode($hist[$key]['keyword']);
+			$hist[$key]['keyword'] = $pageObj->encode($hist[$key]['keyword']);
 		}
 
 		$xoopsTpl->assign('hist', $hist);
