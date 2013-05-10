@@ -16,7 +16,7 @@ if (defined('_SWIKIPAGE')) exit();
 define('_SWIKIPAGE', 1);
 
 include_once 'wiwiProfile.class.php';
-icms_loadLanguageFile(basename(dirname(dirname(__FILE_))), "main");
+icms_loadLanguageFile(basename(dirname(dirname(__FILE__))), "main");
 
 /**
  *
