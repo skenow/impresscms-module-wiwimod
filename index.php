@@ -467,5 +467,5 @@ switch ($op) {
 
 }
 
-$xoopsTpl->assign('xoops_pagetitle', $myts->htmlSpecialChars($myts->htmlSpecialChars($pageObj->title) . ' - ' .$xoopsModule->name()));
+$xoopsTpl->assign('icms_pagetitle', $myts->htmlSpecialChars($myts->htmlSpecialChars($pageObj->title) . ' - ' .$xoopsModule->name()));
 include ICMS_ROOT_PATH . '/footer.php';
