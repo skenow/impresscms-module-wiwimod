@@ -541,8 +541,8 @@ class WiwiRevision {
 
 		$body = '' ; $counter = '[';
 		while ($content = $this->db->fetcharray($result)) {
-			if ($counter != strtoupper(substr($content[$cfg[1]], 0, $cfg[2]))) {
-				$counter = strtoupper(substr($content[$cfg[1]], 0, $cfg[2]));
+			if ($counter != mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]))) {
+				$counter = mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]));
 				eval('$body .= (($body)?"' . $cfg[5] . '":"") . "" . ' . $cfg[3] . ';');
 			}
 			eval('$body .= ' . $cfg[4] . ' . "\n";');
