@@ -541,6 +541,7 @@ class WiwiRevision {
 
 		$body = '' ; $counter = '[';
 		while ($content = $this->db->fetcharray($result)) {
+			mb_internal_encoding('UTF-8');
 			if ($counter != mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]))) {
 				$counter = mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]));
 				eval('$body .= (($body)?"' . $cfg[5] . '":"") . "" . ' . $cfg[3] . ';');
