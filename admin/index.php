@@ -58,16 +58,20 @@ if (in_array($op, $valid_op, TRUE)) {
 	switch ($op) {
 		default :
 		case 'listpages' :
-			if(method_exists($xoopsModule, 'displayAdminMenu')) {
+			if (method_exists($xoopsModule, 'displayAdminMenu')) {
 				echo $xoopsModule->displayAdminMenu (1, _AM_SWIKI_LISTPAGE_NAV);
+			} else {
+				echo getAdminMenu (0, _AM_SWIKI_LISTPAGE_NAV);
 			}
 			include 'listpages.php';
 			break;
 			
 		case 'history' :
 		case 'diff' :
-			if(method_exists($xoopsModule, 'displayAdminMenu')) {
+			if (method_exists($xoopsModule, 'displayAdminMenu')) {
 				echo $xoopsModule->displayAdminMenu (1, _AM_SWIKI_LISTPAGE_NAV . ':' . _AM_SWIKI_HISTORY_NAV);
+			} else {
+				echo getAdminMenu (0, _AM_SWIKI_LISTPAGE_NAV . ':' . _AM_SWIKI_HISTORY_NAV);
 			}
 			include 'history.php';
 			break;

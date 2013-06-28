@@ -254,8 +254,10 @@ if( ! empty( $_POST['submit'] ) ) {
 
 include '../include/functions.php';
 xoops_cp_header() ;
-if(method_exists($xoopsModule, 'displayAdminMenu')) {
+if (method_exists($xoopsModule, 'displayAdminMenu')) {
 	echo $xoopsModule->displayAdminMenu (3,_AM_SWIKI_BLOCKSNGROUPS_NAV);
+} else {
+	echo getAdminMenu (3,_AM_SWIKI_BLOCKSNGROUPS_NAV);
 }
 if( file_exists( './mymenu.php' ) ) include( './mymenu.php' ) ;
 

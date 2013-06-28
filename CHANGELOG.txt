@@ -4,6 +4,7 @@ Released:
 
 Added
 * Wiki link rendering based on permissions of viewer
+* Show Page block has options for displaying title, author and edit
 
 Improved
 * Rendering for [[CamelCase Title]]
@@ -25,7 +26,12 @@ Removed
 Language additions/changes
 * main.php
 	+ define('_MD_SWIKI_CREATE', 'Create this page');
-	
+* blocks.php
+	+ define('_MB_SWIKI_SHOW_TITLE', 'Show title in block');
+	+ define('_MB_SWIKI_SHOW_AUTHOR', 'Show author');
+* install.php
+	!  define('_MI_SWIKI_HOME_TEXT', ... ); //manual points to simplywiki.org
+		
 Contributors to this release
 * skenow
 
