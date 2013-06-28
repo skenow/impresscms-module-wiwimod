@@ -281,9 +281,9 @@ class WiwiProfile {
 		$criteria = new CriteriaCompo (new Criteria('conf_modid', $myXoopsModule->getVar('mid')));
 		$criteria->add(new Criteria('conf_name', 'DefaultProfile'));
 		$config_handler =& xoops_gethandler('config');
-		$configs =& $config_handler->getConfigs($criteria,false);
+		$configs = $config_handler->getConfigs($criteria,false);
 		$confid = $configs[0]->getVar('conf_id');
-		$old_options =& $config_handler->getConfigOptions(new Criteria('conf_id',$confid),false);
+		$old_options = $config_handler->getConfigOptions(new Criteria('conf_id',$confid),false);
 		//-- create the new options
 		$optionshandler = xoops_gethandler('configoption');
 		$prlist = $this->getAllProfiles();

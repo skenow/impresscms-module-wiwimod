@@ -126,14 +126,14 @@ switch ($op) {
 					if (@include_once ICMS_ROOT_PATH . '/class/captcha/captcha.php') {
 						$xoopsCaptcha = XoopsCaptcha::instance();
 						if (! $xoopsCaptcha -> verify(true)) {
-							redirect_header('index.php', 2, $xoopsCaptcha -> getMessage());
+							redirect_header('index.php', 2, $xoopsCaptcha->getMessage());
 						}
 					}
 				} elseif (class_exists('IcmsFormCaptcha')) {
 					if (@include_once ICMS_ROOT_PATH . '/class/captcha/captcha.php') {
 						$icmsCaptcha = IcmsCaptcha::instance();
-						if (! $icmsCaptcha -> verify(true)) {
-							redirect_header('index.php', 2, $icmsCaptcha -> getMessage());
+						if (! $icmsCaptcha->verify(true)) {
+							redirect_header('index.php', 2, $icmsCaptcha->getMessage());
 						}
 					}
 				}
@@ -142,6 +142,8 @@ switch ($op) {
 			$success = ($op == 'insert') ? $pageObj->add() : $pageObj->save();
 
 			if ($success) {
+				/* @todo	remove cached versions, if any */
+				
 				/* Tag module support (Gizmhail) */
 				if(isTagModuleActivated()) {
 					$tag_handler = xoops_getmodulehandler('tag', 'tag');
@@ -151,7 +153,7 @@ switch ($op) {
 				// Define tags for notification message
 				$tags = array();
 				$tags['PAGE_NAME'] = $pageObj->title;
-				$tags['PAGE_URL'] = ICMS_URL . '/modules/' . $xoopsModule -> getVar('dirname') . '/index.php?pageid=' . $pageObj->pageid;
+				$tags['PAGE_URL'] = ICMS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php?page=' . $pageObj->keyword;
 				$notification_handler =& xoops_gethandler('notification');
 				$notification_handler->triggerEvent('page', $pageObj->pageid, 'page_modified', $tags);
 				$notification_handler->triggerEvent('global', 0, 'page_modified', $tags);
@@ -173,7 +175,7 @@ switch ($op) {
 		/* privileges ok -> proceed. */
 		$xoopsOption['template_main'] = 'wiwimod_edit.html';
 		include_once ICMS_ROOT_PATH . '/header.php';
-
+		/* @todo	turn off page caching for previewing and editing */
 		if ($op == 'preview') {
 			/* Note : content came through "post" >> Strip eventual slashes (depending on the magic_quotes_gpc() value)	 */
 			$pageObj->title = $myts->stripSlashesGPC($pageObj->title);
@@ -367,7 +369,7 @@ switch ($op) {
 		if ($success){
 			$tags = array();
 			$tags['PAGE_NAME'] = $pageObj->title;
-			$tags['PAGE_URL'] = ICMS_URL . '/modules/' . $xoopsModule -> getVar('dirname') . '/index.php?pageid=' . $pageObj->pageid;
+			$tags['PAGE_URL'] = ICMS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php?page=' . $pageObj->keyword;
 			$notification_handler =& xoops_gethandler('notification');
 			$notification_handler->triggerEvent('page', $pageObj->pageid, 'page_restored', $tags);
 			$notification_handler->triggerEvent('global', 0, 'page_restored', $tags);

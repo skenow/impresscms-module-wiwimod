@@ -10,8 +10,7 @@ Follow this link to view the page:
 
 You are receiving this message because you selected to be notified when this page is modified.
 
-If this is an error or you wish not to receive further such notifications, pleas
-e update your subscriptions by visiting the link below: 
+If this is an error or you wish not to receive further such notifications, please update your subscriptions by visiting the link below: 
 {X_UNSUBSCRIBE_URL}
 
 -----------
