@@ -440,7 +440,7 @@ class WiwiRevision {
 		$search[] = "#\._\.#ie";
 		$replace[] = "";
 
-		$prelim = preg_replace($search, $replace, $this->ts->displayTarea($body, 1, 1, 1, 1, 0));
+		$prelim = $this->ts->displayTarea(preg_replace($search, $replace, $body), 1, 1, 1, 1, 0);
 		return $this->render_toc($prelim);
 	}
 
