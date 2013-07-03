@@ -1,0 +1,12 @@
+<ul>
+  <{foreach item=link from=$block.links}>
+  <li>
+    <a href="<{$xoops_url}>/modules/<{$block.dirname}>/index.php?page=<{$link.page}>"><{$link.title}></a>
+	<{if $link.display_mode !== 'compact'}>
+	<span class="itemPoster"> - <{$link.date}></span>
+	<{if $link.display_mode == 'full'}>
+	<span class="itemPostDate"> - <{$link.user}></span>
+	<{/if}><{/if}>
+  </li>
+  <{/foreach}>
+</ul>
