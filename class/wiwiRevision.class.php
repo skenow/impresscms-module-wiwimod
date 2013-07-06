@@ -16,7 +16,18 @@ if (defined('_SWIKIPAGE')) exit();
 define('_SWIKIPAGE', 1);
 
 include_once 'wiwiProfile.class.php';
-icms_loadLanguageFile(basename(dirname(dirname(__FILE__))), "main");
+
+$wikiModDir = basename(dirname(dirname(__FILE__)));
+if (function_exists('icms_loadLanguageFile')) {
+	icms_loadLanguageFile($wikiModDir, "main");
+} else {
+	global $xoopsConfig;
+	if (file_exists(ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $xoopsConfig['language'] . '/main.php')) {
+		include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $xoopsConfig['language'] . '/main.php';
+	} else {
+		include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/english/main.php';
+	}
+}
 
 /**
  *
@@ -119,7 +130,7 @@ class WiwiRevision {
 		$this->allowComments = '1';
 		/* new SQL, based on the new tables */
 		$sql = 'SELECT * FROM '. $this->db->prefix('wiki_pages') . ' p INNER JOIN '
-			. $this->db->prefix('wiki_revisions') .' r ON p.pageid = r.pageid';
+				. $this->db->prefix('wiki_revisions') .' r ON p.pageid = r.pageid';
 		if ($id != 0) {
 			$sql .= ' WHERE revid = '. $id;
 		} elseif ($page !== NULL  ) {
@@ -168,19 +179,19 @@ class WiwiRevision {
 		// only insert into the pages table if it is the first revision
 		if ($this->pageid == 0) {
 			$sql = sprintf(
-				"INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock)
+					"INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock)
 					VALUES('%s', '%s', '%s', %u, %u, %u, '%s', '%s', '%s', '%s')",
-				$this->db->prefix('wiki_pages'),
-				$this->ts->addSlashes($this->keyword),
-				$this->ts->addSlashes($this->title),
-				$add_date,						  //-- lastmodified is Now
-				$this->ts->addSlashes($this->parent),
-				$this->visible,
-				$this->profile->prid,
-				$xoopsUser ? $xoopsUser->getVar('uid') : 0, //$this->creator,
-				$add_date,
-				$this->allowComments,
-				$this->ts->addSlashes($this->contextBlock)
+					$this->db->prefix('wiki_pages'),
+					$this->ts->addSlashes($this->keyword),
+					$this->ts->addSlashes($this->title),
+					$add_date,						  //-- lastmodified is Now
+					$this->ts->addSlashes($this->parent),
+					$this->visible,
+					$this->profile->prid,
+					$xoopsUser ? $xoopsUser->getVar('uid') : 0, //$this->creator,
+					$add_date,
+					$this->allowComments,
+					$this->ts->addSlashes($this->contextBlock)
 			);
 			$result = $this->db->query($sql);
 			if (!$result) return false;
@@ -194,28 +205,28 @@ class WiwiRevision {
 			$body = $this->ts->addSlashes($this->body);
 		}
 		$sql = sprintf(
-			"INSERT INTO %s (pageid, summary, body, userid, modified)
+				"INSERT INTO %s (pageid, summary, body, userid, modified)
 				VALUES (%u, '%s', '%s', %u, '%s')",
-			$this->db->prefix('wiki_revisions'),
-			$this->pageid,
-			$this->ts->addSlashes($this->summary),
-			$body,
-			$xoopsUser ? $xoopsUser->getVar('uid') : 0,
-			$add_date
+				$this->db->prefix('wiki_revisions'),
+				$this->pageid,
+				$this->ts->addSlashes($this->summary),
+				$body,
+				$xoopsUser ? $xoopsUser->getVar('uid') : 0,
+				$add_date
 		);
 		$result = $this->db->query($sql);
 		if (!$result) return false;
 		$sql = sprintf(
-			"UPDATE %s SET revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s' WHERE pageid=%u",
-			$this->db->prefix('wiki_pages'),
-			$add_date,
-			$this->ts->addSlashes($this->parent),
-			$this->profile->prid,
-			$this->visible,
-			$this->allowComments,
-			$this->ts->addSlashes($this->title),
-			$this->ts->addSlashes($this->contextBlock),
-			$this->pageid
+				"UPDATE %s SET revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s' WHERE pageid=%u",
+				$this->db->prefix('wiki_pages'),
+				$add_date,
+				$this->ts->addSlashes($this->parent),
+				$this->profile->prid,
+				$this->visible,
+				$this->allowComments,
+				$this->ts->addSlashes($this->title),
+				$this->ts->addSlashes($this->contextBlock),
+				$this->pageid
 		);
 		$result = $this->db->query($sql);
 		return ($result ? true : false);
@@ -237,23 +248,23 @@ class WiwiRevision {
 			$body = $this->ts->addSlashes($this->body);
 		}
 		$sql = sprintf(
-			"UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s'
+				"UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s'
 				WHERE revid=%u AND p.pageid=%u",
-			$this->db->prefix('wiki_pages'),
-			$this->db->prefix('wiki_revisions'),
-			$body,
-			$save_date,
-			$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
-			$this->ts->addSlashes($this->contextBlock),
-			$this->ts->addSlashes($this->summary),
-			$this->ts->addSlashes($this->title),
-			$save_date,
-			$this->ts->addSlashes($this->parent),
-			$this->profile->prid,
-			$this->visible,
-			$this->allowComments,
-			$this->id,
-			$this->pageid
+				$this->db->prefix('wiki_pages'),
+				$this->db->prefix('wiki_revisions'),
+				$body,
+				$save_date,
+				$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
+				$this->ts->addSlashes($this->contextBlock),
+				$this->ts->addSlashes($this->summary),
+				$this->ts->addSlashes($this->title),
+				$save_date,
+				$this->ts->addSlashes($this->parent),
+				$this->profile->prid,
+				$this->visible,
+				$this->allowComments,
+				$this->id,
+				$this->pageid
 		);
 		$result = $this->db->query($sql);
 		return ($result ? true : false);
@@ -280,11 +291,11 @@ class WiwiRevision {
 		global $xoopsUser;
 
 		$sql = sprintf(
-		"UPDATE %s SET views=%u, lastviewed='%s' WHERE pageid=%u",
-		$this->db->prefix("wiki_pages"),
-		$this->views +1,
-		date('Y/n/j G:i:s'), // do not change this date format - it is valid for MySQL
-		$this->pageid
+				"UPDATE %s SET views=%u, lastviewed='%s' WHERE pageid=%u",
+				$this->db->prefix("wiki_pages"),
+				$this->views +1,
+				date('Y/n/j G:i:s'), // do not change this date format - it is valid for MySQL
+				$this->pageid
 		);
 		$result = $this->db->queryF($sql);
 		return ($result ? true : false);
@@ -326,117 +337,117 @@ class WiwiRevision {
 
 		$search = array();
 		$replace = array();
-	// [[PAGE subPage free link]] : we first save it(otherwise it might be recognise as a free link) (addition : Gizmhail)
+		// [[PAGE subPage free link]] : we first save it(otherwise it might be recognise as a free link) (addition : Gizmhail)
 		$search[] = "#\[\[PAGE (.+?)\]\]#";
 		$replace[] = "<wiwisubpage>~\\1</wiwisubpage>";
-	// is this one still useful ?
+		// is this one still useful ?
 		$search[] = "#\r\n?#";
 		$replace[] = "\n";
-	// <<bold text>>
+		// <<bold text>>
 		$search[] = "#" . $lt . "{2}(.*?)" . $gt . "{2}#s";
 		$replace[] = "<strong>\\1</strong>";
-	// {{italic text}}
+		// {{italic text}}
 		$search[] = "#\{{2}(.*?)\}{2}#s";
 		$replace[] = "<em>\\1</em>";
-	// ---- : horizontal rule
+		// ---- : horizontal rule
 		$search[] = "#(" . $nl . ")-{4,}(" . $eol . ")#m";
 		$replace[] = "\\1<hr />\\2";
-	// [br] : line break .. still useful ?
+		// [br] : line break .. still useful ?
 		$search[] = "#\[\[BR\]\]#i";
 		$replace[] = "<br />";
-	// Xoops block ($1 is the block id or title)
+		// Xoops block ($1 is the block id or title)
 		$search[] = "#\[\[XBLK (.+?)\]\]#ie" ;
 		$replace[] = '$this->render_block("$1")';
-	// [[IMG url title]] : inline image ...
+		// [[IMG url title]] : inline image ...
 		$search[] = "#\[\[IMG ([^\s\"\[>{}]+)( ([^\"<\n]+?))?\]\]#i";
 		$replace[] = '<img src="\\1" alt="\\3" />';
-	// link with href ending with ?page=CamelCase
+		// link with href ending with ?page=CamelCase
 		$search[] = "#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))(\">.*)</a>#Uie";
 		$replace[] = '$this->render_wiwiLink("$2", "$1", "$4");';
-	// CamelCase
+		// CamelCase
 		if ($this->swikiConfig['ShowCamelCase']) {
-		// [[CamelCase title]]
+			// [[CamelCase title]]
 			$search[] = "#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#e";
 			$replace[] = '$this->render_wikiLink("$1", "$3", ' . $this->swikiConfig['ShowTitles'] . ')';
-		// [[CamelCase]]
+			// [[CamelCase]]
 			$search[] = "#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#e";
 			$replace[] = '"$1".$this->render_wikiLink("$2", "", ' . $this->swikiConfig['ShowTitles'] . ')';
-		// escaped CamelCase
+			// escaped CamelCase
 			$search[] = "#(^|\s|>)~(([A-Z][a-z]+){2,}\d*)\b#";
 			$replace[] = '\\1\\2';
 		}
-	// [[www.mysite.org title]] and [[<a ... /a> title]]
+		// [[www.mysite.org title]] and [[<a ... /a> title]]
 		$search[] = "#\[\[(<a.*>)(.*)</a> (.+?)\]\]#i";
 		$replace[] = '$1$3</a>';
-	// [[free link | title]]
+		// [[free link | title]]
 		$search[] = "#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#e";
 		$replace[] = '$this->render_wikiLink("$1", "$2", ' . $this->swikiConfig['ShowTitles'] . ')';
-	// [[free link]]
+		// [[free link]]
 		$search[] = "#\[\[(.+?)\]\]#e";
 		$replace[] = '$this->render_wikiLink("$1", "", ' . $this->swikiConfig['ShowTitles'] . ')';
-	//        "#([\w.-]+@[\w.-]+)(?![\w.]*(\">|<))#";
-	//        '<a href="mailto:\\1">\\1</a>';
-	// =Title=
+		//        "#([\w.-]+@[\w.-]+)(?![\w.]*(\">|<))#";
+		//        '<a href="mailto:\\1">\\1</a>';
+		// =Title=
 		$search[] = "#(" . $nl . ")=(.*)=(" . $eol . ")#m";
 		$replace[] = "\n\\1<h2>\\2</h2>\\3\n";
-	// > quoted text
+		// > quoted text
 		$search[] = "#(" . $nl . ")" . $gt . " .* (" . $eol . ")#me";
 		$replace[] = '"<blockquote>" . str_replace("\n", " ", preg_replace("#^> #m", "", "$0")) . "</blockquote>\n"';
-	// * list item
+		// * list item
 		$search[] = "#(" . $nl . ")\* (.*)#m";
 		$replace[] = "\\1<li>\\2</li>\\3";
-	//detection des niv0li
+		//detection des niv0li
 		$search[] = "#(" . $nl . ")\* (.*)#m";
 		$replace[] = "<niv0li>\\2</niv0li>";
-	//detection des niv1li
+		//detection des niv1li
 		$search[] = "#(" . $nl . ")\*\* (.*)#m";
 		$replace[] = "<niv1li style='margin-left: 8px;list-style: disc inside;'>\\2</niv1li>";
-	//detection des niv2li
+		//detection des niv2li
 		$search[] = "#(" . $nl . ")\*\*\* (.*)#m";
 		$replace[] = "<niv2li style='margin-left: 16px;list-style: square inside;'>\\2</niv2li>";
-	//detection des niv3li
+		//detection des niv3li
 		$search[] = "#(" . $nl . ")   (?: )*\* (.*)#m";
 		$replace[] = "<niv3li style='margin-left: 24px;list-style: circle inside;'>\\2</niv3li>";
-	//groupage des niv0li
+		//groupage des niv0li
 		$search[] = "#<niv0li>(?(?!\n\n)(?:.|\n))*</niv(0|1|2|3)li>#";
 		$replace[] = "<niv0ul>\\0</niv0ul>";
-	//groupage des niv1li
+		//groupage des niv1li
 		$search[] = "#<niv1li>(?(?!niv0li)(?:.|\n))*</niv(1|2|3)li>#";
 		$replace[] = "<niv1ul>\\0</niv1ul>";
-	//groupage des niv1li
+		//groupage des niv1li
 		$search[] = "#<niv2li>(?(?!niv0li|niv1li)(?:.|\n))*</niv(2|3)li>#";
 		$replace[] = "<niv2ul>\\0</niv2ul>";
-	//groupage des niv1li
+		//groupage des niv1li
 		$search[] = "#<niv3li>(?(?!niv0li|niv1li|niv2li)(?:.|\n))*</niv(3)li>#";
 		$replace[] = "<niv3ul>\\0</niv3ul>";
-	//nettoyage des niv*li
+		//nettoyage des niv*li
 		$search[] = "#niv([0-9]*)li#";
 		$replace[] = "li";
-	//nettoyage des niv*ul
+		//nettoyage des niv*ul
 		$search[] = "#niv([0-9]*)ul#";
 		$replace[] = "ul";
-	// <[PageIndex]> and <[RecentChanges]>
+		// <[PageIndex]> and <[RecentChanges]>
 		$search[] = "#(?:<p>)*" . $lt . "\[(PageIndexI*|RecentChanges)\]" . $gt . "(?:</p>)*#ie";
 		$replace[] = '$this->render_index("$1")';
-	// surrounds with <p> and </p> some lines .. hum, still useful ?
+		// surrounds with <p> and </p> some lines .. hum, still useful ?
 		$search[] = "#^(?!\n|<h2>|<blockquote>|<hr />)(.*?)\n$#sm";
 		$replace[] = "<p>\\1</p>";
-	// removes multiple line ends .. still useful ?
+		// removes multiple line ends .. still useful ?
 		$search[] = "#\n+#";
 		$replace[] = "\n";
-	// ((subPage title)) : page to include (addition : Gizmhail)
+		// ((subPage title)) : page to include (addition : Gizmhail)
 		$search[] = "#\(\((.+?)\)\)#e";
 		$replace[] = '$this->renderSubPage("$1")';
-	// [[PAGE subPage title]] : page to include (addition : Gizmhail)
+		// [[PAGE subPage title]] : page to include (addition : Gizmhail)
 		$search[] = "#<wiwisubpage>[~]?(.+?)</wiwisubpage>#e";
 		$replace[] = '$this->renderSubPage("$1")';
-	// <[Children]>
+		// <[Children]>
 		$search[] = "#(?:<p>)*" . $lt . "\[Children\]" . $gt . "(?:</p>)*#ie";
 		$replace[] = '$this->render_children()';
-	// <[Siblings]>
+		// <[Siblings]>
 		$search[] = "#(?:<p>)*" . $lt . "\[Siblings\]" . $gt . "(?:</p>)*#ie";
 		$replace[] = '$this->render_siblings()';
-	// dummy string, to prevent recognition of special sequences (addition : Gizmhail)
+		// dummy string, to prevent recognition of special sequences (addition : Gizmhail)
 		$search[] = "#\._\.#ie";
 		$replace[] = "";
 
@@ -474,8 +485,8 @@ class WiwiRevision {
 			$title = $targetPage->title;
 			$txt = $customTitle == ''
 					? (($title != '') && $show_titles)
-						? $title
-						: $normKeyword
+					? $title
+					: $normKeyword
 					: $customTitle ;
 			$privileges = $targetPage->profile->getUserPrivileges();
 			$userCanWrite = $privileges[_WI_WRITE];
@@ -490,8 +501,8 @@ class WiwiRevision {
 
 		if ($pageExists && $userCanView) {
 			$link = sprintf('<a href="%s" title="' . $title . '">%s</a>',
-				$this->_url . 'index.php?page=' . $this->encode($normKeyword),
-				stripslashes($txt));
+					$this->_url . 'index.php?page=' . $this->encode($normKeyword),
+					stripslashes($txt));
 		} elseif (!$pageExists && $userCanWrite) {
 			$link = sprintf('<a href="%s" title="' . _MD_SWIKI_CREATE . '" >%s%s</a>',
 					$this->_url . 'index.php?page=' . $this->encode($normKeyword),
@@ -510,33 +521,33 @@ class WiwiRevision {
 	 */
 	public function render_index($type) {
 		$settings = array(
-			"pageindex" => array(
-				"ORDER BY title ASC",
-				"title",
-				1,
-				'"<br/><span class=\'wiwi_titre\' style=\"font-size:large;\">[$counter]</span><br/>"',
-				'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a><br/>"',
+				"pageindex" => array(
+						"ORDER BY title ASC",
+						"title",
+						1,
+						'"<br/><span class=\'wiwi_titre\' style=\"font-size:large;\">[$counter]</span><br/>"',
+						'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a><br/>"',
 				""),
-			"pageindexi" => array(
-				"ORDER BY keyword ASC",
-				"keyword",
-				1,
-				'"<br/><span class=\'wiwi_titre\'>$counter</span><br />"',
-				'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $content["keyword"] . "\">" . $content["keyword"] . "</a> : " . $content["title"] . "<br />"',
+				"pageindexi" => array(
+						"ORDER BY keyword ASC",
+						"keyword",
+						1,
+						'"<br/><span class=\'wiwi_titre\'>$counter</span><br />"',
+						'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $content["keyword"] . "\">" . $content["keyword"] . "</a> : " . $content["title"] . "<br />"',
 				""),
-			"recentchanges" => array(
-				"ORDER BY lastmodified DESC LIMIT 20",
-				"lastmodified",
-				10,
-				'"<tr><td colspan=3><strong>" . formatTimestamp(strtotime($counter), _SHORTDATESTRING) . "</strong></td></tr>"',
-				'"<tr><td>&nbsp;" . formatTimestamp(strtotime($content["lastmodified"]), "H:i") . "</td><td><a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a></td><td>" . $content["summary"] . "</td><td><span class=\"itemPoster\">" . xoops_getLinkedUnameFromId($content["u_id"]) . "</span></td></tr>"',
+				"recentchanges" => array(
+						"ORDER BY lastmodified DESC LIMIT 20",
+						"lastmodified",
+						10,
+						'"<tr><td colspan=3><strong>" . formatTimestamp(strtotime($counter), _SHORTDATESTRING) . "</strong></td></tr>"',
+						'"<tr><td>&nbsp;" . formatTimestamp(strtotime($content["lastmodified"]), "H:i") . "</td><td><a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a></td><td>" . $content["summary"] . "</td><td><span class=\"itemPoster\">" . xoops_getLinkedUnameFromId($content["u_id"]) . "</span></td></tr>"',
 				"")
 		);
 		$cfg = $settings[strtolower($type)];
 
 		$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM '
-			. $this->db->prefix('wiki_pages') . ' p, ' . $this->db->prefix('wiki_revisions')
-			. ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified ' . $cfg[0];
+				. $this->db->prefix('wiki_pages') . ' p, ' . $this->db->prefix('wiki_revisions')
+				. ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified ' . $cfg[0];
 		$result = $this->db->query($sql);
 
 		$body = '' ; $counter = '[';
@@ -598,8 +609,8 @@ class WiwiRevision {
 	 */
 	public function history($limit = 0, $start = 0) {
 		$sql = 'SELECT keyword, revid as id, title, body, modified as lastmodified, userid as u_id, summary FROM '
-			. $this->db->prefix('wiki_revisions') . ' r, '. $this->db->prefix('wiki_pages')
-			. ' p WHERE p.keyword="' . $this->ts->addSlashes($this->keyword) . '" AND p.pageid=r.pageid ORDER BY id DESC';
+				. $this->db->prefix('wiki_revisions') . ' r, '. $this->db->prefix('wiki_pages')
+				. ' p WHERE p.keyword="' . $this->ts->addSlashes($this->keyword) . '" AND p.pageid=r.pageid ORDER BY id DESC';
 		$result = $this->db->query($sql, $limit, $start);
 
 		$hist = array();
@@ -633,21 +644,21 @@ class WiwiRevision {
 
 		// remove formatting tags, replace tags generating a line break with a "\n".
 		$search = array(
-			"#<(/?TABLE|TD|P|HR|DIV|UL|LI|PRE|BR)>#i",
-			"#<(?!/?A|IMG)[/!]*?[^<>]*?>#si"
+				"#<(/?TABLE|TD|P|HR|DIV|UL|LI|PRE|BR)>#i",
+				"#<(?!/?A|IMG)[/!]*?[^<>]*?>#si"
 		);
 
 		$replace = array(
-			"<$1>\n",
-			""
+				"<$1>\n",
+				""
 		);
 
 		$body = preg_replace($search, $replace, $body);
 		$body2 = preg_replace($search, $replace, $this->body);
 		$bodyDiff = $this->render(diffDisplay($body2, $body));
 		$titleDiff = ($title == $this->title)
-			? '<h2>' . $this->ts->htmlSpecialChars($title) . '</h2>'
-			: '<h2><span style="color: red;">' . $this->ts->htmlSpecialChars($this->title) . '</span> &rarr; <span style="color: green;">' . $this->ts->htmlSpecialChars($title) . '</span></h2>';
+		? '<h2>' . $this->ts->htmlSpecialChars($title) . '</h2>'
+				: '<h2><span style="color: red;">' . $this->ts->htmlSpecialChars($this->title) . '</span> &rarr; <span style="color: green;">' . $this->ts->htmlSpecialChars($title) . '</span></h2>';
 	}
 
 	/**
@@ -844,28 +855,28 @@ class WiwiRevision {
 	public function getLinks($allowExternals = false) {
 		$links = array();
 		$search = array(
-			"#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#",						// CamelCase
-			"#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#",					// [[CamelCase title]]
-			"#\[\[<a href=\"([^\"]*)\"(?:[^>]*)>(.*)</a> (.+?)\]\]#i",	// [[www.mysite.org title]] and [[<a ... /a> title]]
-			"#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#",						// [[free link | title]]
-			"#\[\[(.+?)\]\]#",											// [[free link]]
-			"#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))\">(.*)</a>#Ui",		// link with href ending with ?page=
+				"#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#",						// CamelCase
+				"#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#",					// [[CamelCase title]]
+				"#\[\[<a href=\"([^\"]*)\"(?:[^>]*)>(.*)</a> (.+?)\]\]#i",	// [[www.mysite.org title]] and [[<a ... /a> title]]
+				"#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#",						// [[free link | title]]
+				"#\[\[(.+?)\]\]#",											// [[free link]]
+				"#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))\">(.*)</a>#Ui",		// link with href ending with ?page=
 		);
 		$replace = array(
-			array(2, 2, true),
-			array(1, 3, true),
-			array(1, 2, false),
-			array(1, 2, true),
-			array(1, 1, true),
-			array(2, 2, true),
+				array(2, 2, true),
+				array(1, 3, true),
+				array(1, 2, false),
+				array(1, 2, true),
+				array(1, 1, true),
+				array(2, 2, true),
 		);
 		foreach ($search as $key => $pattern) {
 			if (preg_match_all($pattern, $this->body, $matches, PREG_SET_ORDER)) {
 				foreach ($matches as $match) {
 					$links[] = array(
-						"url" => $match[$replace[$key][0]],
-						"txt" => $match[$replace[$key][1]],
-						"isWiwiPage" => $match[$replace[$key][2]]);
+							"url" => $match[$replace[$key][0]],
+							"txt" => $match[$replace[$key][1]],
+							"isWiwiPage" => $match[$replace[$key][2]]);
 				}
 			}
 		}
@@ -911,106 +922,106 @@ class WiwiRevision {
 	 * @return array
 	 */
 	private function getSiblings($parent = '', $order = '', $limit = 0) {
-	 	if ($page == '' ) $parent = $this->parent;
-	 	$siblings = array();
-	 	$where = ' parent = "'. $parent .'" AND keyword !="'. $this->keyword . '"';
-	 	$siblings = $this->getPages($where, $order, $limit);
-	 	return $siblings;
-	 }
+		if ($page == '' ) $parent = $this->parent;
+		$siblings = array();
+		$where = ' parent = "'. $parent .'" AND keyword !="'. $this->keyword . '"';
+		$siblings = $this->getPages($where, $order, $limit);
+		return $siblings;
+	}
 
-	 /**
-	  * Retrieves a list of pages that have the specified parent page
-	  * @param string $page name of the parent page, defaults to the current page
-	  * @param int $limit number of pages to return
-	  * @param string $order field used to sort the list, defaults to all
-	  * @return array
-	  */
-	 private function getChildren($page = '', $order= '', $limit = 0) {
-		 if ($page == '' ) $page = $this->keyword;
-		 $children = array();
-		 $where = ' parent = "'. $page .'"';
-		 $children = $this->getPages($where, $order, $limit);
-		 return $children;
-	 }
+	/**
+	 * Retrieves a list of pages that have the specified parent page
+	 * @param string $page name of the parent page, defaults to the current page
+	 * @param int $limit number of pages to return
+	 * @param string $order field used to sort the list, defaults to all
+	 * @return array
+	 */
+	private function getChildren($page = '', $order= '', $limit = 0) {
+		if ($page == '' ) $page = $this->keyword;
+		$children = array();
+		$where = ' parent = "'. $page .'"';
+		$children = $this->getPages($where, $order, $limit);
+		return $children;
+	}
 
-	 /**
-	  * Render an unordered list of pages that have the same parent
-	  *
-	  * @param	string $parent	The parent to use to find the sibling, will default to the current page
-	  * @param	string $order	The field used to sort the list
-	  * @param	string $limit	The number of pages to return in the list, defaults to all
-	  * @return	string	HTML for the unordered list
-	  */
-	 private function render_children($page = '', $order = '', $limit = 0) {
-	 	$pages = self::getChildren($page, $order, $limit);
-	 	$body = '';
-	 	foreach ($pages as $page) {
-	 		$body .= "<li><a href='" . $this->_url . "index.php?page=" . $this->encode($page->keyword) . "'>"
+	/**
+	 * Render an unordered list of pages that have the same parent
+	 *
+	 * @param	string $parent	The parent to use to find the sibling, will default to the current page
+	 * @param	string $order	The field used to sort the list
+	 * @param	string $limit	The number of pages to return in the list, defaults to all
+	 * @return	string	HTML for the unordered list
+	 */
+	private function render_children($page = '', $order = '', $limit = 0) {
+		$pages = self::getChildren($page, $order, $limit);
+		$body = '';
+		foreach ($pages as $page) {
+			$body .= "<li><a href='" . $this->_url . "index.php?page=" . $this->encode($page->keyword) . "'>"
 	 			. ($page->title == "" ? $page->keyword : $page->title) . "</a></li>";
-	 	}
-	 	return "<ul>" . $body . "</ul>";
-	 }
+		}
+		return "<ul>" . $body . "</ul>";
+	}
 
-	 /**
-	  * Render an unordered list of pages that have the same parent
-	  *
-	  * @param	string $parent	The parent to use to find the sibling, will default to the parent of the current page
-	  * @param	string $order	The field used to sort the list
-	  * @param	string $limit	The number of pages to return in the list, defaults to all
-	  * @return	string	HTML for the unordered list
-	  */
-	 private function render_siblings($parent = '', $order = '', $limit = 0) {
-	 	$pages = self::getSiblings($parent, $order, $limit);
-	 	$body = '';
-	 	foreach ($pages as $page) {
-	 		$body .= "<li><a href='" . $this->_url . "index.php?page=" . $this->encode($page->keyword) . "'>"
+	/**
+	 * Render an unordered list of pages that have the same parent
+	 *
+	 * @param	string $parent	The parent to use to find the sibling, will default to the parent of the current page
+	 * @param	string $order	The field used to sort the list
+	 * @param	string $limit	The number of pages to return in the list, defaults to all
+	 * @return	string	HTML for the unordered list
+	 */
+	private function render_siblings($parent = '', $order = '', $limit = 0) {
+		$pages = self::getSiblings($parent, $order, $limit);
+		$body = '';
+		foreach ($pages as $page) {
+			$body .= "<li><a href='" . $this->_url . "index.php?page=" . $this->encode($page->keyword) . "'>"
 	 			. ($page->title == "" ? $page->keyword : $page->title) . "</a></li>";
-	 	}
-	 	return "<ul>" . $body . "</ul>";
-	 }
+		}
+		return "<ul>" . $body . "</ul>";
+	}
 
-	 /**
-	  * Create a linked table of contents for a page
-	  * This function locates all the heading tags and creates a linked list to assist with
-	  * navigation and organiztion. The list will only be created if there are 3 or more headings
-	  * You must insert <[Headings]> in the page for your TOC to display
-	  *
-	  * @return	string Unaltered body text if there are less than 3 headings, HTML inserted for the linked list otherwise
-	  */
-	 private function render_toc(&$body) {
+	/**
+	 * Create a linked table of contents for a page
+	 * This function locates all the heading tags and creates a linked list to assist with
+	 * navigation and organiztion. The list will only be created if there are 3 or more headings
+	 * You must insert <[Headings]> in the page for your TOC to display
+	 *
+	 * @return	string Unaltered body text if there are less than 3 headings, HTML inserted for the linked list otherwise
+	 */
+	private function render_toc(&$body) {
 		$lt = "(?:&lt;|<)";
 		$gt = "(?:&gt;|>)";
 
-	 	$search = '/<(h\d)>(.+?)<\/\1>/';
-	 	if (preg_match_all($search, $body, $matches, PREG_SET_ORDER) < 3) {
-	 		return $body;
-	 	} else {
-	 	    $headings = array();
-		 	foreach ($matches as $key=>$match) {
-		 		$body = str_replace(
+		$search = '/<(h\d)>(.+?)<\/\1>/';
+		if (preg_match_all($search, $body, $matches, PREG_SET_ORDER) < 3) {
+			return $body;
+		} else {
+			$headings = array();
+			foreach ($matches as $key=>$match) {
+				$body = str_replace(
 		 			$match[0],
 		 			'<a name="heading' . $key . '"></a>' . $match[0],
 		 			$body
-		 		);
-		 		$headings[] = "<a href='#heading" . $key . "'>". $match[2] . "</a>";
-		 	}
-	 	}
-	// <[Headings]>
+				);
+				$headings[] = "<a href='#heading" . $key . "'>". $match[2] . "</a>";
+			}
+		}
+		// <[Headings]>
 		$search = "#(<p>)*" . $lt . "\[Headings\]" . $gt . "(</p>)*#i";
 		$replace = "<div class='wiki_toc'>" . implode("<br />", $headings) . "</div>";
 
-	 	return preg_replace($search, $replace, $body);
-	 }
+		return preg_replace($search, $replace, $body);
+	}
 
-	 /**
-	  * Determine the link title
-	  *
-	  * @param	str	$link
-	  * @return	str	Text to use for the title attribute of the link
-	  */
-	 public function getTitle($link) {
+	/**
+	 * Determine the link title
+	 *
+	 * @param	str	$link
+	 * @return	str	Text to use for the title attribute of the link
+	 */
+	public function getTitle($link) {
 
-	 }
+	}
 }  // end class wiwiRevision
 
 /**
@@ -1023,7 +1034,8 @@ class WiwiRevision {
  */
 class WiwiRevisionHandler {
 
-	public function __construct() {}
+	public function __construct() {
+	}
 
 	/**
 	 *
