@@ -17,6 +17,8 @@ Fixed
 * Unnecessary inclusion of header.php in the block files
 * PATH and URL definition in the block files
 * Wiki tag <[PageIndexI]> was not working (an index list with page name and title)
+* The proper language file is loaded by the main class so blocks work without error
+* Blocks/Groups admin in ImpressCMS 1.3 - NOTE: this feature is being deprecated!
 
 Removed
 * Static HTML manual

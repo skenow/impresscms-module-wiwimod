@@ -246,12 +246,22 @@ function icms_update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent
 		xoops_cp_footer();
 		exit();
 	}
-	if (defined('ICMS_VERSION_BUILD') && ICMS_VERSION_BUILD > 27) { /* ImpressCMS 1.2+ */
-		$myblock_handler = new IcmsBlockHandler($xoopsDB); /* Will only work in ImpressCMS 1.2+ */
-		$myblock = $myblock_handler->get($bid);
-	} else { /* legacy support */
-		$myblock = new XoopsBlock($bid);
+
+	switch (TRUE) {
+		case (class_exists('icms_view_block_Handler')):
+			$myblock_handler = new icms_view_block_Handler($xoopsDB);
+			$myblock = $myblock_handler->get($bid);
+		break;
+
+		case (class_exists('IcmsBlockHandler')):
+			$myblock_handler = new IcmsBlockHandler($xoopsDB); /* Will only work in ImpressCMS 1.2+ */
+			$myblock = $myblock_handler->get($bid);
+		break;
+		
+		default:
+			$myblock = new XoopsBlock($bid);
 	}
+
 	$myblock->setVar('side', $bside);
 	$myblock->setVar('weight', $bweight);
 	$myblock->setVar('visible', $bvisible);

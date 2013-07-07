@@ -41,7 +41,7 @@ if (!is_object($module) || !$module->getVar('isactive')) {
 	exit();
 }
 $member_handler =& xoops_gethandler('member');
-$group_list =& $member_handler->getGroupList();
+$group_list = $member_handler->getGroupList();
 if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
 	$gperm_handler = xoops_gethandler('groupperm');
 	foreach ($_POST['perms'] as $perm_name => $perm_data) {
@@ -50,7 +50,7 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
 			// echo "<pre>" ;
 			// var_dump( $_POST['perms'] ) ;
 			// exit ;
-			if (false != myDeleteByModule($gperm_handler->db,$modid,$perm_name,$item_id)) {
+			if (false != myDeleteByModule($GLOBALS['xoopsDB'],$modid,$perm_name,$item_id)) {
 				if( empty( $perm_data['groups'] ) ) continue ;
 				foreach ($perm_data['groups'] as $group_id => $item_ids) {
 	//				foreach ($item_ids as $item_id => $selected) {

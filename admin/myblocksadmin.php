@@ -51,9 +51,9 @@ if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_BLOCK, $xoopsUser
 // get blocks owned by the module
 if ( defined('ICMS_VERSION_BUILD') && ICMS_VERSION_BUILD > 27  ) { /* ImpressCMS 1.2+ */
 	$block_handler =& xoops_gethandler ('block');
-	$block_arr =& $block_handler->getByModule ($xoopsModule->mid());
+	$block_arr = $block_handler->getByModule ($xoopsModule->mid());
 } else { /* legacy support */
-	$block_arr =& XoopsBlock::getByModule( $xoopsModule->mid() ) ; /* from class/xoopsblock.php */
+	$block_arr = XoopsBlock::getByModule( $xoopsModule->mid() ) ; /* from class/xoopsblock.php */
 }
 /**
  * List and display the blocks and their options - this function is also found in system/admin/blocksadmin/blocksadmin.php
@@ -261,6 +261,7 @@ if (method_exists($xoopsModule, 'displayAdminMenu')) {
 }
 if( file_exists( './mymenu.php' ) ) include( './mymenu.php' ) ;
 
+xoops_error("This feature is being deprecated and will soon be unavailable", "");
 echo "<h3 style='text-align:left;'>".$xoopsModule->name()."</h3>\n" ;
 echo "<h4 style='text-align:left;'>"._AM_BADMIN."</h4>\n" ;
 list_blocks() ;
