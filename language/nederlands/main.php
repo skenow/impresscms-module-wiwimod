@@ -85,3 +85,6 @@ define('_MD_SWIKI_VIEWED','This page has been viewed %u time(s)');
 
 //Added in version 1.2
 define('_MD_SWIKI_VIEWS', 'Views');
+
+// Added in version 1.2.1
+define('_MD_SWIKI_CREATE', 'Create this page');

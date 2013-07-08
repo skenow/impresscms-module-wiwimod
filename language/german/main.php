@@ -70,3 +70,6 @@ define('_MD_SWIKI_VIEWED','Diese Seite wurde %u Mal angesehen');
 
 //Added in version 1.2
 define('_MD_SWIKI_VIEWS', 'gelesen');
+
+// Added in version 1.2.1
+define('_MD_SWIKI_CREATE', 'Create this page');
