@@ -36,6 +36,8 @@ Language additions/changes
 		
 Contributors to this release
 * skenow
+* sato-san
+* debianus
 
 == SimplyWiki 1.2 ==
 Status: Final
