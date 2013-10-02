@@ -32,7 +32,9 @@ Language additions/changes
 	+ define('_MB_SWIKI_SHOW_TITLE', 'Show title in block');
 	+ define('_MB_SWIKI_SHOW_AUTHOR', 'Show author');
 * install.php
-	!  define('_MI_SWIKI_HOME_TEXT', ... ); //manual points to simplywiki.org
+	!  define('_MI_SWIKI_HOME_TEXT', ... ); //manual now on simplywiki.org
+* modinfo.php
+	! define('_MI_SWIKI_AUTHOR_WORD', ...); //manual now on simplywiki.org
 		
 Contributors to this release
 * skenow

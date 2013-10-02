@@ -143,7 +143,7 @@ switch ($op) {
 
 			if ($success) {
 				/* @todo	remove cached versions, if any */
-				
+
 				/* Tag module support (Gizmhail) */
 				if(isTagModuleActivated()) {
 					$tag_handler = xoops_getmodulehandler('tag', 'tag');
@@ -470,4 +470,6 @@ switch ($op) {
 }
 
 $xoopsTpl->assign('icms_pagetitle', $myts->htmlSpecialChars($myts->htmlSpecialChars($pageObj->title) . ' - ' .$xoopsModule->name()));
+// @todo	remove after version 1.2
+$xoopsTpl->assign('xoops_pagetitle', $myts->htmlSpecialChars($myts->htmlSpecialChars($pageObj->title) . ' - ' .$xoopsModule->name()));
 include ICMS_ROOT_PATH . '/footer.php';
