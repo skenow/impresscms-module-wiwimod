@@ -301,7 +301,10 @@ switch ($op) {
 
 		$btn_tray->addElement(new XoopsFormButton('', 'submit', _MD_SWIKI_SUBMITREVISION_BTN, 'submit'));
 
-		if ($pageObj->id > 0) {
+		/* only show the Save button if the user is an administrator for the page.
+		 * Otherwise, they can only let them create a new revision
+		 */
+		if ($pageObj->id > 0 && $pageObj->canAdministrate() === TRUE) {
 			$quietsave_btn = new XoopsFormButton('', 'quietsave', _MD_SWIKI_QUIETSAVE_BTN, 'button');
 			$quietsave_btn->setExtra("onclick='document.forms.swikiform.op.value=\"quietsave\"; document.forms.swikiform.submit.click();'");
 			$btn_tray->addElement($quietsave_btn);
