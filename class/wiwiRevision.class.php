@@ -325,6 +325,7 @@ class WiwiRevision {
 
 	/**
 	 * Renders revision content, interpreting wiki codes and XoopsCodes.
+	 * @todo	Need to refactor because preg_replace() /e has been deprecated in PHP 5.5. Use preg_replace_callback() instead
 	 */
 	public function render(&$body = '') {
 		if ($body == '') $body = $this->body;
