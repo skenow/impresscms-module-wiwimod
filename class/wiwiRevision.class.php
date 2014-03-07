@@ -198,7 +198,7 @@ class WiwiRevision {
 			$this->pageid = $this->db->getInsertId();
 		}
 		/* need to do this because of new input filtering in ImpressCMS 1.3.3 */
-		if (defined("ICMS_VERSION_BUILD") && ICMS_VERSION_BUILD > 63) {
+		if (defined("ICMS_VERSION_BUILD") && ICMS_VERSION_BUILD > 63 && ICMS_VERSION_BUILD != 71) {
 			/* deliberate use of addslashes, here */
 			$body = addslashes(icms_core_DataFilter::checkVar($this->body, 'html', 'input'));
 		} else {
@@ -241,7 +241,7 @@ class WiwiRevision {
 		global $xoopsUser;
 		$save_date = date('Y/n/j G:i:s');
 		/* need to do this because of new input filtering in ImpressCMS 1.3.3 */
-		if (defined("ICMS_VERSION_BUILD") && ICMS_VERSION_BUILD > 63) {
+		if (defined("ICMS_VERSION_BUILD") && ICMS_VERSION_BUILD > 63 && ICMS_VERSION_BUILD != 71) {
 			/* deliberate use of addslashes, here */
 			$body = addslashes(icms_core_DataFilter::checkVar($this->body, 'html', 'input'));
 		} else {
