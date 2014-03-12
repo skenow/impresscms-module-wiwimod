@@ -1,0 +1,37 @@
+== Latest Release: SimplyWiki 1.2 Final==
+
+System requirements
+	* ImpressCMS 1.0 or higher, or XOOPS 2.0.16+, or XOOPS 2.3.0+
+
+Installing SimplyWiki
+	* Upload to your modules folder - the folder for SimplyWiki can be renamed
+	* Go to Modules Admin and install the module
+	* Go to SimplyWiki's admin page and set your preferences
+	* Set group permissions for module access
+	* Set block visibility and positions for the blocks you wish to display
+	* Check and adjust the profiles for viewing and editing pages
+	* Edit the default home page, create new pages!	
+
+Upgrading from a previous version of SimplyWiki or Wiwimod
+	* Backup your database
+	* Upload all files to your existing folder for SimplyWiki or Wiwimod, 
+	  overwriting all existing files
+	* Go to Modules Admin and update the module
+	* Check the name of the top page in the module's preferences, the new version sets
+	  this to 'HomePage'. Previous versions defaulted to 'WiwiHome'
+	* You may need to clear your templates_c and cache folders
+	* If you have been using template overrides for SimplyWiki/Wiwimod in your theme,
+	  remove them or update them from the new templates in this release
+
+== SimplyWiki 1.2 ==
+
+What's New in 1.2
+	* 3 new tags have been introduced <[Siblings]>, <[Children]> and <[Headings]>
+	* RSS feeds
+	* Global notification options - any new page, any page modified, any page deleted, any page restored
+	* New event for notification - page restored
+	* When previewing a page, any tags or summary you have entered will be preserved
+	  
+What's New in 1.1.1
+	* Bugs fixed: errors when deleting a profile, getting notifications, adding a new comment
+	* Improved myblocksadmin to work in ImpressCMS 1.2
