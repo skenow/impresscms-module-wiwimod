@@ -490,15 +490,14 @@ class WiwiRevision {
 					: $normKeyword
 					: $customTitle ;
 			$privileges = $targetPage->profile->getUserPrivileges();
-			$userCanWrite = $privileges[_WI_WRITE];
-			$userCanView = $privileges[_WI_READ];
 		} else {
 			$pageExists = FALSE;
 			$txt = ($customTitle != '' ? $customTitle : $normKeyword);
 			$privileges = $this->profile->getUserPrivileges();
-			$userCanWrite = $privileges[_WI_WRITE];
-			$userCanView = $privileges[_WI_READ];
 		}
+
+		$userCanWrite = $privileges[_WI_WRITE];
+		$userCanView = $privileges[_WI_READ];
 
 		if ($pageExists && $userCanView) {
 			$link = sprintf('<a href="%s" title="' . $title . '">%s</a>',
