@@ -1,4 +1,4 @@
-== Latest Release: SimplyWiki 1.2 Final==
+== Latest Release: SimplyWiki 1.2.1 Final (March 2014)==
 
 System requirements
 	* ImpressCMS 1.0 or higher, or XOOPS 2.0.16+, or XOOPS 2.3.0+
@@ -23,7 +23,15 @@ Upgrading from a previous version of SimplyWiki or Wiwimod
 	* If you have been using template overrides for SimplyWiki/Wiwimod in your theme,
 	  remove them or update them from the new templates in this release
 
-== SimplyWiki 1.2 ==
+== SimplyWiki 1.2.x ==
+
+What's new in 1.2.1 (March 2014)
+	* WikiLinks to pages are based on user permissions - if they cannot view an existing page, there is no link.
+		If they cannot create pages, a link to create a nonexistant page will not be available
+	* Show page block has options to disable title, author and edit information
+	* WikiLinks now have title attributes
+	* Index lists (<[PageIndex]>) support multibyte languages
+	* Blocks and Permissions administration is being deprecated
 
 What's New in 1.2
 	* 3 new tags have been introduced <[Siblings]>, <[Children]> and <[Headings]>

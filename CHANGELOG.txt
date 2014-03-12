@@ -1,5 +1,5 @@
 == SimplyWiki 1.2.1 ==
-Status: RC
+Status: Final
 Released: 
 
 Added
@@ -12,6 +12,7 @@ Improved
 * Wiki links now have title attributes
 * Multibyte languages now supported in <[PageIndex]> list
 * Stricter PHP 5.4 compliance
+* Version check improved for save (will work in ImpressCMS 1.2.8)
 
 Fixed
 * Unnecessary inclusion of header.php in the block files
