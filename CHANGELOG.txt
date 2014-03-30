@@ -13,6 +13,7 @@ Improved
 * Multibyte languages now supported in <[PageIndex]> list
 * Stricter PHP 5.4 compliance
 * Version check improved for save (will work in ImpressCMS 1.2.8)
+* Only page admins can use Save feature. All others must create a new revision
 
 Fixed
 * Unnecessary inclusion of header.php in the block files
