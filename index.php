@@ -472,7 +472,13 @@ switch ($op) {
 
 }
 
+// better meta tag generation and assignments
+require_once ICMS_ROOT_PATH . '/kernel/icmsmetagen.php';
+$metas = new IcmsMetagen($pageObj->title, '', $pageObj->body);
+$xoTheme->addMeta('meta', 'description', $metas->createMetaDescription(40));
+
 $xoopsTpl->assign('icms_pagetitle', $myts->htmlSpecialChars($myts->htmlSpecialChars($pageObj->title) . ' - ' .$xoopsModule->name()));
 // @todo	remove after version 1.2
 $xoopsTpl->assign('xoops_pagetitle', $myts->htmlSpecialChars($myts->htmlSpecialChars($pageObj->title) . ' - ' .$xoopsModule->name()));
+
 include ICMS_ROOT_PATH . '/footer.php';
