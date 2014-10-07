@@ -1,0 +1,12 @@
+<head>
+<link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/xoops.css" />
+<link rel="stylesheet" type="text/css" media="all" href="<{$xoops_themecss}>" />
+</head>
+<table class="PageTitle"><tr><td><h2><{$swiki.title}></h2></td><td style="text-align:<{$smarty.const._GLOBAL_RIGHT}>">
+<{foreach from=$parentlist item=pg}>[<{$pg}>]&nbsp;>&nbsp;<{/foreach}>
+[<{$swiki.keyword}>]</td></tr></table>
+
+<{$swiki.body}>
+<div style="text-align: <{$smarty.const._GLOBAL_RIGHT}>; padding: 3px; margin: 0px; color : #8090B1"><span style = "border-top: 1px solid #8090B1; padding: 3px; font-style:italic; font-size:small;" >
+<{$smarty.const._MD_SWIKI_MODIFIED_TXT}> <{$swiki.lastmodified}> <{$smarty.const._MD_SWIKI_BY}> <span class="itemPoster"><{$swiki.author}></span>
+</span></div>

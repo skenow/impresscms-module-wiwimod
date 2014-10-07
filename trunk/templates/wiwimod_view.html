@@ -1,0 +1,64 @@
+<table class="PageTitle">
+ <tr>
+  <td style="text-align:<{$smarty.const._GLOBAL_RIGHT}>">
+	[<{foreach from=$parentlist item=pg}><{$pg}>&nbsp;::&nbsp;<{/foreach}><{$smarty.const._MD_SWIKI_THISPAGE}>]
+		<{if $nav}>&nbsp;<{$nav.html}><{/if}>
+  </td>
+ </tr>
+ <{if $isTagModuleActivated}>
+ <tr>
+  <td style="text-align:<{$smarty.const._GLOBAL_RIGHT}>">
+    <{include file="db:tag_bar.html"}>
+  </td>
+ </tr>
+ <{/if}>
+ <tr>
+  <td><h2><{$swiki.title}></h2></td>
+ </tr>
+</table>
+<{$swiki.body}>
+<{if $nav}><{$nav.html}><{/if}>
+<table><tr><td align='<{$smarty.const._GLOBAL_LEFT}>'>
+	<div style="text-align: <{$smarty.const._GLOBAL_LEFT}>; padding: 3px; margin: 0px; color : #8090B1"><span style = "font-style:italic; font-size:small;" >
+	<{if $swiki.ShowPageInfo.ShowRevisions>-1}><{$swiki.revisions}><br /><{/if}>
+	<{if $swiki.ShowPageInfo.ShowLastRevised>-1}><{$smarty.const._MD_SWIKI_MODIFIED_TXT}> <{$swiki.lastmodified}> <{$smarty.const._MD_SWIKI_BY}> <{$swiki.author}><br /><{/if}>
+	<{if $swiki.ShowPageInfo.ShowCreated>-1}><{$swiki.created}><br /><{/if}>
+	<{if $swiki.ShowPageInfo.ShowViews>-1}><{$swiki.views}><br /><{/if}>
+	<{if $swiki.ShowPageInfo.ShowLastViewed>-1}><{$swiki.lastviewed}><br /><{/if}></span></div>
+</td><td align='<{$smarty.const._GLOBAL_RIGHT}>'>
+	<{if $swiki.allowPDF}> <a href="wiwipdf.php?page=<{$swiki.encodedurl}>" target="_blank" rel="nofollow"><img src="images/pdf.gif" align="middle" alt="" /></a>&nbsp;<{/if}>
+	<{if $swiki.showHistory}> <input type="button" onclick="self.location.href='index.php?page=<{$swiki.encodedurl}>&amp;op=history';" value="<{$smarty.const._MD_SWIKI_HISTORY_BTN}>" /><{/if}>
+	<{if $swiki.mayEdit}> <input type="button" onclick="self.location.href='index.php?page=<{$swiki.encodedurl}>&amp;op=edit';" value="<{$smarty.const._EDIT}>" /><{/if}>
+</td></tr>
+</table>
+<{if $swiki.ShowQuickAdd && $swiki.WritePrivileges !== 0}><div id='writepage'>
+    <form name='addpage' method='get' action='index.php'>
+		<fieldset>
+			<legend><{$smarty.const._MD_SWIKI_ADDPAGE}></legend>
+				<input type='text' name='page' size='60' />
+		        <input type='submit' value='<{$smarty.const._MD_SWIKI_ADDPAGE_BTN}>' />
+		</fieldset>
+    </form>
+</div><{/if}>
+<{if $swiki.showComments}>
+<br />
+<div ><fieldset><legend><{$smarty.const._COMMENTS}></legend>
+<div style="margin: 3px; padding: 3px;">
+<!-- start comments loop -->
+<{if $comment_mode == "flat"}>
+  <{include file="db:system_comments_flat.html"}>
+<{elseif $comment_mode == "thread"}>
+  <{include file="db:system_comments_thread.html"}>
+<{elseif $comment_mode == "nest"}>
+  <{include file="db:system_comments_nest.html"}>
+<{/if}>
+<!-- end comments loop -->
+</div>
+<div style="text-align: center; padding: 3px; margin: 3px;">
+  <{$commentsnav}>
+  <{$lang_notice}>
+</div>
+</fieldset></div>
+<{/if}>
+<{include file='db:system_notification_select.html'}>
+
