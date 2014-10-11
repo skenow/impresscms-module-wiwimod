@@ -342,14 +342,20 @@ switch ($op) {
 				'body' => $pageObj->render(),
 			));
 		} else {
-			$pageObj->diff($bodyDiff, $titleDiff);
+			$pageObj->diff($bodyorig, $titleDiff, $bodychanged);
+			global $icmsConfig;
+			$wikiModDir =  basename(dirname(__FILE__));
+			$wikidir = $wikiModDir;
 			$xoopsTpl->assign('swiki', array(
 				'keyword' => $pageObj->keyword,
 				'encodedurl' => $pageObj->encode($pageObj->keyword),
 				'revid' => $pageObj->id,
 				'title' => $titleDiff,
-				'body' => $bodyDiff,
+				'bodychanged' => $bodychanged,
+				'wikidir' => $wikidir,
+				'bodyorig' => $bodyorig,
 			));
+			
 		}
 
 		$hist = $pageObj->history();

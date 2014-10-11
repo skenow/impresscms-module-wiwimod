@@ -1,8 +1,38 @@
 
+<{literal}>
+<script type="text/javascript" src="<{/literal}><{$icms_url}><{literal}>/modules/<{/literal}><{$swiki.wikidir}><{literal}>/js/diff_match_patch.js"></script>
+<script type="text/javascript" src="<{/literal}><{$icms_url}><{literal}>/modules/<{/literal}><{$swiki.wikidir}><{literal}>/js/jquery.pretty-text-diff.js"></script>
+<{/literal}>
+<style>
+ins {
+    background-color: #c6ffc6;
+    text-decoration: none;
+}
+del {
+    background-color: #ffc6c6;
+}
+table th {
+    width: 30%;
+}
+</style>
 <{$smarty.const._MD_SWIKI_HISTORY_TXT}> : <{$swiki.keyword}>
 <input type="button" onclick="self.location.href='index.php?page=<{$swiki.keyword}>';" value="<{$smarty.const._MD_SWIKI_PAGEVIEW_BTN}>" />
 
 <h2><{$swiki.title}></h2>
+<table class="diff" border="1" cellspacing="0" cellpadding="3">
+	<thead>
+		<tr>
+			<th><{$smarty.const._MD_SWIKI_DIFF_ORIGINAL}></th>
+			<th><{$smarty.const._MD_SWIKI_DIFF_CHANGED}></th>
+			<th><{$smarty.const._MD_SWIKI_DIFF_DIFF}></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="original"><{$swiki.bodyorig}></td><td class="changed"><{$swiki.bodychanged}></td><td class="diff"></td>
+		</tr>
+	<tbody>
+</table>
 <{$swiki.body}>
 
 <script type="text/javascript">
@@ -41,3 +71,7 @@ tr.highlitedrevision td {background-color: #FFCC66; padding: 5px;}
 	<{/foreach}>
 </table>
 <p align='<{$smarty.const._GLOBAL_RIGHT}>'><input type='button' onclick="self.location.href='index.php?page=<{$swiki.keyword}>';" value="<{$smarty.const._MD_SWIKI_PAGEVIEW_BTN}>" /></p>
+<script>$(document).ready(function() {
+    $(".diff tr").prettyTextDiff({});
+  });
+</script>

@@ -635,27 +635,14 @@ class WiwiRevision {
 	 * @param $bodyDiff
 	 * @param $titleDiff
 	 */
-	public function diff(&$bodyDiff, &$titleDiff) {
-		include_once ICMS_ROOT_PATH . '/modules/' . $this->_dir . '/include/diff.php';
+	public function diff(&$bodyorig, &$titleDiff, &$bodychanged) {
 		// Get the latest revision contents
-		$sql = 'SELECT title, body FROM ' . $this->db->prefix('wiki_revisions') . ' r, ' . $this->db->prefix('wiki_pages') . ' p WHERE p.pageid="' . $this->pageid . '" AND r.pageid="' . $this->pageid . '" ORDER BY revid DESC LIMIT 1';
+		$sql = 'SELECT title, body FROM ' . $this->db->prefix('wiki_revisions') . ' r, ' . $this->db->prefix('wiki_pages') . ' p WHERE p.pageid="' .$this->pageid . '" AND r.pageid="' . $this->pageid . '" ORDER BY revid DESC LIMIT 1';
 		$result = $this->db->query($sql);
 		list($title, $body) = $this->db->fetchRow($result);
-
-		// remove formatting tags, replace tags generating a line break with a "\n".
-		$search = array(
-				"#<(/?TABLE|TD|P|HR|DIV|UL|LI|PRE|BR)>#i",
-				"#<(?!/?A|IMG)[/!]*?[^<>]*?>#si"
-		);
-
-		$replace = array(
-				"<$1>\n",
-				""
-		);
-
-		$body = preg_replace($search, $replace, $body);
-		$body2 = preg_replace($search, $replace, $this->body);
-		$bodyDiff = $this->render(diffDisplay($body2, $body));
+		$body =  $body;
+		$bodyorig =  $body;
+		$bodychanged =  $this->body;
 		$titleDiff = ($title == $this->title)
 		? '<h2>' . $this->ts->htmlSpecialChars($title) . '</h2>'
 				: '<h2><span style="color: red;">' . $this->ts->htmlSpecialChars($this->title) . '</span> &rarr; <span style="color: green;">' . $this->ts->htmlSpecialChars($title) . '</span></h2>';

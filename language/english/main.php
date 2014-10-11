@@ -73,3 +73,8 @@ define('_MD_SWIKI_VIEWS', 'Views');
 
 // Added in version 1.2.1
 define('_MD_SWIKI_CREATE', 'Create this page');
+//Added in version xxx
+define('_MD_SWIKI_DIFF_ORIGINAL', 'Original');
+define('_MD_SWIKI_DIFF_CHANGED', 'Changed');
+define('_MD_SWIKI_DIFF_DIFF', 'Differences');
+ 
