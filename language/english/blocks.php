@@ -37,3 +37,5 @@ define('_MB_SWIKI_VIEWS', 'Number of page views');
 // Added in 1.2.1 RC
 define('_MB_SWIKI_SHOW_TITLE', 'Show title in block');
 define('_MB_SWIKI_SHOW_AUTHOR', 'Show author');
+// Aded in xxx
+define('_MB_SWIKI_SHOW_CHARNUM', 'Page content height (pixels)');

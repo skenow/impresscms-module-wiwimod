@@ -1,13 +1,22 @@
-<table cellspacing="0">
+<script src="<{$icms_url}>/modules/<{$block.dirname}>/js/jquery.dotdotdot.min.js"></script>
+<{literal}>
+<script>
+    $(document).ready(function() {
+		$(".lwiki").dotdotdot({
+			height: <{/literal}><{$block.charnum}><{literal}>
+		});
+    });
+</script>
+<{/literal}>
+
+<ul class="listawiki" style="padding:0">
   <{foreach item=link from=$block.links}>
-  <tr>
-    <td>
-    <a href="<{$xoops_url}>/modules/<{$block.dirname}>/index.php?page=<{$link.page}>"><{$link.title}></a>
-    </td><td>
-	<span class="itemPoster"><{$link.user}></span>
-	</td><td>
-	<span class="itemPostDate"><{$link.lastmodified}></span>
-	</td>
-  </tr>
-  <{/foreach}>
-</table>
+    <li>
+		<a href="<{$icms_url}>/modules/<{$block.dirname}>/index.php?page=<{$link.page}>"><{$link.title}></a>
+		<div class="lwiki"><{if $link.body}><{$link.body}><{/if}></div>
+		<{if $link.summary}><p class="comText"><{$link.summary}></p><{/if}>
+		<span class="itemPoster"><{if $link.user}><{$link.user}><{/if}></span>
+		<span class="itemPostDate"><{if $link.lastmodified}><{$link.lastmodified}><{/if}></span>
+	</li>
+ <{/foreach}>
+</ul>

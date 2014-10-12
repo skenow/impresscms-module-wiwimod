@@ -102,7 +102,7 @@ $modversion['blocks'][] = array(
   'description' => _MI_SWIKI_BLOCK_RECENT_DESC,
   'show_func' => 'swiki_recent',
   'edit_func' => 'swiki_recent_blockedit',
-  'options' => '5',
+  'options' => '5|0|100|0|1',
   'template' => 'wiwimod_recent.html',
   'can_clone' => true);
 
