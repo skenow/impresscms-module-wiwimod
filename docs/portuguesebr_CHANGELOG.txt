@@ -1,0 +1,224 @@
+== Wiwimod 0.8.3 Re-release ==
+Released: 
+
+Added
+* index.html to every directory without one
+* Global notification option
+* Tag module integration, based on work previously done by Gizmhail
+* Can now install wiwimod in any folder
+* Use of language constants for date formats
+* Code documentation with phpdoc blocks
+* Changelog.txt
+* Check for ROOT_PATH in all included files
+* New language constants for block options
+* Language constants are used throughout for complete internationalization (i18n) and localization (l10n)
+* New icons for ImpressCMS admin area
+* formatTimestamp to date values. (stranger)
+* RTL style for admin menu. (stranger)
+* Portuguese-Brazilian translation (gibaphp)
+
+Fixed
+* Block notifications now work
+* Can delete profiles
+* unexpected '%' in include\search.php on line 22. (stranger)
+
+Improved
+* $modversion definitions in xoops_version.php reduced to arrays - more compact and easier to read
+* HTML validation
+* Moved page name to the beginning of the meta page title for better SEO
+* Code layout - single quotes instead of double quotes, include/include_once/require/require_once do not use (), removed redundant blank lines
+* Replaced deprecated functions with current functions: makeTboxData4Show() -> htmlSpecialChars(); 
+* References to class/xoopsuser.php relocated to kernel/user.php (vaughan)
+* Changed intval() to (int) for faster processing
+* myblocksadmin updated for current basic block positions - works in ImpressCMS 1.0, 1.1 and in XOOPS 2.0.18 and 2.3
+* Profiles are saved as config options during the installation - no longer need to save a profile before setting default profile
+* All data inserts are now done in include/oninstall.php and are not in the SQL definitions 
+* Data validation for GET/POST/REQUEST variables
+
+Language additions
+* blocks.php
+  + define('_MB_WIWI_NUM_DISP_DESC','Number of items to display');
+  + define('_MB_WIWI_SHOWPAGE_DESC','Page to display');
+
+* xoops_version.php
+  + define('_MI_WIWIMOD_GLOBALNOTIFYCAT_TITLE','Global');
+  + define('_MI_WIWIMOD_GLOBALNOTIFYCAT_DESC','Notifications that apply to the all pages');
+  + define('_MI_WIWIMOD_GLOBALNOTIFY_TITLE','Page updated');
+  + define('_MI_WIWIMOD_GLOBALNOTIFY_CAPTION','Notify me when any page is modified');
+  + define('_MI_WIWIMOD_GLOBALNOTIFY_DESC','Receive notification when any user updates any page.');
+  + define('_MI_WIWIMOD_GLOBALNOTIFY_SUBJECT','[{X_SITENAME}] {X_MODULE} auto-notify : page updated');
+  + define('_MI_WIWIMOD_TEMPLATE_VIEW_DESC','View Wiwi Page');
+  + define('_MI_WIWIMOD_TEMPLATE_EDIT_DESC','Edit Wiwi Page');
+  + define('_MI_WIWIMOD_TEMPLATE_HISTORY_DESC','View page history');
+  + define('_MI_WIWIMOD_TEMPLATE_PDF_DESC','WiwiMod - pdf');
+  + define('_MI_WIWIMOD_BLOCK_TOC_NAME','Wiwi TOC');
+  + define('_MI_WIWIMOD_BLOCK_TOC_DESC','Wiwi selected entry pages');
+  + define('_MI_WIWIMOD_BLOCK_RECENT_NAME','Wiwi Recent');
+  + define('_MI_WIWIMOD_BLOCK_RECENT_DESC','Wiwi recently modified');
+  + define('_MI_WIWIMOD_BLOCK_RELATED_NAME','WiwiSideContent');
+  + define('_MI_WIWIMOD_BLOCK_RELATED_DESC','Side block for extra content on Wiwi pages');
+  + define('_MI_WIWIMOD_BLOCK_SHOWPAGE_NAME','WiwiShowPage');
+  + define('_MI_WIWIMOD_BLOCK_SHOWPAGE_DESC','Show a wiwi page');
+  + define('_MI_WIWIMOD_DEFAULTPROFILE_DESC','Default profile assigned to new pages');
+
+* admin/about.php
+  + define('_MI_WIWIMOD_AUTHOR_WORD','<h4>About Wiwi 0.8.3</h4><br />Wiwi is GPL software ; visit Wiwi home page at <a href="http://www.zonatim.com/modules/wiwimod?page=WiwimodHomePage" target="_blank">www.zonatim.com</a> to support or get help.<br /><br />If you\'ve just migrated from an older Wiwi version (0.7.1 or less), please click here : <input type="button" value="UPGRADE" onclick="document.location.href=\'../update.php\';"><br /><br /><a href=\'../manual.html\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
+
+* include/oninstall.inc.php (constants in language/<language>/install.php) (new)
+  + define('_MI_wiki_profile1','Open Content');
+  + define('_MI_wiki_profile2','Public Content');
+  + define('_MI_wiki_profile3','Private Content');
+  + define('_MI_WIWIMOD_WIWIHOME_TITLE','Your Wiwi home page');
+  + define('_MI_WIWIMOD_WIWIHOME_TEXT','<p>\r\n<table border=\'0\'>\r\n<tbody>\r\n<tr>\r\n<td>\r\n<p>Welcome;<br />This is Wiwi\'s default home page. Feel free to edit and modify it. To create new pages, type in anywhere a page name and surround it with double square brackets ( [[ ). When you save this page, the brackets will be replaced by a link to your new page.</p>\r\n<p>Check <a href=\'manual.html\' target=_blank>the manual</a> for an in depth view of editing features.</p></td>\r\n<td><img src=\'images/wiwilogo.gif\' /></td></tr></tbody></table></p>\r\n<p>\r\n<table cellspacing=\'5\' cellpadding=\'5\' width=\'100%\' border=\'0\'>\r\n<tbody>\r\n<tr>\r\n<td bgcolor=\'#e4e4e4\'>Pages index</td>\r\n<td bgcolor=\'#e4e4e4\'>Recently modified pages</td></tr>\r\n<tr>\r\n<td bgcolor=\'#f6f6f6\'>&lt;[PageIndex]&gt;</td>\r\n<td bgcolor=\'#f6f6f6\'>&lt;[RecentChanges]&gt;</td></tr></tbody></table><br /><br /></p>');
+
+* admin/admin.php
+  + define('_AM_WIWI_SYS_CFG','System Configuration');
+
+Contributors to this release
+* skenow
+* pesian_stranger
+* gibaphp
+* juancj
+* xoops-magazine
+* m0nty_
+  
+== Wiwimod 0.8.3 ==
+
+- enhancement : Added "change editor" feature in page edit form (right-click).
+- enhancement : Added config option for Recent block : max number of items displayed.
+- enhancement : Add config option to enable/disable CamelCase.
+- enhancement : Added new tags to wiki syntax (thanks again to Gizmhail for his work) :
+     1) [[PAGE page name]] inserts the content of a page within the current page (with privilege check);
+     2) multi-level bulleted lists : starting a line with up to three stars (*) displays bulleted lists at the corresponding level
+     3) added "._." tag that displays nothing : allows displaying reserved Wiki codes without them being interpreted (useful for online help on Wiwi for example)
+- enhancement : Added Xoops notification support (on page updates).
+- enhancement : the "cleanup db" button in Wiwi admin is back ; (thanks to Shine ;-) ).
+
+- bugfix : slashes stripped in page links titles at display time (function wikilink() )
+- bugfix : page name encoding issues in urls (thanks to Gizmhail) : "edit" buttons, history list, recent list, toc, redirections, etc.
+- bugfix : lacking language constants ;
+
+
+v0.8.2 :
+--------
+- enhancement : added free links support : page names no more are restricted to CamelCase ;
+	Page names can include spaces, apostrophes, quotes, dots, etc... all except brackets indeed.
+        Now, supported formats are :
+	[[free link | title]] or [[free link]] ,
+	[[CamelCase title]] or [[CamelCase]] or CamelCase
+	[[www.externalsite.com title]] or [[www.externalsite.com]] or www.externalsite.com   
+	
+	The latter work because the editors do the replacement themselves, so the "real" parsed form is : [[<a ...> ... </a> | title]] 
+	NOTICE : the former [[relative_url title]] tag does not work any more (usually used as [[?page=MyPage title]])
+- enhancement : modified <[page index]> to show page titles instead of page names (shows page name if no title)
+- enhancement : added portuguese (brazilian) locale (thanks to Rafael Sahb) ; updated nederlands locale (thanks to Shine)
+- enhancement : creates a default HomePage page at install time, with some kick-start content.
+
+- bugfix : while the "preferences" tab of wiwi admin was active, standard xoops admin menus were corrupted
+- bugfix : added proper handling of &lt; and < in wiki parser (<PageIndex> didn't work on some configs)
+- bugfix : solved issue with ' in page titles at edit time.
+- bugfix : wiwiRecent block couldn't display if the only Wiwi block on a page
+- bugfix : added lacking language locales and removed remaining "hardwired" constants
+
+- cleanup : removed all constant assignments to smarty template variables ; used <{smarty.const.XXX}> instead.
+
+
+v0.8.1 :
+--------
+- enhancement : added preference item for displaying CamelCase links with the page title instead of CamelCase page name.
+- enhancement : added preference item for pdf button display in pages.
+- enhancement : [pagebreak] feature ; this allows displaying long Wiwi pages in as many chunks as you like, with a navigation between them.
+- enhancement : added slovenian locale (thanks to Sebastian Penko)
+- enhancement : "Search engine friendly" : page title now in the html header "title"
+
+- bugfix : multiple bugfixes on comment handling
+- bugfix : language constants weren't defined within Wiwi blocks
+- bugfix : XREF tag didn't work as from 0.8 ;
+- bugfix : TOC block now shows pages ordered by "visible" value
+
+
+v0.8 :
+--------
+- enhancement : PDF generation, grouping the current page and all other down-linked wiwi pages in a single pdf file.
+                NOTE : PDF conversion isn't that good for now ... best results if you tie to "simple" pages without complex CSS .
+- enhancement : "TOC" and "Recent" blocks content filtered according to user privileges (thanks to Lionel PERON for the hack) ;
+		Search results filtered the same way.
+- enhancement : default profile feature, in preferences panel
+- enhancement : new administration panel, (more control on revisions, look'nfeel much alike that from the excellent SmartFAQ, integration 
+		of the "myblockadmin" hack enabling centralized access to all blocks and group management)
+- enhancement : added Dutch (nederland) locale (thanks to Marc de Mesel))
+- enhancement : Editors externalized : Wiwi now uses XoopsWide editors classes, instead of supplying the editors within the module.
+                check available editors and plugins here : www.zonatim.com/modules/mydownloads
+- enhancement : "quiet save" button, to save "minor" changes without creating a new revision.
+- enhancement : "diff" function within history page, to compare selected revision with the most uptodate page.
+		This function is adapted from Wikimod 0.98 (courtesy of Simon Bünzli, and Raphael Kirschke as the original diff algorithm author) 
+- enhancement : escape "tilde ~" character to prevent CamelCase being interpreted within pages.
+
+- bugfix : fixed wrong initialization in load() method of wiwiProfile class that lead to wrong privileges on successive invocations.
+- bugfix : page profile was lost when page updated by user with write privilege but no admin privilege
+- bugfix : general check upon slashes, quotes or newlines processing (the latter lead to sort of unpredictible vertical spacing)
+
+- cleanup : wiki functionnality wrapped in a class, general code review for language and headers includes, replacement of the "common" directory 
+	    with a more standard "include", language files clean-up ...
+
+v0.7.1 :
+--------
+- enhancement : history button, visible if page profile allows it for the current user. The restore option is open to people with admin rights on the current page.
+- enhancement : xoopsCodes support, and possibility to select standart xoops editor instead of a Wysiwyg one. (;-) YES, this is an enhancement)
+- bugfix : the preview button is back, and operates correctly with all editors.
+- bugfix : quotes within pages caused database errors (bug was introduced in 0.7 version);
+- bugfix : wouldn't update nor create profiles
+
+v0.7 :
+------
+- enhancement : added "wiwi profile" feature, to control page access privileges :
+                Profiles list groups allowed to read/write/administrate wiwi pages, and enables/disables comments for related pages.
+		WARNING : older related preferences items were removed.
+- enhancement : added ((XBLK xxx] tag, to insert any Xoops Block in a Wiwi page. (xxx can be either the block title or id)
+- enhancement : default value for "parent" field at page creation.
+- enhancement : new block "WiwiShowPage" displays a selected wiwi page.
+
+- bugfix : updated language files
+- bugfix : updated "update.php" script (no more warnings if run twice ..)
+- bugfix : comments no more disappear when modifying a page (now attached to the page name, not a particular revision)
+- bugfix : no more "notices" in php debug mode.
+
+
+v0.6 :
+------
+- enhancement : MOZILLA, Firefox, etc. wysiwyg edit support, through HTMLArea editor integration
+- enhancement : added "insert flash" button in the editor (.swf files)
+- enhancement : added a "Parent" field to pages in edit mode ; in view mode, display links to parent pages ("navigation" bar).
+- enhancement : added a "context sensitive block". Specify, within each Wiwi page, which existing xoops block should be displayed in the context sensitive block.
+
+- bugfix : wiwi blocks wouldn't display in top page (except whith main menu visible)
+- bugfix : corrected "cannot redeclare ..." when Wiwimod was the default Xoops module and 'wiwi_recent' block was displayed.
+- bugfix : images upload did'nt work properly if no Xoops image library had been initialized.
+- bugfix : security gap correction
+- bugfix : pages wouldn't display in edit mode with SPAW and non IE browsers (plain old Xoops DHTMLArea)
+
+v0.5 :
+------
+- enhancement : Camelcase text converted to Wiwi links automatically, and other wiki-code implementation
+	(bold, italic, header, link, horiz line, line break, img urls)
+- enhancement : Preferences : edit permissions (anonymous users or a specific group).
+- enhancement : spanish localization
+
+- bugfix : (?) appeared only once if more than one link to Wiwi pages on the same line.
+- bugfix : the spaw editor now works with non root ("www.mydomain.com/") Xoops location.
+
+v0.4
+------
+- added file upload functionnality.
+
+v0.3
+------
+- added two blocks : "TOC" (links to selected pages) and "Recent" (recently modified pages)
+
+v0.2
+------
+- Corrected bug (comments were lost after page modification)
+
+v0.1
+------
+* Initial release, based on wikiMod rev 0.96
