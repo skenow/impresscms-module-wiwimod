@@ -27,7 +27,7 @@
 	<{if $swiki.ShowPageInfo.ShowLastViewed>-1}><{$swiki.lastviewed}><br /><{/if}></span></div>
 </td><td align='<{$smarty.const._GLOBAL_RIGHT}>'>
 	<{if $swiki.allowPDF}> <a href="wiwipdf.php?page=<{$swiki.encodedurl}>" target="_blank" rel="nofollow"><img src="images/pdf.gif" align="middle" alt="" /></a>&nbsp;<{/if}>
-	<{if $swiki.showHistory}> <input type="button" onclick="self.location.href='index.php?page=<{$swiki.encodedurl}>&amp;op=history';" value="<{$smarty.const._MD_SWIKI_HISTORY_BTN}>" /><{/if}>
+	<{if $rev > 1 and $swiki.showHistory}> <input type="button" onclick="self.location.href='index.php?page=<{$swiki.encodedurl}>&amp;op=history';" value="<{$smarty.const._MD_SWIKI_HISTORY_BTN}>" /><{/if}>
 	<{if $swiki.mayEdit}> <input type="button" onclick="self.location.href='index.php?page=<{$swiki.encodedurl}>&amp;op=edit';" value="<{$smarty.const._EDIT}>" /><{/if}>
 </td></tr>
 </table>

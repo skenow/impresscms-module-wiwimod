@@ -354,6 +354,7 @@ switch ($op) {
 				'bodychanged' => $bodychanged,
 				'wikidir' => $wikidir,
 				'bodyorig' => $bodyorig,
+				'diff' => '1',
 			));
 			
 		}
@@ -436,7 +437,9 @@ switch ($op) {
 		$user = $xoopsUser ? $xoopsUser : NULL;
 		$writeProfiles = new WiwiProfile();
 		$WritePrivileges = count($writeProfiles->getWriteProfiles($user));
-
+		$hist = $pageObj->history();
+		$revisiones = count($hist);
+		$xoopsTpl->assign('rev', $revisiones);
 		$xoopsTpl->assign('swiki', array(
 			'keyword' => $pageObj->keyword,
 			'encodedurl' => $pageObj->encode($pageObj->keyword),
