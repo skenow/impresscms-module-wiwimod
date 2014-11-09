@@ -13,10 +13,9 @@ tr.highlitedrevision td {
 	background-color: #ffc6c6; padding: 5px;
 }
 </style>
-<{literal}>
-<script type="text/javascript" src="<{/literal}><{$icms_url}><{literal}>/modules/<{/literal}><{$swiki.wikidir}><{literal}>/js/diff_match_patch.js"></script>
-<script type="text/javascript" src="<{/literal}><{$icms_url}><{literal}>/modules/<{/literal}><{$swiki.wikidir}><{literal}>/js/jquery.pretty-text-diff.js"></script>
-<{/literal}>
+
+<script type="text/javascript" src="<{$icms_url}>/modules/<{$swiki.wikidir}>/js/diff_match_patch.js"></script>
+<script type="text/javascript" src="<{$icms_url}>/modules/<{$swiki.wikidir}>/js/jquery.pretty-text-diff.js"></script>
 
 <{$smarty.const._MD_SWIKI_HISTORY_TXT}> : <{$swiki.keyword}>
 <input type="button" onclick="self.location.href='index.php?page=<{$swiki.keyword}>';" value="<{$smarty.const._MD_SWIKI_PAGEVIEW_BTN}>" />
@@ -54,9 +53,10 @@ tr.highlitedrevision td {
 	<input type="hidden" id="page" name="page" value="<{$swiki.keyword}>" />
 	<input type="hidden" id="id" name="id" value="<{$swiki.revid}>" />
 </form>
-
+<br />
+<strong><{$smarty.const._MD_SWIKI_HISTORY_BTN}></strong>
 <table border="0" cellpadding="0" cellspacing="1" width="100%" class="outer">
-	<tr class="head"><td></td><td><b><{$smarty.const._MD_SWIKI_TITLE_COL}></b></td><td width="20%"><b><{$smarty.const._MD_SWIKI_MODIFIED_COL}></b></td><td width="10%"><b><{$smarty.const._MD_SWIKI_AUTHOR_COL}></b></td><td width=""><b><{$smarty.const._MI_SWIKI_REVISION_SUMMARY}></b></td><td width="30%"><b><{$smarty.const._MD_SWIKI_ACTION_COL}></b></td></tr>
+	<tr class="head"><td></td><td><strong><{$smarty.const._MD_SWIKI_TITLE_COL}></strong></td><td width="20%"><strong><{$smarty.const._MD_SWIKI_MODIFIED_COL}></strong></td><td width="10%"><strong><{$smarty.const._MD_SWIKI_AUTHOR_COL}></strong></td><td width=""><strong><{$smarty.const._MI_SWIKI_REVISION_SUMMARY}></strong></td><td width="30%"><strong><{$smarty.const._MD_SWIKI_ACTION_COL}></strong></td></tr>
 	<{foreach from=$hist item=revision}>
 	<tr <{if $revision.id == $swiki.revid}>class="highlitedrevision"<{else}>class="<{cycle values=even,odd}>"<{/if}> >
 		<td width=10 style="color: #FF0000; font-weight:bold"><{if $revision.id == $swiki.revid}><img src="images/hand.gif" alt='' /><{else}>&nbsp;<{/if}></td>

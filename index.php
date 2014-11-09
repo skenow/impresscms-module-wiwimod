@@ -438,8 +438,6 @@ switch ($op) {
 		$writeProfiles = new WiwiProfile();
 		$WritePrivileges = count($writeProfiles->getWriteProfiles($user));
 		$hist = $pageObj->history();
-		$revisiones = count($hist);
-		$xoopsTpl->assign('rev', $revisiones);
 		$xoopsTpl->assign('swiki', array(
 			'keyword' => $pageObj->keyword,
 			'encodedurl' => $pageObj->encode($pageObj->keyword),
@@ -454,7 +452,8 @@ switch ($op) {
 			'created' => sprintf(_MD_SWIKI_CREATED, xoops_getLinkedUnameFromId($pageObj->creator), formatTimestamp(strtotime($pageObj->created), _SHORTDATESTRING)),
 			'views' => sprintf(_MD_SWIKI_VIEWED, $pageObj->views),
 			'lastviewed' => sprintf(_MD_SWIKI_LASTVIEWED, formatTimestamp(strtotime($pageObj->lastviewed), _SHORTDATESTRING)),
-			'revisions' => sprintf(_MD_SWIKI_REVISIONS, $pageObj->revisions),
+			'revisions' => $pageObj->revisions,
+			'revision_text' => sprintf(_MD_SWIKI_REVISIONS, $pageObj->revisions),
 			'ShowPageInfo' => array_flip($xoopsModuleConfig['ShowPageInfo']),
 			'ShowQuickAdd' => $xoopsModuleConfig['ShowQuickAdd'],
 			'WritePrivileges' => $WritePrivileges,
