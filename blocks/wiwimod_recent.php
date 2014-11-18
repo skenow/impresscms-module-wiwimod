@@ -6,7 +6,7 @@
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id: wiwimod_recent.php 23007 2011-11-22 17:20:33Z skenow $
+ * @version $Id:$
  */
 
 defined('ICMS_URL') || define('ICMS_URL', XOOPS_URL);
@@ -21,7 +21,7 @@ function swiki_recent ($options) {
 	$limit = (int) $options[0];
 	$block = array();
 	$myts =& MyTextSanitizer::getInstance();
-	$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, prid, body, summary FROM ' //add body
+	$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, prid, body, summary FROM '
 		. $xoopsDB->prefix('wiki_pages') . ' p, ' . $xoopsDB->prefix('wiki_revisions') 
 		. ' r WHERE p.pageid=r.pageid AND lastmodified=modified ORDER BY lastmodified DESC LIMIT ' 
 		. $limit;
@@ -70,7 +70,6 @@ function swiki_recent ($options) {
  */
 function swiki_recent_blockedit ($options) {
 	$form = _MB_SWIKI_NUM_DISP_DESC . "&nbsp;:&nbsp;<input type='text' name='options[0]' value='" . $options[0] . "' /><br />";
-	//añadisos
 	$form .=   _MD_SWIKI_BODY_FLD  ;
 	$form .= '&nbsp;:&nbsp; <input type="radio" name="options[1]" value="1"';
 	if ($options[1] == 1) 
@@ -117,13 +116,3 @@ function swiki_recent_blockedit ($options) {
 	$form .= '/> ' . _NO . '<br />';	
 	return $form;
 }
-/*
-$modversion['blocks'][] = array(
-    'file' => 'quotes_rotator_quotes.php',
-    'name' => _MI_QUOTES_ROTATION_QUOTES,
-    'description' => _MI_QUOTES_ROTATION_QUOTESDSC,
-    'show_func' => 'quotes_rotator_quotes_show',
-    'edit_func' => 'quotes_rotator_quotes_edit',
-    'options' => '5|0|300|6000|fade',
-    'template' => 'quotes_rotator_quotes.html');
-	*/

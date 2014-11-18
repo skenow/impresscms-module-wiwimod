@@ -13,10 +13,10 @@
   <{foreach item=link from=$block.links}>
     <li>
 		<a href="<{$icms_url}>/modules/<{$block.dirname}>/index.php?page=<{$link.page}>"><{$link.title}></a>
-		<div class="lwiki"><{if $link.body}><{$link.body}><{/if}></div>
+		<{if $link.body}><div class="lwiki"><{$link.body}></div><{/if}>
 		<{if $link.summary}><p class="comText"><{$link.summary}></p><{/if}>
-		<span class="itemPoster"><{if $link.user}><{$link.user}><{/if}></span>
-		<span class="itemPostDate"><{if $link.lastmodified}><{$link.lastmodified}><{/if}></span>
+		<{if $link.user}><span class="itemPoster"><{$link.user}></span><{/if}>
+		<{if $link.lastmodified}><span class="itemPostDate"><{$link.lastmodified}></span><{/if}>
 	</li>
  <{/foreach}>
 </ul>
