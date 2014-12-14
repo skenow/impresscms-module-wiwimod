@@ -27,7 +27,7 @@ $wikiModDir = basename(dirname(dirname(__FILE__)));
 
 /**
  * Returns a clickable username for a userid
- * @deprecated	Use xoops_getLinkedUnameFromId, instead (which is deprecated in XOOPS 2.5.0) 
+ * @deprecated	Use xoops_getLinkedUnameFromId, instead (which is deprecated in XOOPS 2.5.0)
  * @param		$uid
  */
 function getUserName($uid) {
@@ -208,7 +208,9 @@ function getAvailableEditors() {
 }
 
 /**
+ * Determine if old XOOPS Tag module is present and activated
  *
+ * @return	bool	Returns TRUE if the module is active
  */
 function isTagModuleActivated() {
 	if (!file_exists(ICMS_ROOT_PATH . '/modules/tag/include/formtag.php')) return false;
@@ -216,6 +218,7 @@ function isTagModuleActivated() {
 	$moduleHandler = new XoopsModuleHandler($db);
 	$tagModule = $moduleHandler->getByDirName('tag');
 	if ($tagModule == false) return false;
+	if ($tagModule->getVar('isactive') == FALSE) return FALSE;
 	return true;
 }
 
