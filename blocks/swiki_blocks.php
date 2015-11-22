@@ -8,10 +8,6 @@
  * @version $Id$
  */
 
-/* These are here for cross-platform compatibility */
-defined('ICMS_URL') || define('ICMS_URL', XOOPS_URL);
-defined('ICMS_ROOT_PATH') || define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
-
 global $xoopsConfig;
 $wikiModDir = basename(dirname(dirname(__FILE__)));
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
@@ -84,18 +80,18 @@ function swiki_listpages ($options) {
  */
 function swiki_listpages_blockedit ($options) {
 	$form = _MB_SWIKI_NUM_DISP_DESC . "&nbsp;<input type='text' name='options[0]' value='" . $options[0] . "' /><br />";
-	$form .= _MB_SWIKI_FIELD_DESC . "&nbsp;<select name='options[1]' size='1'><option value='createdate'" 
-		. ($options[1]=="createdate" ? "selected='selected'>" : ">") . _MB_SWIKI_CREATE_DATE . "</option><option value='lastmodified'" 
-		. ($options[1]=="lastmodified" ? "selected='selected'>" : ">") . _MB_SWIKI_MODIFIED_DATE . "</option><option value='lastviewed'" 
+	$form .= _MB_SWIKI_FIELD_DESC . "&nbsp;<select name='options[1]' size='1'><option value='createdate'"
+		. ($options[1]=="createdate" ? "selected='selected'>" : ">") . _MB_SWIKI_CREATE_DATE . "</option><option value='lastmodified'"
+		. ($options[1]=="lastmodified" ? "selected='selected'>" : ">") . _MB_SWIKI_MODIFIED_DATE . "</option><option value='lastviewed'"
 		. ($options[1]=="lastviewed" ? "selected='selected'>" : ">") . _MB_SWIKI_LASTVIEWED_DATE . "</option><option value='revisions'"
-		. ($options[1]=="revisions" ? "selected='selected'>" : ">") . _MB_SWIKI_REVISIONS . "</option><option value='views'" 
+		. ($options[1]=="revisions" ? "selected='selected'>" : ">") . _MB_SWIKI_REVISIONS . "</option><option value='views'"
 		. ($options[1]=="views" ? "selected='selected'>" : ">") . _MB_SWIKI_VIEWS . "</option></select><br />";
-	$form .= _MB_SWIKI_SORT_OPTION . "&nbsp;<select name='options[2]' size='1'><option value='ASC'" 
-		. ($options[2]=="ASC" ? "selected='selected'>" : ">") . _MB_SWIKI_ASCENDING . "</option><option value='DESC'" 
+	$form .= _MB_SWIKI_SORT_OPTION . "&nbsp;<select name='options[2]' size='1'><option value='ASC'"
+		. ($options[2]=="ASC" ? "selected='selected'>" : ">") . _MB_SWIKI_ASCENDING . "</option><option value='DESC'"
 		. ($options[2]=="DESC" ? "selected='selected'>" : ">") . _MB_SWIKI_DESCENDING . "</option></select><br />";
-	$form .= _MB_SWIKI_DISPLAY_MODE . "&nbsp;<select name ='options[3]' size='1'><option value='compact'" 
-		. ($options[3]=="compact" ? "selected='selected'>" : ">") . _MB_SWIKI_DISPLAY_COMPACT . "</option><option value='light'" 
-		. ($options[3]=="light" ? "selected='selected'>" : ">") . _MB_SWIKI_DISPLAY_LIGHT . "</option><option value='full'" 
+	$form .= _MB_SWIKI_DISPLAY_MODE . "&nbsp;<select name ='options[3]' size='1'><option value='compact'"
+		. ($options[3]=="compact" ? "selected='selected'>" : ">") . _MB_SWIKI_DISPLAY_COMPACT . "</option><option value='light'"
+		. ($options[3]=="light" ? "selected='selected'>" : ">") . _MB_SWIKI_DISPLAY_LIGHT . "</option><option value='full'"
 		. ($options[3]=="full" ? "selected='selected'>" : ">") . _MB_SWIKI_DISPLAY_FULL . "</option></select><br />";
 	$form .= _MB_SWIKI_DATETIME_FORMAT . "&nbsp;<input type='text' name='options[4]' value='" . $options[4] . "' /><br />" ._MB_SWIKI_DATETIME_FORMAT_INFO;
 	return $form;

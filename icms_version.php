@@ -11,15 +11,15 @@
  */
 $modversion = array(
   'name' => _MI_SWIKI_NAME,
-  'version' => '1.21',
-  'status' => 'Final',
+  'version' => '2.0.0',
+  'status' => 'Beta',
   'description' => _MI_SWIKI_DESC,
   'author' => 'Steve Kenow <skenow@impresscms.org>',
   'credits' => 'Based on Wiwimod by Xavier JIMENEZ; with further contributions by Gizmhail and GibaPHP',
   'license' => 'GNU General Public License',
   'help' => '',
   'official' => 0,
-  'image' => 'images/wiwilogo-blue.gif', /* standard XOOPS icon, 92x52 px  */
+  'image' => 'images/wiwimod.png', /* standard XOOPS icon, 92x52 px  */
   'iconbig' => 'images/wiwimod.png', /* big icon for ImpressCMS, 37x35 px */
   'iconsmall' => 'images/wiwimod-small.png', /* small icon for ImpressCMS, 16x16 px */
   'dirname' => basename(dirname(__FILE__)),
@@ -35,13 +35,6 @@ $modversion = array(
   'author_word' => '_MI_SWIKI_AUTHOR_WORD',
 );
 
-if (defined('ICMS_URL')) {
-  $modversion['image'] = 'images/wiwimod.png';
-} else {
-	/* These are here for cross-platform compatibility */
-	define('ICMS_URL', XOOPS_URL);
-	define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
-}
 // Tables created by the SQL file (without prefix!)
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 $modversion['tables'] = array(

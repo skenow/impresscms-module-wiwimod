@@ -12,11 +12,7 @@
 
 /** include the control panel header */
 include_once '../../../include/cp_header.php' ;
-if (!defined('ICMS_URL')) {
-	/* These are here for cross-platform compatibility */
-	define('ICMS_URL', XOOPS_URL);
-	define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
-}
+
 /** include the group permissions form */
 include_once 'mygrouppermform.php';
 /** include the blocks class */

@@ -18,11 +18,6 @@ if (empty($fct)) $fct = 'preferences' ;
 
 include '../../../mainfile.php';
 
-if (!defined('ICMS_URL')) {
-	/* These are here for cross-platform compatibility */
-	define('ICMS_URL', XOOPS_URL);
-	define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
-}
 include ICMS_ROOT_PATH . '/include/cp_functions.php';
 if (file_exists(ICMS_ROOT_PATH . '/modules/system/language/' . $xoopsConfig['language'] . '/admin.php')) {
 	include ICMS_ROOT_PATH . '/modules/system/language/' . $xoopsConfig['language'] . '/admin.php';

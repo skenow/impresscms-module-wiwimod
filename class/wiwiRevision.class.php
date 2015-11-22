@@ -9,7 +9,7 @@
  * @version $Id$
  */
 
-if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
+if (!defined('ICMS_ROOT_PATH')) exit();
 // @todo is this only here to keep the class from being declared twice?
 if (defined('_SWIKIPAGE')) exit();
 

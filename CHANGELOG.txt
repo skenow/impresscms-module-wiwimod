@@ -1,3 +1,19 @@
+== SimplyWiki 2.0.0 ==
+Status: Beta
+Released: 
+
+Added
+
+Improved
+
+Fixed
+
+Removed
+
+Language additions/changes
+		
+Contributors to this release
+
 == SimplyWiki 1.2.1 ==
 Status: Final
 Released: 

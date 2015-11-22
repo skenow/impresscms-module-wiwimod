@@ -9,9 +9,6 @@
  * @version $Id$
  */
 
-defined('ICMS_URL') || define('ICMS_URL', XOOPS_URL);
-defined('ICMS_ROOT_PATH') || define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
-
 $wikiModDir = basename(dirname(dirname(__FILE__))) ;
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
@@ -21,9 +18,9 @@ function swiki_recent ($options) {
 	$limit = (int) $options[0];
 	$block = array();
 	$myts =& MyTextSanitizer::getInstance();
-	$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, prid, summary FROM ' 
-		. $xoopsDB->prefix('wiki_pages') . ' p, ' . $xoopsDB->prefix('wiki_revisions') 
-		. ' r WHERE p.pageid=r.pageid AND lastmodified=modified ORDER BY lastmodified DESC LIMIT ' 
+	$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, prid, summary FROM '
+		. $xoopsDB->prefix('wiki_pages') . ' p, ' . $xoopsDB->prefix('wiki_revisions')
+		. ' r WHERE p.pageid=r.pageid AND lastmodified=modified ORDER BY lastmodified DESC LIMIT '
 		. $limit;
 	$result = $xoopsDB->query($sql);
 

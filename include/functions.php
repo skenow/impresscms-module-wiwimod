@@ -7,7 +7,7 @@
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id
  */
-if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
+if (!defined('ICMS_ROOT_PATH')) exit();
 
 // reproduces right in RTL languages and left in LTR languages
 if (!defined("_GLOBAL_LEFT")) {
@@ -27,7 +27,7 @@ $wikiModDir = basename(dirname(dirname(__FILE__)));
 
 /**
  * Returns a clickable username for a userid
- * @deprecated	Use xoops_getLinkedUnameFromId, instead (which is deprecated in XOOPS 2.5.0) 
+ * @deprecated	Use xoops_getLinkedUnameFromId, instead (which is deprecated in XOOPS 2.5.0)
  * @param		$uid
  */
 function getUserName($uid) {

@@ -10,11 +10,7 @@
  */
 
 include_once '../../../mainfile.php';
-if (!defined('ICMS_URL')) {
-	/* These are here for cross-platform compatibility */
-	define('ICMS_URL', XOOPS_URL);
-	define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
-}
+
 include_once ICMS_ROOT_PATH . '/kernel/module.php';
 include_once '../include/functions.php';
 if (!defined('WIWI_NOCPFUNC')) include_once ICMS_ROOT_PATH . '/include/cp_functions.php';
