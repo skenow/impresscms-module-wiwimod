@@ -25,7 +25,7 @@ Use it as a "plain" wiki for collaborative documentation, or to build a web site
 	    * SIDECONTENT : this is a smart block whom content depends on the Wiwi page that is currently displayed as "main content" of your Xoops Site. 
 	      This is useful for example to display context sensitive advertisement, or "related links", or contextual help ...
 
-	Wiwimod is derived from the Wikimod module code from Simon B�nzli (zeniko@gmx.ch) .
+	Wiwimod is derived from the Wikimod module code from Simon Bünzli (zeniko@gmx.ch) .
 
 		================================
 		NOTE ABOUT THE WYSIWYG EDITORS  :
@@ -135,7 +135,7 @@ v0.8 :
                 check available editors and plugins here : www.zonatim.com/modules/mydownloads
 - enhancement : "quiet save" button, to save "minor" changes without creating a new revision.
 - enhancement : "diff" function within history page, to compare selected revision with the most uptodate page.
-		This function is adapted from Wikimod 0.98 (courtesy of Simon B�nzli, and Raphael Kirschke as the original diff algorithm author) 
+		This function is adapted from Wikimod 0.98 (courtesy of Simon Bünzli, and Raphael Kirschke as the original diff algorithm author) 
 - enhancement : escape "tilde ~" character to prevent CamelCase being interpreted within pages.
 
 - bugfix : fixed wrong initialization in load() method of wiwiProfile class that lead to wrong privileges on successive invocations.
@@ -251,7 +251,7 @@ or write to: Xavier JIMENEZ <xjimenez@zonatim.com>.
 Contributors
 ------------
 Thanks to :
-   Simon B�nzli, original wikimod module author, for his continuous support ;
+   Simon Bünzli, original wikimod module author, for his continuous support ;
    Locales : Andreas Thewes (german), Shine and Marc de Mesel (nederlands), Sebastjan Penko (slovenian), Rafael Sahb (portuguese)
    and all Wiwi contributors that bring their hacks and suggestions in the forums.
 

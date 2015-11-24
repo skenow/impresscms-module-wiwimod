@@ -64,7 +64,7 @@ For comments, bug reports and suggestions, visit the forums at http://community.
 Past Contributors (Wiwimod)
 ------------
 Thanks to :
-   Simon B�nzli, original wikimod module author, for his continuous support ;
+   Simon Bünzli, original wikimod module author, for his continuous support ;
    Locales : Andreas Thewes (german), Shine and Marc de Mesel (nederlands), Sebastjan Penko (slovenian), Rafael Sahb (portuguese)
    and all Wiwi contributors that bring their hacks and suggestions in the forums.
 
