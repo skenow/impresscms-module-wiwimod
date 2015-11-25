@@ -26,15 +26,6 @@ if (!defined("_GLOBAL_RIGHT")) {
 $wikiModDir = basename(dirname(dirname(__FILE__)));
 
 /**
- * Returns a clickable username for a userid
- * @deprecated	Use xoops_getLinkedUnameFromId, instead (which is deprecated in XOOPS 2.5.0)
- * @param		$uid
- */
-function getUserName($uid) {
-	return xoops_getLinkedUnameFromId($uid);
-}
-
-/**
  * @todo	This will not work in ImpressCMS until it is updated for the proper
  * 			class handler
  * @param 	$blkname block title or id
@@ -102,15 +93,6 @@ function swiki_getXoopsBlock ($blkname) {
 }
 
 /**
- * @deprecated
- * code adapted from the excellent SmartFaq module (www.smartfactory.ca)
- */
-function w_adminMenu ($currentoption = 0, $breadcrumb = '') {
-
-	echo getAdminMenu($currentoption, $breadcrumb);
-}
-
-/**
  * code adapted from the excellent SmartFaq module (www.smartfactory.ca)
  * @deprecated
  */
@@ -137,15 +119,15 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '') {
 		</style>
     ";
 
-	// global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig;
-	global $xoopsModule, $xoopsConfig;
+	global $icmsConfig;
+	$module = icms::handler('icms_module')->getByDirname($wikiModDir);
 	$myts = &icms_core_Textsanitizer::getInstance();
 
-	$tblColors = Array();
+	$tblColors = array();
 	$tblColors[0] = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] ='';
 	$tblColors[$currentoption] = 'current';
-	if (file_exists(ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
-		include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $xoopsConfig['language'] . '/modinfo.php';
+	if (file_exists(ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/modinfo.php')) {
+		include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/modinfo.php';
 	} else {
 		include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/english/modinfo.php';
 	}
@@ -154,8 +136,8 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '') {
 		. "<table style=\"width: 100%; padding: 0; \" cellspacing=\"0\"><tr>";
 
 	$html .= "<td style='width: 60%; font-size: 14px; font-weight:bolder; text-align: "._GLOBAL_LEFT."; color: #2F5376; padding: 0 6px; line-height: 18px;'>"._MI_SWIKI_NAME." - "._MI_SWIKI_DESC
-		. "<br /><span style='font-size: 10px;'><a href='" . ICMS_URL . "/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $xoopsModule->getVar('mid') . "'>" . _PREFERENCES . "</a> | <a href='" . ICMS_URL . "/modules/" . $wikiModDir . "' title=''>" . _AM_SWIKI_GOTO_MODULE . "</a> | <a href='" . ICMS_URL . "/modules/system/admin.php?fct=modulesadmin&op=update&module=" . $wikiModDir . "' title=''>" . _AM_SWIKI_UPDATE_MODULE . "</a></span></td>"
-		. "<td style='width: 40%; font-size: 10px; text-align: " . _GLOBAL_RIGHT . "; color: #2F5376; padding: 0 6px; line-height: 18px;'>" . _AM_SWIKI_ADMIN_TXT . " : " . $xoopsModule->getVar('name') . " : " . $breadcrumb . "</td>"
+		. "<br /><span style='font-size: 10px;'><a href='" . ICMS_URL . "/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $module->getVar('mid') . "'>" . _PREFERENCES . "</a> | <a href='" . ICMS_URL . "/modules/" . $wikiModDir . "' title=''>" . _AM_SWIKI_GOTO_MODULE . "</a> | <a href='" . ICMS_URL . "/modules/system/admin.php?fct=modulesadmin&op=update&module=" . $wikiModDir . "' title=''>" . _AM_SWIKI_UPDATE_MODULE . "</a></span></td>"
+		. "<td style='width: 40%; font-size: 10px; text-align: " . _GLOBAL_RIGHT . "; color: #2F5376; padding: 0 6px; line-height: 18px;'>" . _AM_SWIKI_ADMIN_TXT . " : " . $module->getVar('name') . " : " . $breadcrumb . "</td>"
 		. "</tr></table>"
 		. "</div>";
 
@@ -209,8 +191,8 @@ function getAvailableEditors() {
 function isTagModuleActivated() {
 	if (!file_exists(ICMS_ROOT_PATH . '/modules/tag/include/formtag.php')) return false;
 	$db =& icms_db_Factory::instance();
-	$moduleHandler = new XoopsModuleHandler($db);
-	$tagModule = $moduleHandler->getByDirName('tag');
+	$moduleHandler = icms::handler('icms_module');
+	$tagModule =& $moduleHandler->getByDirName('tag');
 	if ($tagModule == false) return false;
 	return true;
 }

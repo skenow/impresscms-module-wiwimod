@@ -14,10 +14,10 @@ if (!defined("ICMS_ROOT_PATH") && !defined('ICMS_ROOT_PATH')) exit("Root path no
 function xoops_module_update_wiwimod($module = NULL, $prev_version = NULL) {
 	$wikiInstallDir = dirname(dirname(__FILE__));
 	$wikiModDir = basename(dirname(dirname(__FILE__)));
-	global $xoopsConfig;
+	global $icmsConfig;
 
-	if (@file_exists($wikiInstallDir . '/language/' . $xoopsConfig['language'] . '/update.php')){
-		include $wikiInstallDir . '/language/' . $xoopsConfig['language'] . '/update.php';
+	if (@file_exists($wikiInstallDir . '/language/' . $icmsConfig['language'] . '/update.php')){
+		include $wikiInstallDir . '/language/' . $icmsConfig['language'] . '/update.php';
 	} else {
 		include $wikiInstallDir . '/language/english/update.php';
 	}

@@ -22,7 +22,7 @@ include_once ICMS_ROOT_PATH . '/class/xoopsblock.php'; /* for backwards compatib
 $xoops_system_path = ICMS_ROOT_PATH . '/modules/system' ;
 
 // language files
-$language = $xoopsConfig['language'] ;
+$language = $icmsConfig['language'] ;
 if( ! file_exists( $xoops_system_path.'/language/'.$language.'/admin/blocksadmin.php') ) $language = 'english' ;
 
 // to prevent from notice that constants already defined

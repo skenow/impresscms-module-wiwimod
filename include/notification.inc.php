@@ -11,7 +11,7 @@
 if (!defined('ICMS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 
 function swiki_notify_iteminfo($category, $item_id) {
-	global $xoopsModule, $xoopsModuleConfig, $xoopsConfig;
+	global $xoopsModule, $xoopsModuleConfig, $icmsConfig;
 	$wikiModDir = basename(dirname(dirname(__FILE__)));
 	if (empty($xoopsModule) || $xoopsModule->getVar('dirname') !== $wikiModDir) {
 		$module_handler =& icms::handler('icms_module');

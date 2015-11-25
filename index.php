@@ -447,7 +447,7 @@ switch ($op) {
 			// patch to deal with a bug in the standard Xoops 2.05 comment_view file,
 			// (generated a disgraceful "undefined index notice" in debug mode ;-)
 			if (!isset($clean_GET['com_order'])) {
-				$_GET['com_order'] = (is_object(icms::$user) ? icms::$user->getVar('uorder') : $xoopsConfig['com_order']) ;
+				$_GET['com_order'] = (is_object(icms::$user) ? icms::$user->getVar('uorder') : $icmsConfig['com_order']) ;
 			}
 			include ICMS_ROOT_PATH . '/include/comment_view.php';
 		}

@@ -15,16 +15,16 @@ define('FPDF_FONTPATH','class/html2fpdf/font/');
 require 'class/html2fpdf/html2fpdf.php';
 if (isset($_GET['page'])) $page = $_GET['page']; else $page="";
 function printPage(&$pageObj,&$pdf) {
-	global $xoopsConfig;
+	global $icmsConfig;
 	/*
 	 * initialize template system (copied from /header.php)
 	 */
 	$xoopsTpl = new XoopsTpl();
 	$xoopsTpl->xoops_setCaching(0);
-	if ($xoopsConfig['debug_mode'] == 3) {
+	if ($icmsConfig['debug_mode'] == 3) {
 		$xoopsTpl->xoops_setDebugging(true);
 	}
-	$xoopsTpl->assign(array('xoops_theme' => $xoopsConfig['theme_set'], 'xoops_imageurl' => ICMS_THEME_URL.'/'.$xoopsConfig['theme_set'].'/', 'xoops_themecss'=> xoops_getcss($xoopsConfig['theme_set']), 'xoops_requesturi' => htmlspecialchars($GLOBALS['xoopsRequestUri'], ENT_QUOTES), 'xoops_sitename' => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES), 'xoops_slogan' => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES)));
+	$xoopsTpl->assign(array('xoops_theme' => $icmsConfig['theme_set'], 'xoops_imageurl' => ICMS_THEME_URL.'/'.$icmsConfig['theme_set'].'/', 'xoops_themecss'=> xoops_getcss($icmsConfig['theme_set']), 'xoops_requesturi' => htmlspecialchars($GLOBALS['xoopsRequestUri'], ENT_QUOTES), 'xoops_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES), 'xoops_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES)));
 	// Meta tags
 	$config_handler =& icms::handler('icms_config');
 	$criteria = new CriteriaCompo(new Criteria('conf_modid', 0));

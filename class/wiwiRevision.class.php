@@ -21,9 +21,9 @@ $wikiModDir = basename(dirname(dirname(__FILE__)));
 if (function_exists('icms_loadLanguageFile')) {
 	icms_loadLanguageFile($wikiModDir, "main");
 } else {
-	global $xoopsConfig;
-	if (file_exists(ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $xoopsConfig['language'] . '/main.php')) {
-		include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $xoopsConfig['language'] . '/main.php';
+	global $icmsConfig;
+	if (file_exists(ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/main.php')) {
+		include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/main.php';
 	} else {
 		include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/english/main.php';
 	}

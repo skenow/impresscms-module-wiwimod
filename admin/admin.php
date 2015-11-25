@@ -19,8 +19,8 @@ if (empty($fct)) $fct = 'preferences' ;
 include '../../../mainfile.php';
 
 include ICMS_ROOT_PATH . '/include/cp_functions.php';
-if (file_exists(ICMS_ROOT_PATH . '/modules/system/language/' . $xoopsConfig['language'] . '/admin.php')) {
-	include ICMS_ROOT_PATH . '/modules/system/language/' . $xoopsConfig['language'] . '/admin.php';
+if (file_exists(ICMS_ROOT_PATH . '/modules/system/language/' . $icmsConfig['language'] . '/admin.php')) {
+	include ICMS_ROOT_PATH . '/modules/system/language/' . $icmsConfig['language'] . '/admin.php';
 } else {
 	include ICMS_ROOT_PATH . '/modules/system/language/english/admin.php';
 }
@@ -43,8 +43,8 @@ $error = FALSE;
 if ($admintest != 0) {
 	if (isset($fct) && $fct != '') {
 		if (file_exists(ICMS_ROOT_PATH . '/modules/system/admin/' . $fct . '/xoops_version.php')) {
-			if (file_exists(ICMS_ROOT_PATH . '/modules/system/language/' . $xoopsConfig['language'] . '/admin/' . $fct . '.php')) {
-				include ICMS_ROOT_PATH . '/modules/system/language/' . $xoopsConfig['language'] . '/admin/' . $fct . '.php';
+			if (file_exists(ICMS_ROOT_PATH . '/modules/system/language/' . $icmsConfig['language'] . '/admin/' . $fct . '.php')) {
+				include ICMS_ROOT_PATH . '/modules/system/language/' . $icmsConfig['language'] . '/admin/' . $fct . '.php';
 			} elseif (file_exists(ICMS_ROOT_PATH . '/modules/system/language/english/admin/' . $fct . '.php')) {
 				include ICMS_ROOT_PATH . '/modules/system/language/english/admin/' . $fct . '.php';
 			}

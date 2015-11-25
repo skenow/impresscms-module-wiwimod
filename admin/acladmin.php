@@ -44,7 +44,7 @@ if (in_array($op, $valid_ops, TRUE)) {
 			if (method_exists(icms::$module, 'displayAdminMenu')) {
 				icms::$module->displayAdminMenu (2, _AM_SWIKI_ACLADMIN_NAV);
 			} else {
-				w_adminMenu (1, _AM_SWIKI_ACLADMIN_NAV);
+				echo getAdminMenu (1, _AM_SWIKI_ACLADMIN_NAV);
 			}
 
 			//--- list profiles ---
@@ -154,7 +154,7 @@ if (in_array($op, $valid_ops, TRUE)) {
 			foreach ($tmplst as $k=>$v) if ($k != $prid) $prflst[$k] = $v;
 
 			icms_cp_header();
-			w_adminMenu (1, '_AM_SWIKI_ACLADMIN_TXT');
+			echo getAdminMenu (1, '_AM_SWIKI_ACLADMIN_TXT');
 
 			$aclConfirmDelete = new icms_form_elements_Checkbox(_AM_SWIKI_ACLNAME_FLD . ': ' . $prf->name, 'confirmchk');
 			$aclConfirmDelete->addOption(1, _AM_SWIKI_DELCONFIRM_OPT);

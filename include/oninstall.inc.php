@@ -14,10 +14,10 @@ if (!defined("ICMS_ROOT_PATH") && !defined('ICMS_ROOT_PATH')) die('Root path not
 
 function xoops_module_install_wiki () {
 	$mydir = dirname(dirname(__FILE__));
-	global $xoopsConfig;
+	global $icmsConfig;
 
-	if (@file_exists($mydir . '/language/' . $xoopsConfig['language'] . '/install.php')){
-		include $mydir . '/language/' . $xoopsConfig['language'] . '/install.php';
+	if (@file_exists($mydir . '/language/' . $icmsConfig['language'] . '/install.php')){
+		include $mydir . '/language/' . $icmsConfig['language'] . '/install.php';
 	} else {
 		include $mydir . '/language/english/install.php';
 	}

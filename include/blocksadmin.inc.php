@@ -57,7 +57,7 @@ if (isset($previewblock)) {
 	$myts =& icms_core_Textsanitizer::getInstance();
 	$myblock->setVar('title', $myts->stripSlashesGPC($btitle));
 	$myblock->setVar('content', $myts->stripSlashesGPC($bcontent));
-	$dummyhtml = '<html><head><meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" /><meta http-equiv="content-language" content="' . _LANGCODE . '" /><title>' . $xoopsConfig['sitename'] . '</title><link rel="stylesheet" type="text/css" media="all" href="' . getcss($xoopsConfig['theme_set']) . '" /></head><body><table><tr><th>' . $myblock->getVar('title') . '</th></tr><tr><td>' . $myblock->getContent('S', $bctype) . '</td></tr></table></body></html>';
+	$dummyhtml = '<html><head><meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" /><meta http-equiv="content-language" content="' . _LANGCODE . '" /><title>' . $icmsConfig['sitename'] . '</title><link rel="stylesheet" type="text/css" media="all" href="' . getcss($icmsConfig['theme_set']) . '" /></head><body><table><tr><th>' . $myblock->getVar('title') . '</th></tr><tr><td>' . $myblock->getContent('S', $bctype) . '</td></tr></table></body></html>';
 
 	$dummyfile = '_dummyfile_' . time() . '.html';
 	$fp = fopen(ICMS_CACHE_PATH . '/' . $dummyfile, 'w');
@@ -164,7 +164,7 @@ if ($op == 'edit') {
 }
 // import from modules/system/admin/blocksadmin/blocksadmin.php
 function myblocksadmin_update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options=array()) {
-	global $xoopsConfig;
+	global $icmsConfig;
 	if (empty($bmodule)) {
 		icms_cp_header();
 		xoops_error(sprintf(_AM_NOTSELNG, _AM_VISIBLEIN));
@@ -239,7 +239,7 @@ function myblocksadmin_update_block($bid, $bside, $bweight, $bvisible, $btitle, 
  * ImpressCMS 1.1 update blocks function handles pages
  */
 function icms_update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options=array()) {
-	global $xoopsConfig, $xoopsDB;
+	global $icmsConfig, $xoopsDB;
 	if (empty($bmodule)) {
 		icms_cp_header();
 		xoops_error(sprintf(_AM_NOTSELNG, _AM_VISIBLEIN));
