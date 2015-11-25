@@ -21,9 +21,9 @@ global $myts;
  */
 $op = $id = $starthist = $page = NULL;
 $valid_getvars = array(
-	'op' => 'string', 
-	'id' => 'int', 
-	'starthist' => 'int', 
+	'op' => 'string',
+	'id' => 'int',
+	'starthist' => 'int',
 	'page' => 'string'
 );
 /* This will provide a cleaned variable array to use instead of the $_GET variable */
@@ -31,20 +31,20 @@ $clean_GET = swiki_cleanVars($_GET, $valid_getvars);
 /* This will explode the valid variables for use everywhere */
 extract($clean_GET);
 $page = stripslashes($page);
-xoops_cp_header();
+icms_cp_header();
 /* Valid op values: listpages, history, diff, restore, fixit, deleteit, fix, delete, cleanupdb, cleanit */
 $valid_op = array(
-	'listpages', 
-	'history', 
-	'diff', 
-	'restore', 
-	'fixit', 
-	'deleteit', 
-	'fix', 
-	'delete', 
-	'cleanupdb', 
-	'cleanit', 
-	'', 
+	'listpages',
+	'history',
+	'diff',
+	'restore',
+	'fixit',
+	'deleteit',
+	'fix',
+	'delete',
+	'cleanupdb',
+	'cleanit',
+	'',
 	NULL,
 );
 if (in_array($op, $valid_op, TRUE)) {
@@ -83,8 +83,8 @@ if (in_array($op, $valid_op, TRUE)) {
 			$pageObj->body = $myts->stripSlashesGPC($restoredRevision->body);
 			$pageObj->contextBlock = $restoredRevision->contextBlock;
 			$success = $pageObj->add();
-				redirect_header("javascript:submitaction('page=" 
-				. urlencode($rev->encode($rev->keyword)) . "&amp;op=history');", 2, 
+				redirect_header("javascript:submitaction('page="
+				. urlencode($rev->encode($rev->keyword)) . "&amp;op=history');", 2,
 				($success) ? _MD_SWIKI_DBUPDATED_MSG : _MD_SWIKI_ERRORINSERT_MSG
 			);
 			break;
@@ -93,8 +93,8 @@ if (in_array($op, $valid_op, TRUE)) {
 			include 'listpages_hidden.inc.php';
 			$rev = new wiwiRevision('', $id);
 			$success = $rev->fix();
-			redirect_header("javascript:submitaction('page=" 
-				. urlencode($rev->encode($rev->keyword)) . "&amp;op=history&amp;starthist=" . $starthist . "');", 2, 
+			redirect_header("javascript:submitaction('page="
+				. urlencode($rev->encode($rev->keyword)) . "&amp;op=history&amp;starthist=" . $starthist . "');", 2,
 				($success) ? _MD_SWIKI_DBUPDATED_MSG : _MD_SWIKI_ERRORINSERT_MSG
 			);
 			break;
@@ -103,20 +103,20 @@ if (in_array($op, $valid_op, TRUE)) {
 			include 'listpages_hidden.inc.php';
 			$rev = new wiwiRevision($page);
 			$success = $rev->deletePage();
-			redirect_header("javascript:submitaction('page=" 
-				. urlencode($rev->encode($rev->keyword)) . "&amp;op=listpages');", 2, 
+			redirect_header("javascript:submitaction('page="
+				. urlencode($rev->encode($rev->keyword)) . "&amp;op=listpages');", 2,
 				($success) ? _MD_SWIKI_DBUPDATED_MSG : _MD_SWIKI_ERRORINSERT_MSG
 			);
 			break;
 
 		case 'fix' :
 			include 'listpages_hidden.inc.php';
-			echo "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>" 
+			echo "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align='center'>"
 				. _AM_SWIKI_CONFIRMFIX_MSG . "<br /><br />"
-				. '<input type=\'button\' value=' . _YES 
-				. ' onclick="javascript:submitaction(\'op=fixit&amp;id=' . $id 
-				. '&amp;starthist=' . $starthist . '\')" />&nbsp;&nbsp;<input type=\'button\' value=' . _NO 
-				. ' onclick="javascript:submitaction(\'op=history&amp;starthist=' . $starthist 
+				. '<input type=\'button\' value=' . _YES
+				. ' onclick="javascript:submitaction(\'op=fixit&amp;id=' . $id
+				. '&amp;starthist=' . $starthist . '\')" />&nbsp;&nbsp;<input type=\'button\' value=' . _NO
+				. ' onclick="javascript:submitaction(\'op=history&amp;starthist=' . $starthist
 				. '&amp;page=' . wiwiRevision::encode($page) . '\')" />'
 				. '</td></tr></table></center><br /><br />';
 			break;
@@ -135,15 +135,15 @@ if (in_array($op, $valid_op, TRUE)) {
 		case 'cleanupdb' :
 			echo "<center><table style='align:center; border: 3px solid red; width:50%; background:#F0F0F0'; ><tr><td align=center>"
 				. _AM_SWIKI_CONFIRMCLEAN_MSG . "<br /><br />"
-				. '<input type=\'button\' value=' . _YES 
-				. ' onclick="javascript:submitaction(\'op=cleanit\')" />&nbsp;&nbsp;<input type=\'button\' value=' . _NO 
+				. '<input type=\'button\' value=' . _YES
+				. ' onclick="javascript:submitaction(\'op=cleanit\')" />&nbsp;&nbsp;<input type=\'button\' value=' . _NO
 				. ' onclick="javascript:submitaction(\'op=listpages\')" />'
 				. '</td></tr></table></center><br /><br />';
 			break;
 
 		case 'cleanit' :
 			$success = wiwiRevision::cleanPagesHistory();
-			redirect_header("javascript:submitaction('op=listpages');", 2, 
+			redirect_header("javascript:submitaction('op=listpages');", 2,
 				($success) ? _MD_SWIKI_DBUPDATED_MSG : _MD_SWIKI_ERRORINSERT_MSG
 			);
 			break;
@@ -154,5 +154,5 @@ if (in_array($op, $valid_op, TRUE)) {
 	// put something here if you want to inform users of a bad op value
 	// echo "you made a bad choice!";
 }
-xoops_cp_footer();
+icms_cp_footer();
 

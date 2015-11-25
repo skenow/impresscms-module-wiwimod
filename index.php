@@ -233,7 +233,7 @@ switch ($op) {
 					$editorhandler->setConfig(
 					$t_area,
 					array(
-							'filepath' => XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname'),
+							'filepath' => ICMS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname'),
 							'upload' => true,
 							'extensions' => array('txt', 'jpg', 'zip')
 					));

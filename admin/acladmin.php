@@ -41,7 +41,7 @@ if (in_array($op, $valid_ops, TRUE)) {
 
 		case 'edit':
 		default:
-			xoops_cp_header();
+			icms_cp_header();
 			if (method_exists($xoopsModule, 'displayAdminMenu')) {
 				$xoopsModule->displayAdminMenu (2, _AM_SWIKI_ACLADMIN_NAV);
 			} else {
@@ -81,17 +81,17 @@ if (in_array($op, $valid_ops, TRUE)) {
 			$aclAdministrators->setValue(array_keys($prf->administrators));
 			$aclComments = new XoopsFormSelect(_AM_SWIKI_COMMENTS_FLD, 'prf_commentslevel', $prf->commentslevel);
 			$aclComments->addOptionArray(array(
-				0 => _AM_SWIKI_COMMENTS_NONE_OPT , 
-				_WI_READ => _AM_SWIKI_READERS_OPT , 
-				_WI_WRITE => _AM_SWIKI_WRITERS_OPT, 
+				0 => _AM_SWIKI_COMMENTS_NONE_OPT ,
+				_WI_READ => _AM_SWIKI_READERS_OPT ,
+				_WI_WRITE => _AM_SWIKI_WRITERS_OPT,
 				_WI_ADMIN => _AM_SWIKI_ADMINISTRATORS_OPT
 				)
 			);
 			$aclHistory = new XoopsFormSelect(_AM_SWIKI_HISTORY_FLD, 'prf_historylevel', $prf->historylevel);
 			$aclHistory->addOptionArray(array(
-				0 => _AM_SWIKI_HISTORY_NONE_OPT , 
-				_WI_READ => _AM_SWIKI_READERS_OPT , 
-				_WI_WRITE => _AM_SWIKI_WRITERS_OPT, 
+				0 => _AM_SWIKI_HISTORY_NONE_OPT ,
+				_WI_READ => _AM_SWIKI_READERS_OPT ,
+				_WI_WRITE => _AM_SWIKI_WRITERS_OPT,
 				_WI_ADMIN => _AM_SWIKI_ADMINISTRATORS_OPT
 				)
 			);
@@ -121,7 +121,7 @@ if (in_array($op, $valid_ops, TRUE)) {
 
 			echo '</td><td valign="top" width="40%">' . _AM_SWIKI_ACLHELP_TXT . '</td></tr></table>';
 
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'save' :
@@ -136,7 +136,7 @@ if (in_array($op, $valid_ops, TRUE)) {
 				$prf->historylevel = $prf_historylevel;
 
 				$success = $prf->store();
-				redirect_header ('acladmin.php?op=edit&amp;profile=' . $prid, 2, 
+				redirect_header ('acladmin.php?op=edit&amp;profile=' . $prid, 2,
 					($success ? _AM_SWIKI_PRFSAVESUCCESS_MSG : _AM_SWIKI_PRFSAVEFAILED_MSG));
 				break;
 			}
@@ -154,7 +154,7 @@ if (in_array($op, $valid_ops, TRUE)) {
 			$prflst = array();
 			foreach ($tmplst as $k=>$v) if ($k != $prid) $prflst[$k] = $v;
 
-			xoops_cp_header();
+			icms_cp_header();
 			w_adminMenu (1, '_AM_SWIKI_ACLADMIN_TXT');
 
 			$aclConfirmDelete = new XoopsFormCheckBox(_AM_SWIKI_ACLNAME_FLD . ': ' . $prf->name, 'confirmchk');
@@ -181,7 +181,7 @@ if (in_array($op, $valid_ops, TRUE)) {
 			$form->addElement(new XoopsFormHidden('prid', $prid));
 			$form->display();
 
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'delete' :

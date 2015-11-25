@@ -249,7 +249,7 @@ if( ! empty( $_POST['submit'] ) ) {
 }
 
 include '../include/functions.php';
-xoops_cp_header() ;
+icms_cp_header() ;
 if (method_exists($xoopsModule, 'displayAdminMenu')) {
 	echo $xoopsModule->displayAdminMenu (3,_AM_SWIKI_BLOCKSNGROUPS_NAV);
 } else {
@@ -262,4 +262,4 @@ echo "<h3 style='text-align:left;'>".$xoopsModule->name()."</h3>\n" ;
 echo "<h4 style='text-align:left;'>"._AM_BADMIN."</h4>\n" ;
 list_blocks() ;
 list_groups() ;
-xoops_cp_footer() ;
+icms_cp_footer() ;

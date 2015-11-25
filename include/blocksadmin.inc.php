@@ -36,7 +36,7 @@ if (isset($_GET['op'])) {
 }
 
 if (isset($previewblock)) {
-	xoops_cp_header();
+	icms_cp_header();
 	include_once ICMS_ROOT_PATH . '/class/template.php';
 	$xoopsTpl = new XoopsTpl();
 	$xoopsTpl->xoops_setCaching(0);
@@ -60,7 +60,7 @@ if (isset($previewblock)) {
 	$dummyhtml = '<html><head><meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" /><meta http-equiv="content-language" content="' . _LANGCODE . '" /><title>' . $xoopsConfig['sitename'] . '</title><link rel="stylesheet" type="text/css" media="all" href="' . getcss($xoopsConfig['theme_set']) . '" /></head><body><table><tr><th>' . $myblock->getVar('title') . '</th></tr><tr><td>' . $myblock->getContent('S', $bctype) . '</td></tr></table></body></html>';
 
 	$dummyfile = '_dummyfile_' . time() . '.html';
-	$fp = fopen(XOOPS_CACHE_PATH . '/' . $dummyfile, 'w');
+	$fp = fopen(ICMS_CACHE_PATH . '/' . $dummyfile, 'w');
 	fwrite($fp, $dummyhtml);
 	fclose($fp);
 	$block['edit_form'] = false;
@@ -78,7 +78,7 @@ if (isset($previewblock)) {
 	echo '<a href="admin.php?fct=blocksadmin">'. _AM_BADMIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . $block['form_title'] . '<br /><br />';
 	include ICMS_ROOT_PATH . '/modules/system/admin/blocksadmin/blockform.php';
 	$form->display();
-	xoops_cp_footer();
+	icms_cp_footer();
 	echo '<script type="text/javascript">
 	<!--//
 	preview_window = openWithSelfMain("' . ICMS_URL . '/modules/system/admin.php?fct=blocksadmin&op=previewpopup&file=' . $dummyfile . '", "popup", 250, 200);
@@ -88,7 +88,7 @@ if (isset($previewblock)) {
 }
 
 if ($op == 'previewpopup') {
-	$file = str_replace('..', '', XOOPS_CACHE_PATH . '/' . trim($_GET['file']));
+	$file = str_replace('..', '', ICMS_CACHE_PATH . '/' . trim($_GET['file']));
 	if (file_exists($file)) {
 		include $file;
 		@unlink($file);
@@ -97,9 +97,9 @@ if ($op == 'previewpopup') {
 }
 
 if ($op == 'list') {
-	xoops_cp_header();
+	icms_cp_header();
 	list_blocks();
-	xoops_cp_footer();
+	icms_cp_footer();
 	exit();
 }
 
@@ -150,25 +150,25 @@ if ($op == 'delete_ok') {
 }
 
 if ($op == 'delete') {
-	xoops_cp_header();
+	icms_cp_header();
 	delete_block($bid);
-	xoops_cp_footer();
+	icms_cp_footer();
 	exit();
 }
 
 if ($op == 'edit') {
-	xoops_cp_header();
+	icms_cp_header();
 	edit_block($bid);
-	xoops_cp_footer();
+	icms_cp_footer();
 	exit();
 }
 // import from modules/system/admin/blocksadmin/blocksadmin.php
 function myblocksadmin_update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options=array()) {
 	global $xoopsConfig;
 	if (empty($bmodule)) {
-		xoops_cp_header();
+		icms_cp_header();
 		xoops_error(sprintf(_AM_NOTSELNG, _AM_VISIBLEIN));
-		xoops_cp_footer();
+		icms_cp_footer();
 		exit();
 	}
 	$myblock = new XoopsBlock($bid);
@@ -241,9 +241,9 @@ function myblocksadmin_update_block($bid, $bside, $bweight, $bvisible, $btitle, 
 function icms_update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options=array()) {
 	global $xoopsConfig, $xoopsDB;
 	if (empty($bmodule)) {
-		xoops_cp_header();
+		icms_cp_header();
 		xoops_error(sprintf(_AM_NOTSELNG, _AM_VISIBLEIN));
-		xoops_cp_footer();
+		icms_cp_footer();
 		exit();
 	}
 

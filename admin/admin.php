@@ -54,7 +54,7 @@ if ($admintest != 0) {
 			unset($modversion);
 			if ($category > 0) {
 				$groups =& $xoopsUser->getGroups();
-				if (in_array(XOOPS_GROUP_ADMIN, $groups) || FALSE !== $sysperm_handler->checkRight('system_admin', $category, $groups, $xoopsModule->getVar('mid'))){
+				if (in_array(ICMS_GROUP_ADMIN, $groups) || FALSE !== $sysperm_handler->checkRight('system_admin', $category, $groups, $xoopsModule->getVar('mid'))){
 					if (file_exists("../include/{$fct}.inc.php")) {
 						include_once "../include/{$fct}.inc.php" ;
 					} else {
@@ -80,13 +80,13 @@ if ($admintest != 0) {
 	}
 }
 if (FALSE !== $error) {
-	xoops_cp_header();
+	icms_cp_header();
 	echo '<h4>' . _AM_SWIKI_SYS_CFG . '</h4>'
 		. '<table class="outer" cellpadding="4" cellspacing="1">'
 		. '<tr>';
 	$groups = $xoopsUser->getGroups();
 	$all_ok = FALSE;
-	if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
+	if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
 		$sysperm_handler =& xoops_gethandler('groupperm');
 		$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
 	} else {
@@ -122,5 +122,5 @@ if (FALSE !== $error) {
 		$counter++;
 	}
 	echo '</tr></table>';
-    xoops_cp_footer();
+    icms_cp_footer();
 }

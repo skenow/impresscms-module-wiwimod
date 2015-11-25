@@ -182,8 +182,8 @@ class WiwiProfile {
 	 */
 	function getAdminProfiles($user) {
 		$member_handler =& xoops_gethandler('member');
-		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(XOOPS_GROUP_ANONYMOUS);
-		if (in_array(XOOPS_GROUP_ADMIN , $usergroups)) {
+		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(ICMS_GROUP_ANONYMOUS);
+		if (in_array(ICMS_GROUP_ADMIN , $usergroups)) {
 			$prlist = $this->getAllProfiles();
 		} else {
 			$t1 = $this->db->prefix('wiki_profiles');
@@ -208,10 +208,10 @@ class WiwiProfile {
 		global $xoopsUser;
 		$member_handler =& xoops_gethandler('member');
 		if ($user == '') $user = $xoopsUser;
-		//$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(XOOPS_GROUP_ANONYMOUS);
-		$usergroups = $xoopsUser ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		//$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(ICMS_GROUP_ANONYMOUS);
+		$usergroups = $xoopsUser ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$priv = array();
-		$priv[_WI_ADMIN] = in_array(XOOPS_GROUP_ADMIN , $usergroups) || ( count(array_intersect ($usergroups, array_keys($this->administrators))) > 0 );
+		$priv[_WI_ADMIN] = in_array(ICMS_GROUP_ADMIN , $usergroups) || ( count(array_intersect ($usergroups, array_keys($this->administrators))) > 0 );
 		$priv[_WI_WRITE] = $priv[_WI_ADMIN] || ( count(array_intersect ($usergroups, array_keys($this->writers))) > 0 );
 		$priv[_WI_READ] = $priv[_WI_WRITE]  || ( count(array_intersect ($usergroups, array_keys($this->readers))) > 0 );
 		$priv[_WI_COMMENTS] = (
@@ -313,8 +313,8 @@ class WiwiProfile {
 	*/
 	function getWriteProfiles($user) {
 		$member_handler =& xoops_gethandler('member');
-		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(XOOPS_GROUP_ANONYMOUS);
-		if (in_array(XOOPS_GROUP_ADMIN , $usergroups)) {
+		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(ICMS_GROUP_ANONYMOUS);
+		if (in_array(ICMS_GROUP_ADMIN , $usergroups)) {
 			$prlist = $this->getAllProfiles();
 		} else {
 			$t1 = $this->db->prefix('wiki_profiles');
