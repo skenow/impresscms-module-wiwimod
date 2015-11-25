@@ -13,10 +13,10 @@ $wikiModDir = basename(dirname(dirname(__FILE__)));
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
 function swiki_toc() {
-	global $xoopsDB, $xoopsUser;
+	global $xoopsDB;
 	$wikiModDir = basename(dirname(dirname(__FILE__)));
 	$block = array();
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 
 	$sql = 'SELECT keyword, title, visible, prid FROM ' . $xoopsDB->prefix('wiki_pages') . ' p, '
 		. $xoopsDB->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND lastmodified=modified AND visible>0 ORDER BY visible, title ';

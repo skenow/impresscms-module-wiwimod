@@ -85,8 +85,8 @@ if (in_array($op, array('preview','insert', 'quietsave')) && isset($id)) {
 } else {
 
 	if (($page == '') && ($id == 0) && ($pageid == 0)) {
-		$modhandler =& xoops_gethandler('module');
-		$config_handler =& xoops_gethandler('config');
+		$modhandler =& icms::handler('icms_module');
+		$config_handler =& icms::handler('icms_config');
 		$SimplyWiki = $modhandler->getByDirname(basename(dirname(__FILE__)));
 		$swikiConfig =& $config_handler->getConfigsByCat(0, $SimplyWiki->getVar('mid'));
 		$page = $swikiConfig['TopPage'] == NULL ? _MI_SWIKI_HOME : $swikiConfig['TopPage'];
@@ -120,25 +120,13 @@ switch ($op) {
 		} else {
 
 			if ($xoopsModuleConfig['Captcha']) {
-				// Captcha Hack
-				// Verify entered code
-				if (class_exists('XoopsFormCaptcha')) {
-					if (@include_once ICMS_ROOT_PATH . '/class/captcha/captcha.php') {
-						$xoopsCaptcha = XoopsCaptcha::instance();
-						if (! $xoopsCaptcha -> verify(true)) {
-							redirect_header('index.php', 2, $xoopsCaptcha->getMessage());
-						}
-					}
-				} elseif (class_exists('IcmsFormCaptcha')) {
-					if (@include_once ICMS_ROOT_PATH . '/class/captcha/captcha.php') {
-						$icmsCaptcha = IcmsCaptcha::instance();
-						if (! $icmsCaptcha->verify(true)) {
-							redirect_header('index.php', 2, $icmsCaptcha->getMessage());
-						}
-					}
+				// Captcha - Verify entered code
+				$icmsCaptcha = icms_form_elements_captcha_Object::instance();
+				if (! $icmsCaptcha->verify(true)) {
+					redirect_header('index.php', 2, $icmsCaptcha->getMessage());
 				}
-				// Captcha Hack
 			}
+			
 			$success = ($op == 'insert') ? $pageObj->add() : $pageObj->save();
 
 			if ($success) {
@@ -147,20 +135,21 @@ switch ($op) {
 				/* Tag module support (Gizmhail) */
 				if(isTagModuleActivated()) {
 					$tag_handler = xoops_getmodulehandler('tag', 'tag');
-					$tag_handler->updateByItem($item_tag, $pageObj->pageid, $xoopsModule->getVar('dirname'), $catid =0);
+					$tag_handler->updateByItem($item_tag, $pageObj->pageid, icms::$module->getVar('dirname'), $catid =0);
 				}
 				/* Tag module support end */
 				// Define tags for notification message
 				$tags = array();
 				$tags['PAGE_NAME'] = $pageObj->title;
-				$tags['PAGE_URL'] = ICMS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php?page=' . $pageObj->keyword;
-				$notification_handler =& xoops_gethandler('notification');
+				$tags['PAGE_URL'] = ICMS_URL . '/modules/' . icms::$module->getVar('dirname') . '/index.php?page=' . $pageObj->keyword;
+				$notification_handler =& icms::handler('icms_data_notification');
 				$notification_handler->triggerEvent('page', $pageObj->pageid, 'page_modified', $tags);
 				$notification_handler->triggerEvent('global', 0, 'page_modified', $tags);
 			}
 			redirect_header('index.php?page=' . urlencode($pageObj->keyword), 2, ($success)?_MD_SWIKI_DBUPDATED_MSG:_MD_SWIKI_ERRORINSERT_MSG);
 			echo 'index.php?page=' . $pageObj->keyword;
 		}
+		
 		exit();
 
 	case 'edit':
@@ -168,7 +157,7 @@ switch ($op) {
 		//  show page in editor (after privileges check)
 		if (!$pageObj->canWrite()) {
 			include_once ICMS_ROOT_PATH . '/header.php';
-			xoops_error(_MD_SWIKI_PAGENOTFOUND_MSG);
+			icms_core_Message::warning(_MD_SWIKI_PAGENOTFOUND_MSG);
 			include_once ICMS_ROOT_PATH . '/footer.php';
 			break;
 		}
@@ -178,8 +167,8 @@ switch ($op) {
 		/* @todo	turn off page caching for previewing and editing */
 		if ($op == 'preview') {
 			/* Note : content came through "post" >> Strip eventual slashes (depending on the magic_quotes_gpc() value)	 */
-			$pageObj->title = $myts->stripSlashesGPC($pageObj->title);
-			$pageObj->body = $myts->stripSlashesGPC($pageObj->body);
+			$pageObj->title = icms_core_DataFilter::stripSlashesGPC($pageObj->title);
+			$pageObj->body = icms_core_DataFilter::stripSlashesGPC($pageObj->body);
 
 			$xoopsTpl->assign('swiki', array(
 				'keyword' => $pageObj->keyword,
@@ -188,17 +177,17 @@ switch ($op) {
 		}
 
 		/* Build form */
-		$form = new XoopsThemeForm(_MD_SWIKI_EDIT_TXT . ': ' . $page, 'swikiform', 'index.php');
-		$btn_tray = new XoopsFormElementTray('', ' ');
+		$form = new icms_form_Theme(_MD_SWIKI_EDIT_TXT . ': ' . $page, 'swikiform', 'index.php');
+		$btn_tray = new icms_form_elements_Tray('', ' ');
 
-		$form->addElement(new XoopsFormHidden('op', 'insert'));
-		$form->addElement(new XoopsFormHidden('page', $myts->htmlSpecialChars($pageObj->keyword)));
-		$form->addElement(new XoopsFormHidden('pageid', $pageObj->pageid));
-		$form->addElement(new XoopsFormHidden('id', $pageObj->id));
-		$form->addElement(new XoopsFormHidden('uid', ($xoopsUser) ? $xoopsUser->getVar('uid') : 0));
-		$form->addElement(new XoopsFormHidden('lastmodified', $pageObj->lastmodified));
+		$form->addElement(new icms_form_elements_Hidden('op', 'insert'));
+		$form->addElement(new icms_form_elements_Hidden('page', icms_core_DataFilter::htmlSpecialchars($pageObj->keyword)));
+		$form->addElement(new icms_form_elements_Hidden('pageid', $pageObj->pageid));
+		$form->addElement(new icms_form_elements_Hidden('id', $pageObj->id));
+		$form->addElement(new icms_form_elements_Hidden('uid', (icms::$user) ? icms::$user->getVar('uid') : 0));
+		$form->addElement(new icms_form_elements_Hidden('lastmodified', $pageObj->lastmodified));
 
-		$form->addElement(new XoopsFormText(_MD_SWIKI_TITLE_FLD, 'title', 50, 250, $myts->htmlSpecialChars($pageObj->title)));
+		$form->addElement(new icms_form_elements_Text(_MD_SWIKI_TITLE_FLD, 'title', 50, 250, icms_core_DataFilter::htmlSpecialchars($pageObj->title)));
 
 		$edArr = array();
 		foreach (getAvailableEditors() as $ed) {
@@ -207,18 +196,17 @@ switch ($op) {
 		$xoopsTpl->assign('editorsArr', $edArr);
 		$editor = isset($clean_POST['editor']) ? $clean_POST['editor'] : $xoopsModuleConfig['Editor'] ;
 		$editOptions = isset($clean_POST['editoptions']) ? $clean_POST['editoptions'] : "" ;
-		$form->addElement(new XoopsFormHidden('editor', $editor));
-		$form->addElement(new XoopsFormHidden('editoptions', $editOptions));
+		$form->addElement(new icms_form_elements_Hidden('editor', $editor));
+		$form->addElement(new icms_form_elements_Hidden('editoptions', $editOptions));
 
 		switch ($editor) {
 			default:
 			case 0 : // standard xoops
-				$t_area = new XoopsFormDhtmlTextArea(_MD_SWIKI_BODY_FLD, 'body', htmlspecialchars($pageObj->body, ENT_QUOTES, _CHARSET, FALSE), '30', '70');
+				$t_area = new icms_form_elements_Dhtmltextarea(_MD_SWIKI_BODY_FLD, 'body', htmlspecialchars($pageObj->body, ENT_QUOTES, _CHARSET, FALSE), '30', '70');
 				break;
 
 			case 1 : // XoopsEditor
-				include_once (ICMS_ROOT_PATH . '/class/xoopseditor/xoopseditor.php');
-				$editorhandler = new XoopsEditorHandler();
+				$editorhandler = new icms_plugins_EditorHandler();
 				$editor_name = ($editOptions != '') ? $editOptions : $xoopsModuleConfig['XoopsEditor'];
 
 				$options['caption'] = _MD_SWIKI_BODY_FLD;
@@ -233,7 +221,7 @@ switch ($op) {
 					$editorhandler->setConfig(
 					$t_area,
 					array(
-							'filepath' => ICMS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname'),
+							'filepath' => ICMS_UPLOAD_PATH . '/' . icms::$module->getVar('dirname'),
 							'upload' => true,
 							'extensions' => array('txt', 'jpg', 'zip')
 					));
@@ -262,20 +250,20 @@ switch ($op) {
 		}
 		$form->addElement($t_area);
 
-		$form->addElement(new XoopsFormText(_MD_SWIKI_PARENT_FLD, 'parent', 15, 100, $myts->htmlSpecialChars($pageObj->parent)));
+		$form->addElement(new icms_form_elements_Text(_MD_SWIKI_PARENT_FLD, 'parent', 15, 100, icms_core_DataFilter::htmlSpecialchars($pageObj->parent)));
 
 		if ($pageObj->canAdministrate()) {
-			$prflst = $pageObj->profile->getAdminProfiles($xoopsUser);
-			$prfsel = new XoopsFormSelect(_MD_SWIKI_PROFILE_FLD, 'prid', $pageObj->profile->prid);
+			$prflst = $pageObj->profile->getAdminProfiles(icms::$user);
+			$prfsel = new icms_form_elements_Select(_MD_SWIKI_PROFILE_FLD, 'prid', $pageObj->profile->prid);
 			$prfsel->addOptionArray($prflst);
 			$form->addElement($prfsel);
 		} else {
-			$form->addElement(new XoopsFormLabel(_MD_SWIKI_PROFILE_FLD, $pageObj->profile->name));
-			$form->addElement(new XoopsFormHidden('prid', $pageObj->profile->prid));
+			$form->addElement(new icms_form_elements_Label(_MD_SWIKI_PROFILE_FLD, $pageObj->profile->name));
+			$form->addElement(new icms_form_elements_Hidden('prid', $pageObj->profile->prid));
 		}
 
-		$form->addElement(new XoopsFormText(_MD_SWIKI_VISIBLE_FLD, 'visible', 3, 3, $pageObj->visible));
-		$form->addElement(new XoopsFormText(_MD_SWIKI_CONTEXTBLOCK_FLD, 'contextBlock', 15, 100, $myts->htmlSpecialChars($pageObj->contextBlock)));
+		$form->addElement(new icms_form_elements_Text(_MD_SWIKI_VISIBLE_FLD, 'visible', 3, 3, $pageObj->visible));
+		$form->addElement(new icms_form_elements_Text(_MD_SWIKI_CONTEXTBLOCK_FLD, 'contextBlock', 15, 100, icms_core_DataFilter::htmlSpecialchars($pageObj->contextBlock)));
 		/* Tag module support (Gizmhail) */
 		if (isTagModuleActivated()) {
 			include_once ICMS_ROOT_PATH . '/modules/tag/include/formtag.php';
@@ -288,39 +276,35 @@ switch ($op) {
 		}
 		/* Tag module support end*/
 		$rev_summary = $summary ? $summary : '';
-		$form->addElement(new XoopsFormText(_MI_SWIKI_REVISION_SUMMARY, 'summary', 50, 255, $rev_summary));
+		$form->addElement(new icms_form_elements_Text(_MI_SWIKI_REVISION_SUMMARY, 'summary', 50, 255, $rev_summary));
 		/*		$allowComments_checkbox =	 new XoopsFormCheckBox(_MI_SWIKI_ALLOW_COMMENTS, 'allowComments',);
 		 $allowComments_checkbox->addOption ($allowComments, $pageObj->allowComments);
 		 $option_tray = new XoopsFormElementTray('Options','<br />');
 		 $option_tray->addElement($allowComments_checkbox);
 		 $form->addElement($allowComments_checkbox);*/
 
-		$preview_btn = new XoopsFormButton('', 'preview', _PREVIEW, 'button');
+		$preview_btn = new icms_form_elements_Button('', 'preview', _PREVIEW, 'button');
 		$preview_btn->setExtra("onclick='document.forms.swikiform.op.value=\"preview\"; document.forms.swikiform.submit.click();'");
 		$btn_tray->addElement($preview_btn);
 
-		$btn_tray->addElement(new XoopsFormButton('', 'submit', _MD_SWIKI_SUBMITREVISION_BTN, 'submit'));
+		$btn_tray->addElement(new icms_form_elements_Button('', 'submit', _MD_SWIKI_SUBMITREVISION_BTN, 'submit'));
 
 		/* only show the Save button if the user is an administrator for the page.
 		 * Otherwise, they can only let them create a new revision
 		 */
 		if ($pageObj->id > 0 && $pageObj->canAdministrate() === TRUE) {
-			$quietsave_btn = new XoopsFormButton('', 'quietsave', _MD_SWIKI_QUIETSAVE_BTN, 'button');
+			$quietsave_btn = new icms_form_elements_Button('', 'quietsave', _MD_SWIKI_QUIETSAVE_BTN, 'button');
 			$quietsave_btn->setExtra("onclick='document.forms.swikiform.op.value=\"quietsave\"; document.forms.swikiform.submit.click();'");
 			$btn_tray->addElement($quietsave_btn);
 		}
 
+		// Captcha Hack
 		if ($xoopsModuleConfig['Captcha']) {
-			// Captcha Hack
-			if (class_exists('XoopsFormCaptcha')) {
-				$form -> addElement(new XoopsFormCaptcha());
-			} elseif (class_exists('IcmsFormCaptcha')) {
-				$form -> addElement(new IcmsFormCaptcha());
-			}
-			// Captcha Hack
+			$form -> addElement(new icms_form_elements_Captcha());
 		}
+		// Captcha Hack
 
-		$cancel_btn = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
+		$cancel_btn = new icms_form_elements_Button('', 'cancel', _CANCEL, 'button');
 		$cancel_btn->setExtra(($op == 'edit') ? "onclick='history.back();'" : "onclick='document.location.href=\"index.php" . (($pageObj->id != 0) ? "?page=" . $pageObj->keyword : "") . "\"'");
 		$btn_tray->addElement($cancel_btn);
 		$form->addElement($btn_tray);
@@ -354,7 +338,7 @@ switch ($op) {
 
 		$hist = $pageObj->history();
 		foreach ($hist as $key=>$value) {
-			$hist[$key]['username'] = xoops_getLinkedUnameFromId($hist[$key]['u_id']);
+			$hist[$key]['username'] = icms_member_user_Handler::getUserLink($hist[$key]['u_id']);
 			$hist[$key]['keyword'] = $pageObj->encode($hist[$key]['keyword']);
 		}
 
@@ -365,15 +349,15 @@ switch ($op) {
 	case 'restore' :
 		// Creates a new revision whom content is copied from the selected one, but with other data (parent, privileges etc..) untouched.
 		$restoredRevision = new wiwiRevision("", $id);
-		$pageObj->title = $myts->stripSlashesGPC($restoredRevision->title);
-		$pageObj->body = $myts->stripSlashesGPC($restoredRevision->body);
+		$pageObj->title = icms_core_DataFilter::stripSlashesGPC($restoredRevision->title);
+		$pageObj->body = icms_core_DataFilter::stripSlashesGPC($restoredRevision->body);
 		$pageObj->contextBlock = $restoredRevision->contextBlock;
 		$success = $pageObj->add();
 		if ($success){
 			$tags = array();
 			$tags['PAGE_NAME'] = $pageObj->title;
-			$tags['PAGE_URL'] = ICMS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php?page=' . $pageObj->keyword;
-			$notification_handler =& xoops_gethandler('notification');
+			$tags['PAGE_URL'] = ICMS_URL . '/modules/' . icms::$module->getVar('dirname') . '/index.php?page=' . $pageObj->keyword;
+			$notification_handler =& icms::handler('icms_data_notification');
 			$notification_handler->triggerEvent('page', $pageObj->pageid, 'page_restored', $tags);
 			$notification_handler->triggerEvent('global', 0, 'page_restored', $tags);
 		}
@@ -385,15 +369,14 @@ switch ($op) {
 		$xoopsOption['template_main'] = 'wiwimod_view.html';
 		include_once ICMS_ROOT_PATH . '/header.php';
 		if (!$pageObj->canRead()) {
-			$pagecontent = xoops_warning(_MD_SWIKI_NOREADACCESS_MSG);
+			$pagecontent = icms_core_Message::warning(_MD_SWIKI_NOREADACCESS_MSG);
 		} else {
 			// Handle pagebreaks
 			$pagecontent = $pageObj->body;
 			$cpages = explode ("[pagebreak]", $pagecontent);
 			if (isset($clean_GET['startpage'])) $startpage = (int) $clean_GET['startpage'] ; else $startpage = 0;
 			if (count($cpages) > 0) {
-				include_once ICMS_ROOT_PATH . '/class/pagenav.php';
-				$pagenav = new XoopsPageNav(count($cpages), 1, $startpage, 'startpage', 'page=' . $pageObj->keyword);
+				$pagenav = new icms_view_PageNav(count($cpages), 1, $startpage, 'startpage', 'page=' . $pageObj->keyword);
 				$xoopsTpl->assign('nav' , array(
 					'startpage' => $startpage,
 					'html' => $pagenav->RenderNav(),
@@ -407,8 +390,8 @@ switch ($op) {
 			 * In future, count for relevant ip, cookies and more.
 			 * if logout or no, verify it.
 			 */
-			if (($xoopsUser) ? $xoopsUser->getVar('uid') : 0) {
-				if (($xoopsUser->getVar("uid")) == ($pageObj->u_id)) {
+			if ((icms::$user) ? icms::$user->getVar('uid') : 0) {
+				if ((icms::$user->getVar("uid")) == ($pageObj->u_id)) {
 					//-- author is equal the current user not count visit
 				} else {
 					$pageObj->visited(); // no is user last modified
@@ -427,7 +410,7 @@ switch ($op) {
 			$xoopsTpl->assign('tagbar', tagBar($itemid, $catid = 0));
 		}
 		/* Tag module support end*/
-		$user = $xoopsUser ? $xoopsUser : NULL;
+		$user = icms::$user ? icms::$user : NULL;
 		$writeProfiles = new WiwiProfile();
 		$WritePrivileges = count($writeProfiles->getWriteProfiles($user));
 
@@ -437,12 +420,12 @@ switch ($op) {
 			'title' => $pageObj->title,
 			'body' => $pagecontent,
 			'lastmodified' => formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING),
-			'author' => xoops_getLinkedUnameFromId($pageObj->u_id),
+			'author' => icms_member_user_Handler::getUserLink($pageObj->u_id),
 			'mayEdit' => $pageObj->canWrite(),
 			'showComments' => $pageObj->canViewComments() && ($xoopsModuleConfig['com_rule'] != 0),
 			'showHistory' => $pageObj->canViewHistory(),
 			'allowPDF' => $xoopsModuleConfig['allowPDF'],
-			'created' => sprintf(_MD_SWIKI_CREATED, xoops_getLinkedUnameFromId($pageObj->creator), formatTimestamp(strtotime($pageObj->created), _SHORTDATESTRING)),
+			'created' => sprintf(_MD_SWIKI_CREATED, icms_member_user_Handler::getUserLink($pageObj->creator), formatTimestamp(strtotime($pageObj->created), _SHORTDATESTRING)),
 			'views' => sprintf(_MD_SWIKI_VIEWED, $pageObj->views),
 			'lastviewed' => sprintf(_MD_SWIKI_LASTVIEWED, formatTimestamp(strtotime($pageObj->lastviewed), _SHORTDATESTRING)),
 			'revisions' => sprintf(_MD_SWIKI_REVISIONS, $pageObj->revisions),
@@ -464,7 +447,7 @@ switch ($op) {
 			// patch to deal with a bug in the standard Xoops 2.05 comment_view file,
 			// (generated a disgraceful "undefined index notice" in debug mode ;-)
 			if (!isset($clean_GET['com_order'])) {
-				$_GET['com_order'] = (is_object($xoopsUser) ? $xoopsUser->getVar('uorder') : $xoopsConfig['com_order']) ;
+				$_GET['com_order'] = (is_object(icms::$user) ? icms::$user->getVar('uorder') : $xoopsConfig['com_order']) ;
 			}
 			include ICMS_ROOT_PATH . '/include/comment_view.php';
 		}
@@ -472,7 +455,6 @@ switch ($op) {
 
 }
 
-$xoopsTpl->assign('icms_pagetitle', $myts->htmlSpecialChars($myts->htmlSpecialChars($pageObj->title) . ' - ' .$xoopsModule->name()));
-// @todo	remove after version 1.2
-$xoopsTpl->assign('xoops_pagetitle', $myts->htmlSpecialChars($myts->htmlSpecialChars($pageObj->title) . ' - ' .$xoopsModule->name()));
+$xoopsTpl->assign('icms_pagetitle', icms_core_DataFilter::htmlSpecialchars(icms_core_DataFilter::htmlSpecialchars($pageObj->title) . ' - ' .icms::$module->getVar('name')));
+
 include ICMS_ROOT_PATH . '/footer.php';

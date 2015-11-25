@@ -35,10 +35,10 @@ if (file_exists('../language/' . $xoopsConfig['language'] . '/main.php')) {
     include_once '../language/english/main.php';
 }
 
-if ($xoopsUser) {
-    $icmsModule = XoopsModule::getByDirname($wikiModDir);
-    $xoopsModule =& $icmsModule;
-    if (!$xoopsUser->isAdmin($xoopsModule->mid())) {
+if (icms::$user) {
+    $icmsModule = icms::handler('icms_module')->getByDirname($wikiModDir);
+	$xoopsModule =& $icmsModule;
+    if (!icms::$user->isAdmin($icmsModule->getVar('mid'))) {
         redirect_header(ICMS_URL . '/', 3, _NOPERM);
         exit();
     }
@@ -47,4 +47,4 @@ if ($xoopsUser) {
     exit();
 }
 
-$myts = myTextSanitizer::getInstance();
+$myts = icms_core_Textsanitizer::getInstance();

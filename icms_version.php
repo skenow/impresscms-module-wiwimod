@@ -203,14 +203,10 @@ $modversion['config'][2] = array(
   'formtype' => 'select',
   'valuetype' => 'text',
   'default' => 0);
-if (file_exists(ICMS_ROOT_PATH . '/class/xoopseditor/xoopseditor.php')) {
-	include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-	include_once ICMS_ROOT_PATH . '/class/xoopseditor/xoopseditor.php';
-	$editor_name = !empty($_GET['editor_name']) ? $_GET['editor_name'] : '';
-	$editorhandler = new XoopsEditorHandler();
-	$modversion['config'][2]['options'] = array_flip($editorhandler->getList());
-	}
-else $modversion['config'][2]['options'] = array();
+
+$editor_name = !empty($_GET['editor_name']) ? $_GET['editor_name'] : '';
+$editorhandler = new icms_plugins_EditorHandler();
+$modversion['config'][2]['options'] = array_flip($editorhandler->getList());
 
 $modversion['config'][]  = array(
   'name' => 'DefaultProfile',

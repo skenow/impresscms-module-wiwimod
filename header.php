@@ -14,7 +14,7 @@
  */
 include_once '../../mainfile.php';
 
-$myts = MyTextSanitizer::getInstance();
+$myts = icms_core_Textsanitizer::getInstance();
 
 global $wikiModDir;
 $wikiModDir = basename(dirname(__FILE__));

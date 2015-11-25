@@ -26,9 +26,9 @@ if (file_exists(ICMS_ROOT_PATH . '/modules/system/language/' . $xoopsConfig['lan
 }
 require_once ICMS_ROOT_PATH . '/kernel/module.php';
 $admintest = 0;
-if (is_object($xoopsUser)) {
-	$xoopsModule =& XoopsModule::getByDirname('system');
-	if (!$xoopsUser->isAdmin($xoopsModule->mid())) {
+if (is_object(icms::$user)) {
+	$module =& icms::handler('icms_module')->getbyDirname('system');
+	if (!icms::$user->isAdmin($module->mid())) {
 		redirect_header(ICMS_URL . '/user.php', 3, _NOPERM);
 		exit();
 	}
@@ -49,12 +49,12 @@ if ($admintest != 0) {
 				include ICMS_ROOT_PATH . '/modules/system/language/english/admin/' . $fct . '.php';
 			}
 			include ICMS_ROOT_PATH . '/modules/system/admin/' . $fct . '/xoops_version.php';
-			$sysperm_handler =& xoops_gethandler('groupperm');
+			$sysperm_handler =& icms::handler('groupperm');
 			$category = !empty($modversion['category']) ? (int) $modversion['category'] : 0;
 			unset($modversion);
 			if ($category > 0) {
-				$groups =& $xoopsUser->getGroups();
-				if (in_array(ICMS_GROUP_ADMIN, $groups) || FALSE !== $sysperm_handler->checkRight('system_admin', $category, $groups, $xoopsModule->getVar('mid'))){
+				$groups =& icms::$user->getGroups();
+				if (in_array(ICMS_GROUP_ADMIN, $groups) || FALSE !== $sysperm_handler->checkRight('system_admin', $category, $groups, $module->getVar('mid'))){
 					if (file_exists("../include/{$fct}.inc.php")) {
 						include_once "../include/{$fct}.inc.php" ;
 					} else {
@@ -84,10 +84,10 @@ if (FALSE !== $error) {
 	echo '<h4>' . _AM_SWIKI_SYS_CFG . '</h4>'
 		. '<table class="outer" cellpadding="4" cellspacing="1">'
 		. '<tr>';
-	$groups = $xoopsUser->getGroups();
+	$groups = icms::$user->getGroups();
 	$all_ok = FALSE;
 	if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
-		$sysperm_handler =& xoops_gethandler('groupperm');
+		$sysperm_handler =& icms::handler('groupperm');
 		$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
 	} else {
 		$all_ok = TRUE;

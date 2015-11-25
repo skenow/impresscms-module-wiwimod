@@ -12,8 +12,8 @@
 include 'admin_header.php';
 
 icms_cp_header();
-if(method_exists($xoopsModule, 'displayAdminMenu')) {
-	echo $xoopsModule->displayAdminMenu (4,'about');
+if(method_exists(icms::$module, 'displayAdminMenu')) {
+	echo icms::$module->displayAdminMenu (4,'about');
 } else {
 	echo getAdminMenu (4,'about');
 }

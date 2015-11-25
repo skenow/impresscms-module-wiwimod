@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$
  */
-if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
+if (!is_object(icms::$user) || !is_object($xoopsModule) || !icms::$user->isAdmin($xoopsModule->mid())) {
 	exit('Access Denied');
 }
 
@@ -54,7 +54,7 @@ if (isset($previewblock)) {
 		$myblock = new XoopsBlock();
 		$myblock->setVar('block_type', 'C');
 	}
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	$myblock->setVar('title', $myts->stripSlashesGPC($btitle));
 	$myblock->setVar('content', $myts->stripSlashesGPC($bcontent));
 	$dummyhtml = '<html><head><meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" /><meta http-equiv="content-language" content="' . _LANGCODE . '" /><title>' . $xoopsConfig['sitename'] . '</title><link rel="stylesheet" type="text/css" media="all" href="' . getcss($xoopsConfig['theme_set']) . '" /></head><body><table><tr><th>' . $myblock->getVar('title') . '</th></tr><tr><td>' . $myblock->getContent('S', $bctype) . '</td></tr></table></body></html>';
@@ -205,7 +205,7 @@ function myblocksadmin_update_block($bid, $bside, $bweight, $bvisible, $btitle, 
 	}
 	$msg = _AM_DBUPDATED;
 	if ($myblock->store() != false) {
-		$db =& Database::getInstance();
+		$db =& icms_db_Factory::Instance();
 		$sql = sprintf('DELETE FROM %s WHERE block_id = %u', $db->prefix('block_module_link'), $bid);
 		$db->query($sql);
 		foreach ($bmodule as $bmid) {
@@ -303,7 +303,7 @@ function icms_update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent
 	}
 	$msg = _AM_DBUPDATED;
 	if ($myblock->store() !== FALSE) {
-		$db =& Database::getInstance();
+		$db =& icms_db_Factory::Instance();
 		$sql = sprintf("DELETE FROM %s WHERE block_id = '%u'", $db->prefix('block_module_link'), (int) $bid);
 		$db->query($sql);
 		foreach ($bmodule as $bmid) {

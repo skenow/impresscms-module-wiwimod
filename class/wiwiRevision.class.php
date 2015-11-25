@@ -101,13 +101,13 @@ class WiwiRevision {
 	public function __construct($page = NULL, $id = 0, $pageid = 0) {
 		if ($page == '') $page = NULL;
 
-		$this->db =& Database::getInstance();
-		$this->ts = MyTextSanitizer::getInstance();
+		$this->db =& icms_db_Factory::Instance();
+		$this->ts = icms_core_Textsanitizer::getInstance();
 		$this->_dir = basename(dirname(dirname(__FILE__)));
 		$this->_url = ICMS_URL . '/modules/' . $this->_dir . '/';
 
-		$modhandler =& xoops_gethandler('module');
-		$config_handler =& xoops_gethandler('config');
+		$modhandler =& icms::handler('icms_module');
+		$config_handler =& icms::handler('icms_config');
 		$SimplyWiki = $modhandler->getByDirname($this->_dir);
 		$this->swikiConfig =& $config_handler->getConfigsByCat(0, $SimplyWiki->getVar('mid'));
 		$this->keyword = $page;
@@ -134,7 +134,7 @@ class WiwiRevision {
 		if ($id != 0) {
 			$sql .= ' WHERE revid = '. $id;
 		} elseif ($page !== NULL  ) {
-			$sql .= ' WHERE p.lastmodified = r.modified AND keyword="' . $this->ts->addSlashes($page) . '" ';
+			$sql .= ' WHERE p.lastmodified = r.modified AND keyword="' . icms_core_DataFilter::addSlashes($page) . '" ';
 		} elseif ($pageid != 0) {
 			$sql .= ' WHERE p.lastmodified = r.modified AND p.pageid=' . $pageid;
 		} else {
@@ -173,7 +173,6 @@ class WiwiRevision {
 	 * @todo	remove cached version of page after successfully updating a revision
 	 */
 	public function add() {
-		global $xoopsUser;
 		//$this->created, in a format that MySQL can handle. In PHP 5.1.1+, this can be date(DATE_ATOM) or date(DATE_W3C)
 		$add_date = date('Y/n/j G:i:s');
 		// only insert into the pages table if it is the first revision
@@ -182,16 +181,16 @@ class WiwiRevision {
 					"INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock)
 					VALUES('%s', '%s', '%s', %u, %u, %u, '%s', '%s', '%s', '%s')",
 					$this->db->prefix('wiki_pages'),
-					$this->ts->addSlashes($this->keyword),
-					$this->ts->addSlashes($this->title),
+					icms_core_DataFilter::addSlashes($this->keyword),
+					icms_core_DataFilter::addSlashes($this->title),
 					$add_date,						  //-- lastmodified is Now
-					$this->ts->addSlashes($this->parent),
+					icms_core_DataFilter::addSlashes($this->parent),
 					$this->visible,
 					$this->profile->prid,
-					$xoopsUser ? $xoopsUser->getVar('uid') : 0, //$this->creator,
+					icms::$user ? icms::$user->getVar('uid') : 0, //$this->creator,
 					$add_date,
 					$this->allowComments,
-					$this->ts->addSlashes($this->contextBlock)
+					icms_core_DataFilter::addSlashes($this->contextBlock)
 			);
 			$result = $this->db->query($sql);
 			if (!$result) return false;
@@ -202,16 +201,16 @@ class WiwiRevision {
 			/* deliberate use of addslashes, here */
 			$body = addslashes(icms_core_DataFilter::checkVar($this->body, 'html', 'input'));
 		} else {
-			$body = $this->ts->addSlashes($this->body);
+			$body = icms_core_DataFilter::addSlashes($this->body);
 		}
 		$sql = sprintf(
 				"INSERT INTO %s (pageid, summary, body, userid, modified)
 				VALUES (%u, '%s', '%s', %u, '%s')",
 				$this->db->prefix('wiki_revisions'),
 				$this->pageid,
-				$this->ts->addSlashes($this->summary),
+				icms_core_DataFilter::addSlashes($this->summary),
 				$body,
-				$xoopsUser ? $xoopsUser->getVar('uid') : 0,
+				icms::$user ? icms::$user->getVar('uid') : 0,
 				$add_date
 		);
 		$result = $this->db->query($sql);
@@ -220,12 +219,12 @@ class WiwiRevision {
 				"UPDATE %s SET revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s' WHERE pageid=%u",
 				$this->db->prefix('wiki_pages'),
 				$add_date,
-				$this->ts->addSlashes($this->parent),
+				icms_core_DataFilter::addSlashes($this->parent),
 				$this->profile->prid,
 				$this->visible,
 				$this->allowComments,
-				$this->ts->addSlashes($this->title),
-				$this->ts->addSlashes($this->contextBlock),
+				icms_core_DataFilter::addSlashes($this->title),
+				icms_core_DataFilter::addSlashes($this->contextBlock),
 				$this->pageid
 		);
 		$result = $this->db->query($sql);
@@ -238,14 +237,13 @@ class WiwiRevision {
 	 * a new query to update a revision and page - mysql allows updating multiple tables in a single query
 	 */
 	public function save() {
-		global $xoopsUser;
 		$save_date = date('Y/n/j G:i:s');
 		/* need to do this because of new input filtering in ImpressCMS 1.3.3 */
 		if (defined("ICMS_VERSION_BUILD") && ICMS_VERSION_BUILD > 63 && ICMS_VERSION_BUILD != 71) {
 			/* deliberate use of addslashes, here */
 			$body = addslashes(icms_core_DataFilter::checkVar($this->body, 'html', 'input'));
 		} else {
-			$body = $this->ts->addSlashes($this->body);
+			$body = icms_core_DataFilter::addSlashes($this->body);
 		}
 		$sql = sprintf(
 				"UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s'
@@ -254,12 +252,12 @@ class WiwiRevision {
 				$this->db->prefix('wiki_revisions'),
 				$body,
 				$save_date,
-				$xoopsUser ? $xoopsUser->getVar('uid') : 0,   //-- author is always the current user
-				$this->ts->addSlashes($this->contextBlock),
-				$this->ts->addSlashes($this->summary),
-				$this->ts->addSlashes($this->title),
+				icms::$user ? icms::$user->getVar('uid') : 0,   //-- author is always the current user
+				icms_core_DataFilter::addSlashes($this->contextBlock),
+				icms_core_DataFilter::addSlashes($this->summary),
+				icms_core_DataFilter::addSlashes($this->title),
 				$save_date,
-				$this->ts->addSlashes($this->parent),
+				icms_core_DataFilter::addSlashes($this->parent),
 				$this->profile->prid,
 				$this->visible,
 				$this->allowComments,
@@ -288,7 +286,6 @@ class WiwiRevision {
 	 * anonymous count and section interest.
 	 */
 	public function visited() {
-		global $xoopsUser;
 
 		$sql = sprintf(
 				"UPDATE %s SET views=%u, lastviewed='%s' WHERE pageid=%u",
@@ -478,7 +475,7 @@ class WiwiRevision {
 	 * @return	str		text or link, depending on existence and user permissions for target page
 	 */
 	public function render_wikiLink($keyword, $customTitle = '', $show_titles = FALSE )	{
-		$normKeyword = $this->ts->addSlashes($this->normalize($keyword));
+		$normKeyword = icms_core_DataFilter::addSlashes($this->normalize($keyword));
 		$page = $this->getPages("keyword='" . $normKeyword . "'");
 		if (count($page) > 0) {
 			$pageExists = TRUE;
@@ -540,7 +537,7 @@ class WiwiRevision {
 						"lastmodified",
 						10,
 						'"<tr><td colspan=3><strong>" . formatTimestamp(strtotime($counter), _SHORTDATESTRING) . "</strong></td></tr>"',
-						'"<tr><td>&nbsp;" . formatTimestamp(strtotime($content["lastmodified"]), "H:i") . "</td><td><a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a></td><td>" . $content["summary"] . "</td><td><span class=\"itemPoster\">" . xoops_getLinkedUnameFromId($content["u_id"]) . "</span></td></tr>"',
+						'"<tr><td>&nbsp;" . formatTimestamp(strtotime($content["lastmodified"]), "H:i") . "</td><td><a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a></td><td>" . $content["summary"] . "</td><td><span class=\"itemPoster\">" . icms_member_user_Handler::getUserLink($content["u_id"]) . "</span></td></tr>"',
 				"")
 		);
 		$cfg = $settings[strtolower($type)];
@@ -578,7 +575,7 @@ class WiwiRevision {
 	 * Note : this was formerly an inline function, but php5 doesn't seem to accept it recursively.
 	 */
 	private function parentList_recurr($child, &$parlist, &$db) {
-		$sql = 'SELECT parent FROM ' . $db->prefix('wiki_pages') . ' WHERE keyword="' . $this->ts->addSlashes($child) . '"';
+		$sql = 'SELECT parent FROM ' . $db->prefix('wiki_pages') . ' WHERE keyword="' . icms_core_DataFilter::addSlashes($child) . '"';
 		$result = $db->query($sql);
 		list($parent) = $db->fetchRow($result);
 		if (($parent != '')&&(!in_array($parent, $parlist))) {
@@ -610,7 +607,7 @@ class WiwiRevision {
 	public function history($limit = 0, $start = 0) {
 		$sql = 'SELECT keyword, revid as id, title, body, modified as lastmodified, userid as u_id, summary FROM '
 				. $this->db->prefix('wiki_revisions') . ' r, '. $this->db->prefix('wiki_pages')
-				. ' p WHERE p.keyword="' . $this->ts->addSlashes($this->keyword) . '" AND p.pageid=r.pageid ORDER BY id DESC';
+				. ' p WHERE p.keyword="' . icms_core_DataFilter::addSlashes($this->keyword) . '" AND p.pageid=r.pageid ORDER BY id DESC';
 		$result = $this->db->query($sql, $limit, $start);
 
 		$hist = array();
@@ -624,7 +621,7 @@ class WiwiRevision {
 	 * @deprecated	Use the revisions property, instead
 	 */
 	public function historyNum() {
-		$sql = 'SELECT revisions FROM ' . $this->db->prefix('wiki_pages') . ' WHERE keyword="' . $this->ts->addSlashes($this->keyword) . '"';
+		$sql = 'SELECT revisions FROM ' . $this->db->prefix('wiki_pages') . ' WHERE keyword="' . icms_core_DataFilter::addSlashes($this->keyword) . '"';
 		$result = $this->db->query($sql);
 		list($maxcount) = $this->db->fetchRow($result);
 		return $maxcount;
@@ -704,7 +701,7 @@ class WiwiRevision {
 	public function concurrentlySaved() {
 		/** @todo returning false, because the logic is not working correctly */
 		return false;
-		$sql = "SELECT lastmodified FROM " . $this->db->prefix("wiki_pages") . " WHERE keyword='" . $this->ts->addSlashes($this->keyword) . "'";
+		$sql = "SELECT lastmodified FROM " . $this->db->prefix("wiki_pages") . " WHERE keyword='" . icms_core_DataFilter::addSlashes($this->keyword) . "'";
 		$result = $this->db->query($sql);
 		$rowsnum = $this->db->getRowsNum($result);
 
@@ -724,7 +721,7 @@ class WiwiRevision {
 	 * @param $id
 	 */
 	public function pageExists($page = "", $id = 0) {
-		$page = $this->ts->addSlashes($this->normalize($page));
+		$page = icms_core_DataFilter::addSlashes($this->normalize($page));
 		if ($id > 0) {
 			$sql = "SELECT keyword FROM " . $this->db->prefix("wiki_pages") . " WHERE pageid = $id";
 		} elseif (($page != "") && ((int) $page == 0)) {
@@ -816,7 +813,7 @@ class WiwiRevision {
 	 * Deletes all revisions of current page, anterior to current revision.
 	 */
 	public function fix() {
-		$sql = 'DELETE FROM ' . $this->db->prefix('wiki_revisions') . ' WHERE pageid="' . $this->ts->addSlashes($this->pageid) . '" AND modified < "' . $this->lastmodified . '"';
+		$sql = 'DELETE FROM ' . $this->db->prefix('wiki_revisions') . ' WHERE pageid="' . icms_core_DataFilter::addSlashes($this->pageid) . '" AND modified < "' . $this->lastmodified . '"';
 		$success = $this->db->query($sql);
 		return $success;
 	}
@@ -825,11 +822,10 @@ class WiwiRevision {
 	 *
 	 */
 	public function cleanPagesHistory() {
-		global $xoopsDB;
 		$success = true;
-		$sql = "SELECT pageid, MAX(revid) AS id FROM " . $xoopsDB->prefix("wiki_revisions") . " WHERE modified<'" . formatTimestamp(time() - 61 * 24 * 3600, 'Y/n/j G:i:s') . "' GROUP BY pageid"; // do not change this date format - it is valide for MySQL
-		$result = $xoopsDB->query($sql);
-		while ($content = $xoopsDB->fetcharray($result)) {
+		$sql = "SELECT pageid, MAX(revid) AS id FROM " . $this->db->prefix("wiki_revisions") . " WHERE modified<'" . formatTimestamp(time() - 61 * 24 * 3600, 'Y/n/j G:i:s') . "' GROUP BY pageid"; // do not change this date format - it is valide for MySQL
+		$result = $this->db->query($sql);
+		while ($content = $this->db->fetcharray($result)) {
 			$rev = new wiwiRevision("", $content['id']);
 			$success &= $rev->fix();
 		}

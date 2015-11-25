@@ -15,7 +15,7 @@ $wikiModDir = basename(dirname(dirname(__FILE__)));
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
 function swiki_showpage ($options) {
-	global $xoopsDB, $xoopsModuleConfig, $xoopsUser, $myts;
+	global $xoopsDB, $xoopsModuleConfig, icms::$user, $myts;
 	$wikiModDir = basename(dirname(dirname(__FILE__))) ;
 	 
 	$block = array();
@@ -57,7 +57,7 @@ function swiki_showpage ($options) {
 }
 
 function swiki_contextshow($options) {
-	global $xoopsDB, $xoopsModuleConfig, $xoopsUser, $myts;
+	global $xoopsDB, $xoopsModuleConfig, icms::$user, $myts;
 	$wikiModDir = basename(dirname(dirname(__FILE__))) ;
 	// Get content to display
 	$preg_res = array();

@@ -1,12 +1,12 @@
 <?php
 /**
  * Admin menu
- * 
+ *
  * @package SimplyWiki
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$  
+ * @version $Id$
  */
 
 $adminmenu[1] = array(
@@ -40,11 +40,11 @@ $wikiModDir = basename(dirname(dirname(__FILE__)));
 if (isset($xoopsModule)) {
 	$headermenu[0] = array(
 	     'title' => _PREFERENCES,
-	     'link'  => ICMS_URL . "/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $xoopsModule->mid(),
+	     'link'  => ICMS_URL . "/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $xoopsModule->getVar('mid'),
 	);
 	
 /* cross platform issues on the latest version; not addressing the language translations here */
-defined('_AM_SWIKI_GOTO_MODULE') 
+defined('_AM_SWIKI_GOTO_MODULE')
 	|| include_once ICMS_ROOT_PATH . "/modules/" . $wikiModDir . "/language/english/admin.php";
 	$headermenu[] = array(
 		'title' => _AM_SWIKI_GOTO_MODULE,

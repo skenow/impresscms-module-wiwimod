@@ -40,7 +40,6 @@ function getUserName($uid) {
  * @param 	$blkname block title or id
  */
 function swiki_getXoopsBlock ($blkname) {
-	global $xoopsUser;
 	global $xoopsDB;
 	$wikiModDir = basename(dirname(dirname(__FILE__)));
 	$block = array();
@@ -50,7 +49,7 @@ function swiki_getXoopsBlock ($blkname) {
 	// get all blocks
 	if (defined('ICMS_VERSION_BUILD') && ICMS_VERSION_BUILD > 27) {
 		/* ImpressCMS 1.2+ */
-		$block_handler =& xoops_gethandler('block');
+		$block_handler =& icms::handler('icms_view_block');
 		$block_arr =& $block_handler->getAllBlocks();
 	} else {
 		/* legacy support */
@@ -140,7 +139,7 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '') {
 
 	// global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig;
 	global $xoopsModule, $xoopsConfig;
-	$myts = &MyTextSanitizer::getInstance();
+	$myts = &icms_core_Textsanitizer::getInstance();
 
 	$tblColors = Array();
 	$tblColors[0] = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] ='';
@@ -155,8 +154,8 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '') {
 		. "<table style=\"width: 100%; padding: 0; \" cellspacing=\"0\"><tr>";
 
 	$html .= "<td style='width: 60%; font-size: 14px; font-weight:bolder; text-align: "._GLOBAL_LEFT."; color: #2F5376; padding: 0 6px; line-height: 18px;'>"._MI_SWIKI_NAME." - "._MI_SWIKI_DESC
-		. "<br /><span style='font-size: 10px;'><a href='" . ICMS_URL . "/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $xoopsModule->mid() . "'>" . _PREFERENCES . "</a> | <a href='" . ICMS_URL . "/modules/" . $wikiModDir . "' title=''>" . _AM_SWIKI_GOTO_MODULE . "</a> | <a href='" . ICMS_URL . "/modules/system/admin.php?fct=modulesadmin&op=update&module=" . $wikiModDir . "' title=''>" . _AM_SWIKI_UPDATE_MODULE . "</a></span></td>"
-		. "<td style='width: 40%; font-size: 10px; text-align: " . _GLOBAL_RIGHT . "; color: #2F5376; padding: 0 6px; line-height: 18px;'>" . _AM_SWIKI_ADMIN_TXT . " : " .$xoopsModule->name() . " : " . $breadcrumb . "</td>"
+		. "<br /><span style='font-size: 10px;'><a href='" . ICMS_URL . "/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $xoopsModule->getVar('mid') . "'>" . _PREFERENCES . "</a> | <a href='" . ICMS_URL . "/modules/" . $wikiModDir . "' title=''>" . _AM_SWIKI_GOTO_MODULE . "</a> | <a href='" . ICMS_URL . "/modules/system/admin.php?fct=modulesadmin&op=update&module=" . $wikiModDir . "' title=''>" . _AM_SWIKI_UPDATE_MODULE . "</a></span></td>"
+		. "<td style='width: 40%; font-size: 10px; text-align: " . _GLOBAL_RIGHT . "; color: #2F5376; padding: 0 6px; line-height: 18px;'>" . _AM_SWIKI_ADMIN_TXT . " : " . $xoopsModule->getVar('name') . " : " . $breadcrumb . "</td>"
 		. "</tr></table>"
 		. "</div>";
 
@@ -178,14 +177,11 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '') {
 function getAvailableEditors() {
 	$arr[] = array('Standard' , 0 , '' );
 
-	if (file_exists(ICMS_ROOT_PATH . '/class/xoopseditor')) {
-		include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-		include_once ICMS_ROOT_PATH . '/class/xoopseditor/xoopseditor.php';
-		$editorhandler = new XoopsEditorHandler();
-		$xedArr = array_flip($editorhandler->getList());
-		foreach ($xedArr as $xedTitle => $xedName) {
-			$arr[] = array($xedTitle, 1 , $xedName );
-		}
+	$editorhandler = new icms_plugins_EditorHandler();
+	$xedArr = array_flip($editorhandler->getList());
+	
+	foreach ($xedArr as $xedTitle => $xedName) {
+		$arr[] = array($xedTitle, 1 , $xedName );
 	}
 
 	if (file_exists(ICMS_ROOT_PATH . '/class/spaw')) {
@@ -212,7 +208,7 @@ function getAvailableEditors() {
  */
 function isTagModuleActivated() {
 	if (!file_exists(ICMS_ROOT_PATH . '/modules/tag/include/formtag.php')) return false;
-	$db =& Database::getInstance();
+	$db =& icms_db_Factory::instance();
 	$moduleHandler = new XoopsModuleHandler($db);
 	$tagModule = $moduleHandler->getByDirName('tag');
 	if ($tagModule == false) return false;

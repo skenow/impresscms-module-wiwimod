@@ -42,8 +42,8 @@ if (in_array($op, $valid_ops, TRUE)) {
 		case 'edit':
 		default:
 			icms_cp_header();
-			if (method_exists($xoopsModule, 'displayAdminMenu')) {
-				$xoopsModule->displayAdminMenu (2, _AM_SWIKI_ACLADMIN_NAV);
+			if (method_exists(icms::$module, 'displayAdminMenu')) {
+				icms::$module->displayAdminMenu (2, _AM_SWIKI_ACLADMIN_NAV);
 			} else {
 				w_adminMenu (1, _AM_SWIKI_ACLADMIN_NAV);
 			}

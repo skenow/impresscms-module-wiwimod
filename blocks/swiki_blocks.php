@@ -39,7 +39,7 @@ function swiki_listpages ($options) {
 	$display = in_array($options[3], array('compact', 'light', 'full'), true) ? (string) $options[3] : '';
 	$datetime = (string) htmlspecialchars(trim($options[4]));
 	$block = array();
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	$sql = 'SELECT keyword, title, ' . $field  .' as date, r.userid as u_id, prid, summary FROM ' . $xoopsDB->prefix('wiki_pages') . ' p, ' . $xoopsDB->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND lastmodified=modified ORDER BY '. $field .' ' . $sort .' LIMIT ' . $limit;
 	$result = $xoopsDB->query($sql);
 
@@ -103,11 +103,10 @@ function swiki_listpages_blockedit ($options) {
  * @return array $block
  */
 function swiki_addpage (){
-	global $xoopsUser;
 	$wikiModDir = basename(dirname(dirname(__FILE__)));
 	$block = array();
 
-	$user = $xoopsUser ? $xoopsUser : NULL;
+	$user = icms::$user ? icms::$user : NULL;
 	$writeProfiles = new WiwiProfile();
 	$WritePrivileges = count($writeProfiles->getWriteProfiles($user));
 

@@ -1,12 +1,12 @@
 <?php
 /**
  * Create PDF for a page
- * 
+ *
  * @package SimplyWiki
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$  
+ * @version $Id$
  */
 include_once 'header.php';
 include_once 'class/wiwiRevision.class.php';
@@ -26,7 +26,7 @@ function printPage(&$pageObj,&$pdf) {
 	}
 	$xoopsTpl->assign(array('xoops_theme' => $xoopsConfig['theme_set'], 'xoops_imageurl' => ICMS_THEME_URL.'/'.$xoopsConfig['theme_set'].'/', 'xoops_themecss'=> xoops_getcss($xoopsConfig['theme_set']), 'xoops_requesturi' => htmlspecialchars($GLOBALS['xoopsRequestUri'], ENT_QUOTES), 'xoops_sitename' => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES), 'xoops_slogan' => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES)));
 	// Meta tags
-	$config_handler =& xoops_gethandler('config');
+	$config_handler =& icms::handler('icms_config');
 	$criteria = new CriteriaCompo(new Criteria('conf_modid', 0));
 	$criteria->add(new Criteria('conf_catid', ICMS_CONF_METAFOOTER));
 	$config =& $config_handler->getConfigs($criteria, true);
@@ -40,11 +40,11 @@ function printPage(&$pageObj,&$pdf) {
 	 */
 	$pagecontent = $pageObj->render();
 	$xoopsTpl->assign('swiki', array(
-		'keyword' => $pageObj->keyword, 
-		'title' => $pageObj->title, 
-		'body' => $pagecontent, 
-		'lastmodified' => formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING), 
-		'author' => xoops_getLinkedUnameFromId($pageObj->u_id), 
+		'keyword' => $pageObj->keyword,
+		'title' => $pageObj->title,
+		'body' => $pagecontent,
+		'lastmodified' => formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING),
+		'author' => xoops_getLinkedUnameFromId($pageObj->u_id),
 		));
 	ob_start();
 		$xoopsTpl->xoops_setCaching(0);
@@ -119,7 +119,7 @@ $msg = '';
 if (!printPages($page, $pdf, true, $msg)) {
 	redirect_header('index.php?page='.$page, 2, $msg);
 	exit();
-} 
+}
 // create a temp file
 //$file=tempnam(ICMS_ROOT_PATH.'/uploads','wiwitmp');
 //rename($file,$file.'.pdf');
@@ -129,5 +129,5 @@ $pdf->Output();
 // cleanup old temp files (more than one hour old)
 //cleanupDir(ICMS_ROOT_PATH.'/uploads');
 // redirect page to the newly created pdf.
-//echo "<HTML><SCRIPT>document.location='".ICMS_URL."/uploads/".basename($file)."';</SCRIPT></HTML>"; 
+//echo "<HTML><SCRIPT>document.location='".ICMS_URL."/uploads/".basename($file)."';</SCRIPT></HTML>";
 ?>

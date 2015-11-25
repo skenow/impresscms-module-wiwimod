@@ -1,12 +1,12 @@
 <?php
 /**
  * Group permissions for SimplyWiki
- * 
+ *
  * @package SimplyWiki
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$  
+ * @version $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
@@ -30,20 +30,20 @@ function myDeleteByModule($DB, $gperm_modid, $gperm_name = null, $gperm_itemid =
 // include '../../../include/cp_header.php'; GIJ
 $modid = isset($_POST['modid']) ? (int) $_POST['modid'] : 1;
 // we dont want system module permissions to be changed here ( 1 -> 0 GIJ)
-if ($modid <= 0 || !is_object($xoopsUser) || !$xoopsUser->isAdmin($modid)) {
+if ($modid <= 0 || !is_object(icms::$user) || !icms::$user->isAdmin($modid)) {
 	redirect_header(ICMS_URL.'/user.php', 1, _NOPERM);
 	exit();
 }
-$module_handler =& xoops_gethandler('module');
+$module_handler =& icms::handler('icms_module');
 $module =& $module_handler->get($modid);
 if (!is_object($module) || !$module->getVar('isactive')) {
 	redirect_header(ICMS_URL.'/admin.php', 1, _MODULENOEXIST);
 	exit();
 }
-$member_handler =& xoops_gethandler('member');
+$member_handler =& icms::handler('icms_member');
 $group_list = $member_handler->getGroupList();
 if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
-	$gperm_handler = xoops_gethandler('groupperm');
+	$gperm_handler = icms::handler('groupperm');
 	foreach ($_POST['perms'] as $perm_name => $perm_data) {
 		foreach( $perm_data['itemname' ] as $item_id => $item_name ) {
 			// checking code

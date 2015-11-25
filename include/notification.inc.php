@@ -14,9 +14,9 @@ function swiki_notify_iteminfo($category, $item_id) {
 	global $xoopsModule, $xoopsModuleConfig, $xoopsConfig;
 	$wikiModDir = basename(dirname(dirname(__FILE__)));
 	if (empty($xoopsModule) || $xoopsModule->getVar('dirname') !== $wikiModDir) {
-		$module_handler =& xoops_gethandler('module');
+		$module_handler =& icms::handler('icms_module');
 		$module =& $module_handler->getByDirname($wikiModDir);
-		$config_handler =& xoops_gethandler('config');
+		$config_handler =& icms::handler('icms_config');
 		$config =& $config_handler->getConfigsByCat(0, $module->getVar('mid'));
 	} else {
 		$module =& $xoopsModule;

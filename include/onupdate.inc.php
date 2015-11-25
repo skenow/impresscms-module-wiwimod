@@ -22,9 +22,9 @@ function xoops_module_update_wiwimod($module = NULL, $prev_version = NULL) {
 		include $wikiInstallDir . '/language/english/update.php';
 	}
 
-	$db =& Database::getInstance();
-	$modhandler =& xoops_gethandler('module');
-	$config_handler =& xoops_gethandler('config');
+	$db =& icms_db_Factory::Instance();
+	$modhandler =& icms::handler('icms_module');
+	$config_handler =& icms::handler('icms_config');
 	$SimplyWiki = $modhandler->getByDirname($wikiModDir);
 
 	/* Get current module version before proceeding */

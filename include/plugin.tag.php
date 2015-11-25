@@ -30,7 +30,7 @@ function wiki_tag_iteminfo(&$items) {
 	if(empty($items) || !is_array($items)) {
 		return false;
 	}
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	//TODO : when the wiwimod database upgrade will be done, we'll be able to handle
 	// page directly in the database, so we won't need this inclusion anymore, and
 	// we'll be able to use getObjects as normally, thus the request will be faster.

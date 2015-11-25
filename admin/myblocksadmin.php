@@ -41,8 +41,8 @@ foreach( $group_defs as $def ) {
 if( ! is_object( $xoopsModule ) ) redirect_header( ICMS_URL.'/user.php' , 1 , _NOPERM ) ;
 
 // check access right (needs system_admin of BLOCK)
-$sysperm_handler =& xoops_gethandler('groupperm');
-if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_BLOCK, $xoopsUser->getGroups())) redirect_header( ICMS_URL.'/user.php' , 1 , _NOPERM ) ;
+$sysperm_handler =& icms::handler('groupperm');
+if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_BLOCK, icms::$user->getGroups())) redirect_header( ICMS_URL.'/user.php' , 1 , _NOPERM ) ;
 
 // get blocks owned by the module
 if ( defined('ICMS_VERSION_BUILD') && ICMS_VERSION_BUILD > 27  ) { /* ImpressCMS 1.2+ */
@@ -140,7 +140,7 @@ function list_blocks()
 			}
 		}
 
-		$db =& Database::getInstance();
+		$db =& icms_db_Factory::Instance();
 		if (!$adv_pages){
 			// target modules - XOOPS 2.0.x, 2.3.x, 2.4.x and ImpressCMS 1.0.x
 			$result = $db->query( 'SELECT module_id FROM '.$db->prefix('block_module_link').' WHERE block_id="'.$bid.'"' ) ;
@@ -148,7 +148,7 @@ function list_blocks()
 			while ( list( $selected_mid ) = $db->fetchRow( $result ) ) {
 				$selected_mids[] = (int) $selected_mid ;
 			}
-			$module_handler =& xoops_gethandler('module');
+			$module_handler =& icms::handler('icms_module');
 			$criteria = new CriteriaCompo(new Criteria('hasmain', 1));
 			$criteria->add(new Criteria('isactive', 1));
 			$module_list =& $module_handler->getList($criteria);

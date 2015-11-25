@@ -40,7 +40,7 @@ class WiwiProfile {
 	 * Constructor
 	 */
 	function WiwiProfile($prid = 0) {
-		$this->db =& Database::getInstance();
+		$this->db =& icms_db_Factory::Instance();
 		$this->name = '';
 		$this->readers = array();
 		$this->writers = array();
@@ -65,7 +65,7 @@ class WiwiProfile {
 		$this->readers = array();
 		$this->writers = array();
 		$this->administrators = array();
-		$member_handler =& xoops_gethandler('member');
+		$member_handler =& icms::handler('icms_member');
 		$grps = $member_handler->getGroupList();
 		$sql = 'SELECT gid, priv FROM '.$this->db->prefix('wiki_prof_groups').' WHERE prid='. (int) $prid.' ORDER BY priv';
 		$res = $this->db->query($sql);
@@ -95,8 +95,8 @@ class WiwiProfile {
 		 * so must guess SimplyWiki module id from its folder ...
 		 * @return int Integer representing the profile id of the default profile defined in the module's preferences
 		 */
-		$modhandler =& xoops_gethandler('module');
-		$config_handler =& xoops_gethandler('config');
+		$modhandler =& icms::handler('icms_module');
+		$config_handler =& icms::handler('icms_config');
         $wiwiModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));
 		$swikiConfig =& $config_handler->getConfigsByCat(0, $wiwiModule->getVar('mid'));
 		$prid = $swikiConfig['DefaultProfile'];
@@ -181,7 +181,7 @@ class WiwiProfile {
 	 * Xoops Webmasters have admin access to all profiles of course.
 	 */
 	function getAdminProfiles($user) {
-		$member_handler =& xoops_gethandler('member');
+		$member_handler =& icms::handler('icms_member');
 		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(ICMS_GROUP_ANONYMOUS);
 		if (in_array(ICMS_GROUP_ADMIN , $usergroups)) {
 			$prlist = $this->getAllProfiles();
@@ -205,11 +205,10 @@ class WiwiProfile {
 	 * Returns an three items array with keys _WI_READ, _WI_WRITE, _WI_ADMIN, _WI_COMMENTS
 	 */
 	function getUserPrivileges ($user='') {
-		global $xoopsUser;
-		$member_handler =& xoops_gethandler('member');
-		if ($user == '') $user = $xoopsUser;
+		$member_handler =& icms::handler('icms_member');
+		if ($user == '') $user = icms::$user;
 		//$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(ICMS_GROUP_ANONYMOUS);
-		$usergroups = $xoopsUser ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$usergroups = icms::$user ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$priv = array();
 		$priv[_WI_ADMIN] = in_array(ICMS_GROUP_ADMIN , $usergroups) || ( count(array_intersect ($usergroups, array_keys($this->administrators))) > 0 );
 		$priv[_WI_WRITE] = $priv[_WI_ADMIN] || ( count(array_intersect ($usergroups, array_keys($this->writers))) > 0 );
@@ -275,17 +274,17 @@ class WiwiProfile {
 		 * cannot use the global xoopsModule, if called from within another module ;
 		 * so must guess SimplyWiki module id from its folder ...
 		 */
-		$modhandler =& xoops_gethandler('module');
+		$modhandler =& icms::handler('icms_module');
         $myXoopsModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));
 		//-- get the config item options from the database
 		$criteria = new CriteriaCompo (new Criteria('conf_modid', $myXoopsModule->getVar('mid')));
 		$criteria->add(new Criteria('conf_name', 'DefaultProfile'));
-		$config_handler =& xoops_gethandler('config');
+		$config_handler =& icms::handler('icms_config');
 		$configs = $config_handler->getConfigs($criteria,false);
 		$confid = $configs[0]->getVar('conf_id');
 		$old_options = $config_handler->getConfigOptions(new Criteria('conf_id',$confid),false);
 		//-- create the new options
-		$optionshandler = xoops_gethandler('configoption');
+		$optionshandler = icms::handler('icms_config_option');
 		$prlist = $this->getAllProfiles();
 		foreach ($prlist as $prid=>$prname) {
 			$opt = $optionshandler->create();
@@ -312,7 +311,7 @@ class WiwiProfile {
 	* @return array
 	*/
 	function getWriteProfiles($user) {
-		$member_handler =& xoops_gethandler('member');
+		$member_handler =& icms::handler('icms_member');
 		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(ICMS_GROUP_ANONYMOUS);
 		if (in_array(ICMS_GROUP_ADMIN , $usergroups)) {
 			$prlist = $this->getAllProfiles();
