@@ -112,22 +112,22 @@ $pageArr = $pageObj->getPages($wherexpr,$post_selorderby . ' ' . $post_selorderd
 $maxcount = $pageObj->getPagesNum($wherexpr/*,$post_selorderby . ' ' . $post_selorderdir*/);
 
 echo '<table border="0" cellpadding="0" cellspacing="1" width="100%" class="outer">'
-	. '<tr class="head"><td width="20%"><strong>' . _MD_SWIKI_KEYWORD_COL 
-	. '</strong></td><td><strong>' . _MD_SWIKI_TITLE_COL 
-	. '</strong></td><td width="10%"><strong>' . _MD_SWIKI_MODIFIED_COL 
+	. '<tr class="head"><td width="20%"><strong>' . _MD_SWIKI_KEYWORD_COL
+	. '</strong></td><td><strong>' . _MD_SWIKI_TITLE_COL
+	. '</strong></td><td width="10%"><strong>' . _MD_SWIKI_MODIFIED_COL
 	. '</strong></td><td width="10%"><strong>' . _MD_SWIKI_VIEWS
-	. '</strong></td><td width="30%"><strong>' . _MD_SWIKI_ACTION_COL 
+	. '</strong></td><td width="30%"><strong>' . _MD_SWIKI_ACTION_COL
 	. '</strong></td></tr>';
 
 for ($i=0; $i<count($pageArr); $i++) {
 	$encodedKeyword = $pageObj->encode($pageArr[$i]->keyword);
-	echo '<tr class="' . (($i % 2)?"even":"odd") . '"><td><a href="#" onclick="submitaction(\'op=history&amp;page=' 
-		. $encodedKeyword . '\');">' 
-		. $pageArr[$i]->keyword . '</a></td><td>' . $myts->htmlSpecialChars($pageArr[$i]->title) 
-		. '</td><td>' . formatTimestamp(@strtotime($pageArr[$i]->lastmodified), _SHORTDATESTRING) 
-		. '</td><td>' . $pageArr[$i]->views 
-		. '</td><td><a href="#" onclick="submitaction(\'op=history&amp;page=' . $encodedKeyword . '\');">' 
-		. _MD_SWIKI_HISTORY_BTN . '</a> | <a href="javascript:submitaction(\'op=delete&amp;page=' 
+	echo '<tr class="' . (($i % 2)?"even":"odd") . '"><td><a href="#" onclick="submitaction(\'op=history&amp;page='
+		. $encodedKeyword . '\');">'
+		. $pageArr[$i]->keyword . '</a></td><td>' . icms_core_DataFilter::htmlSpecialchars($pageArr[$i]->title)
+		. '</td><td>' . formatTimestamp(@strtotime($pageArr[$i]->lastmodified), _SHORTDATESTRING)
+		. '</td><td>' . $pageArr[$i]->views
+		. '</td><td><a href="#" onclick="submitaction(\'op=history&amp;page=' . $encodedKeyword . '\');">'
+		. _MD_SWIKI_HISTORY_BTN . '</a> | <a href="javascript:submitaction(\'op=delete&amp;page='
 		. urlencode($encodedKeyword) . '\');">' . _DELETE . '</a></td></tr>';
 }
 echo '</table></br>'

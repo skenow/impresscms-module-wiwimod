@@ -654,8 +654,8 @@ class WiwiRevision {
 		$body2 = preg_replace($search, $replace, $this->body);
 		$bodyDiff = $this->render(diffDisplay($body2, $body));
 		$titleDiff = ($title == $this->title)
-		? '<h2>' . $this->ts->htmlSpecialChars($title) . '</h2>'
-				: '<h2><span style="color: red;">' . $this->ts->htmlSpecialChars($this->title) . '</span> &rarr; <span style="color: green;">' . $this->ts->htmlSpecialChars($title) . '</span></h2>';
+		? '<h2>' . icms_core_DataFilter::htmlSpecialchars($title) . '</h2>'
+				: '<h2><span style="color: red;">' . icms_core_DataFilter::htmlSpecialchars($this->title) . '</span> &rarr; <span style="color: green;">' . icms_core_DataFilter::htmlSpecialchars($title) . '</span></h2>';
 	}
 
 	/**

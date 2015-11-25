@@ -11,7 +11,6 @@
 
 include_once '../../../mainfile.php';
 
-include_once ICMS_ROOT_PATH . '/kernel/module.php';
 include_once '../include/functions.php';
 if (!defined('WIWI_NOCPFUNC')) include_once ICMS_ROOT_PATH . '/include/cp_functions.php';
 $wikiModDir = basename(dirname(dirname(__FILE__)));

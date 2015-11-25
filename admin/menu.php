@@ -35,12 +35,11 @@ $adminmenu[] = array(
      'icon' => 'images/help.png',
      'small' => 'images/help_small.png');
 
-global $xoopsModule;
 $wikiModDir = basename(dirname(dirname(__FILE__)));
-if (isset($xoopsModule)) {
+if (isset(icms::$module)) {
 	$headermenu[0] = array(
 	     'title' => _PREFERENCES,
-	     'link'  => ICMS_URL . "/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $xoopsModule->getVar('mid'),
+	     'link'  => ICMS_URL . "/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . icms::$module->getVar('mid'),
 	);
 	
 /* cross platform issues on the latest version; not addressing the language translations here */

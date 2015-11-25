@@ -11,8 +11,7 @@
 include 'admin_header.php';
 /** Include the profile class */
 include '../class/wiwiProfile.class.php';
-/** Include the core form class */
-include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
+
 $op = $prid = $newprf = $profile = NULL;
 
 $allowed_get = array(
@@ -72,14 +71,14 @@ if (in_array($op, $valid_ops, TRUE)) {
 				. '</td></tr></table><br>';
 
 			//--- profile form ---
-			$aclName = new XoopsFormText(_AM_SWIKI_ACLNAME_FLD, 'prf_name', 20, 20, $prf->name);
-			$aclReaders = new XoopsFormSelectGroup(_AM_SWIKI_READERS_FLD, 'prf_readers', TRUE, NULL, 5, TRUE);
+			$aclName = new icms_form_elements_Text(_AM_SWIKI_ACLNAME_FLD, 'prf_name', 20, 20, $prf->name);
+			$aclReaders = new icms_form_elements_select_Group(_AM_SWIKI_READERS_FLD, 'prf_readers', TRUE, NULL, 5, TRUE);
 			$aclReaders->setValue(array_keys($prf->readers));
-			$aclWriters = new XoopsFormSelectGroup(_AM_SWIKI_WRITERS_FLD, 'prf_writers', TRUE, NULL, 5, TRUE);
+			$aclWriters = new icms_form_elements_select_Group(_AM_SWIKI_WRITERS_FLD, 'prf_writers', TRUE, NULL, 5, TRUE);
 			$aclWriters->setValue(array_keys($prf->writers));
-			$aclAdministrators = new XoopsFormSelectGroup(_AM_SWIKI_ADMINISTRATORS_FLD, 'prf_administrators', TRUE, NULL, 5, TRUE);
+			$aclAdministrators = new icms_form_elements_select_Group(_AM_SWIKI_ADMINISTRATORS_FLD, 'prf_administrators', TRUE, NULL, 5, TRUE);
 			$aclAdministrators->setValue(array_keys($prf->administrators));
-			$aclComments = new XoopsFormSelect(_AM_SWIKI_COMMENTS_FLD, 'prf_commentslevel', $prf->commentslevel);
+			$aclComments = new icms_form_elements_Select(_AM_SWIKI_COMMENTS_FLD, 'prf_commentslevel', $prf->commentslevel);
 			$aclComments->addOptionArray(array(
 				0 => _AM_SWIKI_COMMENTS_NONE_OPT ,
 				_WI_READ => _AM_SWIKI_READERS_OPT ,
@@ -87,7 +86,7 @@ if (in_array($op, $valid_ops, TRUE)) {
 				_WI_ADMIN => _AM_SWIKI_ADMINISTRATORS_OPT
 				)
 			);
-			$aclHistory = new XoopsFormSelect(_AM_SWIKI_HISTORY_FLD, 'prf_historylevel', $prf->historylevel);
+			$aclHistory = new icms_form_elements_Select(_AM_SWIKI_HISTORY_FLD, 'prf_historylevel', $prf->historylevel);
 			$aclHistory->addOptionArray(array(
 				0 => _AM_SWIKI_HISTORY_NONE_OPT ,
 				_WI_READ => _AM_SWIKI_READERS_OPT ,
@@ -95,13 +94,13 @@ if (in_array($op, $valid_ops, TRUE)) {
 				_WI_ADMIN => _AM_SWIKI_ADMINISTRATORS_OPT
 				)
 			);
-			$aclSubmit = new XoopsFormButton('', 'savebtn', _AM_SWIKI_EDITACL_SAVE_BTN, 'submit');
+			$aclSubmit = new icms_form_elements_Button('', 'savebtn', _AM_SWIKI_EDITACL_SAVE_BTN, 'submit');
 			if ($prid !== NULL) {
-				$aclDelete = new XoopsFormButton('', 'delbtn', _AM_SWIKI_EDITACL_DELETE_BTN, 'submit');
+				$aclDelete = new icms_form_elements_Button('', 'delbtn', _AM_SWIKI_EDITACL_DELETE_BTN, 'submit');
 				$aclDelete->setExtra('onclick="document.forms.aclform.op.value=\'confirmdelete\'"');
 
 			}
-			$form = new XoopsThemeForm(_AM_SWIKI_EDITACL_TXT, 'aclform', 'acladmin.php');
+			$form = new icms_form_Theme(_AM_SWIKI_EDITACL_TXT, 'aclform', 'acladmin.php');
 			$form->addElement($aclName);
 			$form->addElement($aclReaders);
 			$form->addElement($aclWriters);
@@ -109,13 +108,13 @@ if (in_array($op, $valid_ops, TRUE)) {
 			$form->addElement($aclComments);
 			$form->addElement($aclHistory);
 
-			$btnTray = new XoopsFormElementTray('');
+			$btnTray = new icms_form_elements_Tray('');
 			$btnTray->addElement($aclSubmit);
 			if ($prid !== NULL) $btnTray->addElement($aclDelete);
 			$form->addElement($btnTray);
 
-			$form->addElement(new XoopsFormHidden('op', 'save'));
-			$form->addElement(new XoopsFormHidden('prid', $prid));
+			$form->addElement(new icms_form_elements_Hidden('op', 'save'));
+			$form->addElement(new icms_form_elements_Hidden('prid', $prid));
 
 			$form->display();
 
@@ -157,28 +156,28 @@ if (in_array($op, $valid_ops, TRUE)) {
 			icms_cp_header();
 			w_adminMenu (1, '_AM_SWIKI_ACLADMIN_TXT');
 
-			$aclConfirmDelete = new XoopsFormCheckBox(_AM_SWIKI_ACLNAME_FLD . ': ' . $prf->name, 'confirmchk');
+			$aclConfirmDelete = new icms_form_elements_Checkbox(_AM_SWIKI_ACLNAME_FLD . ': ' . $prf->name, 'confirmchk');
 			$aclConfirmDelete->addOption(1, _AM_SWIKI_DELCONFIRM_OPT);
 			$aclConfirmDelete->setDescription(_AM_SWIKI_DELCONFIRM_TXT);
 			$aclConfirmDelete->setExtra('onclick="document.forms.aclform.delbtn.style.display=(this.checked ? \'inline\' : \'none\')"');
 
-			$aclRedir = new XoopsFormSelect(_AM_SWIKI_DELREDIR_FLD, 'newprf');
+			$aclRedir = new icms_form_elements_Select(_AM_SWIKI_DELREDIR_FLD, 'newprf');
 			$aclRedir->addOptionArray($prflst);
 			$aclRedir->setDescription(_AM_SWIKI_DELREDIR_TXT);
 
-			$aclDelete = new XoopsFormButton('', 'delbtn', _AM_SWIKI_EDITACL_DELETE_BTN, 'submit');
+			$aclDelete = new icms_form_elements_Button('', 'delbtn', _AM_SWIKI_EDITACL_DELETE_BTN, 'submit');
 			$aclDelete->setExtra ('style="display:none" onclick="document.forms.aclform.op.value=\'delete\'"');
-			$aclCancel = new XoopsFormButton('', 'cancelbtn', _AM_SWIKI_EDITACL_CANCEL_BTN, 'submit');
-			$btnTray = new XoopsFormElementTray('');
+			$aclCancel = new icms_form_elements_Button('', 'cancelbtn', _AM_SWIKI_EDITACL_CANCEL_BTN, 'submit');
+			$btnTray = new icms_form_elements_Tray('');
 			$btnTray->addElement($aclDelete);
 			$btnTray->addElement($aclCancel);
 
-			$form = new XoopsThemeForm(_AM_SWIKI_DELCONFIRM_TXT, 'aclform', 'acladmin.php');
+			$form = new icms_form_Theme(_AM_SWIKI_DELCONFIRM_TXT, 'aclform', 'acladmin.php');
 			$form->addElement($aclConfirmDelete);
 			$form->addElement($aclRedir);
 			$form->addElement($btnTray);
-			$form->addElement(new XoopsFormHidden('op', 'edit'));
-			$form->addElement(new XoopsFormHidden('prid', $prid));
+			$form->addElement(new icms_form_elements_Hidden('op', 'edit'));
+			$form->addElement(new icms_form_elements_Hidden('prid', $prid));
 			$form->display();
 
 			icms_cp_footer();

@@ -3,16 +3,21 @@ Status: Beta
 Released: 
 
 Added
+* Templates for all pages
 
 Improved
+* PHP 5.5 strict compliance
 
 Fixed
+* All deprecated code and references updated
 
 Removed
+* Blocks and Group admin
 
 Language additions/changes
 		
 Contributors to this release
+* skenow
 
 == SimplyWiki 1.2.1 ==
 Status: Final

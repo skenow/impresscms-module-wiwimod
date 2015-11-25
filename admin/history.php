@@ -40,9 +40,9 @@ foreach ($hist as $i=>$rev) {
 	$encodedKeyword = $pageObj->encode($rev['keyword']);
 	echo '<tr class="' . (($pageObj->id == $rev['id']) ? "highlitedrevision" : (($i % 2)?"even":"odd")) . '">'
 		. '<td width="10">' . ($pageObj->id == $rev['id'] ? '<img src="../images/hand.gif">' : '&nbsp;') . '</td>'
-		. '<td><a href="#" onclick="javascript:submitaction(\'page=' . $encodedKeyword . '&op=history&id=' . $rev['id'] . '\');">' . $myts->htmlSpecialChars($rev['title']) . '</a></td>'
+		. '<td><a href="#" onclick="javascript:submitaction(\'page=' . $encodedKeyword . '&op=history&id=' . $rev['id'] . '\');">' . icms_core_DataFilter::htmlSpecialchars($rev['title']) . '</a></td>'
 		. '<td>' . formatTimestamp(strtotime($rev['lastmodified']), _MEDIUMDATESTRING) . '</td>'
-		. '<td>' . xoops_getLinkedUnameFromId($rev['u_id']) . '</td>'
+		. '<td>' . icms_member_user_Handler::getUserLink($rev['u_id']) . '</td>'
 		. '<td><a href="#" onclick="javascript:submitaction(\'page=' . $encodedKeyword
 		. '&op=history&id=' . $rev['id'] . '\');">' . _MD_SWIKI_VIEW_BTN
 		. '</a> | <a href="#" onclick="javascript:submitaction(\'page=' . $encodedKeyword
