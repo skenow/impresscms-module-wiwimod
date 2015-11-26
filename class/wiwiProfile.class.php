@@ -39,8 +39,8 @@ class WiwiProfile {
 	/**
 	 * Constructor
 	 */
-	function WiwiProfile($prid = 0) {
-		$this->db =& icms_db_Factory::Instance();
+	function __construct($prid = 0) {
+		$this->db = icms_db_Factory::instance();
 		$this->name = '';
 		$this->readers = array();
 		$this->writers = array();
@@ -275,14 +275,14 @@ class WiwiProfile {
 		 * so must guess SimplyWiki module id from its folder ...
 		 */
 		$modhandler =& icms::handler('icms_module');
-        $myXoopsModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));
+        $myModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));
 		//-- get the config item options from the database
-		$criteria = new CriteriaCompo (new Criteria('conf_modid', $myXoopsModule->getVar('mid')));
-		$criteria->add(new Criteria('conf_name', 'DefaultProfile'));
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', $myModule->getVar('mid')));
+		$criteria->add(new icms_db_criteria_Item('conf_name', 'DefaultProfile'));
 		$config_handler =& icms::handler('icms_config');
 		$configs = $config_handler->getConfigs($criteria,false);
 		$confid = $configs[0]->getVar('conf_id');
-		$old_options = $config_handler->getConfigOptions(new Criteria('conf_id',$confid),false);
+		$old_options = $config_handler->getConfigOptions(new icms_db_criteria_Item('conf_id',$confid),false);
 		//-- create the new options
 		$optionshandler = icms::handler('icms_config_option');
 		$prlist = $this->getAllProfiles();

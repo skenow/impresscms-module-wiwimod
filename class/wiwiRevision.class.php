@@ -101,7 +101,7 @@ class WiwiRevision {
 	public function __construct($page = NULL, $id = 0, $pageid = 0) {
 		if ($page == '') $page = NULL;
 
-		$this->db =& icms_db_Factory::Instance();
+		$this->db = icms_db_Factory::instance();
 		$this->ts = icms_core_Textsanitizer::getInstance();
 		$this->_dir = basename(dirname(dirname(__FILE__)));
 		$this->_url = ICMS_URL . '/modules/' . $this->_dir . '/';
@@ -322,7 +322,8 @@ class WiwiRevision {
 
 	/**
 	 * Renders revision content, interpreting wiki codes and XoopsCodes.
-	 * @todo	Need to refactor because preg_replace() /e has been deprecated in PHP 5.5. Use preg_replace_callback() instead
+	 * @todo	Need to refactor because preg_replace() /e has been deprecated in PHP 5.5
+	 * 			Use preg_replace_callback() or preg_replace_callback_array() instead
 	 */
 	public function render(&$body = '') {
 		if ($body == '') $body = $this->body;
@@ -353,21 +354,25 @@ class WiwiRevision {
 		// [br] : line break .. still useful ?
 		$search[] = "#\[\[BR\]\]#i";
 		$replace[] = "<br />";
+/* callback */
 		// Xoops block ($1 is the block id or title)
 		$search[] = "#\[\[XBLK (.+?)\]\]#ie" ;
 		$replace[] = '$this->render_block("$1")';
 		// [[IMG url title]] : inline image ...
 		$search[] = "#\[\[IMG ([^\s\"\[>{}]+)( ([^\"<\n]+?))?\]\]#i";
 		$replace[] = '<img src="\\1" alt="\\3" />';
+/* callback */
 		// link with href ending with ?page=CamelCase
 		$search[] = "#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))(\">.*)</a>#Uie";
 		$replace[] = '$this->render_wiwiLink("$2", "$1", "$4");';
 		// CamelCase
 		if ($this->swikiConfig['ShowCamelCase']) {
 			// [[CamelCase title]]
+/* callback */
 			$search[] = "#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#e";
 			$replace[] = '$this->render_wikiLink("$1", "$3", ' . $this->swikiConfig['ShowTitles'] . ')';
 			// [[CamelCase]]
+/* callback */
 			$search[] = "#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#e";
 			$replace[] = '"$1".$this->render_wikiLink("$2", "", ' . $this->swikiConfig['ShowTitles'] . ')';
 			// escaped CamelCase
@@ -377,9 +382,11 @@ class WiwiRevision {
 		// [[www.mysite.org title]] and [[<a ... /a> title]]
 		$search[] = "#\[\[(<a.*>)(.*)</a> (.+?)\]\]#i";
 		$replace[] = '$1$3</a>';
+/* callback */
 		// [[free link | title]]
 		$search[] = "#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#e";
 		$replace[] = '$this->render_wikiLink("$1", "$2", ' . $this->swikiConfig['ShowTitles'] . ')';
+/* callback */
 		// [[free link]]
 		$search[] = "#\[\[(.+?)\]\]#e";
 		$replace[] = '$this->render_wikiLink("$1", "", ' . $this->swikiConfig['ShowTitles'] . ')';
@@ -388,6 +395,7 @@ class WiwiRevision {
 		// =Title=
 		$search[] = "#(" . $nl . ")=(.*)=(" . $eol . ")#m";
 		$replace[] = "\n\\1<h2>\\2</h2>\\3\n";
+/* callback */
 		// > quoted text
 		$search[] = "#(" . $nl . ")" . $gt . " .* (" . $eol . ")#me";
 		$replace[] = '"<blockquote>" . str_replace("\n", " ", preg_replace("#^> #m", "", "$0")) . "</blockquote>\n"';
@@ -424,6 +432,7 @@ class WiwiRevision {
 		//nettoyage des niv*ul
 		$search[] = "#niv([0-9]*)ul#";
 		$replace[] = "ul";
+/* callback */
 		// <[PageIndex]> and <[RecentChanges]>
 		$search[] = "#(?:<p>)*" . $lt . "\[(PageIndexI*|RecentChanges)\]" . $gt . "(?:</p>)*#ie";
 		$replace[] = '$this->render_index("$1")';
@@ -433,18 +442,23 @@ class WiwiRevision {
 		// removes multiple line ends .. still useful ?
 		$search[] = "#\n+#";
 		$replace[] = "\n";
+/* callback */
 		// ((subPage title)) : page to include (addition : Gizmhail)
 		$search[] = "#\(\((.+?)\)\)#e";
 		$replace[] = '$this->renderSubPage("$1")';
+/* callback */
 		// [[PAGE subPage title]] : page to include (addition : Gizmhail)
 		$search[] = "#<wiwisubpage>[~]?(.+?)</wiwisubpage>#e";
 		$replace[] = '$this->renderSubPage("$1")';
+/* callback */
 		// <[Children]>
 		$search[] = "#(?:<p>)*" . $lt . "\[Children\]" . $gt . "(?:</p>)*#ie";
 		$replace[] = '$this->render_children()';
+/* callback */
 		// <[Siblings]>
 		$search[] = "#(?:<p>)*" . $lt . "\[Siblings\]" . $gt . "(?:</p>)*#ie";
 		$replace[] = '$this->render_siblings()';
+/* callback? */
 		// dummy string, to prevent recognition of special sequences (addition : Gizmhail)
 		$search[] = "#\._\.#ie";
 		$replace[] = "";

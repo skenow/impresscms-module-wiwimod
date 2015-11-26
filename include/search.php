@@ -14,9 +14,8 @@ $wikiModDir = basename(dirname(dirname(__FILE__)));
 include_once ICMS_ROOT_PATH . '/modules/'. $wikiModDir .'/class/wiwiProfile.class.php';
 
 function swiki_search($queryarray, $andor, $limit, $offset, $userid) {
-    global $xoopsDB;
 
-    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('wiki_pages') . ' p, ' . $xoopsDB->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified';
+    $sql = 'SELECT * FROM ' . icms::$xoopsDB->prefix('wiki_pages') . ' p, ' . icms::$xoopsDB->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified';
     if (is_array($queryarray) && ($count = count($queryarray))) {
         $sql .= ' AND (p.title LIKE "%' . $queryarray[0] . '%" OR r.body LIKE "%' . $queryarray[0] . '%")';
         for($i = 1; $i < $count; $i++) {
@@ -29,8 +28,8 @@ function swiki_search($queryarray, $andor, $limit, $offset, $userid) {
 
     $items = array();
 	$prf = new WiwiProfile();
-    $result = $xoopsDB->query($sql, $limit, $offset);
-     while($myrow = $xoopsDB->fetchArray($result)) {
+    $result = icms::$xoopsDB->query($sql, $limit, $offset);
+     while($myrow = icms::$xoopsDB->fetchArray($result)) {
 		$prf->load($myrow['prid']);
 		if ($prf->canRead()) {
 			$items[] = array(
