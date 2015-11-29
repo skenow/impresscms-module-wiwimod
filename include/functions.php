@@ -31,22 +31,14 @@ $wikiModDir = basename(dirname(dirname(__FILE__)));
  * @param 	$blkname block title or id
  */
 function swiki_getXoopsBlock ($blkname) {
-	global $xoopsDB;
 	$wikiModDir = basename(dirname(dirname(__FILE__)));
 	$block = array();
 	$bcontent = '';
 	$bid = (int) $blkname;
 
 	// get all blocks
-	if (defined('ICMS_VERSION_BUILD') && ICMS_VERSION_BUILD > 27) {
-		/* ImpressCMS 1.2+ */
 		$block_handler =& icms::handler('icms_view_block');
-		$block_arr =& $block_handler->getAllBlocks();
-	} else {
-		/* legacy support */
-		$block_arr =& XoopsBlock::getAllBlocks();
-		$blk = new XoopsBlock;
-	}
+		$block_arr = $block_handler->getAllBlocks();
 
 	// check block to show
 	if ($bid == 0) {
@@ -60,17 +52,11 @@ function swiki_getXoopsBlock ($blkname) {
 
 	// build block and extract content
 	if ($bid > 0) {
-		if (defined('ICMS_VERSION_BUILD') && ICMS_VERSION_BUILD > 27) {
-			/* ImpressCMS 1.2+ */
-			$blk = $block_handler->get($bid, TRUE);
-		} else {
-			/* legacy support */
-			$blk->load($bid);
-		}
+		$blk = $block_handler->get($bid, TRUE);
 
 		$btpl = $blk->getVar('template');
 		$bid = $blk->getVar('bid');
-		$bresult =& $blk->buildBlock();
+		$bresult = $blk->buildBlock();
 		if ($bresult) {
 			require_once ICMS_ROOT_PATH . '/class/template.php';
 			$xoopsTpl = new XoopsTpl();
@@ -78,11 +64,11 @@ function swiki_getXoopsBlock ($blkname) {
 
 			if ($btpl != '') {
 				$xoopsTpl->assign_by_ref('block', $bresult);
-				$bcontent =& $xoopsTpl->fetch('db:' . $btpl);
+				$bcontent = $xoopsTpl->fetch('db:' . $btpl);
 				$xoopsTpl->clear_assign('block');
 			} else {
 				$xoopsTpl->assign_by_ref('dummy_content', $bresult['content']);
-				$bcontent =& $xoopsTpl->fetch('db:system_dummy.html', 'blk_' . $bid);
+				$bcontent = $xoopsTpl->fetch('db:system_dummy.html', 'blk_' . $bid);
 				$xoopsTpl->clear_assign('dummy_content');
 			}
 		}

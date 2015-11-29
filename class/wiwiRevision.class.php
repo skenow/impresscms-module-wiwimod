@@ -299,13 +299,16 @@ class WiwiRevision {
 	}
 
 	/**
+	 * Callback function to render content from another page within the current page
 	 * Renders sub page content, using render method.
 	 * (addition : Gizmhail)
+	 * @param array $page array of matched elements within the searched text
 	 */
-	public function renderSubPage($page = '') {
+	public function renderSubPage($page) {
+		
 		$result = '';
-		if ($this->keyword != $page) {
-			$subPage =  new WiwiRevision($page);
+		if ($this->keyword != $page[1]) {
+			$subPage =  new WiwiRevision($page[1]);
 			$subPageBody = $subPage->body;
 			//Check if this sub-page can be read by this user
 			//Also check if the page is empty(if it was the case, the render function may try to render the main page, and would loop)
@@ -323,7 +326,7 @@ class WiwiRevision {
 	/**
 	 * Renders revision content, interpreting wiki codes and XoopsCodes.
 	 * @todo	Need to refactor because preg_replace() /e has been deprecated in PHP 5.5
-	 * 			Use preg_replace_callback() or preg_replace_callback_array() instead
+	 * 			Use preg_replace_callback() or preg_replace_callback_array() (in PHP7) instead
 	 */
 	public function render(&$body = '') {
 		if ($body == '') $body = $this->body;
@@ -336,9 +339,12 @@ class WiwiRevision {
 
 		$search = array();
 		$replace = array();
+
 		// [[PAGE subPage free link]] : we first save it(otherwise it might be recognise as a free link) (addition : Gizmhail)
-		$search[] = "#\[\[PAGE (.+?)\]\]#";
-		$replace[] = "<wiwisubpage>~\\1</wiwisubpage>";
+		$subpagesearch = "#\[\[PAGE (.+?)\]\]#";
+		$subpagereplace = "<wiwisubpage>~\\1</wiwisubpage>";
+		$body = preg_replace($subpagesearch, $subpagereplace, $body);
+		
 		// is this one still useful ?
 		$search[] = "#\r\n?#";
 		$replace[] = "\n";
@@ -354,10 +360,12 @@ class WiwiRevision {
 		// [br] : line break .. still useful ?
 		$search[] = "#\[\[BR\]\]#i";
 		$replace[] = "<br />";
-/* callback */
+		
+/* callback - applied */
 		// Xoops block ($1 is the block id or title)
-		$search[] = "#\[\[XBLK (.+?)\]\]#ie" ;
-		$replace[] = '$this->render_block("$1")';
+		$search_callback = "#\[\[XBLK (.+?)\]\]#i" ;
+		$body = preg_replace_callback($search_callback, array($this, 'render_block'), $body);
+
 		// [[IMG url title]] : inline image ...
 		$search[] = "#\[\[IMG ([^\s\"\[>{}]+)( ([^\"<\n]+?))?\]\]#i";
 		$replace[] = '<img src="\\1" alt="\\3" />';
@@ -367,12 +375,12 @@ class WiwiRevision {
 		$replace[] = '$this->render_wiwiLink("$2", "$1", "$4");';
 		// CamelCase
 		if ($this->swikiConfig['ShowCamelCase']) {
-			// [[CamelCase title]]
 /* callback */
+			// [[CamelCase title]]
 			$search[] = "#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#e";
 			$replace[] = '$this->render_wikiLink("$1", "$3", ' . $this->swikiConfig['ShowTitles'] . ')';
-			// [[CamelCase]]
 /* callback */
+			// [[CamelCase]]
 			$search[] = "#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#e";
 			$replace[] = '"$1".$this->render_wikiLink("$2", "", ' . $this->swikiConfig['ShowTitles'] . ')';
 			// escaped CamelCase
@@ -432,37 +440,41 @@ class WiwiRevision {
 		//nettoyage des niv*ul
 		$search[] = "#niv([0-9]*)ul#";
 		$replace[] = "ul";
-/* callback */
+/* callback - applied */
 		// <[PageIndex]> and <[RecentChanges]>
-		$search[] = "#(?:<p>)*" . $lt . "\[(PageIndexI*|RecentChanges)\]" . $gt . "(?:</p>)*#ie";
-		$replace[] = '$this->render_index("$1")';
+		$search_callback = "#(?:<p>)*" . $lt . "\[(PageIndexI*|RecentChanges)\]" . $gt . "(?:</p>)*#i";
+		$body = preg_replace_callback($search_callback, array($this, 'render_index'), $body);
+		
 		// surrounds with <p> and </p> some lines .. hum, still useful ?
 		$search[] = "#^(?!\n|<h2>|<blockquote>|<hr />)(.*?)\n$#sm";
 		$replace[] = "<p>\\1</p>";
 		// removes multiple line ends .. still useful ?
 		$search[] = "#\n+#";
 		$replace[] = "\n";
-/* callback */
+/* callback - applied */
 		// ((subPage title)) : page to include (addition : Gizmhail)
-		$search[] = "#\(\((.+?)\)\)#e";
-		$replace[] = '$this->renderSubPage("$1")';
-/* callback */
+		$search_callback= "#\(\((.+?)\)\)#";
+		$body = preg_replace_callback($search_callback, array($this, 'renderSubPage'), $body);
+		
+/* callback - applied */
 		// [[PAGE subPage title]] : page to include (addition : Gizmhail)
-		$search[] = "#<wiwisubpage>[~]?(.+?)</wiwisubpage>#e";
-		$replace[] = '$this->renderSubPage("$1")';
-/* callback */
-		// <[Children]>
-		$search[] = "#(?:<p>)*" . $lt . "\[Children\]" . $gt . "(?:</p>)*#ie";
-		$replace[] = '$this->render_children()';
-/* callback */
-		// <[Siblings]>
-		$search[] = "#(?:<p>)*" . $lt . "\[Siblings\]" . $gt . "(?:</p>)*#ie";
-		$replace[] = '$this->render_siblings()';
-/* callback? */
-		// dummy string, to prevent recognition of special sequences (addition : Gizmhail)
-		$search[] = "#\._\.#ie";
-		$replace[] = "";
+		$search_callback = "#<wiwisubpage>[~]?(.+?)</wiwisubpage>#";
+		$body = preg_replace_callback($search_callback, array($this, 'renderSubPage'), $body);
 
+/* callback - applied */
+		// <[Children]>
+		$search_callback = "#(?:<p>)*" . $lt . "\[Children\]" . $gt . "(?:</p>)*#i";
+		$body = preg_replace_callback($search_callback, array($this, 'render_children'), $body);
+		
+/* callback - applied */
+		// <[Siblings]>
+		$search_callback = "#(?:<p>)*" . $lt . "\[Siblings\]" . $gt . "(?:</p>)*#i";
+		$body = preg_replace_callback($search_callback, array($this, 'render_siblings'), $body);
+
+		// dummy string, to prevent recognition of special sequences (addition : Gizmhail)
+		$search[] = "#\._\.#i";
+		$replace[] = "";
+		
 		$prelim = $this->ts->displayTarea(preg_replace($search, $replace, $body), 1, 1, 1, 1, 0);
 		return $this->render_toc($prelim);
 	}
@@ -527,8 +539,9 @@ class WiwiRevision {
 	}
 
 	/**
+	 * Callback function to render an index or list of recent changes embedded in the page
 	 *
-	 * @param $type
+	 * @param array $type array of matched elements in the searched text
 	 */
 	public function render_index($type) {
 		$settings = array(
@@ -554,7 +567,7 @@ class WiwiRevision {
 						'"<tr><td>&nbsp;" . formatTimestamp(strtotime($content["lastmodified"]), "H:i") . "</td><td><a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a></td><td>" . $content["summary"] . "</td><td><span class=\"itemPoster\">" . icms_member_user_Handler::getUserLink($content["u_id"]) . "</span></td></tr>"',
 				"")
 		);
-		$cfg = $settings[strtolower($type)];
+		$cfg = $settings[strtolower($type[1])];
 
 		$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM '
 				. $this->db->prefix('wiki_pages') . ' p, ' . $this->db->prefix('wiki_revisions')
@@ -575,12 +588,14 @@ class WiwiRevision {
 	}
 
 	/**
+	 * Callback function to render a system block within the body
 	 *
-	 * @param $blkname
+	 * @param array $matches array of matched elements in the searched text
 	 */
-	public function render_block($blkname) {
+	public function render_block($matches) {
+		
 		include_once ICMS_ROOT_PATH . '/modules/' . $this->_dir . '/include/functions.php';
-		$blk = swiki_getXoopsBlock($blkname);
+		$blk = swiki_getXoopsBlock($matches[1]);
 		return "<table><tr><td>" . $blk['content'] . "</td></tr></table>";
 	}
 
