@@ -12,7 +12,7 @@
  */
 if (!defined("ICMS_ROOT_PATH") && !defined('ICMS_ROOT_PATH')) die('Root path not defined');
 
-function xoops_module_install_wiki () {
+function icms_module_install_simplywiki() {
 	$mydir = dirname(dirname(__FILE__));
 	global $icmsConfig;
 
@@ -73,9 +73,9 @@ function xoops_module_install_wiki () {
 
 	return TRUE;
 }
-/* This will create a function with a name based on the installation directory, if it is not in wiwimod */
+/* This will create a function with a name based on the installation directory, if it is not in simplywiki */
 $myInstallDir = basename(dirname(dirname(__FILE__)));
-if (!function_exists('xoops_module_install_' . $myInstallDir)) {
-	$myfunc = "function xoops_module_install_" . $myInstallDir . "() { return xoops_module_install_wiki();}";
+if (!function_exists('icms_module_install_' . $myInstallDir)) {
+	$myfunc = "function icms_module_install_" . $myInstallDir . "() { return icms_module_install_simplywiki();}";
 	eval($myfunc);
 }
