@@ -371,18 +371,35 @@ class WiwiRevision {
 		$replace[] = '<img src="\\1" alt="\\3" />';
 /* callback */
 		// link with href ending with ?page=CamelCase
-		$search[] = "#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))(\">.*)</a>#Uie";
-		$replace[] = '$this->render_wiwiLink("$2", "$1", "$4");';
+		$search_callback = "#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))(\">.*)</a>#Ui";
+//		$replace[] = '$this->render_wiwiLink("$2", "$1", "$4");';
+		$body = preg_replace_callback($search_callback,
+					function ($matches) {
+						return $this->render_wiwiLink($matches[2], $matches[1], $matches[4]);
+					},
+					$body);
+		
 		// CamelCase
 		if ($this->swikiConfig['ShowCamelCase']) {
 /* callback */
 			// [[CamelCase title]]
-			$search[] = "#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#e";
-			$replace[] = '$this->render_wikiLink("$1", "$3", ' . $this->swikiConfig['ShowTitles'] . ')';
+			$search_callback = "#\[\[((?:[A-Z][a-z]+){2,}\d*) (.+?)\]\]#";
+//			$replace[] = '$this->render_wikiLink("$1", "$2", ' . $this->swikiConfig['ShowTitles'] . ')';
+			$body = preg_replace_callback($search_callback, 
+						function ($matches) {
+							return $this->render_wikiLink($matches[1], $matches[2], $this->swikiConfig['ShowTitles']); 
+						},
+						$body);
+			
 /* callback */
 			// [[CamelCase]]
-			$search[] = "#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#e";
-			$replace[] = '"$1".$this->render_wikiLink("$2", "", ' . $this->swikiConfig['ShowTitles'] . ')';
+			$search_callback = "#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#";
+//			$replace[] = '"$1".$this->render_wikiLink("$2", "", ' . $this->swikiConfig['ShowTitles'] . ')';
+			$body = preg_replace_callback($search_callback, 
+						function ($matches) {
+							return $matches[1] . $this->render_wikiLink($matches[2], '', $this->swikiConfig['ShowTitles']); 
+						},
+						$body);
 			// escaped CamelCase
 			$search[] = "#(^|\s|>)~(([A-Z][a-z]+){2,}\d*)\b#";
 			$replace[] = '\\1\\2';
@@ -392,12 +409,24 @@ class WiwiRevision {
 		$replace[] = '$1$3</a>';
 /* callback */
 		// [[free link | title]]
-		$search[] = "#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#e";
-		$replace[] = '$this->render_wikiLink("$1", "$2", ' . $this->swikiConfig['ShowTitles'] . ')';
+		$search_callback = "#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#";
+//		$replace[] = '$this->render_wikiLink("$1", "$2", ' . $this->swikiConfig['ShowTitles'] . ')';
+		$body = preg_replace_callback($search_callback,
+					function ($matches) {
+						return $this->render_wikiLink($matches[1], $matches[2], $this->swikiConfig['ShowTitles']);
+					},
+					$body);
+		
 /* callback */
 		// [[free link]]
-		$search[] = "#\[\[(.+?)\]\]#e";
-		$replace[] = '$this->render_wikiLink("$1", "", ' . $this->swikiConfig['ShowTitles'] . ')';
+		$search_callback = "#\[\[(.+?)\]\]#";
+//		$replace[] = '$this->render_wikiLink("$1", "", ' . $this->swikiConfig['ShowTitles'] . ')';
+		$body = preg_replace_callback($search_callback,
+					function ($matches) {
+						return $this->render_wikiLink($matches[1], '', $this->swikiConfig['ShowTitles']);
+					},
+					$body);
+		
 		//        "#([\w.-]+@[\w.-]+)(?![\w.]*(\">|<))#";
 		//        '<a href="mailto:\\1">\\1</a>';
 		// =Title=
@@ -405,8 +434,14 @@ class WiwiRevision {
 		$replace[] = "\n\\1<h2>\\2</h2>\\3\n";
 /* callback */
 		// > quoted text
-		$search[] = "#(" . $nl . ")" . $gt . " .* (" . $eol . ")#me";
-		$replace[] = '"<blockquote>" . str_replace("\n", " ", preg_replace("#^> #m", "", "$0")) . "</blockquote>\n"';
+		$search_callback = "#(" . $nl . ")" . $gt . " .* (" . $eol . ")#m";
+//		$replace[] = '"<blockquote>" . str_replace("\n", " ", preg_replace("#^> #m", "", "$0")) . "</blockquote>\n"';
+		$body = preg_replace_callback($search_callback, 
+					function ($matches) {
+						 return "<blockquote>" . str_replace("\n", " ", preg_replace("#^> #m", "", $matches[0])) . "</blockquote>\n";
+					},
+					$body);
+		
 		// * list item
 		$search[] = "#(" . $nl . ")\* (.*)#m";
 		$replace[] = "\\1<li>\\2</li>\\3";
@@ -876,6 +911,10 @@ class WiwiRevision {
 
 	/**
 	 * Returns an array with all links on the current page.
+	 * 
+	 * used in creating the PDF version of a page
+	 * @param	bool	$allowExternals not used? 
+	 * @return	array	$links	an array of links found in the page
 	 */
 	public function getLinks($allowExternals = false) {
 		$links = array();
@@ -971,6 +1010,7 @@ class WiwiRevision {
 
 	/**
 	 * Render an unordered list of pages that have the same parent
+	 * @todo the function allows for arguments, but the current implementation does not use them all
 	 *
 	 * @param	string $parent	The parent to use to find the sibling, will default to the current page
 	 * @param	string $order	The field used to sort the list
@@ -989,6 +1029,7 @@ class WiwiRevision {
 
 	/**
 	 * Render an unordered list of pages that have the same parent
+	 * @todo the function allows for arguments, but the current implementation does not use them all
 	 *
 	 * @param	string $parent	The parent to use to find the sibling, will default to the parent of the current page
 	 * @param	string $order	The field used to sort the list
