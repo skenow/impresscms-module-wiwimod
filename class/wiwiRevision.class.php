@@ -325,8 +325,9 @@ class WiwiRevision {
 
 	/**
 	 * Renders revision content, interpreting wiki codes and XoopsCodes.
-	 * @todo	Need to refactor because preg_replace() /e has been deprecated in PHP 5.5
-	 * 			Use preg_replace_callback() or preg_replace_callback_array() (in PHP7) instead
+	 *
+	 * @param	string	$body	text of page to be processed
+	 * @return	string	processed text
 	 */
 	public function render(&$body = '') {
 		if ($body == '') $body = $this->body;
@@ -357,12 +358,12 @@ class WiwiRevision {
 		// ---- : horizontal rule
 		$search[] = "#(" . $nl . ")-{4,}(" . $eol . ")#m";
 		$replace[] = "\\1<hr />\\2";
-		// [br] : line break .. still useful ?
+		// [[br]] : line break .. still useful ?
 		$search[] = "#\[\[BR\]\]#i";
 		$replace[] = "<br />";
 		
 /* callback - applied */
-		// Xoops block ($1 is the block id or title)
+		// [[XBLK 1]] or [[XBLK title]] Xoops block ($1 is the block id or title)
 		$search_callback = "#\[\[XBLK (.+?)\]\]#i" ;
 		$body = preg_replace_callback($search_callback, array($this, 'render_block'), $body);
 
@@ -385,9 +386,9 @@ class WiwiRevision {
 			// [[CamelCase title]]
 			$search_callback = "#\[\[((?:[A-Z][a-z]+){2,}\d*) (.+?)\]\]#";
 //			$replace[] = '$this->render_wikiLink("$1", "$2", ' . $this->swikiConfig['ShowTitles'] . ')';
-			$body = preg_replace_callback($search_callback, 
+			$body = preg_replace_callback($search_callback,
 						function ($matches) {
-							return $this->render_wikiLink($matches[1], $matches[2], $this->swikiConfig['ShowTitles']); 
+							return $this->render_wikiLink($matches[1], $matches[2], $this->swikiConfig['ShowTitles']);
 						},
 						$body);
 			
@@ -395,9 +396,9 @@ class WiwiRevision {
 			// [[CamelCase]]
 			$search_callback = "#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#";
 //			$replace[] = '"$1".$this->render_wikiLink("$2", "", ' . $this->swikiConfig['ShowTitles'] . ')';
-			$body = preg_replace_callback($search_callback, 
+			$body = preg_replace_callback($search_callback,
 						function ($matches) {
-							return $matches[1] . $this->render_wikiLink($matches[2], '', $this->swikiConfig['ShowTitles']); 
+							return $matches[1] . $this->render_wikiLink($matches[2], '', $this->swikiConfig['ShowTitles']);
 						},
 						$body);
 			// escaped CamelCase
@@ -436,7 +437,7 @@ class WiwiRevision {
 		// > quoted text
 		$search_callback = "#(" . $nl . ")" . $gt . " .* (" . $eol . ")#m";
 //		$replace[] = '"<blockquote>" . str_replace("\n", " ", preg_replace("#^> #m", "", "$0")) . "</blockquote>\n"';
-		$body = preg_replace_callback($search_callback, 
+		$body = preg_replace_callback($search_callback,
 					function ($matches) {
 						 return "<blockquote>" . str_replace("\n", " ", preg_replace("#^> #m", "", $matches[0])) . "</blockquote>\n";
 					},
@@ -911,9 +912,9 @@ class WiwiRevision {
 
 	/**
 	 * Returns an array with all links on the current page.
-	 * 
+	 *
 	 * used in creating the PDF version of a page
-	 * @param	bool	$allowExternals not used? 
+	 * @param	bool	$allowExternals not used?
 	 * @return	array	$links	an array of links found in the page
 	 */
 	public function getLinks($allowExternals = false) {
