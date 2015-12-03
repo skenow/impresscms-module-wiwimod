@@ -1,9 +1,8 @@
-[._.[PAGE subpage free link ]._.]	[[PAGE subPage free link]]
 <._.<._.bold text._.>._.> 		<<bold text>>
 {._.{italic text}._.}		{{italic text}}
 -._.-._.-._.- 				---- : horizontal rule
 [._.[br]._.]				[[br]] : line break .. still useful ?
-[._.[XBLK 1]._.]			[[XBLK 1]] or [[XBLK title]] Xoops block ($1 is the block id or title)
+[._.[XBLK 1]._.]			[[XBLK 1]] or [[XBLK title]] Block ($1 is the block id or title)
 [._.[IMG url title]._.]	[[IMG url title]] : inline image
 <._.a .+ ?page=CamelCase._.>.*<._./a._.>	<a .+ ?page=CamelCase>.*</a> link with href ending with ?page=CamelCase
 [._.[CamelCase title]._.]	[[CamelCase title]]
@@ -17,8 +16,8 @@
 *._. list item		* list item
 <._.[PageIndex]._.>	<[PageIndex]> 
 <._.[RecentChanges]._.>	<[RecentChanges]>
-._.((subPage title)._.)	((subPage title)) : page to include
-[._.[PAGE subPage title]._.]	[[PAGE subPage title]] : page to include
+._.((HomePage title)._.)	((HomePage title)) : page to include
+[._.[PAGE HomePage title]._.]	[[PAGE HomePage title]] : page to include
 <._.[Children]._.>	<[Children]>
 <._.[Siblings]._.>	<[Siblings]>
 .._.._._._..	There is no spa._.ce between the a and c of space

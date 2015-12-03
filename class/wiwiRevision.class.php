@@ -312,7 +312,7 @@ class WiwiRevision {
 			$subPageBody = $subPage->body;
 			//Check if this sub-page can be read by this user
 			//Also check if the page is empty(if it was the case, the render function may try to render the main page, and would loop)
-			if ($subPage->canRead()&&$subPageBody != '') {
+			if ($subPage->canRead() && $subPageBody != '') {
 				$result = $this->render($subPageBody);
 			} else {
 				$result = '';
