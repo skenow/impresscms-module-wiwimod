@@ -20,6 +20,4 @@ global $wikiModDir;
 $wikiModDir = basename(dirname(__FILE__));
 $modversion['dirname'] = $wikiModDir;
 
-include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/include/functions.php';
-

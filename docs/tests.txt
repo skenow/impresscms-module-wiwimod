@@ -1,23 +1,24 @@
 <._.<._.bold text._.>._.> 		<<bold text>>
 {._.{italic text}._.}		{{italic text}}
--._.-._.-._.- 				---- : horizontal rule
+-._.-._.-._.- 				horizontal rule
+----
 [._.[br]._.]				[[br]] : line break .. still useful ?
-[._.[XBLK 1]._.]			[[XBLK 1]] or [[XBLK title]] Block ($1 is the block id or title)
-[._.[IMG url title]._.]	[[IMG url title]] : inline image
-<._.a .+ ?page=CamelCase._.>.*<._./a._.>	<a .+ ?page=CamelCase>.*</a> link with href ending with ?page=CamelCase
+[._.[XBLK 1]._.]			[[XBLK 1]] Block ($1 is the block id or title)
+[._.[IMG url title]._.]	[[IMG images/wiwimod.png SimplyWiki logo]] : inline image
+<._.a .+ ?page=CamelCase._.>.*<._./a._.>	<a href='index.php?page=CamelCase'>link with href</a> 
 [._.[CamelCase title]._.]	[[CamelCase title]]
-[._.[CamelCase]._.]		[[CamelCase]]
+Camel._.Case		CamelCase
 ~._.CamelCase			~CamelCase
-[._.[www.mysite.org title]._.]	[[www.mysite.org title]] and 
-[._.[<a ... /a> title]._.]	[[<a ... /a> title]]
+[._.[<._.a ... /a._.> title]._.]	[[<a href='index.php'></a> title]]
 [._.[free link | title]._.]	[[free link | title]]
 [._.[free link]._.]	[[free link]]
->._. quoted text	> quoted text
-*._. list item		* list item
+
+*._. list item		
+* list item
 <._.[PageIndex]._.>	<[PageIndex]> 
 <._.[RecentChanges]._.>	<[RecentChanges]>
-._.((HomePage title)._.)	((HomePage title)) : page to include
-[._.[PAGE HomePage title]._.]	[[PAGE HomePage title]] : page to include
+(._.(HomePage)._.)	((HomePage)) : page to include
+[._.[PAGE ~HomePage]._.]	[[PAGE HomePage]] : page to include
 <._.[Children]._.>	<[Children]>
 <._.[Siblings]._.>	<[Siblings]>
 .._.._._._..	There is no spa._.ce between the a and c of space

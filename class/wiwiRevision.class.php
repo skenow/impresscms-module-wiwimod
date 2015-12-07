@@ -341,111 +341,49 @@ class WiwiRevision {
 		$search = array();
 		$replace = array();
 
-		// [[PAGE subPage free link]] : we first save it(otherwise it might be recognise as a free link) (addition : Gizmhail)
-		$subpagesearch = "#\[\[PAGE (.+?)\]\]#";
-		$subpagereplace = "<wiwisubpage>~\\1</wiwisubpage>";
-		$body = preg_replace($subpagesearch, $subpagereplace, $body);
-		
+		/**
+		 * @todo	Many of these are not necessary with a full WYSIWYG editor in use. Still left here for legacy support
+		 */
 		// is this one still useful ?
 		$search[] = "#\r\n?#";
 		$replace[] = "\n";
+		
 		// <<bold text>>
 		$search[] = "#" . $lt . "{2}(.*?)" . $gt . "{2}#s";
 		$replace[] = "<strong>\\1</strong>";
+		
 		// {{italic text}}
 		$search[] = "#\{{2}(.*?)\}{2}#s";
 		$replace[] = "<em>\\1</em>";
+		
 		// ---- : horizontal rule
 		$search[] = "#(" . $nl . ")-{4,}(" . $eol . ")#m";
 		$replace[] = "\\1<hr />\\2";
-		// [[br]] : line break .. still useful ?
+
+		// [[br]] : line break .. still useful?
+		//Need to process before other [[ ]] page links, or it will be interpretted as a link to another page
 		$search[] = "#\[\[BR\]\]#i";
 		$replace[] = "<br />";
 		
-/* callback - applied */
-		// [[XBLK 1]] or [[XBLK title]] Xoops block ($1 is the block id or title)
-		$search_callback = "#\[\[XBLK (.+?)\]\]#i" ;
-		$body = preg_replace_callback($search_callback, array($this, 'render_block'), $body);
-
-		// [[IMG url title]] : inline image ...
+		// [[IMG url title]] : inline image.
+		//Need to process before other [[ ]] page links, or it will be interpretted as a link to another page
 		$search[] = "#\[\[IMG ([^\s\"\[>{}]+)( ([^\"<\n]+?))?\]\]#i";
 		$replace[] = '<img src="\\1" alt="\\3" />';
-/* callback - test */
-		// link with href ending with ?page=CamelCase
-		$search_callback = "#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))(\">.*)</a>#Ui";
-//		$replace[] = '$this->render_wiwiLink("$2", "$1", "$4");';
-		$body = preg_replace_callback($search_callback,
-					function ($matches) {
-						return $this->render_wiwiLink($matches[2], $matches[1], $matches[4]);
-					},
-					$body);
-		
-		// CamelCase
-		if ($this->swikiConfig['ShowCamelCase']) {
-/* callback - test */
-			// [[CamelCase title]]
-			$search_callback = "#\[\[((?:[A-Z][a-z]+){2,}\d*) (.+?)\]\]#";
-//			$replace[] = '$this->render_wikiLink("$1", "$2", ' . $this->swikiConfig['ShowTitles'] . ')';
-			$body = preg_replace_callback($search_callback,
-						function ($matches) {
-							return $this->render_wikiLink($matches[1], $matches[2], $this->swikiConfig['ShowTitles']);
-						},
-						$body);
-			
-/* callback - test */
-			// [[CamelCase]]
-			$search_callback = "#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#";
-//			$replace[] = '"$1".$this->render_wikiLink("$2", "", ' . $this->swikiConfig['ShowTitles'] . ')';
-			$body = preg_replace_callback($search_callback,
-						function ($matches) {
-							return $matches[1] . $this->render_wikiLink($matches[2], '', $this->swikiConfig['ShowTitles']);
-						},
-						$body);
-			// escaped CamelCase
-			$search[] = "#(^|\s|>)~(([A-Z][a-z]+){2,}\d*)\b#";
-			$replace[] = '\\1\\2';
-		}
+
 		// [[www.mysite.org title]] and [[<a ... /a> title]]
 		$search[] = "#\[\[(<a.*>)(.*)</a> (.+?)\]\]#i";
-		$replace[] = '$1$3</a>';
-/* callback - test */
-		// [[free link | title]]
-		$search_callback = "#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#";
-//		$replace[] = '$this->render_wikiLink("$1", "$2", ' . $this->swikiConfig['ShowTitles'] . ')';
-		$body = preg_replace_callback($search_callback,
-					function ($matches) {
-						return $this->render_wikiLink($matches[1], $matches[2], $this->swikiConfig['ShowTitles']);
-					},
-					$body);
-		
-/* callback - test */
-		// [[free link]]
-		$search_callback = "#\[\[(.+?)\]\]#";
-//		$replace[] = '$this->render_wikiLink("$1", "", ' . $this->swikiConfig['ShowTitles'] . ')';
-		$body = preg_replace_callback($search_callback,
-					function ($matches) {
-						return $this->render_wikiLink($matches[1], '', $this->swikiConfig['ShowTitles']);
-					},
-					$body);
-		
+		$replace[] = '\\1\\3</a>';
 		//        "#([\w.-]+@[\w.-]+)(?![\w.]*(\">|<))#";
 		//        '<a href="mailto:\\1">\\1</a>';
+		
 		// =Title=
 		$search[] = "#(" . $nl . ")=(.*)=(" . $eol . ")#m";
 		$replace[] = "\n\\1<h2>\\2</h2>\\3\n";
-/* callback - test */
-		// > quoted text
-		$search_callback = "#(" . $nl . ")" . $gt . " .* (" . $eol . ")#m";
-//		$replace[] = '"<blockquote>" . str_replace("\n", " ", preg_replace("#^> #m", "", "$0")) . "</blockquote>\n"';
-		$body = preg_replace_callback($search_callback,
-					function ($matches) {
-						 return "<blockquote>" . str_replace("\n", " ", preg_replace("#^> #m", "", $matches[0])) . "</blockquote>\n";
-					},
-					$body);
 		
 		// * list item
 		$search[] = "#(" . $nl . ")\* (.*)#m";
 		$replace[] = "\\1<li>\\2</li>\\3";
+		
 		//detection des niv0li
 		$search[] = "#(" . $nl . ")\* (.*)#m";
 		$replace[] = "<niv0li>\\2</niv0li>";
@@ -476,43 +414,106 @@ class WiwiRevision {
 		//nettoyage des niv*ul
 		$search[] = "#niv([0-9]*)ul#";
 		$replace[] = "ul";
-/* callback - applied */
-		// <[PageIndex]> and <[RecentChanges]>
-		$search_callback = "#(?:<p>)*" . $lt . "\[(PageIndexI*|RecentChanges)\]" . $gt . "(?:</p>)*#i";
-		$body = preg_replace_callback($search_callback, array($this, 'render_index'), $body);
 		
 		// surrounds with <p> and </p> some lines .. hum, still useful ?
 		$search[] = "#^(?!\n|<h2>|<blockquote>|<hr />)(.*?)\n$#sm";
 		$replace[] = "<p>\\1</p>";
+		
 		// removes multiple line ends .. still useful ?
 		$search[] = "#\n+#";
 		$replace[] = "\n";
-/* callback - applied */
-		// ((subPage title)) : page to include (addition : Gizmhail)
+		
+		$body = $this->ts->displayTarea(preg_replace($search, $replace, $body), 1, 1, 1, 1, 0);
+		
+		$delayedsearch = array();
+		$delayedreplace = array();
+		
+		// link with href ending with ?page=CamelCase
+		$search_callback = "#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))(\">.*)</a>#Ui";
+		$body = preg_replace_callback($search_callback,
+					function ($matches) {
+						return $this->render_wiwiLink($matches[2], $matches[1], $matches[4]);
+					},
+					$body);
+
+		// CamelCase
+		if ($this->swikiConfig['ShowCamelCase']) {
+			// [[CamelCase title]]
+			$search_callback = "#\[\[(?:(?<!XBLK |PAGE )([A-Z][a-z]+){2,}\d*) (.+?)\]\]#";
+			$body = preg_replace_callback($search_callback,
+						function ($matches) {
+							return $this->render_wikiLink($matches[1], $matches[2], $this->swikiConfig['ShowTitles']);
+						},
+						$body);
+			
+			// CamelCase
+			$search_callback = "#(?<!XBLK|PAGE)(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#";
+			$body = preg_replace_callback($search_callback,
+						function ($matches) {
+							return $matches[1] . $this->render_wikiLink($matches[2], '', $this->swikiConfig['ShowTitles']);
+						},
+						$body);
+
+			// escaped ~CamelCase
+			$delayedsearch[] = "#(^|\s|>)~(([A-Z][a-z]+){2,}\d*)\b#";
+			$delayedreplace[] = '\\1\\2';
+		}
+
+		// [[free link | title]]
+		$search_callback = "#\[\[((?!XBLK|PAGE)[^\[\]]+?)\s*\|\s*(.+?)\]\]#";
+		$body = preg_replace_callback($search_callback,
+					function ($matches) {
+						return $this->render_wikiLink($matches[1], $matches[2], $this->swikiConfig['ShowTitles']);
+					},
+					$body);
+		
+		// [[free link]]
+		$search_callback = "#\[\[((?!XBLK |PAGE ).+?)\]\]#";
+		$body = preg_replace_callback($search_callback,
+					function ($matches) {
+						return $this->render_wikiLink($matches[1], '', $this->swikiConfig['ShowTitles']);
+					},
+					$body);
+		
+/* callback - test */
+		// > quoted text
+		$search_callback = "#(" . $nl . ")" . $gt . " .* (" . $eol . ")#m";
+		$body = preg_replace_callback($search_callback,
+					function ($matches) {
+						 return "<blockquote>" . str_replace("\n", " ", preg_replace("#^> #m", "", $matches[0])) . "</blockquote>\n";
+					},
+					$body);
+		
+		// <[PageIndex]> and <[RecentChanges]>
+		$search_callback = "#(?:<p>)*" . $lt . "\[(PageIndexI*|RecentChanges)\]" . $gt . "(?:</p>)*#i";
+		$body = preg_replace_callback($search_callback, array($this, 'render_index'), $body);
+		
+		// ((subPage)) : page to include (addition : Gizmhail)
 		$search_callback= "#\(\((.+?)\)\)#";
 		$body = preg_replace_callback($search_callback, array($this, 'renderSubPage'), $body);
-		
-/* callback - applied */
-		// [[PAGE subPage title]] : page to include (addition : Gizmhail)
-		$search_callback = "#<wiwisubpage>[~]?(.+?)</wiwisubpage>#";
-		$body = preg_replace_callback($search_callback, array($this, 'renderSubPage'), $body);
 
-/* callback - applied */
+		// [[PAGE subPage]] : page to include (addition : Gizmhail) -
+		$search_callback = "#\[\[PAGE (.+?)\]\]#";
+		$body = preg_replace_callback($search_callback, array($this, 'renderSubPage'), $body);
+		
+		// [[XBLK 1]] or [[XBLK title]] Xoops block ($1 is the block id or title)
+		$search_callback = "#\[\[XBLK (.+?)\]\]#i" ;
+		$body = preg_replace_callback($search_callback, array($this, 'render_block'), $body);
+
 		// <[Children]>
 		$search_callback = "#(?:<p>)*" . $lt . "\[Children\]" . $gt . "(?:</p>)*#i";
 		$body = preg_replace_callback($search_callback, array($this, 'render_children'), $body);
 		
-/* callback - applied */
 		// <[Siblings]>
 		$search_callback = "#(?:<p>)*" . $lt . "\[Siblings\]" . $gt . "(?:</p>)*#i";
 		$body = preg_replace_callback($search_callback, array($this, 'render_siblings'), $body);
 
 		// dummy string, to prevent recognition of special sequences (addition : Gizmhail)
-		$search[] = "#\._\.#i";
-		$replace[] = "";
+		$delayedsearch[] = "#\._\.#";
+		$delayedreplace[] = "";
+		$body = preg_replace($delayedsearch, $delayedreplace, $body);
 		
-		$prelim = $this->ts->displayTarea(preg_replace($search, $replace, $body), 1, 1, 1, 1, 0);
-		return $this->render_toc($prelim);
+		return $this->render_toc($body);
 	}
 
 	/**
@@ -545,8 +546,8 @@ class WiwiRevision {
 			$title = $targetPage->title;
 			$txt = $customTitle == ''
 					? (($title != '') && $show_titles)
-					? $title
-					: $normKeyword
+						? $title
+						: $normKeyword
 					: $customTitle ;
 			$privileges = $targetPage->profile->getUserPrivileges();
 		} else {
@@ -987,7 +988,7 @@ class WiwiRevision {
 	 * @return array
 	 */
 	private function getSiblings($parent = '', $order = '', $limit = 0) {
-		if ($page == '' ) $parent = $this->parent;
+		if ($parent == '' ) $parent = $this->parent;
 		$siblings = array();
 		$where = ' parent = "'. $parent .'" AND keyword !="'. $this->keyword . '"';
 		$siblings = $this->getPages($where, $order, $limit);
@@ -1019,6 +1020,7 @@ class WiwiRevision {
 	 * @return	string	HTML for the unordered list
 	 */
 	private function render_children($page = '', $order = '', $limit = 0) {
+		if (is_array($page)) $page = '';
 		$pages = self::getChildren($page, $order, $limit);
 		$body = '';
 		foreach ($pages as $page) {
@@ -1038,6 +1040,7 @@ class WiwiRevision {
 	 * @return	string	HTML for the unordered list
 	 */
 	private function render_siblings($parent = '', $order = '', $limit = 0) {
+		if (is_array($parent)) $parent = '';
 		$pages = self::getSiblings($parent, $order, $limit);
 		$body = '';
 		foreach ($pages as $page) {

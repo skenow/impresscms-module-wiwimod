@@ -58,18 +58,17 @@ function swiki_getXoopsBlock ($blkname) {
 		$bid = $blk->getVar('bid');
 		$bresult = $blk->buildBlock();
 		if ($bresult) {
-			require_once ICMS_ROOT_PATH . '/class/template.php';
-			$xoopsTpl = new XoopsTpl();
-			$xoopsTpl->xoops_setCaching(2);
+			$icmsTemplate = new icms_view_Tpl();
+			$icmsTemplate->caching = 2;
 
 			if ($btpl != '') {
-				$xoopsTpl->assign_by_ref('block', $bresult);
-				$bcontent = $xoopsTpl->fetch('db:' . $btpl);
-				$xoopsTpl->clear_assign('block');
+				$icmsTemplate->assign_by_ref('block', $bresult);
+				$bcontent = $icmsTemplate->fetch('db:' . $btpl);
+				$icmsTemplate->clear_assign('block');
 			} else {
-				$xoopsTpl->assign_by_ref('dummy_content', $bresult['content']);
-				$bcontent = $xoopsTpl->fetch('db:system_dummy.html', 'blk_' . $bid);
-				$xoopsTpl->clear_assign('dummy_content');
+				$icmsTemplate->assign_by_ref('dummy_content', $bresult['content']);
+				$bcontent = $icmsTemplate->fetch('db:system_dummy.html', 'blk_' . $bid);
+				$icmsTemplate->clear_assign('dummy_content');
 			}
 		}
 	}
