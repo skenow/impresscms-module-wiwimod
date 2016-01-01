@@ -11,7 +11,7 @@
  */
 if (!defined("ICMS_ROOT_PATH") && !defined('ICMS_ROOT_PATH')) exit("Root path not defined");
 
-function xoops_module_update_wiwimod($module = NULL, $prev_version = NULL) {
+function icms_module_update_simplywiki($module = NULL, $prev_version = NULL) {
 	$wikiInstallDir = dirname(dirname(__FILE__));
 	$wikiModDir = basename(dirname(dirname(__FILE__)));
 	global $icmsConfig;
@@ -22,7 +22,7 @@ function xoops_module_update_wiwimod($module = NULL, $prev_version = NULL) {
 		include $wikiInstallDir . '/language/english/update.php';
 	}
 
-	$db =& icms_db_Factory::Instance();
+	$db = icms_db_Factory::Instance();
 	$modhandler =& icms::handler('icms_module');
 	$config_handler =& icms::handler('icms_config');
 	$SimplyWiki = $modhandler->getByDirname($wikiModDir);
@@ -153,9 +153,9 @@ function xoops_module_update_wiwimod($module = NULL, $prev_version = NULL) {
 	return TRUE;
 }
 
-/* This will create a function with a name based on the installation directory, if it is not in SimplyWiki */
+/* This will create a function with a name based on the installation directory, if it is not in simplywiki */
 $wikiModDir = basename(dirname(dirname(__FILE__)));
-if (!function_exists('xoops_module_update_' . $wikiModDir)) {
-	$myfunc = "function xoops_module_update_" . $wikiModDir . '($module = NULL, $prev_version = NULL) { return xoops_module_update_wiwimod($module, $prev_version);}';
+if (!function_exists('icms_module_update_' . $wikiModDir)) {
+	$myfunc = "function icms_module_update_" . $wikiModDir . '($module = NULL, $prev_version = NULL) { return icms_module_update_simplywiki($module, $prev_version);}';
 	eval($myfunc);
 }
