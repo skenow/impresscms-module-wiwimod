@@ -13,20 +13,19 @@ $wikiModDir = basename(dirname(dirname(__FILE__))) ;
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
 function swiki_recent ($options) {
-	global $xoopsDB;
 	$wikiModDir = basename(dirname(dirname(__FILE__))) ;
 	$limit = (int) $options[0];
 	$block = array();
 	$myts =& icms_core_Textsanitizer::getInstance();
 	$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, prid, summary FROM '
-		. $xoopsDB->prefix('wiki_pages') . ' p, ' . $xoopsDB->prefix('wiki_revisions')
+		. icms::$xoopsDB->prefix('wiki_pages') . ' p, ' . icms::$xoopsDB->prefix('wiki_revisions')
 		. ' r WHERE p.pageid=r.pageid AND lastmodified=modified ORDER BY lastmodified DESC LIMIT '
 		. $limit;
-	$result = $xoopsDB->query($sql);
+	$result = icms::$xoopsDB->query($sql);
 
 	//Filter each entry according to its privilege
 	$prf = new WiwiProfile();
-	while ($content = $xoopsDB->fetcharray($result)) {
+	while ($content = icms::$xoopsDB->fetcharray($result)) {
 		$prf->load($content['prid']);
 		if ($prf->canRead()) {
 			$link = array();
@@ -34,7 +33,7 @@ function swiki_recent ($options) {
 			$link['title'] = $content['title'];
 			if ($link['title'] == "") $link['title'] = $content['keyword'];
 			$link['lastmodified'] = formatTimestamp(strtotime($content['lastmodified']), _SHORTDATESTRING);
-			$link['user'] = xoops_getLinkedUnameFromId($content['u_id']);
+			$link['user'] = icms_member_user_Handler::getUserLink($content['u_id']);
 			$link['summary'] = $content['summary'];
 				
 			$block['links'][] = $link;

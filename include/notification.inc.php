@@ -25,10 +25,9 @@ function swiki_notify_iteminfo($category, $item_id) {
 
 	if ($category == 'page' || $category == 'global') {
 		// 	Assume we have a valid category id
-		global $xoopsDB;
-		$sql = 'SELECT title, keyword FROM ' . $xoopsDB->prefix('wiki_pages') . ' WHERE pageid = ' . $item_id;
-		$result = $xoopsDB->query($sql); // TODO: error check
-		$result_array = $xoopsDB->fetchArray($result);
+		$sql = 'SELECT title, keyword FROM ' . icms::$xoopsDB->prefix('wiki_pages') . ' WHERE pageid = ' . $item_id;
+		$result = icms::$xoopsDB->query($sql); // TODO: error check
+		$result_array = icms::$xoopsDB->fetchArray($result);
 		$item['name'] = $result_array['title'];
 		$item['url'] = ICMS_URL . '/modules/' . $wikiModDir . '/index.php?page=' . $result_array['keyword'];
 		return $item;

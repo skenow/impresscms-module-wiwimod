@@ -34,7 +34,7 @@ include_once 'class/wiwiRevision.class.php';
 $wiki_page_handler = new WiwiRevisionHandler();
 
 /** Establish a handler for determining the page author */
-$wiki_author_handler = new XoopsMemberHandler($xoopsDB);
+$wiki_author_handler = new icms_member_Handler(icms::$xoopsDB);
 
 $pages = $wiki_page_handler->getRevisions($clean_author, $clean_type);
 

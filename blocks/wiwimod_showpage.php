@@ -15,7 +15,6 @@ $wikiModDir = basename(dirname(dirname(__FILE__)));
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
 function swiki_showpage ($options) {
-	global $xoopsDB, $xoopsModuleConfig, icms::$user, $myts;
 	$wikiModDir = basename(dirname(dirname(__FILE__))) ;
 	 
 	$block = array();
@@ -26,15 +25,14 @@ function swiki_showpage ($options) {
 	} else {
 		$block['notfound'] = false;
 		if (!$pageObj->canRead()) {
-			$pagecontent = xoops_warning(_MD_SWIKI_NOREADACCESS_MSG);
+			$pagecontent = icms_core_Message::warning(_MD_SWIKI_NOREADACCESS_MSG);
 		} else {
 			// Handle pagebreaks
 			$pagecontent = $pageObj->body;
 			$cpages = explode ("[pagebreak]", $pagecontent);
 			if (isset($_GET['wiwistartpage'])) $startpage = (int) $_GET['wiwistartpage'] ; else $startpage = 0;
 			if (count($cpages) > 0) {
-				include_once ICMS_ROOT_PATH . '/class/pagenav.php';
-				$pagenav = new XoopsPageNav(count($cpages), 1, $startpage, 'wiwistartpage', '');
+				$pagenav = new icms_view_PageNav(count($cpages), 1, $startpage, 'wiwistartpage', '');
 				$block['nav'] = $pagenav->RenderNav();
 				$pagecontent = $cpages[$startpage];
 			}
@@ -45,7 +43,7 @@ function swiki_showpage ($options) {
 		$block['title'] = $pageObj->title;
 		$block['body'] = $pagecontent;
 		$block['lastmodified'] = formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING);
-		$block['author'] = xoops_getLinkedUnameFromId($pageObj->u_id);
+		$block['author'] = icms_member_user_Handler::getUserLink($pageObj->u_id);
 
 		$block['mayEdit'] = $pageObj->canWrite();
 		$block['EDIT'] = _EDIT;
@@ -57,19 +55,22 @@ function swiki_showpage ($options) {
 }
 
 function swiki_contextshow($options) {
-	global $xoopsDB, $xoopsModuleConfig, icms::$user, $myts;
 	$wikiModDir = basename(dirname(dirname(__FILE__))) ;
+	
 	// Get content to display
 	$preg_res = array();
 	$sidePage = '';
 	$block = array();
-	if (preg_match("#\?page=([^&]+)#ie", htmlspecialchars($GLOBALS['xoopsRequestUri'], ENT_QUOTES),  $preg_res)) {
+	
+	if (preg_match("#\?page=([^&]+)#i", htmlspecialchars($GLOBALS['xoopsRequestUri'], ENT_QUOTES),  $preg_res)) {
 		$page = urldecode($preg_res[1]);
-	} else $page=_MB_SWIKI_HOME;
+	} else {
+		$page=_MB_SWIKI_HOME;
+	}
 
-	$sql = 'SELECT contextBlock FROM ' . $xoopsDB->prefix('wiki_pages') . ' WHERE keyword="' . $page . '" ORDER BY pageid DESC LIMIT 1';
-	$result = $xoopsDB->query($sql);
-	list($sidePage) = $xoopsDB->fetchRow($result);
+	$sql = 'SELECT contextBlock FROM ' . icms::$xoopsDB->prefix('wiki_pages') . ' WHERE keyword="' . $page . '" ORDER BY pageid DESC LIMIT 1';
+	$result = icms::$xoopsDB->query($sql);
+	list($sidePage) = icms::$xoopsDB->fetchRow($result);
 	if ($sidePage != '') {
 		$pageObj = new wiwiRevision($sidePage);
 		if ($pageObj->id != 0) {
@@ -79,7 +80,7 @@ function swiki_contextshow($options) {
 				$block['title'] = $pageObj->title;
 				$block['body'] = $pageObj->render();
 				$block['lastmodified'] = formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING);
-				$block['author'] = xoops_getLinkedUnameFromId($pageObj->u_id);
+				$block['author'] = icms_member_user_Handler::getUserLink($pageObj->u_id);
 				$block['mayEdit'] = $pageObj->canWrite();
 				$block['EDIT'] = _EDIT;
 			} else {

@@ -13,18 +13,17 @@ $wikiModDir = basename(dirname(dirname(__FILE__)));
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
 function swiki_toc() {
-	global $xoopsDB;
 	$wikiModDir = basename(dirname(dirname(__FILE__)));
 	$block = array();
 	$myts =& icms_core_Textsanitizer::getInstance();
 
-	$sql = 'SELECT keyword, title, visible, prid FROM ' . $xoopsDB->prefix('wiki_pages') . ' p, '
-		. $xoopsDB->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND lastmodified=modified AND visible>0 ORDER BY visible, title ';
-	$result = $xoopsDB->query($sql);
+	$sql = 'SELECT keyword, title, visible, prid FROM ' . icms::$xoopsDB->prefix('wiki_pages') . ' p, '
+		. icms::$xoopsDB->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND lastmodified=modified AND visible>0 ORDER BY visible, title ';
+	$result = icms::$xoopsDB->query($sql);
 	
 	//Filter each entry according to its privilege
 	$prf = new WiwiProfile();
-	while($tcontent = $xoopsDB->fetchArray($result)) {
+	while($tcontent = icms::$xoopsDB->fetchArray($result)) {
 		$prf->load($tcontent['prid']);
 		if ($prf->canRead()) {
 			$link = array();

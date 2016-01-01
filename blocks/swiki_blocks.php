@@ -30,7 +30,6 @@ if (!defined('_MD_SWIKI_ADDPAGE_BTN')) {
  * $return array $block
  */
 function swiki_listpages ($options) {
-	global $xoopsDB;
 	$wikiModDir = basename(dirname(dirname(__FILE__)));
 	$limit = (int) $options[0];
 	$field = $sort = $display = $datetime = '';
@@ -40,12 +39,12 @@ function swiki_listpages ($options) {
 	$datetime = (string) htmlspecialchars(trim($options[4]));
 	$block = array();
 	$myts =& icms_core_Textsanitizer::getInstance();
-	$sql = 'SELECT keyword, title, ' . $field  .' as date, r.userid as u_id, prid, summary FROM ' . $xoopsDB->prefix('wiki_pages') . ' p, ' . $xoopsDB->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND lastmodified=modified ORDER BY '. $field .' ' . $sort .' LIMIT ' . $limit;
-	$result = $xoopsDB->query($sql);
+	$sql = 'SELECT keyword, title, ' . $field  .' as date, r.userid as u_id, prid, summary FROM ' . icms::$xoopsDB->prefix('wiki_pages') . ' p, ' . icms::$xoopsDB->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND lastmodified=modified ORDER BY '. $field .' ' . $sort .' LIMIT ' . $limit;
+	$result = icms::$xoopsDB->query($sql);
 
 	//Filter each entry according to its privilege
 	$prf = new WiwiProfile();
-	while ($content = $xoopsDB->fetcharray($result)) {
+	while ($content = icms::$xoopsDB->fetcharray($result)) {
 		$prf->load($content['prid']);
 		if ($prf->canRead()) {
 			$link = array();
@@ -57,7 +56,7 @@ function swiki_listpages ($options) {
 			} else {
 				$link['date'] = (int) $content['date'];
 			}
-			$link['user'] = xoops_getLinkedUnameFromId($content['u_id']);
+			$link['user'] = icms_member_user_Handler::getUserLink($content['u_id']);
 			$link['summary'] = $content['summary'];
 			$link['display_mode'] = $display;
 			$block['links'][] = $link;

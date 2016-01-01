@@ -15,7 +15,6 @@ include 'admin_header.php';
 include '../class/wiwiRevision.class.php';
 include '../class/wiwiPageNav.class.php';
 
-global $myts;
 /* Valid $_GET variables and types:  (string) op, (integer) id, (integer) starthist, (string) page
  * Define all variables and set a default value
  */
