@@ -130,7 +130,6 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '') {
 		. "<ul>"
 		. "<li id='" . $tblColors[0] . "'><a href=\"" . ICMS_URL . "/modules/" . $wikiModDir . "/admin/index.php\"><span>" . _MI_SWIKI_ADMENU1 . "</span></a></li>"
 		. "<li id='" . $tblColors[1] . "'><a href=\"" . ICMS_URL . "/modules/" . $wikiModDir . "/admin/acladmin.php\"><span>" . _MI_SWIKI_ADMENU2 . "</span></a></li>"
-		. "<li id='" . $tblColors[3] . "'><a href=\"" . ICMS_URL . "/modules/" . $wikiModDir . "/admin/myblocksadmin.php\"><span>" . _MI_SWIKI_ADMENU3  . "</span></a></li>"
 		. "<li id='" . $tblColors[4] . "'><a href=\"" . ICMS_URL . "/modules/" . $wikiModDir . "/admin/about.php\"><span>" . _MI_SWIKI_ADMENU4 . "</span></a></li>"
 		. "<li id='" . $tblColors[5] . "'><a href=\"" . ICMS_URL . "/modules/" . $wikiModDir . "/admin/help.php\"><span>" . _MI_SWIKI_ADMENU5 . "</span></a></li>"
 		. "</ul></div>&nbsp;";
