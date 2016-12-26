@@ -106,7 +106,7 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '') {
 
 	global $icmsConfig;
 	$module = icms::handler('icms_module')->getByDirname($wikiModDir);
-	$myts = &icms_core_Textsanitizer::getInstance();
+	$myts = icms_core_Textsanitizer::getInstance();
 
 	$tblColors = array();
 	$tblColors[0] = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] ='';
