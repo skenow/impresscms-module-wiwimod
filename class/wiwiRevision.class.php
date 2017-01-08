@@ -197,7 +197,7 @@ class WiwiRevision {
 			$this->pageid = $this->db->getInsertId();
 		}
 		/* need to do this because of new input filtering in ImpressCMS 1.3.3 */
-		if (defined("ICMS_VERSION_BUILD") && ICMS_VERSION_BUILD > 63 && ICMS_VERSION_BUILD != 71) {
+		if (class_exists('icms_core_DataFilter')) {
 			/* deliberate use of addslashes, here */
 			$body = addslashes(icms_core_DataFilter::checkVar($this->body, 'html', 'input'));
 		} else {
