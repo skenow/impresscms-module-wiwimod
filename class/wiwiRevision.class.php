@@ -197,7 +197,7 @@ class WiwiRevision {
 			$this->pageid = $this->db->getInsertId();
 		}
 		/* need to do this because of new input filtering in ImpressCMS 1.3.3 */
-		if (class_exists('icms_core_DataFilter')) {
+		if (ICMS_VERSION_BUILD > 63) {
 			/* deliberate use of addslashes, here */
 			$body = addslashes(icms_core_DataFilter::checkVar($this->body, 'html', 'input'));
 		} else {
@@ -239,7 +239,7 @@ class WiwiRevision {
 	public function save() {
 		$save_date = date('Y/n/j G:i:s');
 		/* need to do this because of new input filtering in ImpressCMS 1.3.3 */
-		if (defined("ICMS_VERSION_BUILD") && ICMS_VERSION_BUILD > 63 && ICMS_VERSION_BUILD != 71) {
+		if (ICMS_VERSION_BUILD > 63) {
 			/* deliberate use of addslashes, here */
 			$body = addslashes(icms_core_DataFilter::checkVar($this->body, 'html', 'input'));
 		} else {
@@ -632,7 +632,7 @@ class WiwiRevision {
 	public function render_block($matches) {
 		
 		include_once ICMS_ROOT_PATH . '/modules/' . $this->_dir . '/include/functions.php';
-		$blk = swiki_getXoopsBlock($matches[1]);
+		$blk = swiki_getBlock($matches[1]);
 		return "<table><tr><td>" . $blk['content'] . "</td></tr></table>";
 	}
 
@@ -644,7 +644,7 @@ class WiwiRevision {
 		$sql = 'SELECT parent FROM ' . $db->prefix('wiki_pages') . ' WHERE keyword="' . icms_core_DataFilter::addSlashes($child) . '"';
 		$result = $db->query($sql);
 		list($parent) = $db->fetchRow($result);
-		if (($parent != '')&&(!in_array($parent, $parlist))) {
+		if (($parent != '') && (!in_array($parent, $parlist))) {
 			$parlist[] = $parent;
 			$this->parentList_recurr($parent, $parlist, $db);
 		}

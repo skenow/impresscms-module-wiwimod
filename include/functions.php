@@ -30,7 +30,7 @@ $wikiModDir = basename(dirname(dirname(__FILE__)));
  * 			class handler
  * @param 	$blkname block title or id
  */
-function swiki_getXoopsBlock ($blkname) {
+function swiki_getBlock ($blkname) {
 	$wikiModDir = basename(dirname(dirname(__FILE__)));
 	$block = array();
 	$bcontent = '';
