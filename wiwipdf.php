@@ -27,8 +27,8 @@ function printPage(&$pageObj,&$pdf) {
 	$xoopsTpl->assign(array('xoops_theme' => $icmsConfig['theme_set'], 'xoops_imageurl' => ICMS_THEME_URL.'/'.$icmsConfig['theme_set'].'/', 'xoops_themecss'=> xoops_getcss($icmsConfig['theme_set']), 'xoops_requesturi' => htmlspecialchars($GLOBALS['xoopsRequestUri'], ENT_QUOTES), 'xoops_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES), 'xoops_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES)));
 	// Meta tags
 	$config_handler =& icms::handler('icms_config');
-	$criteria = new CriteriaCompo(new Criteria('conf_modid', 0));
-	$criteria->add(new Criteria('conf_catid', ICMS_CONF_METAFOOTER));
+	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', 0));
+	$criteria->add(new icms_db_criteria_Compo('conf_catid', ICMS_CONF_METAFOOTER));
 	$config =& $config_handler->getConfigs($criteria, true);
 	foreach (array_keys($config) as $i) {
 		// prefix each tag with 'xoops_'
@@ -130,4 +130,3 @@ $pdf->Output();
 //cleanupDir(ICMS_ROOT_PATH.'/uploads');
 // redirect page to the newly created pdf.
 //echo "<HTML><SCRIPT>document.location='".ICMS_URL."/uploads/".basename($file)."';</SCRIPT></HTML>";
-?>
