@@ -119,7 +119,7 @@ switch ($op) {
 			redirect_header('index.php?page=' . urlencode($pageObj->keyword), 2, _MD_SWIKI_NOWRITEACCESS_MSG);
 		} else {
 
-			if ($xoopsModuleConfig['Captcha']) {
+			if ($swikiConfig['Captcha']) {
 				// Captcha - Verify entered code
 				$icmsCaptcha = icms_form_elements_captcha_Object::instance();
 				if (! $icmsCaptcha->verify(true)) {
@@ -194,20 +194,20 @@ switch ($op) {
 			$edArr[] = array('value' => $ed[1], 'text' => $ed[0], 'options' => $ed[2]);
 		}
 		$xoopsTpl->assign('editorsArr', $edArr);
-		$editor = isset($clean_POST['editor']) ? $clean_POST['editor'] : $xoopsModuleConfig['Editor'] ;
+		$editor = isset($clean_POST['editor']) ? $clean_POST['editor'] : $swikiConfig['Editor'] ;
 		$editOptions = isset($clean_POST['editoptions']) ? $clean_POST['editoptions'] : "" ;
 		$form->addElement(new icms_form_elements_Hidden('editor', $editor));
 		$form->addElement(new icms_form_elements_Hidden('editoptions', $editOptions));
 
 		switch ($editor) {
 			default:
-			case 0 : // standard xoops
+			case 0 : // standard editor
 				$t_area = new icms_form_elements_Dhtmltextarea(_MD_SWIKI_BODY_FLD, 'body', htmlspecialchars($pageObj->body, ENT_QUOTES, _CHARSET, FALSE), '30', '70');
 				break;
 
-			case 1 : // XoopsEditor
+			case 1 : // HTML editors
 				$editorhandler = new icms_plugins_EditorHandler();
-				$editor_name = ($editOptions != '') ? $editOptions : $xoopsModuleConfig['XoopsEditor'];
+				$editor_name = ($editOptions != '') ? $editOptions : $swikiConfig['XoopsEditor'];
 
 				$options['caption'] = _MD_SWIKI_BODY_FLD;
 				$options['name'] ='body';
@@ -299,7 +299,7 @@ switch ($op) {
 		}
 
 		// Captcha Hack
-		if ($xoopsModuleConfig['Captcha']) {
+		if ($swikiConfig['Captcha']) {
 			$form -> addElement(new icms_form_elements_Captcha());
 		}
 		// Captcha Hack
@@ -422,15 +422,15 @@ switch ($op) {
 			'lastmodified' => formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING),
 			'author' => icms_member_user_Handler::getUserLink($pageObj->u_id),
 			'mayEdit' => $pageObj->canWrite(),
-			'showComments' => $pageObj->canViewComments() && ($xoopsModuleConfig['com_rule'] != 0),
+			'showComments' => $pageObj->canViewComments() && ($swikiConfig['com_rule'] != 0),
 			'showHistory' => $pageObj->canViewHistory(),
-			'allowPDF' => $xoopsModuleConfig['allowPDF'],
+			'allowPDF' => $swikiConfig['allowPDF'],
 			'created' => sprintf(_MD_SWIKI_CREATED, icms_member_user_Handler::getUserLink($pageObj->creator), formatTimestamp(strtotime($pageObj->created), _SHORTDATESTRING)),
 			'views' => sprintf(_MD_SWIKI_VIEWED, $pageObj->views),
 			'lastviewed' => sprintf(_MD_SWIKI_LASTVIEWED, formatTimestamp(strtotime($pageObj->lastviewed), _SHORTDATESTRING)),
 			'revisions' => sprintf(_MD_SWIKI_REVISIONS, $pageObj->revisions),
-			'ShowPageInfo' => array_flip($xoopsModuleConfig['ShowPageInfo']),
-			'ShowQuickAdd' => $xoopsModuleConfig['ShowQuickAdd'],
+			'ShowPageInfo' => array_flip($swikiConfig['ShowPageInfo']),
+			'ShowQuickAdd' => $swikiConfig['ShowQuickAdd'],
 			'WritePrivileges' => $WritePrivileges,
 		));
 

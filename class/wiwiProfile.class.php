@@ -2,8 +2,6 @@
 /**
  * Permissions profile
  *
- * @todo remove any $xoopsModule or $xoopsModuleConfig references, to enable the class being used from within any other module.
- *
  * @package SimplyWiki
  * @author Wiwimod: Xavier JIMENEZ
  *
@@ -91,8 +89,7 @@ class WiwiProfile {
 	 */
 	function getDefaultProfileId () {
 		/*
-		 * cannot use globals xoopsModule or xoopsModuleConfig, if called from within another module ;
-		 * so must guess SimplyWiki module id from its folder ...
+		 * must guess SimplyWiki module id from its folder ...
 		 * @return int Integer representing the profile id of the default profile defined in the module's preferences
 		 */
 		$modhandler =& icms::handler('icms_module');
@@ -178,7 +175,7 @@ class WiwiProfile {
 	}
 	/**
 	 * Retrieves an array with all profile name and id where the selected user has admin privilege
-	 * Xoops Webmasters have admin access to all profiles of course.
+	 * Webmasters have admin access to all profiles of course.
 	 */
 	function getAdminProfiles($user) {
 		$member_handler =& icms::handler('icms_member');
@@ -201,7 +198,7 @@ class WiwiProfile {
 	/*
 	 * Retrieves selected user read, write and administrator privileges on the current profile,
 	 * depending on all groups he is member of.
-	 * Xoops webmasters have full access of course.
+	 * webmasters have full access of course.
 	 * Returns an three items array with keys _WI_READ, _WI_WRITE, _WI_ADMIN, _WI_COMMENTS
 	 */
 	function getUserPrivileges ($user='') {
@@ -271,8 +268,7 @@ class WiwiProfile {
 	 */
 	function updateModuleConfig() {
 		/*
-		 * cannot use the global xoopsModule, if called from within another module ;
-		 * so must guess SimplyWiki module id from its folder ...
+		 * must guess SimplyWiki module id from its folder ...
 		 */
 		$modhandler =& icms::handler('icms_module');
         $myModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));
