@@ -28,7 +28,7 @@ $wikiModDir = basename(dirname(dirname(__FILE__)));
 /**
  * @todo	This will not work in ImpressCMS until it is updated for the proper
  * 			class handler
- * @param 	$blkname block title or id
+ * @param	mixed 	$blkname block title or id
  */
 function swiki_getBlock ($blkname) {
 	$wikiModDir = basename(dirname(dirname(__FILE__)));

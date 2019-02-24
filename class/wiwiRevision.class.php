@@ -532,10 +532,10 @@ class WiwiRevision {
 	 *
 	 * @todo	reduce queries
 	 *
-	 * @param	str		$keyword
-	 * @param	str		$customTitle	Override page title/page name
+	 * @param	string		$keyword
+	 * @param	string		$customTitle	Override page title/page name
 	 * @param	bool	$show_titles	Whether to show the page title or page name in the text
-	 * @return	str		text or link, depending on existence and user permissions for target page
+	 * @return	string		text or link, depending on existence and user permissions for target page
 	 */
 	public function render_wikiLink($keyword, $customTitle = '', $show_titles = FALSE )	{
 		$normKeyword = icms_core_DataFilter::addSlashes($this->normalize($keyword));
@@ -1086,8 +1086,8 @@ class WiwiRevision {
 	/**
 	 * Determine the link title
 	 *
-	 * @param	str	$link
-	 * @return	str	Text to use for the title attribute of the link
+	 * @param	string	$link
+	 * @return	string	Text to use for the title attribute of the link
 	 */
 	public function getTitle($link) {
 
@@ -1110,11 +1110,11 @@ class WiwiRevisionHandler {
 	/**
 	 *
 	 * @param	int	$author
-	 * @param	str $type
-	 * @param	str $order
+	 * @param	string $type
+	 * @param	string $order
 	 * @param	int $limit
 	 * @param	int $start
-	 * @return	arr
+	 * @return	array
 	 */
 	public function getRevisions($author = false, $type = false, $order = 'DESC', $limit = 10, $start = 0  ) {
 		$revObj = new WiwiRevision();
