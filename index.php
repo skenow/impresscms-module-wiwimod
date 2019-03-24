@@ -81,9 +81,10 @@ if (in_array($op, array('preview','insert', 'quietsave')) && isset($id)) {
 	$pageObj->id = (int) $id;
 	$pageObj->summary = $summary;
 	$pageObj->allowComments = $allowComments;
+	$swikiConfig = $pageObj->getConfigs();
 
 } else {
-
+	// what to do when the main page of the module is loaded
 	if (($page == '') && ($id == 0) && ($pageid == 0)) {
 		$modhandler =& icms::handler('icms_module');
 		$config_handler =& icms::handler('icms_config');
@@ -93,6 +94,7 @@ if (in_array($op, array('preview','insert', 'quietsave')) && isset($id)) {
 	}
 
 	$pageObj = new wiwiRevision($page, 0, $pageid);
+	if (!isset($swikiConfig)) $swikiConfig = $pageObj->getConfigs();
 	if ($pageObj->id == 0) {
 		/* page doesn't exist >> edit new one, with default values for title and profile */
 		$op = 'edit';
