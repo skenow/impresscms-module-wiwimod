@@ -1099,7 +1099,7 @@ class WiwiRevision {
 	 * @return	array Module configuration settings
 	 */
 	public function getConfigs() {
-		return self::swikiConfig;
+		return $this->swikiConfig;
 	}
 }  // end class wiwiRevision
 

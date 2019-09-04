@@ -138,7 +138,7 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '') {
 }
 
 /**
- *
+ * @todo	Remove this check and only use the internal editor logic in ImpressCMS
  */
 function getAvailableEditors() {
 	$arr[] = array('Standard' , 0 , '' );
@@ -170,15 +170,12 @@ function getAvailableEditors() {
 }
 
 /**
+ * The old XOOPS Tag module does not work in ImpressCMS 1.3 or higher
  *
+ * @todo	Remove all checks for this module
  */
 function isTagModuleActivated() {
-	if (!file_exists(ICMS_ROOT_PATH . '/modules/tag/include/formtag.php')) return false;
-	$db =& icms_db_Factory::instance();
-	$moduleHandler = icms::handler('icms_module');
-	$tagModule =& $moduleHandler->getByDirName('tag');
-	if ($tagModule == false) return false;
-	return true;
+	return false;
 }
 
 /**
@@ -238,7 +235,7 @@ function swiki_cleanVars ($input_var, $valid_vars) {
 				}
 				break;
 
-			case 'binary':/* only PHP6 - for now*/
+			case 'binary':/* only PHP6 - for now */
 				break;
 
 			case 'array': /* need to walk the array, I suppose */
