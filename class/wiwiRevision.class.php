@@ -1092,6 +1092,15 @@ class WiwiRevision {
 	public function getTitle($link) {
 
 	}
+	
+	/*
+	 * Return the module configs
+	 *
+	 * @return	array Module configuration settings
+	 */
+	public function getConfigs() {
+		return $this->swikiConfig;
+	}
 }  // end class wiwiRevision
 
 /**

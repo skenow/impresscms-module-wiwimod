@@ -40,14 +40,14 @@ function icms_module_update_simplywiki($module = NULL, $prev_version = NULL) {
        keyword varchar(255) NOT NULL DEFAULT '' COMMENT 'Keyword/page name',
        title varchar(255) NOT NULL DEFAULT '' COMMENT 'Title of the page',
        creator mediumint(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Userid for the user that created the page, from users.uid',
-       createdate datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Datetime the page was created',
+       createdate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datetime the page was created',
        prid int NOT NULL DEFAULT 0 COMMENT 'Profile id to control page access, defined in wiki_profiles.prid',
        parent varchar(255) DEFAULT '' COMMENT 'Keyword/page name of the parent page for the page',
        views int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Number of times this page has been viewed',
        visible int DEFAULT 0 COMMENT 'Determines if the page is visible in the index and its sort order (weight)',
        revisions int DEFAULT 0 COMMENT 'The number of times the page has been revised',
-       lastmodified datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Last time this page was revised',
-       lastviewed datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Last time this page was viewed by someone other than the last author',
+       lastmodified datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Last time this page was revised',
+       lastviewed datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Last time this page was viewed by someone other than the last author',
        allowComments ENUM('0','1') DEFAULT '1' COMMENT 'Allow or restrict (additional) comments for the page',
        contextBlock varchar(255) DEFAULT '' COMMENT 'Keyword/page name for the related content block',
        PRIMARY KEY (pageid),
@@ -78,7 +78,7 @@ function icms_module_update_simplywiki($module = NULL, $prev_version = NULL) {
        pageid int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Link to wiki_pages.pageid',
        body mediumtext NOT NULL COMMENT 'Text for this revision',
        summary tinytext COMMENT 'Summary of the revision by the author',
-       modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Timestamp for the revision',
+       modified datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Timestamp for the revision',
        userid mediumint(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Userid for the user that modified the page, from users.uid',
        PRIMARY KEY page (revid)
      ) ENGINE=MyISAM COMMENT 'Holds details of the individual revisions to each page';
@@ -149,7 +149,33 @@ function icms_module_update_simplywiki($module = NULL, $prev_version = NULL) {
 			WHERE p.pageid = r.pageid AND r.c > p.revisions";
 		$db->query($sql);
 	}
-
+	
+	/*
+	 * check for the datetime fields default values '0000-00-00 00:00:00' is no longer valid in SQL strict mode
+	 *
+	 */
+	$sql = "SHOW COLUMNS FROM `" . $db->prefix('wiki_pages') ."` WHERE type = 'datetime' AND `Default` = '0000-00-00 00:00:00';";
+	$result = $db->query($sql);
+	
+	if ($db->getRowsNum($result) > 0) {
+		$table = new icms_db_legacy_updater_Table('wiki_pages');
+		$table->addAlteredField('createdate', "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
+		$table->addAlteredField('lastmodified', "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
+		$table->addAlteredField('lastviewed', "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
+		$table->alterTable();
+		unset($table);
+	}
+	
+	$sql = "SHOW COLUMNS FROM `" . $db->prefix('wiki_revisions') ."` WHERE type = 'datetime' AND `Default` = '0000-00-00 00:00:00';";
+	$result = $db->query($sql);
+	
+	if ($db->getRowsNum($result) > 0) {
+		$table = new icms_db_legacy_updater_Table('wiki_revisions');
+		$table->addAlteredField('modified', "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
+		$table->alterTable();
+		unset($table);
+	}
+	
 	return TRUE;
 }
 
