@@ -17,7 +17,6 @@ include_once 'class/wiwiRevision.class.php';
 
 /*
  * extract all header variables to corresponding php variables ---
- * @todo : - $xoopsUser can be overriden by post variables >> security fix ?
  */
 $id = $pageid = $visible = $editor = $allowComments = $uid = 0;
 $contextBlock = $parent = $op = $summary = $item_tag = $page = '';
@@ -59,6 +58,10 @@ $op = (in_array($op, $valid_ops, true)) ? $op : '';
 if (!empty($_POST)) {
 	$clean_POST = swiki_cleanVars($_POST, $allowed_postvars);
 	extract($clean_POST);
+	/* Prevent poisoning of the user ID through POST */
+	if ($uid !== icms::$user->getVar("uid")) {
+		$uid = 0;
+	}
 }
 
 $page = stripslashes($page);  // if page name comes in url, decode it.
@@ -134,12 +137,6 @@ switch ($op) {
 			if ($success) {
 				/* @todo	remove cached versions, if any */
 
-				/* Tag module support (Gizmhail) */
-				if(isTagModuleActivated()) {
-					$tag_handler = xoops_getmodulehandler('tag', 'tag');
-					$tag_handler->updateByItem($item_tag, $pageObj->pageid, icms::$module->getVar('dirname'), $catid =0);
-				}
-				/* Tag module support end */
 				// Define tags for notification message
 				$tags = array();
 				$tags['PAGE_NAME'] = $pageObj->title;
@@ -266,17 +263,6 @@ switch ($op) {
 
 		$form->addElement(new icms_form_elements_Text(_MD_SWIKI_VISIBLE_FLD, 'visible', 3, 3, $pageObj->visible));
 		$form->addElement(new icms_form_elements_Text(_MD_SWIKI_CONTEXTBLOCK_FLD, 'contextBlock', 15, 100, icms_core_DataFilter::htmlSpecialchars($pageObj->contextBlock)));
-		/* Tag module support (Gizmhail) */
-		if (isTagModuleActivated()) {
-			include_once ICMS_ROOT_PATH . '/modules/tag/include/formtag.php';
-			if (!$item_tag) {
-				$value = ($pageObj->pageid == 0) ? $pageObj->keyword : $pageObj->pageid;
-			} else {
-				$value = $item_tag;
-			}
-			$form->addElement(new XoopsFormTag('item_tag', 60, 255, $value, $catid = 0));
-		}
-		/* Tag module support end*/
 		$rev_summary = $summary ? $summary : '';
 		$form->addElement(new icms_form_elements_Text(_MI_SWIKI_REVISION_SUMMARY, 'summary', 50, 255, $rev_summary));
 		/*		$allowComments_checkbox =	 new XoopsFormCheckBox(_MI_SWIKI_ALLOW_COMMENTS, 'allowComments',);
@@ -404,14 +390,6 @@ switch ($op) {
 			/* End modification to count visits */
 		}
 
-		/* Tag module support (Gizmhail) */
-		if (isTagModuleActivated()) {
-			$xoopsTpl->assign('isTagModuleActivated', array('activated'=>'true'));
-			include_once ICMS_ROOT_PATH . '/modules/tag/include/tagbar.php';
-			$itemid = $pageObj->pageid;
-			$xoopsTpl->assign('tagbar', tagBar($itemid, $catid = 0));
-		}
-		/* Tag module support end*/
 		$user = icms::$user ? icms::$user : NULL;
 		$writeProfiles = new WiwiProfile();
 		$WritePrivileges = count($writeProfiles->getWriteProfiles($user));

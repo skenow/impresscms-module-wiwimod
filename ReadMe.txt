@@ -24,8 +24,6 @@ You can name the install directory any name you'd like (wiki, faqs, wiwimod, etc
 
 It supports multiple languages, even right-to-left languages
 
-Support for tags, using the Tag module
-
 Limitations, bugs and todos :
 =============================
 

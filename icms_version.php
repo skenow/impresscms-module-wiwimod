@@ -136,27 +136,6 @@ $modversion['blocks'][] = array(
   'can_clone' => true);
 
 include_once dirname(__FILE__) . '/include/functions.php';
-if (isTagModuleActivated()) {
-	$modversion['blocks'][] = array(
-	  'file' => 'swiki_blocks.php',
-	  'name' => _MI_SWIKI_BLOCK_TAGCLOUD_NAME,
-	  'description' => _MI_SWIKI_BLOCK_TAGCLOUD_DESC,
-	  'show_func' => 'swiki_tag_block_cloud_show',
-	  'edit_func' => 'swiki_tag_block_cloud_edit',
-	  'options' => '100|0|150|80',
-	  'template' => 'swiki_tag_block_cloud.html',
-	  'can_clone' => true );
-
-	$modversion['blocks'][] = array(
-	  'file' => 'swiki_blocks.php',
-	  'name' => _MI_SWIKI_BLOCK_TAG_NAME,
-	  'description' => _MI_SWIKI_BLOCK_TAG_DESC,
-	  'show_func' => 'swiki_tag_block_top_show',
-	  'edit_func' => 'swiki_tag_block_top_edit',
-	  'options' => '20|0|c',
-	  'template' => 'swiki_tag_block_tag.html',
-	  'can_clone' => true);
-}
 // Admin preferences items
 
 // name of config option for accessing its specified value. i.e. $xoopsModuleConfig['storyhome']
