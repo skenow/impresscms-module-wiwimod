@@ -4,6 +4,7 @@ Released:
 
 Added
 * Templates for all pages
+* Meta keywords and meta description fields to customize each page's snippets
 
 Improved
 * PHP 5.6 strict compliance
@@ -17,6 +18,8 @@ Removed
 * Support for XOOPS legacy Tag module 
 
 Language additions/changes
++ define('_MD_SWIKI_META_KEYWORDS', 'META Keywords');
++ define('_MD_SWIKI_META_DESCRIPTION', 'META Description');
 		
 Contributors to this release
 * skenow

@@ -82,6 +82,11 @@ class WiwiRevision {
 	/** whether to allow comments or not for the page */
 	public $allowComments;
 	/** Base directory for the module */
+	/* custom meta keywords */
+	public $meta_keywords;
+	/* custom meta_description */
+	public $meta_description;
+	
 	private $_dir;
 	/** Base URL for the module */
 	private $_url;
@@ -128,6 +133,9 @@ class WiwiRevision {
 		$this->revisions = 0;
 		$this->lastviewed = null;
 		$this->allowComments = '1';
+		$this->meta_keywords = '';
+		$this->meta_description = '';
+		
 		/* new SQL, based on the new tables */
 		$sql = 'SELECT * FROM '. $this->db->prefix('wiki_pages') . ' p INNER JOIN '
 				. $this->db->prefix('wiki_revisions') .' r ON p.pageid = r.pageid';
@@ -164,7 +172,10 @@ class WiwiRevision {
 			$this->revisions = $row['revisions'];
 			$this->lastviewed = $row['lastviewed'];
 			$this->allowComments = $row['allowComments'];
+			$this->meta_keywords = $row['meta_keywords'];
+			$this->meta_description = $row['meta_description'];
 		}
+		
 		return $this;
 	}
 
@@ -178,8 +189,8 @@ class WiwiRevision {
 		// only insert into the pages table if it is the first revision
 		if ($this->pageid == 0) {
 			$sql = sprintf(
-					"INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock)
-					VALUES('%s', '%s', '%s', %u, %u, %u, '%s', '%s', '%s', '%s')",
+					"INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock, meta_keywords, meta_description)
+					VALUES('%s', '%s', '%s', %u, %u, %u, '%s', '%s', '%s', '%s', '%s', '%s')",
 					$this->db->prefix('wiki_pages'),
 					icms_core_DataFilter::addSlashes($this->keyword),
 					icms_core_DataFilter::addSlashes($this->title),
@@ -190,7 +201,9 @@ class WiwiRevision {
 					icms::$user ? icms::$user->getVar('uid') : 0, //$this->creator,
 					$add_date,
 					$this->allowComments,
-					icms_core_DataFilter::addSlashes($this->contextBlock)
+					icms_core_DataFilter::addSlashes($this->contextBlock),
+					icms_core_DataFilter::addSlashes($this->meta_keywords),
+					icms_core_DataFilter::addSlashes($this->meta_description)
 			);
 			$result = $this->db->query($sql);
 			if (!$result) return false;
@@ -216,7 +229,7 @@ class WiwiRevision {
 		$result = $this->db->query($sql);
 		if (!$result) return false;
 		$sql = sprintf(
-				"UPDATE %s SET revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s' WHERE pageid=%u",
+				"UPDATE %s SET revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s', meta_keywords='%s', meta_description='%s' WHERE pageid=%u",
 				$this->db->prefix('wiki_pages'),
 				$add_date,
 				icms_core_DataFilter::addSlashes($this->parent),
@@ -225,6 +238,8 @@ class WiwiRevision {
 				$this->allowComments,
 				icms_core_DataFilter::addSlashes($this->title),
 				icms_core_DataFilter::addSlashes($this->contextBlock),
+				icms_core_DataFilter::addSlashes($this->meta_keywords),
+				icms_core_DataFilter::addSlashes($this->meta_description),
 				$this->pageid
 		);
 		$result = $this->db->query($sql);
@@ -246,7 +261,7 @@ class WiwiRevision {
 			$body = icms_core_DataFilter::addSlashes($this->body);
 		}
 		$sql = sprintf(
-				"UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s'
+				"UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', meta_keywords='%s', meta_description='%s'
 				WHERE revid=%u AND p.pageid=%u",
 				$this->db->prefix('wiki_pages'),
 				$this->db->prefix('wiki_revisions'),
@@ -261,6 +276,8 @@ class WiwiRevision {
 				$this->profile->prid,
 				$this->visible,
 				$this->allowComments,
+				icms_core_DataFilter::addSlashes($this->meta_keywords),
+				icms_core_DataFilter::addSlashes($this->meta_description),
 				$this->id,
 				$this->pageid
 		);
@@ -475,7 +492,6 @@ class WiwiRevision {
 					},
 					$body);
 		
-/* callback - test */
 		// > quoted text
 		$search_callback = "#(" . $nl . ")" . $gt . " .* (" . $eol . ")#m";
 		$body = preg_replace_callback($search_callback,

@@ -150,10 +150,7 @@ function icms_module_update_simplywiki($module = NULL, $prev_version = NULL) {
 		$db->query($sql);
 	}
 	
-	/*
-	 * check for the datetime fields default values '0000-00-00 00:00:00' is no longer valid in SQL strict mode
-	 *
-	 */
+	/* check for the datetime fields default values '0000-00-00 00:00:00' is no longer valid in SQL strict mode */
 	$sql = "SHOW COLUMNS FROM `" . $db->prefix('wiki_pages') ."` WHERE type = 'datetime' AND `Default` = '0000-00-00 00:00:00';";
 	$result = $db->query($sql);
 	
@@ -173,6 +170,17 @@ function icms_module_update_simplywiki($module = NULL, $prev_version = NULL) {
 		$table = new icms_db_legacy_updater_Table('wiki_revisions');
 		$table->addAlteredField('modified', "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
 		$table->alterTable();
+		unset($table);
+	}
+	
+	/* Add meta fields to the wiki_pages table */
+	$table = new icms_db_legacy_updater_Table('wiki_pages');
+	
+	if (!$table->fieldExists('meta_keywords')) {
+		$table->addNewField('meta_keywords', 'varchar(255) DEFAULT "" COMMENT "Allows specification of custom keywords for metatags"');
+		$table->addNewField('meta_description', 'varchar(255) DEFAULT "" COMMENT "Allows specification of custom meta description"');
+	
+		$table->addNewFields();
 		unset($table);
 	}
 	

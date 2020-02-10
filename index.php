@@ -19,7 +19,7 @@ include_once 'class/wiwiRevision.class.php';
  * extract all header variables to corresponding php variables ---
  */
 $id = $pageid = $visible = $editor = $allowComments = $uid = 0;
-$contextBlock = $parent = $op = $summary = $item_tag = $page = '';
+$contextBlock = $parent = $op = $summary = $item_tag = $page = $meta_description = $meta_keywords = '';
 $allowed_getvars = array(
 	'op'=>'plaintext',
 	'back'=>'string',
@@ -47,6 +47,8 @@ $allowed_postvars = array(
 	'item_tag'=>'plaintext',
 	'summary' => 'plaintext',
 	'allowComments' => 'plaintext',
+	'meta_description' => 'plaintext',
+	'meta_keywords' => 'plaintext',
 );
 $clean_GET = swiki_cleanVars($_GET, $allowed_getvars);
 extract($clean_GET);
@@ -84,6 +86,8 @@ if (in_array($op, array('preview','insert', 'quietsave')) && isset($id)) {
 	$pageObj->id = (int) $id;
 	$pageObj->summary = $summary;
 	$pageObj->allowComments = $allowComments;
+	$pageObj->meta_keywords = $meta_keywords;
+	$pageObj->meta_description = $meta_description;
 	$swikiConfig = $pageObj->getConfigs();
 
 } else {
@@ -93,7 +97,7 @@ if (in_array($op, array('preview','insert', 'quietsave')) && isset($id)) {
 		$config_handler =& icms::handler('icms_config');
 		$SimplyWiki = $modhandler->getByDirname(basename(dirname(__FILE__)));
 		$swikiConfig =& $config_handler->getConfigsByCat(0, $SimplyWiki->getVar('mid'));
-		$page = $swikiConfig['TopPage'] == NULL ? _MI_SWIKI_HOME : $swikiConfig['TopPage'];
+		$page = $swikiConfig['TopPage'] == null ? _MI_SWIKI_HOME : $swikiConfig['TopPage'];
 	}
 
 	$pageObj = new wiwiRevision($page, 0, $pageid);
@@ -271,6 +275,9 @@ switch ($op) {
 		 $option_tray->addElement($allowComments_checkbox);
 		 $form->addElement($allowComments_checkbox);*/
 
+		$form->addElement(new icms_form_elements_Text(_MD_SWIKI_META_KEYWORDS, 'meta_keywords', 50, 255, $pageObj->meta_keywords));
+		$form->addElement(new icms_form_elements_Textarea(_MD_SWIKI_META_DESCRIPTION, 'meta_description', $pageObj->meta_description, 5, 50));
+		
 		$preview_btn = new icms_form_elements_Button('', 'preview', _PREVIEW, 'button');
 		$preview_btn->setExtra("onclick='document.forms.swikiform.op.value=\"preview\"; document.forms.swikiform.submit.click();'");
 		$btn_tray->addElement($preview_btn);
@@ -436,5 +443,13 @@ switch ($op) {
 }
 
 $xoopsTpl->assign('icms_pagetitle', icms_core_DataFilter::htmlSpecialchars(icms_core_DataFilter::htmlSpecialchars($pageObj->title) . ' - ' .icms::$module->getVar('name')));
+
+if (!empty($pageObj->meta_keywords)) {
+	$xoTheme->addMeta('meta', 'keywords', icms_core_DataFilter::htmlSpecialchars(icms_core_DataFilter::htmlSpecialchars($pageObj->meta_keywords)));
+}
+
+if (!empty($pageObj->meta_description)) {
+	$xoTheme->addMeta('meta', 'description', icms_core_DataFilter::htmlSpecialchars(icms_core_DataFilter::htmlSpecialchars($pageObj->meta_description)));
+}
 
 include ICMS_ROOT_PATH . '/footer.php';

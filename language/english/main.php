@@ -73,3 +73,7 @@ define('_MD_SWIKI_VIEWS', 'Views');
 
 // Added in version 1.2.1
 define('_MD_SWIKI_CREATE', 'Create this page');
+
+// Added in version 2.0
+define('_MD_SWIKI_META_KEYWORDS', 'META Keywords');
+define('_MD_SWIKI_META_DESCRIPTION', 'META Description');

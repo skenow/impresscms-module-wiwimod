@@ -13,6 +13,8 @@ CREATE TABLE wiki_pages (
   `lastviewed` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Last time this page was viewed by someone other than the last author',
   `allowComments` ENUM('0','1') DEFAULT '1' COMMENT 'Allow or restrict (additional) comments for the page',
   `contextBlock` varchar(255) DEFAULT '' COMMENT 'Keyword/page name for the related content block',
+  `meta_keywords` varchar(255) DEFAULT '' COMMENT 'Allows specification of custom keywords for metatags',
+  `meta_description` varchar(255) DEFAULT '' COMMENT 'Allows specification of custom meta description',
   PRIMARY KEY (`pageid`),
   UNIQUE KEY (`keyword`)
 ) COMMENT 'Holds the list of pages and their properties';
