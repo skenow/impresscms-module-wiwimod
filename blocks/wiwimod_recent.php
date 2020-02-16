@@ -16,7 +16,7 @@ function swiki_recent ($options) {
 	$wikiModDir = basename(dirname(dirname(__FILE__))) ;
 	$limit = (int) $options[0];
 	$block = array();
-	$myts =& icms_core_Textsanitizer::getInstance();
+	$myts = icms_core_Textsanitizer::getInstance();
 	$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, prid, summary FROM '
 		. icms::$xoopsDB->prefix('wiki_pages') . ' p, ' . icms::$xoopsDB->prefix('wiki_revisions')
 		. ' r WHERE p.pageid=r.pageid AND lastmodified=modified ORDER BY lastmodified DESC LIMIT '
