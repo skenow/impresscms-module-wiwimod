@@ -15,7 +15,7 @@ include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.c
 function swiki_toc() {
 	$wikiModDir = basename(dirname(__DIR__));
 	$block = array();
-	$myts =& icms_core_Textsanitizer::getInstance();
+	$myts = icms_core_Textsanitizer::getInstance();
 
 	$sql = 'SELECT keyword, title, visible, prid FROM ' . icms::$xoopsDB->prefix('wiki_pages') . ' p, '
 		. icms::$xoopsDB->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND lastmodified=modified AND visible>0 ORDER BY visible, title ';

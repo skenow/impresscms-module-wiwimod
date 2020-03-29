@@ -38,7 +38,7 @@ function swiki_listpages ($options) {
 	$display = in_array($options[3], array('compact', 'light', 'full'), true) ? (string) $options[3] : '';
 	$datetime = (string) htmlspecialchars(trim($options[4]));
 	$block = array();
-	$myts =& icms_core_Textsanitizer::getInstance();
+	$myts = icms_core_Textsanitizer::getInstance();
 	$sql = 'SELECT keyword, title, ' . $field  .' as date, r.userid as u_id, prid, summary FROM ' . icms::$xoopsDB->prefix('wiki_pages') . ' p, ' . icms::$xoopsDB->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND lastmodified=modified ORDER BY '. $field .' ' . $sort .' LIMIT ' . $limit;
 	$result = icms::$xoopsDB->query($sql);
 
