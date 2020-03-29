@@ -23,7 +23,7 @@ if (!defined("_GLOBAL_RIGHT")) {
 		: "right")
 	);
 }
-$wikiModDir = basename(dirname(dirname(__FILE__)));
+$wikiModDir = basename(dirname(__DIR__));
 
 /**
  * @todo	This will not work in ImpressCMS until it is updated for the proper
@@ -31,7 +31,7 @@ $wikiModDir = basename(dirname(dirname(__FILE__)));
  * @param	mixed 	$blkname block title or id
  */
 function swiki_getBlock ($blkname) {
-	$wikiModDir = basename(dirname(dirname(__FILE__)));
+	$wikiModDir = basename(dirname(__DIR__));
 	$block = array();
 	$bcontent = '';
 	$bid = (int) $blkname;
@@ -82,7 +82,7 @@ function swiki_getBlock ($blkname) {
  * @deprecated
  */
 function getAdminMenu ($currentoption = 0, $breadcrumb = '') {
-	$wikiModDir = basename(dirname(dirname(__FILE__)));
+	$wikiModDir = basename(dirname(__DIR__));
 	$html = '';
 	/* Nice buttons styles */
 	$html .= "

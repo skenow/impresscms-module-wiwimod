@@ -13,7 +13,7 @@ include_once '../../../mainfile.php';
 
 include_once '../include/functions.php';
 if (!defined('WIWI_NOCPFUNC')) include_once ICMS_ROOT_PATH . '/include/cp_functions.php';
-$wikiModDir = basename(dirname(dirname(__FILE__)));
+$wikiModDir = basename(dirname(__DIR__));
 
 // language files
 if (file_exists('../language/' . $icmsConfig['language'] . '/modinfo.php')) {

@@ -17,7 +17,7 @@ include_once '../../mainfile.php';
 $myts = icms_core_Textsanitizer::getInstance();
 
 global $wikiModDir;
-$wikiModDir = basename(dirname(__FILE__));
+$wikiModDir = basename(__DIR__);
 $modversion['dirname'] = $wikiModDir;
 
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/include/functions.php';

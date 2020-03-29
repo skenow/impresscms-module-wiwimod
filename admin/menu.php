@@ -30,7 +30,7 @@ $adminmenu[] = array(
      'icon' => 'images/help.png',
      'small' => 'images/help_small.png');
 
-$wikiModDir = basename(dirname(dirname(__FILE__)));
+$wikiModDir = basename(dirname(__DIR__));
 if (isset(icms::$module)) {
 	$headermenu[0] = array(
 	     'title' => _PREFERENCES,

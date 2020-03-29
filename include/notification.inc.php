@@ -11,7 +11,7 @@
 if (!defined('ICMS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 
 function swiki_notify_iteminfo($category, $item_id) {
-	$wikiModDir = basename(dirname(dirname(__FILE__)));
+	$wikiModDir = basename(dirname(__DIR__));
 
 	if ($category == 'page' || $category == 'global') {
 		// 	Assume we have a valid category id

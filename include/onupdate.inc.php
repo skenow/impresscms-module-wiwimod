@@ -12,8 +12,8 @@
 if (!defined("ICMS_ROOT_PATH") && !defined('ICMS_ROOT_PATH')) exit("Root path not defined");
 
 function icms_module_update_simplywiki($module = NULL, $prev_version = NULL) {
-	$wikiInstallDir = dirname(dirname(__FILE__));
-	$wikiModDir = basename(dirname(dirname(__FILE__)));
+	$wikiInstallDir = dirname(__DIR__);
+	$wikiModDir = basename(dirname(__DIR__));
 	global $icmsConfig;
 
 	if (@file_exists($wikiInstallDir . '/language/' . $icmsConfig['language'] . '/update.php')){
@@ -188,7 +188,7 @@ function icms_module_update_simplywiki($module = NULL, $prev_version = NULL) {
 }
 
 /* This will create a function with a name based on the installation directory, if it is not in simplywiki */
-$wikiModDir = basename(dirname(dirname(__FILE__)));
+$wikiModDir = basename(dirname(__DIR__));
 if (!function_exists('icms_module_update_' . $wikiModDir)) {
 	$myfunc = "function icms_module_update_" . $wikiModDir . '($module = NULL, $prev_version = NULL) { return icms_module_update_simplywiki($module, $prev_version);}';
 	eval($myfunc);

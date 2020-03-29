@@ -9,7 +9,7 @@
  */
 
 global $icmsConfig;
-$wikiModDir = basename(dirname(dirname(__FILE__)));
+$wikiModDir = basename(dirname(__DIR__));
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 //I don't want to have this language constant in multiple files - just include the other file
 if (!defined('_MD_SWIKI_ADDPAGE_BTN')) {
@@ -30,7 +30,7 @@ if (!defined('_MD_SWIKI_ADDPAGE_BTN')) {
  * $return array $block
  */
 function swiki_listpages ($options) {
-	$wikiModDir = basename(dirname(dirname(__FILE__)));
+	$wikiModDir = basename(dirname(__DIR__));
 	$limit = (int) $options[0];
 	$field = $sort = $display = $datetime = '';
 	$field = in_array($options[1], array('createdate', 'lastmodified', 'revisions', 'lastviewed', 'views'), true) ? (string) $options[1] : '';
@@ -102,7 +102,7 @@ function swiki_listpages_blockedit ($options) {
  * @return array $block
  */
 function swiki_addpage (){
-	$wikiModDir = basename(dirname(dirname(__FILE__)));
+	$wikiModDir = basename(dirname(__DIR__));
 	$block = array();
 
 	$user = icms::$user ? icms::$user : NULL;

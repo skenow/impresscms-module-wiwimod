@@ -94,7 +94,7 @@ class WiwiProfile {
 		 */
 		$modhandler =& icms::handler('icms_module');
 		$config_handler =& icms::handler('icms_config');
-        $wiwiModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));
+        $wiwiModule = $modhandler->getByDirname(basename(dirname(__DIR__)));
 		$swikiConfig =& $config_handler->getConfigsByCat(0, $wiwiModule->getVar('mid'));
 		$prid = $swikiConfig['DefaultProfile'];
 		return $prid;
@@ -271,7 +271,7 @@ class WiwiProfile {
 		 * must guess SimplyWiki module id from its folder ...
 		 */
 		$modhandler =& icms::handler('icms_module');
-        $myModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));
+        $myModule = $modhandler->getByDirname(basename(dirname(__DIR__)));
 		//-- get the config item options from the database
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', $myModule->getVar('mid')));
 		$criteria->add(new icms_db_criteria_Item('conf_name', 'DefaultProfile'));

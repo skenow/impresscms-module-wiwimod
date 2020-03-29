@@ -13,7 +13,7 @@
 if (!defined("ICMS_ROOT_PATH") && !defined('ICMS_ROOT_PATH')) die('Root path not defined');
 
 function icms_module_install_simplywiki() {
-	$mydir = dirname(dirname(__FILE__));
+	$mydir = dirname(__DIR__);
 	global $icmsConfig;
 
 	if (@file_exists($mydir . '/language/' . $icmsConfig['language'] . '/install.php')){
@@ -74,7 +74,7 @@ function icms_module_install_simplywiki() {
 	return TRUE;
 }
 /* This will create a function with a name based on the installation directory, if it is not in simplywiki */
-$myInstallDir = basename(dirname(dirname(__FILE__)));
+$myInstallDir = basename(dirname(__DIR__));
 if (!function_exists('icms_module_install_' . $myInstallDir)) {
 	$myfunc = "function icms_module_install_" . $myInstallDir . "() { return icms_module_install_simplywiki();}";
 	eval($myfunc);

@@ -17,7 +17,7 @@ define('_SWIKIPAGE', 1);
 
 include_once 'wiwiProfile.class.php';
 
-$wikiModDir = basename(dirname(dirname(__FILE__)));
+$wikiModDir = basename(dirname(__DIR__));
 if (function_exists('icms_loadLanguageFile')) {
 	icms_loadLanguageFile($wikiModDir, "main");
 } else {
@@ -108,7 +108,7 @@ class WiwiRevision {
 
 		$this->db = icms_db_Factory::instance();
 		$this->ts = icms_core_Textsanitizer::getInstance();
-		$this->_dir = basename(dirname(dirname(__FILE__)));
+		$this->_dir = basename(dirname(__DIR__));
 		$this->_url = ICMS_URL . '/modules/' . $this->_dir . '/';
 
 		$modhandler =& icms::handler('icms_module');

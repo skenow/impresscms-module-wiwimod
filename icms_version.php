@@ -22,7 +22,7 @@ $modversion = array(
   'image' => 'images/wiwimod.png', /* standard XOOPS icon, 92x52 px  */
   'iconbig' => 'images/wiwimod.png', /* big icon for ImpressCMS, 37x35 px */
   'iconsmall' => 'images/wiwimod-small.png', /* small icon for ImpressCMS, 16x16 px */
-  'dirname' => basename(dirname(__FILE__)),
+  'dirname' => basename(__DIR__),
   'onInstall' => 'include/oninstall.inc.php',
   'onUpdate' => 'include/onupdate.inc.php',
   'demo_site_url' => 'http://www.simplywiki.org/',
@@ -135,7 +135,7 @@ $modversion['blocks'][] = array(
   'template' => 'swiki_addpage.html',
   'can_clone' => true);
 
-include_once dirname(__FILE__) . '/include/functions.php';
+include_once __DIR__ . '/include/functions.php';
 // Admin preferences items
 
 // name of config option for accessing its specified value. i.e. $xoopsModuleConfig['storyhome']

@@ -95,7 +95,7 @@ if (in_array($op, array('preview','insert', 'quietsave')) && isset($id)) {
 	if (($page == '') && ($id == 0) && ($pageid == 0)) {
 		$modhandler =& icms::handler('icms_module');
 		$config_handler =& icms::handler('icms_config');
-		$SimplyWiki = $modhandler->getByDirname(basename(dirname(__FILE__)));
+		$SimplyWiki = $modhandler->getByDirname(basename(__DIR__));
 		$swikiConfig =& $config_handler->getConfigsByCat(0, $SimplyWiki->getVar('mid'));
 		$page = $swikiConfig['TopPage'] == null ? _MI_SWIKI_HOME : $swikiConfig['TopPage'];
 	}

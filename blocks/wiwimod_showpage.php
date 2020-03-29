@@ -11,11 +11,11 @@
  * @version $Id$
  */
 
-$wikiModDir = basename(dirname(dirname(__FILE__)));
+$wikiModDir = basename(dirname(__DIR__));
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
 function swiki_showpage ($options) {
-	$wikiModDir = basename(dirname(dirname(__FILE__))) ;
+	$wikiModDir = basename(dirname(__DIR__)) ;
 	 
 	$block = array();
 	$pageObj = new wiwiRevision($options[0]);
@@ -55,7 +55,7 @@ function swiki_showpage ($options) {
 }
 
 function swiki_contextshow($options) {
-	$wikiModDir = basename(dirname(dirname(__FILE__))) ;
+	$wikiModDir = basename(dirname(__DIR__)) ;
 	
 	// Get content to display
 	$preg_res = array();

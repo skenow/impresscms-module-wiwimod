@@ -9,11 +9,11 @@
  * @version $Id$
  */
 
-$wikiModDir = basename(dirname(dirname(__FILE__)));
+$wikiModDir = basename(dirname(__DIR__));
 include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
 function swiki_toc() {
-	$wikiModDir = basename(dirname(dirname(__FILE__)));
+	$wikiModDir = basename(dirname(__DIR__));
 	$block = array();
 	$myts =& icms_core_Textsanitizer::getInstance();
 
