@@ -1069,7 +1069,7 @@ class WiwiRevision {
 	/**
 	 * Create a linked table of contents for a page
 	 * This function locates all the heading tags and creates a linked list to assist with
-	 * navigation and organiztion. The list will only be created if there are 3 or more headings
+	 * navigation and organization. The list will only be created if there are 3 or more headings
 	 * You must insert <[Headings]> in the page for your TOC to display
 	 *
 	 * @return	string Unaltered body text if there are less than 3 headings, HTML inserted for the linked list otherwise

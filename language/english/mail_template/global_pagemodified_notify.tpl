@@ -16,5 +16,5 @@ If this is an error or you wish not to receive further such notifications, pleas
 -----------
 
 {X_SITENAME} ({X_SITEURL}) 
-webmaster
+Webmaster
 {X_ADMINMAIL}

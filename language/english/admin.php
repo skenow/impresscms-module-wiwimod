@@ -24,13 +24,13 @@ define('_AM_SWIKI_SELECTACL_TXT', 'modify a profile :');
 define('_AM_SWIKI_CREATEACL_TXT', 'or create a new one :');
 define('_AM_SWIKI_EDITACL_TXT', 'Profile info');
 define('_AM_SWIKI_ACLHELP_TXT', '
-	<p>Privileges are a set of named profiles describing groups that enventually have read/write/administrate access to corresponding pages.</p>
+	<p>Privileges are a set of named profiles describing groups that eventually have read/write/administer access to corresponding pages.</p>
 	<ul>
 		<li>Writers&nbsp;can modify the current page, and create new pages with the same profile.</li>
 		<li>Administrators&nbsp;can change page profiles to whichever profiles they have "admin" privilege for.</li></ul>
 	<p>New pages default to their parent\'s profile.</p>
 	<p>Profiles also define who can read/post comments. This is useful to allow private comments on public pages ...</p>
-	<p>Note : Webmasters always have full privileges to Wiki pages.</p>
+	<p>Note : Webmasters always have full privileges to pages.</p>
 	');
 define('_AM_SWIKI_DELCONFIRMTITLE_TXT', 'DELETE PROFILE CONFIRMATION');
 define('_AM_SWIKI_DELCONFIRM_TXT', 'You are about to delete a profile. Please confirm by checking the checkbox.');
@@ -78,8 +78,8 @@ define('_AM_SWIKI_ACLADMIN_NAV', 'privileges (ACL)');
 define("_AM_SWIKI_BLOCKSNGROUPS_NAV", "blocks and groups");
 
 define('_AM_SWIKI_NOPAGESPECIFIED_MSG', 'Please select a page');
-define('_AM_SWIKI_CONFIRMDEL_MSG', 'Do you really want to delete this Wiki page?');
-define('_AM_SWIKI_CONFIRMFIX_MSG', 'Do you really want to fix this Wiki page?');
+define('_AM_SWIKI_CONFIRMDEL_MSG', 'Do you really want to delete this page?');
+define('_AM_SWIKI_CONFIRMFIX_MSG', 'Do you really want to fix this page?');
 define('_AM_SWIKI_CONFIRMCLEAN_MSG', 'Do you really want to clean up the database?');
 define('_AM_SWIKI_PRFSAVESUCCESS_MSG', 'Profile successfully saved on database');
 define('_AM_SWIKI_PRFSAVEFAILED_MSG', 'Error while storing profile. Database NOT updated');

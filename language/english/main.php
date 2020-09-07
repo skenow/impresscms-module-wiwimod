@@ -15,7 +15,7 @@
 define('_MD_SWIKI_MODIFIED_TXT', 'Last modified on');
 define('_MD_SWIKI_BY', 'by');
 define('_MD_SWIKI_HISTORY_TXT', 'History of page');
-define('_MD_SWIKI_EDIT_TXT', 'Edit Wiki Page');
+define('_MD_SWIKI_EDIT_TXT', 'Edit Page');
 define('_MD_SWIKI_BODY_TXT', 'Page content');
 define('_MD_SWIKI_DIFF_TXT', 'Differences between current and latest revisions');
 define('_MD_SWIKI_THISPAGE', 'This page');
