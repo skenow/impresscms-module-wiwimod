@@ -30,29 +30,30 @@ $allowed_getvars = array(
 $clean_GET = swiki_cleanVars($_GET, $allowed_getvars);
 extract($clean_GET);
 
-$pgitemsnum = 15;  // numbre of items per result page.
+$pgitemsnum = 15;  // number of items per result page.
 
 /*
  * Query form
  */
 $selWhere = array(
-		''			=> array('desc'=> _AM_SWIKI_LISTPAGES_ALLPAGES_OPT,	'type' =>'none'),
-		'keyword'	=> array('desc'=> _AM_SWIKI_LISTPAGES_KEYWORD_OPT ,	'type' =>'text'),
-		'title'		=> array('desc'=> _AM_SWIKI_LISTPAGES_TITLE_OPT ,	'type' =>'text'),
-		'body'		=> array('desc'=> _AM_SWIKI_LISTPAGES_BODY_OPT ,	'type' =>'text'),
-		'parent'	=> array('desc'=> _AM_SWIKI_LISTPAGES_PARENT_OPT,	'type' =>'text'),
-		'prid'		=> array('desc'=> _AM_SWIKI_LISTPAGES_PRID_OPT,		'type' =>'profile'),
+		''			=> array('desc'=> _AM_SWIKI_LISTPAGES_ALLPAGES_OPT, 'type' =>'none'),
+		'keyword'	=> array('desc'=> _AM_SWIKI_LISTPAGES_KEYWORD_OPT , 'type' =>'text'),
+		'title'		=> array('desc'=> _AM_SWIKI_LISTPAGES_TITLE_OPT , 'type' =>'text'),
+		'body'		=> array('desc'=> _AM_SWIKI_LISTPAGES_BODY_OPT , 'type' =>'text'),
+		'parent'	=> array('desc'=> _AM_SWIKI_LISTPAGES_PARENT_OPT, 'type' =>'text'),
+		'prid'		=> array('desc'=> _AM_SWIKI_LISTPAGES_PRID_OPT, 'type' =>'profile'),
 );
 $selOrder = array(
-	array('desc' => _AM_SWIKI_LISTPAGES_KEYWORD_OPT,		'col' => 'keyword'),
-	array('desc' => _AM_SWIKI_LISTPAGES_TITLE_OPT,			'col' => 'title'),
-	array('desc' => _AM_SWIKI_LISTPAGES_PARENT_OPT,			'col' => 'parent'),
-array('desc' => _AM_SWIKI_LISTPAGES_LASTMODIFIED_OPT, 	'col' => 'lastmodified'),
+	array('desc' => _AM_SWIKI_LISTPAGES_KEYWORD_OPT, 'col' => 'keyword'),
+	array('desc' => _AM_SWIKI_LISTPAGES_TITLE_OPT, 'col' => 'title'),
+	array('desc' => _AM_SWIKI_LISTPAGES_PARENT_OPT, 'col' => 'parent'),
+    array('desc' => _AM_SWIKI_LISTPAGES_LASTMODIFIED_OPT, 'col' => 'lastmodified'),
+    array('desc' => _MD_SWIKI_VIEWS, 'col' => 'views'),
 );
 
 $selOrderDir = array(
-	array('desc' => _AM_SWIKI_LISTPAGES_ORDERASC_OPT,		'col' => 'ASC'),
-	array('desc' => _AM_SWIKI_LISTPAGES_ORDERDESC_OPT,		'col' => 'DESC'),
+	array('desc' => _AM_SWIKI_LISTPAGES_ORDERASC_OPT, 'col' => 'ASC'),
+	array('desc' => _AM_SWIKI_LISTPAGES_ORDERDESC_OPT, 'col' => 'DESC'),
 );
 
 echo '<script>function showSelectOperands(ele) {'
