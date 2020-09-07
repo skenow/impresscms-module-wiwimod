@@ -1,3 +1,7 @@
++ added
+- removed
+! changed
+
 == SimplyWiki 2.0.0 ==
 Status: Beta
 Released: 
@@ -5,10 +9,12 @@ Released:
 Added
 * Templates for all pages
 * Meta keywords and meta description fields to customize each page's snippets
+* Ability to sort pages by number of views in admin area
 
 Improved
 * PHP 5.6 strict compliance
 * Default values for datetime fields compliant with MySQL Strict Mode
+* Layout of the TOC block works better with modern themes
 
 Fixed
 * All deprecated code and references updated
@@ -18,8 +24,17 @@ Removed
 * Support for XOOPS legacy Tag module 
 
 Language additions/changes
+admin.php
 + define('_MD_SWIKI_META_KEYWORDS', 'META Keywords');
 + define('_MD_SWIKI_META_DESCRIPTION', 'META Description');
++ define('_AM_SWIKI_HELP', 'Visit the community support page at <a href="https://www.impresscms.org/" target="_blank">ImpressCMS Community Forums</a> for support or to get help. You can read the <a href=\'http://www.simplywiki.org/modules/wiki/index.php?page=Wiki+Help\' target=\'_blank\'>manual</a> online.');
+
+main.php
++ define('_MD_SWIKI_META_KEYWORDS', 'META Keywords');
++ define('_MD_SWIKI_META_DESCRIPTION', 'META Description');
+
+modinfo.php
+! define('_MI_SWIKI_AUTHOR_WORD', '<h4>About SimplyWiki</h4>SimplyWiki is GPL software. Read the <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> for the latest updates.');
 		
 Contributors to this release
 * skenow

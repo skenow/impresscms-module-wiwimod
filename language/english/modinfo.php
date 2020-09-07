@@ -59,9 +59,11 @@ define('_MI_SWIKI_BLOCK_RELATED_NAME', 'Side Content');
 define('_MI_SWIKI_BLOCK_RELATED_DESC', 'Side block for extra content on Wiki pages');
 define('_MI_SWIKI_BLOCK_SHOWPAGE_NAME', 'Show Page');
 define('_MI_SWIKI_BLOCK_SHOWPAGE_DESC', 'Show a page in a block');
-define('_MI_SWIKI_AUTHOR_WORD', '<h4>About SimplyWiki</h4><br />SimplyWiki is GPL software ; visit the community support page at <a href="https://www.impresscms.org/" target="_blank">Community Forums</a> to support or get help.<br /><br /><a href=\'http://www.simplywiki.org/modules/wiki/index.php?page=Wiki+Help\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
+define('_MI_SWIKI_AUTHOR_WORD', '<h4>About SimplyWiki</h4>SimplyWiki is GPL software. Read the <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> for the latest updates.');
 define('_MI_SWIKI_DEFAULTPROFILE_DESC', 'Default profile assigned to new pages');
-if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME', 'HomePage');}
+if (! defined('_MI_SWIKI_HOME')) {
+    define('_MI_SWIKI_HOME', 'HomePage');
+}
 
 // Added in SimplyWiki 1.1
 define('_MI_SWIKI_BLOCK_LISTPAGES_NAME', 'List Pages');

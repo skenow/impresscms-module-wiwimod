@@ -1,17 +1,15 @@
 <?php
 /*
  * Module and admin language definition
- * 
- *	_BTN	: text within buttons or action links
- *  _COL	: column headers
- *  _TXT	: "verbose" text (probably within content)
- *  _FLD	: title of form elements
- *  _DESC	: description under the title for form elements
- *  _MSG	: messages, alerts ...
+ *
+ * _BTN : text within buttons or action links
+ * _COL : column headers
+ * _TXT : "verbose" text (probably within content)
+ * _FLD : title of form elements
+ * _DESC : description under the title for form elements
+ * _MSG : messages, alerts ...
  *
  */
-
-
 define('_AM_SWIKI_ADMIN_TXT', 'Module administration');
 define('_AM_SWIKI_PAGESFILTER_TXT', 'Show pages where');
 define('_AM_SWIKI_LIKE_TXT', 'contains');
@@ -42,7 +40,6 @@ define('_AM_SWIKI_EDITACL_SAVE_BTN', 'Save');
 define('_AM_SWIKI_EDITACL_DELETE_BTN', 'Delete');
 define('_AM_SWIKI_EDITACL_CANCEL_BTN', 'Cancel');
 define('_AM_SWIKI_CLEANUPDB_BTN', 'Clean up the database');
-
 
 define('_AM_SWIKI_ACLNAME_FLD', 'Profile name');
 define('_AM_SWIKI_ACLDESC_FLD', 'Profile Description');
@@ -88,6 +85,10 @@ define('_AM_SWIKI_PRFDELSUCCESS_MSG', 'Profile deleted from the database.');
 define('_AM_SWIKI_PRFDELFAILED_MSG', 'Error while deleting profile. Database NOT updated');
 define('_AM_SWIKI_SYS_CFG', 'System Configuration');
 
-//added in version 1.2
+// added in version 1.2
 define('_AM_SWIKI_GOTO_MODULE', 'Go to module');
 define('_AM_SWIKI_UPDATE_MODULE', 'Update module');
+
+// added in version 2.0
+define('_AM_SWIKI_HELP', 'Visit the community support page at <a href="https://www.impresscms.org/" target="_blank">ImpressCMS Community Forums</a> for support or to get help. You can read the <a href=\'http://www.simplywiki.org/modules/wiki/index.php?page=Wiki+Help\' target=\'_blank\'>manual</a> online.');
+
