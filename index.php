@@ -173,7 +173,7 @@ switch ($op) {
 			$pageObj->title = icms_core_DataFilter::stripSlashesGPC($pageObj->title);
 			$pageObj->body = icms_core_DataFilter::stripSlashesGPC($pageObj->body);
 
-			$xoopsTpl->assign('swiki', array(
+			$icmsTpl->assign('swiki', array(
 				'keyword' => $pageObj->keyword,
 				'title' => $pageObj->title,
 				'body' => $pageObj->render()));
@@ -196,7 +196,7 @@ switch ($op) {
 		foreach (getAvailableEditors() as $ed) {
 			$edArr[] = array('value' => $ed[1], 'text' => $ed[0], 'options' => $ed[2]);
 		}
-		$xoopsTpl->assign('editorsArr', $edArr);
+		$icmsTpl->assign('editorsArr', $edArr);
 		$editor = isset($clean_POST['editor']) ? $clean_POST['editor'] : $swikiConfig['Editor'] ;
 		$editOptions = isset($clean_POST['editoptions']) ? $clean_POST['editoptions'] : "" ;
 		$form->addElement(new icms_form_elements_Hidden('editor', $editor));
@@ -303,7 +303,7 @@ switch ($op) {
 		$cancel_btn->setExtra(($op == 'edit') ? "onclick='history.back();'" : "onclick='document.location.href=\"index.php" . (($pageObj->id != 0) ? "?page=" . $pageObj->keyword : "") . "\"'");
 		$btn_tray->addElement($cancel_btn);
 		$form->addElement($btn_tray);
-		$form->assign($xoopsTpl);
+		$form->assign($icmsTpl);
 		break;
 
 	case 'history' :
@@ -313,7 +313,7 @@ switch ($op) {
 
 		$pageObj = new wiwiRevision($page, (isset($id) ? $id : 0));
 		if ($op == 'history') {
-			$xoopsTpl->assign('swiki', array(
+			$icmsTpl->assign('swiki', array(
 				'keyword' => $pageObj->keyword,
 				'encodedurl' => $pageObj->encode($pageObj->keyword),
 				'revid' => $pageObj->id,
@@ -322,7 +322,7 @@ switch ($op) {
 			));
 		} else {
 			$pageObj->diff($bodyDiff, $titleDiff);
-			$xoopsTpl->assign('swiki', array(
+			$icmsTpl->assign('swiki', array(
 				'keyword' => $pageObj->keyword,
 				'encodedurl' => $pageObj->encode($pageObj->keyword),
 				'revid' => $pageObj->id,
@@ -337,8 +337,8 @@ switch ($op) {
 			$hist[$key]['keyword'] = $pageObj->encode($hist[$key]['keyword']);
 		}
 
-		$xoopsTpl->assign('hist', $hist);
-		$xoopsTpl->assign('allowRestore', $pageObj->canAdministrate());
+		$icmsTpl->assign('hist', $hist);
+		$icmsTpl->assign('allowRestore', $pageObj->canAdministrate());
 		break;
 
 	case 'restore' :
@@ -372,7 +372,7 @@ switch ($op) {
 			if (isset($clean_GET['startpage'])) $startpage = (int) $clean_GET['startpage'] ; else $startpage = 0;
 			if (count($cpages) > 0) {
 				$pagenav = new icms_view_PageNav(count($cpages), 1, $startpage, 'startpage', 'page=' . $pageObj->keyword);
-				$xoopsTpl->assign('nav' , array(
+				$icmsTpl->assign('nav' , array(
 					'startpage' => $startpage,
 					'html' => $pagenav->RenderNav(),
 				));
@@ -401,7 +401,7 @@ switch ($op) {
 		$writeProfiles = new WiwiProfile();
 		$WritePrivileges = count($writeProfiles->getWriteProfiles($user));
 
-		$xoopsTpl->assign('swiki', array(
+		$icmsTpl->assign('swiki', array(
 			'keyword' => $pageObj->keyword,
 			'encodedurl' => $pageObj->encode($pageObj->keyword),
 			'title' => $pageObj->title,
@@ -421,13 +421,13 @@ switch ($op) {
 			'WritePrivileges' => $WritePrivileges,
 		));
 
-		$xoopsTpl->assign('parentlist', $pageObj->parentList());
+		$icmsTpl->assign('parentlist', $pageObj->parentList());
 
 		$edArr = array();
 		foreach (getAvailableEditors() as $ed) {
 			$edArr[] = array('value' => $ed[1], 'text' => $ed[0], 'options' => $ed[2]);
 		}
-		$xoopsTpl->assign('editorsArr', $edArr);
+		$icmsTpl->assign('editorsArr', $edArr);
 
 		$pageid = $pageObj->pageid;
 		if ($pageObj->canViewComments()) {
@@ -442,7 +442,7 @@ switch ($op) {
 
 }
 
-$xoopsTpl->assign('icms_pagetitle', icms_core_DataFilter::htmlSpecialchars(icms_core_DataFilter::htmlSpecialchars($pageObj->title) . ' - ' .icms::$module->getVar('name')));
+$icmsTpl->assign('icms_pagetitle', icms_core_DataFilter::htmlSpecialchars(icms_core_DataFilter::htmlSpecialchars($pageObj->title) . ' - ' .icms::$module->getVar('name')));
 
 if (!empty($pageObj->meta_keywords)) {
 	$xoTheme->addMeta('meta', 'keywords', icms_core_DataFilter::htmlSpecialchars(icms_core_DataFilter::htmlSpecialchars($pageObj->meta_keywords)));
