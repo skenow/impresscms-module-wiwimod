@@ -22,6 +22,7 @@ Fixed
 Removed
 * Blocks and Group admin
 * Support for XOOPS legacy Tag module 
+* Editor selector from the editing template. Editors are set in preferences
 
 Language additions/changes
 admin.php
