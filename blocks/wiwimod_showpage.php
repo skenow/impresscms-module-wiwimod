@@ -4,20 +4,20 @@
  *
  * Page selection is done within block administration (TODO)
  * if the reader has modification privilege, shows the "edit" button (TODO) >> see bug
+ *
  * @package SimplyWiki
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$
  */
-
 $wikiModDir = basename(dirname(__DIR__));
 include_once ICMS_MODULES_PATH . '/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
-function swiki_showpage ($options) {
-	$wikiModDir = basename(dirname(__DIR__)) ;
-	 
-	$block = array();
+function swiki_showpage($options) {
+	$wikiModDir = basename(dirname(__DIR__));
+
+	$block = array ();
 	$pageObj = new wiwiRevision($options[0]);
 	if ($pageObj->id == 0) {
 		$block['notfound'] = true;
@@ -29,8 +29,11 @@ function swiki_showpage ($options) {
 		} else {
 			// Handle pagebreaks
 			$pagecontent = $pageObj->body;
-			$cpages = explode ("[pagebreak]", $pagecontent);
-			if (isset($_GET['wiwistartpage'])) $startpage = (int) $_GET['wiwistartpage'] ; else $startpage = 0;
+			$cpages = explode("[pagebreak]", $pagecontent);
+			if (isset($_GET['wiwistartpage']))
+				$startpage = (int) $_GET['wiwistartpage'];
+			else
+				$startpage = 0;
 			if (count($cpages) > 0) {
 				$pagenav = new icms_view_PageNav(count($cpages), 1, $startpage, 'wiwistartpage', '');
 				$block['nav'] = $pagenav->RenderNav();
@@ -55,22 +58,22 @@ function swiki_showpage ($options) {
 }
 
 function swiki_contextshow($options) {
-	$wikiModDir = basename(dirname(__DIR__)) ;
-	
+	$wikiModDir = basename(dirname(__DIR__));
+
 	// Get content to display
-	$preg_res = array();
+	$preg_res = array ();
 	$sidePage = '';
-	$block = array();
-	
-	if (preg_match("#\?page=([^&]+)#i", htmlspecialchars($GLOBALS['xoopsRequestUri'], ENT_QUOTES),  $preg_res)) {
+	$block = array ();
+
+	if (preg_match("#\?page=([^&]+)#i", htmlspecialchars($GLOBALS['xoopsRequestUri'], ENT_QUOTES), $preg_res)) {
 		$page = urldecode($preg_res[1]);
 	} else {
-		$page=_MB_SWIKI_HOME;
+		$page = _MB_SWIKI_HOME;
 	}
 
 	$sql = 'SELECT contextBlock FROM ' . icms::$xoopsDB->prefix('wiki_pages') . ' WHERE keyword="' . $page . '" ORDER BY pageid DESC LIMIT 1';
 	$result = icms::$xoopsDB->query($sql);
-	list($sidePage) = icms::$xoopsDB->fetchRow($result);
+	list ( $sidePage ) = icms::$xoopsDB->fetchRow($result);
 	if ($sidePage != '') {
 		$pageObj = new wiwiRevision($sidePage);
 		if ($pageObj->id != 0) {
@@ -98,10 +101,10 @@ function swiki_contextshow($options) {
 	return $block;
 }
 
-function swiki_showpage_blockedit ($options) {
+function swiki_showpage_blockedit($options) {
 	$form = _MB_SWIKI_SHOWPAGE_DESC . "&nbsp;:&nbsp;<input type='text' name='options[0]' value='" . $options[0] . "' /><br />";
 	$form .= _MB_SWIKI_SHOW_TITLE . "&nbsp;:&nbsp;<input type='checkbox' name='options[1]' value='1'" . (isset($options[1]) ? " checked='checked'" : "") . " /><br />";
 	$form .= _MB_SWIKI_SHOW_AUTHOR . "&nbsp;:&nbsp;<input type='checkbox' name='options[2]' value='1'" . (isset($options[2]) ? " checked='checked'" : "") . " />";
-	
+
 	return $form;
 }

@@ -11,34 +11,28 @@ if (!defined('ICMS_ROOT_PATH')) exit();
 
 // reproduces right in RTL languages and left in LTR languages
 if (!defined("_GLOBAL_LEFT")) {
-	define('_GLOBAL_LEFT', ((defined('_ADM_USE_RTL') && _ADM_USE_RTL )
-		? "right"
-		: "left")
-	);
+	define('_GLOBAL_LEFT', ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? "right" : "left"));
 }
 // reproduces left in RTL languages and right in LTR languages
 if (!defined("_GLOBAL_RIGHT")) {
-	define('_GLOBAL_RIGHT', ((defined('_ADM_USE_RTL') && _ADM_USE_RTL )
-		? "left"
-		: "right")
-	);
+	define('_GLOBAL_RIGHT', ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? "left" : "right"));
 }
 $wikiModDir = basename(dirname(__DIR__));
 
 /**
- * @todo	This will not work in ImpressCMS until it is updated for the proper
- * 			class handler
- * @param	mixed 	$blkname block title or id
+ *
+ * @param mixed $blkname
+ *        block title or id
  */
-function swiki_getBlock ($blkname) {
+function swiki_getBlock($blkname) {
 	$wikiModDir = basename(dirname(__DIR__));
-	$block = array();
+	$block = array ();
 	$bcontent = '';
 	$bid = (int) $blkname;
 
 	// get all blocks
-		$block_handler =& icms::handler('icms_view_block');
-		$block_arr = $block_handler->getAllBlocks();
+	$block_handler = &icms::handler('icms_view_block');
+	$block_arr = $block_handler->getAllBlocks();
 
 	// check block to show
 	if ($bid == 0) {
@@ -79,10 +73,12 @@ function swiki_getBlock ($blkname) {
 
 /**
  * code adapted from the excellent SmartFaq module (www.smartfactory.ca)
+ *
  * @deprecated
  */
-function getAdminMenu ($currentoption = 0, $breadcrumb = '') {
+function getAdminMenu($currentoption = 0, $breadcrumb = '') {
 	$wikiModDir = basename(dirname(__DIR__));
+	$wikiModPath = ICMS_MODULES_PATH . '/' . $wikiModDir;
 	$html = '';
 	/* Nice buttons styles */
 	$html .= "
@@ -108,62 +104,58 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '') {
 	$module = icms::handler('icms_module')->getByDirname($wikiModDir);
 	$myts = icms_core_Textsanitizer::getInstance();
 
-	$tblColors = array();
-	$tblColors[0] = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] ='';
+	$tblColors = array ();
+	$tblColors[0] = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] = '';
 	$tblColors[$currentoption] = 'current';
-	if (file_exists(ICMS_MODULES_PATH . '/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/modinfo.php')) {
-		include_once ICMS_MODULES_PATH . '/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/modinfo.php';
+	if (file_exists($wikiModPath . '/language/' . $icmsConfig['language'] . '/modinfo.php')) {
+		include_once $wikiModPath . '/language/' . $icmsConfig['language'] . '/modinfo.php';
 	} else {
-		include_once ICMS_MODULES_PATH . '/' . $wikiModDir . '/language/english/modinfo.php';
+		include_once $wikiModPath . '/language/english/modinfo.php';
 	}
 
-	$html .= "<div id='buttontop'>"
-		. "<table style=\"width: 100%; padding: 0; \" cellspacing=\"0\"><tr>";
+	$html .= "<div id='buttontop'>" . "<table style=\"width: 100%; padding: 0; \" cellspacing=\"0\"><tr>";
 
-	$html .= "<td style='width: 60%; font-size: 14px; font-weight:bolder; text-align: "._GLOBAL_LEFT."; color: #2F5376; padding: 0 6px; line-height: 18px;'>"._MI_SWIKI_NAME." - "._MI_SWIKI_DESC
-		. "<br /><span style='font-size: 10px;'><a href='" . ICMS_URL . "/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $module->getVar('mid') . "'>" . _PREFERENCES . "</a> | <a href='" . ICMS_URL . "/modules/" . $wikiModDir . "' title=''>" . _AM_SWIKI_GOTO_MODULE . "</a> | <a href='" . ICMS_URL . "/modules/system/admin.php?fct=modulesadmin&op=update&module=" . $wikiModDir . "' title=''>" . _AM_SWIKI_UPDATE_MODULE . "</a></span></td>"
-		. "<td style='width: 40%; font-size: 10px; text-align: " . _GLOBAL_RIGHT . "; color: #2F5376; padding: 0 6px; line-height: 18px;'>" . _AM_SWIKI_ADMIN_TXT . " : " . $module->getVar('name') . " : " . $breadcrumb . "</td>"
-		. "</tr></table>"
-		. "</div>";
+	$html .= "<td style='width: 60%; font-size: 14px; font-weight:bolder; text-align: " . _GLOBAL_LEFT . "; color: #2F5376; padding: 0 6px; line-height: 18px;'>" . _MI_SWIKI_NAME . " - " . _MI_SWIKI_DESC . "<br /><span style='font-size: 10px;'><a href='" . ICMS_URL . "/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $module->getVar('mid') . "'>" . _PREFERENCES . "</a> | <a href='" . ICMS_URL . "/modules/" . $wikiModDir . "' title=''>" . _AM_SWIKI_GOTO_MODULE . "</a> | <a href='" . ICMS_URL . "/modules/system/admin.php?fct=modulesadmin&op=update&module=" . $wikiModDir . "' title=''>" . _AM_SWIKI_UPDATE_MODULE . "</a></span></td>" . "<td style='width: 40%; font-size: 10px; text-align: " . _GLOBAL_RIGHT . "; color: #2F5376; padding: 0 6px; line-height: 18px;'>" . _AM_SWIKI_ADMIN_TXT . " : " . $module->getVar('name') . " : " . $breadcrumb . "</td>" . "</tr></table>" . "</div>";
 
-	$html .= "<div id='buttonbar'>"
-		. "<ul>"
-		. "<li id='" . $tblColors[0] . "'><a href=\"" . ICMS_URL . "/modules/" . $wikiModDir . "/admin/index.php\"><span>" . _MI_SWIKI_ADMENU1 . "</span></a></li>"
-		. "<li id='" . $tblColors[1] . "'><a href=\"" . ICMS_URL . "/modules/" . $wikiModDir . "/admin/acladmin.php\"><span>" . _MI_SWIKI_ADMENU2 . "</span></a></li>"
-		. "<li id='" . $tblColors[4] . "'><a href=\"" . ICMS_URL . "/modules/" . $wikiModDir . "/admin/about.php\"><span>" . _MI_SWIKI_ADMENU4 . "</span></a></li>"
-		. "<li id='" . $tblColors[5] . "'><a href=\"" . ICMS_URL . "/modules/" . $wikiModDir . "/admin/help.php\"><span>" . _MI_SWIKI_ADMENU5 . "</span></a></li>"
-		. "</ul></div>&nbsp;";
+	$html .= "<div id='buttonbar'>" . "<ul>" . "<li id='" . $tblColors[0] . "'><a href=\"" . ICMS_URL . "/modules/" . $wikiModDir . "/admin/index.php\"><span>" . _MI_SWIKI_ADMENU1 . "</span></a></li>" . "<li id='" . $tblColors[1] . "'><a href=\"" . ICMS_URL . "/modules/" . $wikiModDir . "/admin/acladmin.php\"><span>" . _MI_SWIKI_ADMENU2 . "</span></a></li>" . "<li id='" . $tblColors[4] . "'><a href=\"" . ICMS_URL . "/modules/" . $wikiModDir . "/admin/about.php\"><span>" . _MI_SWIKI_ADMENU4 . "</span></a></li>" . "<li id='" . $tblColors[5] . "'><a href=\"" . ICMS_URL . "/modules/" . $wikiModDir . "/admin/help.php\"><span>" . _MI_SWIKI_ADMENU5 . "</span></a></li>" . "</ul></div>&nbsp;";
 
 	return $html;
 }
 
 /**
- * @todo	Remove this check and only use the internal editor logic in ImpressCMS
+ *
+ * @todo Remove this check and only use the internal editor logic in ImpressCMS
  */
 function getAvailableEditors() {
-	$arr[] = array('Standard' , 0 , '' );
+	$arr[] = array ('Standard',0,''
+	);
 
 	$editorhandler = new icms_plugins_EditorHandler();
 	$xedArr = array_flip($editorhandler->getList());
-	
+
 	foreach ($xedArr as $xedTitle => $xedName) {
-		$arr[] = array($xedTitle, 1 , $xedName );
+		$arr[] = array ($xedTitle,1,$xedName
+		);
 	}
 
 	if (file_exists(ICMS_ROOT_PATH . '/class/spaw')) {
-		$arr[] = array('Spaw' , 2 , '' );
+		$arr[] = array ('Spaw',2,''
+		);
 	}
 
 	if (file_exists(ICMS_ROOT_PATH . '/class/htmlarea')) {
-		$arr[] = array('HTMLArea' , 3 , '');
+		$arr[] = array ('HTMLArea',3,''
+		);
 	}
 
 	if (file_exists(ICMS_ROOT_PATH . '/class/wysiwyg')) {
-		$arr[] = array('Koivi' , 4 , '');
+		$arr[] = array ('Koivi',4,''
+		);
 	}
 
 	if (file_exists(ICMS_ROOT_PATH . '/class/fckeditor')) {
-		$arr[] = array('FCKEditor' , 5 , '');
+		$arr[] = array ('FCKEditor',5,''
+		);
 	}
 
 	return $arr;
@@ -172,7 +164,7 @@ function getAvailableEditors() {
 /**
  * The old XOOPS Tag module does not work in ImpressCMS 1.3 or higher
  *
- * @todo	Remove all checks for this module
+ * @todo Remove all checks for this module
  */
 function isTagModuleActivated() {
 	return false;
@@ -183,13 +175,15 @@ function isTagModuleActivated() {
  *
  * This can be expanded for all different types of input: email, URL, filenames, media/mimetypes
  *
- * @param array $input_var Array of user input, gather from $_GET, $_POST
- * @param array $valid_vars Array of valid variables and data type (integer, boolean, string, )
+ * @param array $input_var
+ *        Array of user input, gather from $_GET, $_POST
+ * @param array $valid_vars
+ *        Array of valid variables and data type (integer, boolean, string, )
  * @return array Array of validated and sanitized variables
  */
-function swiki_cleanVars ($input_var, $valid_vars) {
-	$clean_var = array();
-	foreach ($valid_vars as $key=>$type){
+function swiki_cleanVars($input_var, $valid_vars) {
+	$clean_var = array ();
+	foreach ($valid_vars as $key => $type) {
 		if (empty($input_var[$key])) {
 			$input_var[$key] = NULL;
 			continue;

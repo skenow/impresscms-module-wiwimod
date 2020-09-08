@@ -1,5 +1,5 @@
 <ul>
   <{foreach item=link from=$block.links}>
-    <li><a href="<{$icms_url}>/modules/<{$block.dirname}>/index.php?page=<{$link.page}>"><{if ($link.title)}><{$link.title}><{else}><{$link.page}><{/if}></a></li>
+    <li><a href="<{$icms_url}>/modules/<{$block.dirname}>/index.php?page=<{$link.page}>"<{if ($link.title)}><{$link.title}><{else}><{$link.page}><{/if}></a></li>
   <{/foreach}>
-</ul>>
+</ul>
