@@ -10,13 +10,13 @@
 
 global $icmsConfig;
 $wikiModDir = basename(dirname(__DIR__));
-include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
+include_once ICMS_MODULES_PATH . '/' . $wikiModDir . '/class/wiwiRevision.class.php';
 //I don't want to have this language constant in multiple files - just include the other file
 if (!defined('_MD_SWIKI_ADDPAGE_BTN')) {
-	if (file_exists(ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/main.php')) {
-		include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/main.php';
+	if (file_exists(ICMS_MODULES_PATH . '/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/main.php')) {
+		include_once ICMS_MODULES_PATH . '/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/main.php';
 	} else {
-		include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/english/main.php';
+		include_once ICMS_MODULES_PATH . '/' . $wikiModDir . '/language/english/main.php';
 	}
 }
 /** Displays a sorted list of pages

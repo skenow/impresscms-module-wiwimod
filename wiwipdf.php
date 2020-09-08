@@ -8,11 +8,14 @@
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version $Id$
  */
+
 include_once 'header.php';
-include_once 'class/wiwiRevision.class.php';
-require_once ICMS_ROOT_PATH.'/class/template.php';
-define('FPDF_FONTPATH','class/html2fpdf/font/');
+require_once 'class/wiwiRevision.class.php';
+
 require 'class/html2fpdf/html2fpdf.php';
+
+define('FPDF_FONTPATH','class/html2fpdf/font/');
+
 if (isset($_GET['page'])) $page = $_GET['page']; else $page="";
 function printPage(&$pageObj,&$pdf) {
 	global $icmsConfig;

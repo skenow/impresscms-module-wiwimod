@@ -111,10 +111,10 @@ function getAdminMenu ($currentoption = 0, $breadcrumb = '') {
 	$tblColors = array();
 	$tblColors[0] = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] ='';
 	$tblColors[$currentoption] = 'current';
-	if (file_exists(ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/modinfo.php')) {
-		include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/modinfo.php';
+	if (file_exists(ICMS_MODULES_PATH . '/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/modinfo.php')) {
+		include_once ICMS_MODULES_PATH . '/' . $wikiModDir . '/language/' . $icmsConfig['language'] . '/modinfo.php';
 	} else {
-		include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/language/english/modinfo.php';
+		include_once ICMS_MODULES_PATH . '/' . $wikiModDir . '/language/english/modinfo.php';
 	}
 
 	$html .= "<div id='buttontop'>"

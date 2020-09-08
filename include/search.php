@@ -11,7 +11,7 @@
 if (!defined('ICMS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 
 $wikiModDir = basename(dirname(__DIR__));
-include_once ICMS_ROOT_PATH . '/modules/'. $wikiModDir .'/class/wiwiProfile.class.php';
+include_once ICMS_MODULES_PATH . '/'. $wikiModDir .'/class/wiwiProfile.class.php';
 
 function swiki_search($queryarray, $andor, $limit, $offset, $userid) {
 

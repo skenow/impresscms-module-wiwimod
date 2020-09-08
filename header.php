@@ -20,4 +20,4 @@ global $wikiModDir;
 $wikiModDir = basename(__DIR__);
 $modversion['dirname'] = $wikiModDir;
 
-include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/include/functions.php';
+include_once ICMS_MODULES_PATH . '/' . $wikiModDir . '/include/functions.php';

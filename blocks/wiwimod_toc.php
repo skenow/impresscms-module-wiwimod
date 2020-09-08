@@ -10,7 +10,7 @@
  */
 
 $wikiModDir = basename(dirname(__DIR__));
-include_once ICMS_ROOT_PATH . '/modules/' . $wikiModDir . '/class/wiwiRevision.class.php';
+include_once ICMS_MODULES_PATH . '/' . $wikiModDir . '/class/wiwiRevision.class.php';
 
 function swiki_toc() {
 	$wikiModDir = basename(dirname(__DIR__));
