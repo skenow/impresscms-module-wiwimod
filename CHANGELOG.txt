@@ -21,7 +21,7 @@ Fixed
 
 Removed
 * Blocks and Group admin
-* Support for XOOPS legacy Tag module 
+* Support for XOOPS legacy Tag module (had been disable earlier)
 * Editor selector from the editing template. Editors are set in preferences
 
 Language additions/changes
@@ -34,6 +34,9 @@ main.php
 
 modinfo.php
 ! define('_MI_SWIKI_AUTHOR_WORD', '<h4>About SimplyWiki</h4>SimplyWiki is GPL software. Read the <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> for the latest updates.');
++ define('_MI_SWIKI_SITE_DFLT_EDITOR', 'Site Default');
++ define('_MI_SWIKI_SITE_ALT_EDITOR', 'Alternate Editor');
+
 		
 Contributors to this release
 * skenow
