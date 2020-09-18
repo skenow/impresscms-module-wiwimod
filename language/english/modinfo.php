@@ -30,8 +30,8 @@ define('_MI_SWIKI_SHOWTITLES_DESC', 'Show page titles instead of page names in  
 define('_MI_SWIKI_USECAMELCASE', 'Use CamelCase syntax');
 define('_MI_SWIKI_USECAMELCASE_DESC', 'Interprets CamelCase words as links to other pages.');
 
-define('_MI_SWIKI_XOOPSEDITOR', 'Choose a "XoopsEditor" supported editor');
-define('_MI_SWIKI_XOOPSEDITOR_DESC', 'Valid if XoopsEditor was chosen above');
+define('_MI_SWIKI_XOOPSEDITOR', 'Choose a supported editor');
+define('_MI_SWIKI_XOOPSEDITOR_DESC', 'Valid if Alternate Editor was chosen above');
 
 // Notification options
 define('_MI_SWIKI_PAGENOTIFYCAT_TITLE', 'Page');
@@ -61,8 +61,8 @@ define('_MI_SWIKI_BLOCK_SHOWPAGE_NAME', 'Show Page');
 define('_MI_SWIKI_BLOCK_SHOWPAGE_DESC', 'Show a page in a block');
 define('_MI_SWIKI_AUTHOR_WORD', '<h4>About SimplyWiki</h4>SimplyWiki is GPL software. Read the <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> for the latest updates.');
 define('_MI_SWIKI_DEFAULTPROFILE_DESC', 'Default profile assigned to new pages');
-if (! defined('_MI_SWIKI_HOME')) {
-    define('_MI_SWIKI_HOME', 'HomePage');
+if (!defined('_MI_SWIKI_HOME')) {
+	define('_MI_SWIKI_HOME', 'HomePage');
 }
 
 // Added in SimplyWiki 1.1
@@ -93,3 +93,7 @@ define('_MI_SWIKI_GLOBALPAGERESTORE_TITLE', 'Page restored');
 define('_MI_SWIKI_GLOBALPAGERESTORE_CAPTION', 'Notify me when a previous version of any page is restored');
 define('_MI_SWIKI_GLOBALPAGERESTORE_DESC', 'Receive notification when any user restores a previous version of any page');
 define('_MI_SWIKI_GLOBALPAGERESTORE_SUBJECT', '[{X_SITENAME}] {X_MODULE} auto-notify : page restored');
+
+// Added in SimplyWiki 2.0
+define('_MI_SWIKI_SITE_DFLT_EDITOR', 'Site Default');
+define('_MI_SWIKI_SITE_ALT_EDITOR', 'Alternate Editor');

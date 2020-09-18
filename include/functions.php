@@ -123,45 +123,6 @@ function getAdminMenu($currentoption = 0, $breadcrumb = '') {
 }
 
 /**
- *
- * @todo Remove this check and only use the internal editor logic in ImpressCMS
- */
-function getAvailableEditors() {
-	$arr[] = array ('Standard',0,''
-	);
-
-	$editorhandler = new icms_plugins_EditorHandler();
-	$xedArr = array_flip($editorhandler->getList());
-
-	foreach ($xedArr as $xedTitle => $xedName) {
-		$arr[] = array ($xedTitle,1,$xedName
-		);
-	}
-
-	if (file_exists(ICMS_ROOT_PATH . '/class/spaw')) {
-		$arr[] = array ('Spaw',2,''
-		);
-	}
-
-	if (file_exists(ICMS_ROOT_PATH . '/class/htmlarea')) {
-		$arr[] = array ('HTMLArea',3,''
-		);
-	}
-
-	if (file_exists(ICMS_ROOT_PATH . '/class/wysiwyg')) {
-		$arr[] = array ('Koivi',4,''
-		);
-	}
-
-	if (file_exists(ICMS_ROOT_PATH . '/class/fckeditor')) {
-		$arr[] = array ('FCKEditor',5,''
-		);
-	}
-
-	return $arr;
-}
-
-/**
  * The old XOOPS Tag module does not work in ImpressCMS 1.3 or higher
  *
  * @todo Remove all checks for this module

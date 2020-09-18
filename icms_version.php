@@ -131,22 +131,10 @@ $modversion['config'][1]['default'] = 0;
 // required and valid for 'select' or 'select_multi' formtype option only
 // language constants can be used for array key, otherwise use integer
 // $modversion['config'][1]['options'] = array('5' => 5, '10' => 10, '15' => 15, '20' => 20, '25' => 25, '30' => 30);
-$modversion['config'][1]['options'] = array ('Xoops Standard' => 0,'XoopsEditor' => 1
+$modversion['config'][1]['options'] = array (_MI_SWIKI_SITE_DFLT_EDITOR => 0,_MI_SWIKI_SITE_ALT_EDITOR => 1
 );
-if (file_exists(ICMS_ROOT_PATH . '/class/spaw/formspaw.php')) {
-	$modversion['config'][1]['options']['Spaw'] = 2;
-}
-if (file_exists(ICMS_ROOT_PATH . '/class/htmlarea/formhtmlarea.php')) {
-	$modversion['config'][1]['options']['HtmlArea'] = 3;
-}
-if (file_exists(ICMS_ROOT_PATH . '/class/wysiwyg/formwysiwygtextarea.php')) {
-	$modversion['config'][1]['options']['Koivi'] = 4;
-}
-if (file_exists(ICMS_ROOT_PATH . '/class/fckeditor/formfckeditor.php')) {
-	$modversion['config'][1]['options']['FCK Editor'] = 5;
-}
 
-$modversion['config'][2] = array ('name' => 'XoopsEditor','title' => '_MI_SWIKI_XOOPSEDITOR','description' => '_MI_SWIKI_XOOPSEDITOR_DESC','formtype' => 'select','valuetype' => 'text','default' => 0
+$modversion['config'][2] = array ('name' => 'AlternateEditor','title' => '_MI_SWIKI_XOOPSEDITOR','description' => '_MI_SWIKI_XOOPSEDITOR_DESC','formtype' => 'select','valuetype' => 'text','default' => 0
 );
 
 $editor_name = !empty($_GET['editor_name']) ? $_GET['editor_name'] : '';

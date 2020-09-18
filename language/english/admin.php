@@ -92,3 +92,4 @@ define('_AM_SWIKI_UPDATE_MODULE', 'Update module');
 // added in version 2.0
 define('_AM_SWIKI_HELP', 'Visit the community support page at <a href="https://www.impresscms.org/" target="_blank">ImpressCMS Community Forums</a> for support or to get help. You can read the <a href=\'http://www.simplywiki.org/modules/wiki/index.php?page=Wiki+Help\' target=\'_blank\'>manual</a> online.');
 
+
