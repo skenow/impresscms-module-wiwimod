@@ -13,8 +13,8 @@ include_once 'header.php';
 /** Include the header for the site */
 include_once ICMS_ROOT_PATH . '/header.php';
 
-$clean_author = isset($_GET['author']) ? (int) $_GET['author'] : FALSE;
-$clean_type = isset($_GET['type']) ? $_GET['type'] : FALSE;
+$clean_author = isset($_GET['author']) ? (int) $_GET['author'] : false;
+$clean_type = isset($_GET['type']) ? $_GET['type'] : false;
 
 $module_name = $icmsModule->name();
 

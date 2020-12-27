@@ -18,7 +18,7 @@ include '../class/wiwiPageNav.class.php';
 /* Valid $_GET variables and types:  (string) op, (integer) id, (integer) starthist, (string) page
  * Define all variables and set a default value
  */
-$op = $id = $starthist = $page = NULL;
+$op = $id = $starthist = $page = null;
 $valid_getvars = array(
 	'op' => 'string',
 	'id' => 'int',
@@ -44,9 +44,9 @@ $valid_op = array(
 	'cleanupdb',
 	'cleanit',
 	'',
-	NULL,
+	null,
 );
-if (in_array($op, $valid_op, TRUE)) {
+if (in_array($op, $valid_op, true)) {
 	echo '<script>function submitaction(extra_args) {'
 			. 'var frm = document.getElementById("thisform"); '
 			. 'frm.action = "' . basename(__FILE__) . '"+(extra_args == "" ? "" : "?"+extra_args);'

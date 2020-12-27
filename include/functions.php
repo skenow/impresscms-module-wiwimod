@@ -46,7 +46,7 @@ function swiki_getBlock($blkname) {
 
 	// build block and extract content
 	if ($bid > 0) {
-		$blk = $block_handler->get($bid, TRUE);
+		$blk = $block_handler->get($bid, true);
 
 		$btpl = $blk->getVar('template');
 		$bid = $blk->getVar('bid');
@@ -146,7 +146,7 @@ function swiki_cleanVars($input_var, $valid_vars) {
 	$clean_var = array ();
 	foreach ($valid_vars as $key => $type) {
 		if (empty($input_var[$key])) {
-			$input_var[$key] = NULL;
+			$input_var[$key] = null;
 			continue;
 		}
 		switch ($type) {

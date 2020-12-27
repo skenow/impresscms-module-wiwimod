@@ -174,8 +174,8 @@ class WiwiRevision {
 	 * @param int $pageid
 	 *        id for the page
 	 */
-	public function __construct($page = NULL, $id = 0, $pageid = 0) {
-		if ($page == '') $page = NULL;
+	public function __construct($page = null, $id = 0, $pageid = 0) {
+		if ($page == '') $page = null;
 
 		$this->db = icms_db_Factory::instance();
 		$this->ts = icms_core_Textsanitizer::getInstance();
@@ -211,7 +211,7 @@ class WiwiRevision {
 		$sql = 'SELECT * FROM ' . $this->db->prefix('wiki_pages') . ' p INNER JOIN ' . $this->db->prefix('wiki_revisions') . ' r ON p.pageid = r.pageid';
 		if ($id != 0) {
 			$sql .= ' WHERE revid = ' . $id;
-		} elseif ($page !== NULL) {
+		} elseif ($page !== null) {
 			$sql .= ' WHERE p.lastmodified = r.modified AND keyword="' . icms_core_DataFilter::addSlashes($page) . '" ';
 		} elseif ($pageid != 0) {
 			$sql .= ' WHERE p.lastmodified = r.modified AND p.pageid=' . $pageid;
@@ -566,17 +566,17 @@ class WiwiRevision {
 	 *        Whether to show the page title or page name in the text
 	 * @return string text or link, depending on existence and user permissions for target page
 	 */
-	public function render_wikiLink($keyword, $customTitle = '', $show_titles = FALSE) {
+	public function render_wikiLink($keyword, $customTitle = '', $show_titles = false) {
 		$normKeyword = icms_core_DataFilter::addSlashes($this->normalize($keyword));
 		$page = $this->getPages("keyword='" . $normKeyword . "'");
 		if (count($page) > 0) {
-			$pageExists = TRUE;
+			$pageExists = true;
 			$targetPage = new WiwiRevision($normKeyword);
 			$title = $targetPage->title;
 			$txt = $customTitle == '' ? (($title != '') && $show_titles) ? $title : $normKeyword : $customTitle;
 			$privileges = $targetPage->profile->getUserPrivileges();
 		} else {
-			$pageExists = FALSE;
+			$pageExists = false;
 			$txt = ($customTitle != '' ? $customTitle : $normKeyword);
 			$privileges = $this->profile->getUserPrivileges();
 		}

@@ -105,7 +105,7 @@ function swiki_addpage() {
 	$wikiModDir = basename(dirname(__DIR__));
 	$block = array ();
 
-	$user = icms::$user ? icms::$user : NULL;
+	$user = icms::$user ? icms::$user : null;
 	$writeProfiles = new WiwiProfile();
 	$WritePrivileges = count($writeProfiles->getWriteProfiles($user));
 

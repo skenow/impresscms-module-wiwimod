@@ -71,7 +71,7 @@ function icms_module_install_simplywiki() {
 
 	$page->add();
 
-	return TRUE;
+	return true;
 }
 /* This will create a function with a name based on the installation directory, if it is not in simplywiki */
 $myInstallDir = basename(dirname(__DIR__));

@@ -12,7 +12,7 @@ include 'admin_header.php';
 /** Include the profile class */
 include '../class/wiwiProfile.class.php';
 
-$op = $prid = $newprf = $profile = NULL;
+$op = $prid = $newprf = $profile = null;
 
 $allowed_get = array(
   'profile' => 'int',
@@ -34,8 +34,8 @@ if (!empty($_POST)) {
 	extract($clean_POST);
 }
 
-$valid_ops = array('edit', 'save', 'confirmdelete', 'delete', NULL);
-if (in_array($op, $valid_ops, TRUE)) {
+$valid_ops = array('edit', 'save', 'confirmdelete', 'delete', null);
+if (in_array($op, $valid_ops, true)) {
 	switch ($op) {
 
 		case 'edit':
@@ -72,11 +72,11 @@ if (in_array($op, $valid_ops, TRUE)) {
 
 			//--- profile form ---
 			$aclName = new icms_form_elements_Text(_AM_SWIKI_ACLNAME_FLD, 'prf_name', 20, 20, $prf->name);
-			$aclReaders = new icms_form_elements_select_Group(_AM_SWIKI_READERS_FLD, 'prf_readers', TRUE, NULL, 5, TRUE);
+			$aclReaders = new icms_form_elements_select_Group(_AM_SWIKI_READERS_FLD, 'prf_readers', true, null, 5, true);
 			$aclReaders->setValue(array_keys($prf->readers));
-			$aclWriters = new icms_form_elements_select_Group(_AM_SWIKI_WRITERS_FLD, 'prf_writers', TRUE, NULL, 5, TRUE);
+			$aclWriters = new icms_form_elements_select_Group(_AM_SWIKI_WRITERS_FLD, 'prf_writers', true, null, 5, true);
 			$aclWriters->setValue(array_keys($prf->writers));
-			$aclAdministrators = new icms_form_elements_select_Group(_AM_SWIKI_ADMINISTRATORS_FLD, 'prf_administrators', TRUE, NULL, 5, TRUE);
+			$aclAdministrators = new icms_form_elements_select_Group(_AM_SWIKI_ADMINISTRATORS_FLD, 'prf_administrators', true, null, 5, true);
 			$aclAdministrators->setValue(array_keys($prf->administrators));
 			$aclComments = new icms_form_elements_Select(_AM_SWIKI_COMMENTS_FLD, 'prf_commentslevel', $prf->commentslevel);
 			$aclComments->addOptionArray(array(
@@ -95,7 +95,7 @@ if (in_array($op, $valid_ops, TRUE)) {
 				)
 			);
 			$aclSubmit = new icms_form_elements_Button('', 'savebtn', _AM_SWIKI_EDITACL_SAVE_BTN, 'submit');
-			if ($prid !== NULL) {
+			if ($prid !== null) {
 				$aclDelete = new icms_form_elements_Button('', 'delbtn', _AM_SWIKI_EDITACL_DELETE_BTN, 'submit');
 				$aclDelete->setExtra('onclick="document.forms.aclform.op.value=\'confirmdelete\'"');
 
@@ -110,7 +110,7 @@ if (in_array($op, $valid_ops, TRUE)) {
 
 			$btnTray = new icms_form_elements_Tray('');
 			$btnTray->addElement($aclSubmit);
-			if ($prid !== NULL) $btnTray->addElement($aclDelete);
+			if ($prid !== null) $btnTray->addElement($aclDelete);
 			$form->addElement($btnTray);
 
 			$form->addElement(new icms_form_elements_Hidden('op', 'save'));

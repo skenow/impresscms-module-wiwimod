@@ -22,10 +22,10 @@ include_once 'class/wiwiRevision.class.php';
 /*
  * extract all header variables to corresponding php variables ---
  */
-$id = $pageid = $visible = $editor = $allowComments = $uid = 0;
+$id = $pageid = $visible = $allowComments = $uid = 0;
 $contextBlock = $parent = $op = $summary = $item_tag = $page = $meta_description = $meta_keywords = '';
-$allowed_getvars = array ('op' => 'plaintext','back' => 'string','pageid' => 'int','startpage' => 'int','com_order' => 'plaintext','page' => 'string','id' => 'int');
-$allowed_postvars = array (
+$allowed_getvars = array('op' => 'plaintext', 'back' => 'string', 'pageid' => 'int', 'startpage' => 'int', 'com_order' => 'plaintext', 'page' => 'string', 'id' => 'int');
+$allowed_postvars = array(
 		'op' => 'plaintext',
 		'page' => 'string',
 		'pageid' => 'int',
@@ -33,7 +33,6 @@ $allowed_postvars = array (
 		'uid' => 'int',
 		'lastmodified' => 'plaintext',
 		'title' => 'plaintext',
-		'editor' => 'int',
 		'body' => 'string',
 		'parent' => 'plaintext',
 		'prid' => 'int',
@@ -49,7 +48,7 @@ $clean_GET = swiki_cleanVars($_GET, $allowed_getvars);
 extract($clean_GET);
 
 // valid values for op: preview, insert, quietsave, edit, history, diff, restore
-$valid_ops = array ('preview','insert','quietsave','edit','history','diff','restore',NULL);
+$valid_ops = array('preview', 'insert', 'quietsave', 'edit', 'history', 'diff', 'restore', null);
 $op = (in_array($op, $valid_ops, true)) ? $op : '';
 
 if (!empty($_POST)) {
@@ -65,7 +64,7 @@ $page = stripslashes($page); // if page name comes in url, decode it.
 
 /* Read data from database */
 
-if (in_array($op, array ('preview','insert','quietsave')) && isset($id)) {
+if (in_array($op, array('preview', 'insert', 'quietsave')) && isset($id)) {
 	/* Data coming from post variables (and possibly the database) */
 	$pageObj = new wiwiRevision();
 	$pageObj->keyword = $page;
@@ -138,7 +137,7 @@ switch ($op) {
 				/* @todo remove cached versions, if any */
 
 				// Define tags for notification message
-				$tags = array ();
+				$tags = array();
 				$tags['PAGE_NAME'] = $pageObj->title;
 				$tags['PAGE_URL'] = ICMS_URL . '/modules/' . icms::$module->getVar('dirname') . '/index.php?page=' . $pageObj->keyword;
 				$notification_handler = &icms::handler('icms_data_notification');
@@ -169,7 +168,7 @@ switch ($op) {
 			$pageObj->title = icms_core_DataFilter::stripSlashesGPC($pageObj->title);
 			$pageObj->body = icms_core_DataFilter::stripSlashesGPC($pageObj->body);
 
-			$icmsTpl->assign('swiki', array ('keyword' => $pageObj->keyword,'title' => $pageObj->title,'body' => $pageObj->render()));
+			$icmsTpl->assign('swiki', array('keyword' => $pageObj->keyword, 'title' => $pageObj->title, 'body' => $pageObj->render()));
 		}
 
 		/* Build form */
@@ -188,7 +187,7 @@ switch ($op) {
 		switch ($swikiConfig['Editor']) {
 			default:
 			case 0: // standard editor
-				$t_area = new icms_form_elements_Dhtmltextarea(_MD_SWIKI_BODY_FLD, 'body', htmlspecialchars($pageObj->body, ENT_QUOTES, _CHARSET, FALSE), '30', '70');
+				$t_area = new icms_form_elements_Dhtmltextarea(_MD_SWIKI_BODY_FLD, 'body', htmlspecialchars($pageObj->body, ENT_QUOTES, _CHARSET, false), '30', '70');
 				break;
 
 			case 1: // HTML editors
@@ -197,14 +196,14 @@ switch ($op) {
 
 				$options['caption'] = _MD_SWIKI_BODY_FLD;
 				$options['name'] = 'body';
-				$options['value'] = htmlspecialchars($pageObj->body, ENT_QUOTES, _CHARSET, FALSE);
+				$options['value'] = htmlspecialchars($pageObj->body, ENT_QUOTES, _CHARSET, false);
 				$options['rows'] = 25;
 				$options['cols'] = 60;
 				$options['width'] = '100%';
 				$options['height'] = '400px';
-				$t_area = &$editorhandler->get($editor_name, $options, FALSE, 'textarea');
+				$t_area = &$editorhandler->get($editor_name, $options, false, 'textarea');
 				if ($t_area) {
-					$editorhandler->setConfig($t_area, array ('filepath' => ICMS_UPLOAD_PATH . '/' . icms::$module->getVar('dirname'),'upload' => true,'extensions' => array ('txt','jpg','zip')));
+					$editorhandler->setConfig($t_area, array('filepath' => ICMS_UPLOAD_PATH . '/' . icms::$module->getVar('dirname'), 'upload' => true, 'extensions' => array('txt', 'jpg', 'zip')));
 				}
 				break;
 		}
@@ -248,7 +247,7 @@ switch ($op) {
 		 * only show the Save button if the user is an administrator for the page.
 		 * Otherwise, they can only let them create a new revision
 		 */
-		if ($pageObj->id > 0 && $pageObj->canAdministrate() === TRUE) {
+		if ($pageObj->id > 0 && $pageObj->canAdministrate() === true) {
 			$quietsave_btn = new icms_form_elements_Button('', 'quietsave', _MD_SWIKI_QUIETSAVE_BTN, 'button');
 			$quietsave_btn->setExtra("onclick='document.forms.swikiform.op.value=\"quietsave\"; document.forms.swikiform.submit.click();'");
 			$btn_tray->addElement($quietsave_btn);
@@ -274,10 +273,10 @@ switch ($op) {
 
 		$pageObj = new wiwiRevision($page, (isset($id) ? $id : 0));
 		if ($op == 'history') {
-			$icmsTpl->assign('swiki', array ('keyword' => $pageObj->keyword,'encodedurl' => $pageObj->encode($pageObj->keyword),'revid' => $pageObj->id,'title' => $pageObj->title,'body' => $pageObj->render()));
+			$icmsTpl->assign('swiki', array('keyword' => $pageObj->keyword, 'encodedurl' => $pageObj->encode($pageObj->keyword), 'revid' => $pageObj->id, 'title' => $pageObj->title, 'body' => $pageObj->render()));
 		} else {
 			$pageObj->diff($bodyDiff, $titleDiff);
-			$icmsTpl->assign('swiki', array ('keyword' => $pageObj->keyword,'encodedurl' => $pageObj->encode($pageObj->keyword),'revid' => $pageObj->id,'title' => $titleDiff,'body' => $bodyDiff));
+			$icmsTpl->assign('swiki', array('keyword' => $pageObj->keyword, 'encodedurl' => $pageObj->encode($pageObj->keyword), 'revid' => $pageObj->id, 'title' => $titleDiff, 'body' => $bodyDiff));
 		}
 
 		$hist = $pageObj->history();
@@ -298,7 +297,7 @@ switch ($op) {
 		$pageObj->contextBlock = $restoredRevision->contextBlock;
 		$success = $pageObj->add();
 		if ($success) {
-			$tags = array ();
+			$tags = array();
 			$tags['PAGE_NAME'] = $pageObj->title;
 			$tags['PAGE_URL'] = ICMS_URL . '/modules/' . icms::$module->getVar('dirname') . '/index.php?page=' . $pageObj->keyword;
 			$notification_handler = &icms::handler('icms_data_notification');
@@ -324,7 +323,7 @@ switch ($op) {
 				$startpage = 0;
 			if (count($cpages) > 0) {
 				$pagenav = new icms_view_PageNav(count($cpages), 1, $startpage, 'startpage', 'page=' . $pageObj->keyword);
-				$icmsTpl->assign('nav', array ('startpage' => $startpage,'html' => $pagenav->RenderNav()));
+				$icmsTpl->assign('nav', array('startpage' => $startpage, 'html' => $pagenav->RenderNav()));
 				$pagecontent = $cpages[$startpage];
 			}
 			$pagecontent = $pageObj->render($pagecontent);
@@ -346,11 +345,11 @@ switch ($op) {
 			/* End modification to count visits */
 		}
 
-		$user = icms::$user ? icms::$user : NULL;
+		$user = icms::$user ? icms::$user : null;
 		$writeProfiles = new WiwiProfile();
 		$WritePrivileges = count($writeProfiles->getWriteProfiles($user));
 
-		$icmsTpl->assign('swiki', array (
+		$icmsTpl->assign('swiki', array(
 				'keyword' => $pageObj->keyword,
 				'encodedurl' => $pageObj->encode($pageObj->keyword),
 				'title' => $pageObj->title,

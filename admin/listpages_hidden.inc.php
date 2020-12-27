@@ -10,7 +10,7 @@
  */
 if (!defined('ICMS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 
-$post_selwhere = $post_text = $post_profile = $startlist = NULL;
+$post_selwhere = $post_text = $post_profile = $startlist = null;
 $post_selorderby = 'keyword';
 $post_selorderdir = 'ASC';
 
