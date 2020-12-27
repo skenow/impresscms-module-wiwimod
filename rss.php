@@ -6,7 +6,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since		SimplyWiki 1.2
  * @package		SimplyWiki
- * @version		$Id$
+ * @version		
  */
 /** Include the module's header for all pages */
 include_once 'header.php';

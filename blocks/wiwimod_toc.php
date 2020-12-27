@@ -6,7 +6,7 @@
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$
+ * @version 
  */
 $wikiModDir = basename(dirname(__DIR__));
 include_once ICMS_MODULES_PATH . '/' . $wikiModDir . '/class/wiwiRevision.class.php';

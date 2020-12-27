@@ -6,7 +6,7 @@
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$
+ * @version
  */
 if (!defined('ICMS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
 /*
@@ -17,16 +17,16 @@ $post_selorderby = 'keyword';
 $post_selorderdir = 'ASC';
 
 $allowed_postvars = array(
-  'post_selwhere' => 'plaintext',
-  'post_text' => 'plaintext',
-  'post_profile' => 'int',
-  'post_selorderby' => 'plaintext',
-  'post_selorderdir' => 'plaintext');
+	'post_selwhere' => 'plaintext',
+	'post_text' => 'plaintext',
+	'post_profile' => 'int',
+	'post_selorderby' => 'plaintext',
+	'post_selorderdir' => 'plaintext');
 $clean_POST = swiki_cleanVars($_POST, $allowed_postvars);
 extract($clean_POST);
 
 $allowed_getvars = array(
-  'startlist' => 'int');
+	'startlist' => 'int');
 $clean_GET = swiki_cleanVars($_GET, $allowed_getvars);
 extract($clean_GET);
 
@@ -47,8 +47,8 @@ $selOrder = array(
 	array('desc' => _AM_SWIKI_LISTPAGES_KEYWORD_OPT, 'col' => 'keyword'),
 	array('desc' => _AM_SWIKI_LISTPAGES_TITLE_OPT, 'col' => 'title'),
 	array('desc' => _AM_SWIKI_LISTPAGES_PARENT_OPT, 'col' => 'parent'),
-    array('desc' => _AM_SWIKI_LISTPAGES_LASTMODIFIED_OPT, 'col' => 'lastmodified'),
-    array('desc' => _MD_SWIKI_VIEWS, 'col' => 'views'),
+	array('desc' => _AM_SWIKI_LISTPAGES_LASTMODIFIED_OPT, 'col' => 'lastmodified'),
+	array('desc' => _MD_SWIKI_VIEWS, 'col' => 'views'),
 );
 
 $selOrderDir = array(
@@ -98,11 +98,11 @@ switch ($selWhere[$post_selwhere]['type']) {
 	case 'text' :
 		$wherexpr = " lower(" . $post_selwhere . ") LIKE '%" . $post_text . "%' ";
 		break;
-		
+
 	case 'profile' :
 		$wherexpr = $post_selwhere . ' = ' . $post_profile . ' ';
 		break;
-		
+
 	default :
 		$wherexpr = '';
 		break;

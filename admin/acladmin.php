@@ -5,7 +5,7 @@
  * @package SimplyWiki
  * @author Wiwimod: Xavier JIMENEZ
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$
+ * @version
  */
 /** Include the administration header */
 include 'admin_header.php';
@@ -15,20 +15,20 @@ include '../class/wiwiProfile.class.php';
 $op = $prid = $newprf = $profile = null;
 
 $allowed_get = array(
-  'profile' => 'int',
-  'newprf' => 'int');
+	'profile' => 'int',
+	'newprf' => 'int');
 $clean_GET = swiki_cleanVars ($_GET, $allowed_get);
 extract($clean_GET);
 
 $allowed_postvars = array(
-  'prid' => 'int',
-  'prf_name' => 'plaintext',
-  'prf_readers' => 'array',
-  'prf_writers' => 'array',
-  'prf_administrators' => 'array',
-  'prf_commentslevel' => 'int',
-  'prf_historylevel' => 'int',
-  'op' => 'string');
+	'prid' => 'int',
+	'prf_name' => 'plaintext',
+	'prf_readers' => 'array',
+	'prf_writers' => 'array',
+	'prf_administrators' => 'array',
+	'prf_commentslevel' => 'int',
+	'prf_historylevel' => 'int',
+	'op' => 'string');
 if (!empty($_POST)) {
 	$clean_POST = swiki_cleanVars($_POST, $allowed_postvars);
 	extract($clean_POST);

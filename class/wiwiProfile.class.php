@@ -6,7 +6,7 @@
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$
+ * @version 
  */
 if (!defined('_WI_READ')) { // @todo move these defines and remove the conditonal
 define ('_WI_READ', 1);

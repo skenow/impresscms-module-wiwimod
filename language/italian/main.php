@@ -9,7 +9,7 @@
  * _DESC : description under the title for form elements
  * _MSG : messages, alerts ...
  * @package SimplyWiki
- * @version $Id$
+ * @version 
  */
 define('_MD_SWIKI_MODIFIED_TXT', 'Ultima modifica il');
 define('_MD_SWIKI_BY', 'da');

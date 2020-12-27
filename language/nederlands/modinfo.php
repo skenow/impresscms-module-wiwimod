@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// 
 // Module Info
 // Dutch translation Shine
 

@@ -5,7 +5,7 @@
  * @package SimplyWiki
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$
+ * @version 
  */
 global $icmsConfig;
 $wikiModDir = basename(dirname(__DIR__));

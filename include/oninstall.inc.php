@@ -8,7 +8,7 @@
  * @package SimplyWiki
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$
+ * @version 
  */
 if (!defined("ICMS_ROOT_PATH") && !defined('ICMS_ROOT_PATH')) die('Root path not defined');
 
