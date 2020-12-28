@@ -6,7 +6,7 @@
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version 
+ * @version
  */
 if (!defined('ICMS_ROOT_PATH')) exit();
 // @todo is this only here to keep the class from being declared twice?
@@ -167,12 +167,9 @@ class WiwiRevision {
 	 * or the corresponding pageid field (which both are common to
 	 * all page revisions.
 	 *
-	 * @param string $page
-	 *        page keyword
-	 * @param int $id
-	 *        revision number of the page
-	 * @param int $pageid
-	 *        id for the page
+	 * @param string $page page keyword
+	 * @param int $id revision number of the page
+	 * @param int $pageid id for the page
 	 */
 	public function __construct($page = null, $id = 0, $pageid = 0) {
 		if ($page == '') $page = null;
@@ -334,8 +331,7 @@ class WiwiRevision {
 	 * Renders sub page content, using render method.
 	 * (addition : Gizmhail)
 	 *
-	 * @param array $page
-	 *        array of matched elements within the searched text
+	 * @param array $page array of matched elements within the searched text
 	 */
 	public function renderSubPage($page) {
 		$result = '';
@@ -358,8 +354,7 @@ class WiwiRevision {
 	/**
 	 * Renders revision content, interpreting wiki codes and XoopsCodes.
 	 *
-	 * @param string $body
-	 *        text of page to be processed
+	 * @param string $body text of page to be processed
 	 * @return string processed text
 	 */
 	public function render(&$body = '') {
@@ -371,8 +366,8 @@ class WiwiRevision {
 		$lt = "(?:&lt;|<)";
 		$gt = "(?:&gt;|>)";
 
-		$search = array ();
-		$replace = array ();
+		$search = array();
+		$replace = array();
 
 		/**
 		 *
@@ -459,8 +454,8 @@ class WiwiRevision {
 
 		$body = $this->ts->displayTarea(preg_replace($search, $replace, $body), 1, 1, 1, 1, 0);
 
-		$delayedsearch = array ();
-		$delayedreplace = array ();
+		$delayedsearch = array();
+		$delayedreplace = array();
 
 		// link with href ending with ?page=CamelCase
 		$search_callback = "#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))(\">.*)</a>#Ui";
@@ -507,33 +502,27 @@ class WiwiRevision {
 
 		// <[PageIndex]> and <[RecentChanges]>
 		$search_callback = "#(?:<p>)*" . $lt . "\[(PageIndexI*|RecentChanges)\]" . $gt . "(?:</p>)*#i";
-		$body = preg_replace_callback($search_callback, array ($this,'render_index'
-		), $body);
+		$body = preg_replace_callback($search_callback, array($this, 'render_index'), $body);
 
 		// ((subPage)) : page to include (addition : Gizmhail)
 		$search_callback = "#\(\((.+?)\)\)#";
-		$body = preg_replace_callback($search_callback, array ($this,'renderSubPage'
-		), $body);
+		$body = preg_replace_callback($search_callback, array($this, 'renderSubPage'), $body);
 
 		// [[PAGE subPage]] : page to include (addition : Gizmhail) -
 		$search_callback = "#\[\[PAGE (.+?)\]\]#";
-		$body = preg_replace_callback($search_callback, array ($this,'renderSubPage'
-		), $body);
+		$body = preg_replace_callback($search_callback, array($this, 'renderSubPage'), $body);
 
 		// [[XBLK 1]] or [[XBLK title]] Xoops block ($1 is the block id or title)
 		$search_callback = "#\[\[XBLK (.+?)\]\]#i";
-		$body = preg_replace_callback($search_callback, array ($this,'render_block'
-		), $body);
+		$body = preg_replace_callback($search_callback, array($this, 'render_block'), $body);
 
 		// <[Children]>
 		$search_callback = "#(?:<p>)*" . $lt . "\[Children\]" . $gt . "(?:</p>)*#i";
-		$body = preg_replace_callback($search_callback, array ($this,'render_children'
-		), $body);
+		$body = preg_replace_callback($search_callback, array($this, 'render_children'), $body);
 
 		// <[Siblings]>
 		$search_callback = "#(?:<p>)*" . $lt . "\[Siblings\]" . $gt . "(?:</p>)*#i";
-		$body = preg_replace_callback($search_callback, array ($this,'render_siblings'
-		), $body);
+		$body = preg_replace_callback($search_callback, array($this, 'render_siblings'), $body);
 
 		// dummy string, to prevent recognition of special sequences (addition : Gizmhail)
 		$delayedsearch[] = "#\._\.#";
@@ -560,10 +549,8 @@ class WiwiRevision {
 	 * @todo reduce queries
 	 *
 	 * @param string $keyword
-	 * @param string $customTitle
-	 *        Override page title/page name
-	 * @param bool $show_titles
-	 *        Whether to show the page title or page name in the text
+	 * @param string $customTitle Override page title/page name
+	 * @param bool $show_titles Whether to show the page title or page name in the text
 	 * @return string text or link, depending on existence and user permissions for target page
 	 */
 	public function render_wikiLink($keyword, $customTitle = '', $show_titles = false) {
@@ -598,30 +585,23 @@ class WiwiRevision {
 	/**
 	 * Callback function to render an index or list of recent changes embedded in the page
 	 *
-	 * @param array $type
-	 *        array of matched elements in the searched text
+	 * @param array $type array of matched elements in the searched text
 	 */
 	public function render_index($type) {
-		$settings = array (
-				"pageindex" => array (
-						"ORDER BY title ASC",
+		$settings = array(
+				"pageindex" => array("ORDER BY title ASC",
 						"title",
 						1,
 						'"<br/><span class=\'wiwi_titre\' style=\"font-size:large;\">[$counter]</span><br/>"',
 						'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a><br/>"',
-						""
-				),
-				"pageindexi" => array ("ORDER BY keyword ASC","keyword",1,'"<br/><span class=\'wiwi_titre\'>$counter</span><br />"','"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $content["keyword"] . "\">" . $content["keyword"] . "</a> : " . $content["title"] . "<br />"',""
-				),
-				"recentchanges" => array (
-						"ORDER BY lastmodified DESC LIMIT 20",
+						""),
+				"pageindexi" => array("ORDER BY keyword ASC", "keyword", 1, '"<br/><span class=\'wiwi_titre\'>$counter</span><br />"', '"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $content["keyword"] . "\">" . $content["keyword"] . "</a> : " . $content["title"] . "<br />"', ""),
+				"recentchanges" => array("ORDER BY lastmodified DESC LIMIT 20",
 						"lastmodified",
 						10,
 						'"<tr><td colspan=3><strong>" . formatTimestamp(strtotime($counter), _SHORTDATESTRING) . "</strong></td></tr>"',
 						'"<tr><td>&nbsp;" . formatTimestamp(strtotime($content["lastmodified"]), "H:i") . "</td><td><a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a></td><td>" . $content["summary"] . "</td><td><span class=\"itemPoster\">" . icms_member_user_Handler::getUserLink($content["u_id"]) . "</span></td></tr>"',
-						""
-				)
-		);
+						""));
 		$cfg = $settings[strtolower($type[1])];
 
 		$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM ' . $this->db->prefix('wiki_pages') . ' p, ' . $this->db->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified ' . $cfg[0];
@@ -644,8 +624,7 @@ class WiwiRevision {
 	/**
 	 * Callback function to render a system block within the body
 	 *
-	 * @param array $matches
-	 *        array of matched elements in the searched text
+	 * @param array $matches array of matched elements in the searched text
 	 */
 	public function render_block($matches) {
 		include_once ICMS_MODULES_PATH . '/' . $this->_dir . '/include/functions.php';
@@ -660,7 +639,7 @@ class WiwiRevision {
 	private function parentList_recurr($child, &$parlist, &$db) {
 		$sql = 'SELECT parent FROM ' . $db->prefix('wiki_pages') . ' WHERE keyword="' . icms_core_DataFilter::addSlashes($child) . '"';
 		$result = $db->query($sql);
-		list ( $parent ) = $db->fetchRow($result);
+		list($parent) = $db->fetchRow($result);
 		if (($parent != '') && (!in_array($parent, $parlist))) {
 			$parlist[] = $parent;
 			$this->parentList_recurr($parent, $parlist, $db);
@@ -673,7 +652,7 @@ class WiwiRevision {
 	 * @return array List of parent pages linked to the page
 	 */
 	public function parentList() {
-		$parlist = array ();
+		$parlist = array();
 		if ($this->keyword != '') {
 			$this->parentList_recurr($this->keyword, $parlist, $this->db);
 		}
@@ -685,16 +664,14 @@ class WiwiRevision {
 
 	/**
 	 *
-	 * @param
-	 *        $limit
-	 * @param
-	 *        $start
+	 * @param $limit
+	 * @param $start
 	 */
 	public function history($limit = 0, $start = 0) {
 		$sql = 'SELECT keyword, revid as id, title, body, modified as lastmodified, userid as u_id, summary FROM ' . $this->db->prefix('wiki_revisions') . ' r, ' . $this->db->prefix('wiki_pages') . ' p WHERE p.keyword="' . icms_core_DataFilter::addSlashes($this->keyword) . '" AND p.pageid=r.pageid ORDER BY id DESC';
 		$result = $this->db->query($sql, $limit, $start);
 
-		$hist = array ();
+		$hist = array();
 		for ($i = 0; $i < $this->db->getRowsNum($result); $i++ ) {
 			$hist[] = $this->db->fetchArray($result);
 		}
@@ -703,39 +680,25 @@ class WiwiRevision {
 
 	/**
 	 *
-	 * @deprecated Use the revisions property, instead
-	 */
-	public function historyNum() {
-		$sql = 'SELECT revisions FROM ' . $this->db->prefix('wiki_pages') . ' WHERE keyword="' . icms_core_DataFilter::addSlashes($this->keyword) . '"';
-		$result = $this->db->query($sql);
-		list ( $maxcount ) = $this->db->fetchRow($result);
-		return $maxcount;
-	}
-
-	/**
-	 *
-	 * @param
-	 *        $bodyDiff
-	 * @param
-	 *        $titleDiff
+	 * @param $bodyDiff
+	 * @param $titleDiff
 	 */
 	public function diff(&$bodyDiff, &$titleDiff) {
 		include_once ICMS_MODULES_PATH . '/' . $this->_dir . '/include/diff.php';
 		// Get the latest revision contents
 		$sql = 'SELECT title, body FROM ' . $this->db->prefix('wiki_revisions') . ' r, ' . $this->db->prefix('wiki_pages') . ' p WHERE p.pageid="' . $this->pageid . '" AND r.pageid="' . $this->pageid . '" ORDER BY revid DESC LIMIT 1';
 		$result = $this->db->query($sql);
-		list ( $title, $body ) = $this->db->fetchRow($result);
+		list($title, $body) = $this->db->fetchRow($result);
 
 		// remove formatting tags, replace tags generating a line break with a "\n".
-		$search = array ("#<(/?TABLE|TD|P|HR|DIV|UL|LI|PRE|BR)>#i","#<(?!/?A|IMG)[/!]*?[^<>]*?>#si"
-		);
+		$search = array("#<(/?TABLE|TD|P|HR|DIV|UL|LI|PRE|BR)>#i", "#<(?!/?A|IMG)[/!]*?[^<>]*?>#si");
 
-		$replace = array ("<$1>\n",""
-		);
+		$replace = array("<$1>\n", "");
 
 		$body = preg_replace($search, $replace, $body);
 		$body2 = preg_replace($search, $replace, $this->body);
-		$bodyDiff = $this->render(diffDisplay($body2, $body));
+		$diff2Disp = diffDisplay($body2, $body);
+		$bodyDiff = $this->render($diff2Disp);
 		$titleDiff = ($title == $this->title) ? '<h2>' . icms_core_DataFilter::htmlSpecialchars($title) . '</h2>' : '<h2><span style="color: red;">' . icms_core_DataFilter::htmlSpecialchars($this->title) . '</span> &rarr; <span style="color: green;">' . icms_core_DataFilter::htmlSpecialchars($title) . '</span></h2>';
 	}
 
@@ -788,17 +751,15 @@ class WiwiRevision {
 
 			return ($rowsnum > 0); // this was a page creation : somebody did it before ...
 		} else {
-			list ( $db_lastmodified ) = $this->db->fetchRow($result);
+			list($db_lastmodified) = $this->db->fetchRow($result);
 			return ($this->lastmodified != $db_lastmodified);
 		}
 	}
 
 	/**
 	 *
-	 * @param
-	 *        $page
-	 * @param
-	 *        $id
+	 * @param $page
+	 * @param $id
 	 */
 	public function pageExists($page = "", $id = 0) {
 		$page = icms_core_DataFilter::addSlashes($this->normalize($page));
@@ -834,7 +795,7 @@ class WiwiRevision {
 		}
 		$result_a = $this->db->query($sql_a, $items_perpage, $current_start);
 
-		$pageArr = array ();
+		$pageArr = array();
 		for ($i = 0; $i < $this->db->getRowsNum($result_a); $i++ ) {
 			$row = $this->db->fetchArray($result_a);
 			$pageObj = new WiwiRevision();
@@ -864,8 +825,7 @@ class WiwiRevision {
 
 	/**
 	 *
-	 * @param
-	 *        $where
+	 * @param $where
 	 */
 	public function getPagesNum($where = "") {
 		$sql_a = "SELECT count(p.pageid) as count FROM " . $this->db->prefix("wiki_pages") . ' p, ' . $this->db->prefix("wiki_revisions") . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified';
@@ -875,7 +835,7 @@ class WiwiRevision {
 		}
 
 		$result = $this->db->query($sql_a);
-		list ( $maxcount ) = $this->db->fetchRow($result);
+		list($maxcount) = $this->db->fetchRow($result);
 
 		return $maxcount;
 	}
@@ -929,32 +889,23 @@ class WiwiRevision {
 	 *
 	 * used in creating the PDF version of a page
 	 *
-	 * @param bool $allowExternals
-	 *        not used?
+	 * @param bool $allowExternals not used?
 	 * @return array $links an array of links found in the page
 	 */
 	public function getLinks($allowExternals = false) {
-		$links = array ();
-		$search = array ("#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#", // CamelCase
+		$links = array();
+		$search = array("#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#", // CamelCase
 		"#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#", // [[CamelCase title]]
 		"#\[\[<a href=\"([^\"]*)\"(?:[^>]*)>(.*)</a> (.+?)\]\]#i", // [[www.mysite.org title]] and [[<a ... /a> title]]
 		"#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#", // [[free link | title]]
 		"#\[\[(.+?)\]\]#", // [[free link]]
 		"#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))\">(.*)</a>#Ui" // link with href ending with ?page=
 		);
-		$replace = array (array (2,2,true
-		),array (1,3,true
-		),array (1,2,false
-		),array (1,2,true
-		),array (1,1,true
-		),array (2,2,true
-		)
-		);
+		$replace = array(array(2, 2, true), array(1, 3, true), array(1, 2, false), array(1, 2, true), array(1, 1, true), array(2, 2, true));
 		foreach ($search as $key => $pattern) {
 			if (preg_match_all($pattern, $this->body, $matches, PREG_SET_ORDER)) {
 				foreach ($matches as $match) {
-					$links[] = array ("url" => $match[$replace[$key][0]],"txt" => $match[$replace[$key][1]],"isWiwiPage" => $match[$replace[$key][2]]
-					);
+					$links[] = array("url" => $match[$replace[$key][0]], "txt" => $match[$replace[$key][1]], "isWiwiPage" => $match[$replace[$key][2]]);
 				}
 			}
 		}
@@ -963,57 +914,45 @@ class WiwiRevision {
 
 	/**
 	 *
-	 * @param
-	 *        $keyword
+	 * @param $keyword
 	 */
 	public function normalize($keyword) {
-		$search = array ("\'",'\"','&quot;','&nbsp;'
-		);
-		$replace = array ("'",'"','"',' '
-		);
+		$search = array("\'", '\"', '&quot;', '&nbsp;');
+		$replace = array("'", '"', '"', ' ');
 		return str_replace($search, $replace, $keyword);
 	}
 
 	/**
 	 *
-	 * @param
-	 *        $keyword
+	 * @param $keyword
 	 */
 	static public function encode($keyword) {
-		$search = array ("\'","'",'\"','"','&quot;',' ','&nbsp;'
-		);
-		$replace = array ('%27','%27','%22','%22','%22','+','+'
-		);
+		$search = array("\'", "'", '\"', '"', '&quot;', ' ', '&nbsp;');
+		$replace = array('%27', '%27', '%22', '%22', '%22', '+', '+');
 		return str_replace($search, $replace, $keyword);
 	}
 
 	/**
 	 *
-	 * @param
-	 *        $keyword
+	 * @param $keyword
 	 */
 	public function decode($keyword) {
-		$replace = array ("'",'"',' '
-		);
-		$search = array ('%27','%22','+'
-		);
+		$replace = array("'", '"', ' ');
+		$search = array('%27', '%22', '+');
 		return str_replace($search, $replace, $keyword);
 	}
 
 	/**
 	 * Retrieves a list of pages with the same parent page
 	 *
-	 * @param string $parent
-	 *        name of the parent page, defaults to the parent of the current page
-	 * @param int $limit
-	 *        number of pages to return
-	 * @param string $order
-	 *        field to sort
+	 * @param string $parent name of the parent page, defaults to the parent of the current page
+	 * @param int $limit number of pages to return
+	 * @param string $order field to sort
 	 * @return array
 	 */
 	private function getSiblings($parent = '', $order = '', $limit = 0) {
 		if ($parent == '') $parent = $this->parent;
-		$siblings = array ();
+		$siblings = array();
 		$where = ' parent = "' . $parent . '" AND keyword !="' . $this->keyword . '"';
 		$siblings = $this->getPages($where, $order, $limit);
 		return $siblings;
@@ -1022,17 +961,14 @@ class WiwiRevision {
 	/**
 	 * Retrieves a list of pages that have the specified parent page
 	 *
-	 * @param string $page
-	 *        name of the parent page, defaults to the current page
-	 * @param int $limit
-	 *        number of pages to return
-	 * @param string $order
-	 *        field used to sort the list, defaults to all
+	 * @param string $page name of the parent page, defaults to the current page
+	 * @param int $limit number of pages to return
+	 * @param string $order field used to sort the list, defaults to all
 	 * @return array
 	 */
 	private function getChildren($page = '', $order = '', $limit = 0) {
 		if ($page == '') $page = $this->keyword;
-		$children = array ();
+		$children = array();
 		$where = ' parent = "' . $page . '"';
 		$children = $this->getPages($where, $order, $limit);
 		return $children;
@@ -1043,12 +979,9 @@ class WiwiRevision {
 	 *
 	 * @todo the function allows for arguments, but the current implementation does not use them all
 	 *
-	 * @param string $parent
-	 *        The parent to use to find the sibling, will default to the current page
-	 * @param string $order
-	 *        The field used to sort the list
-	 * @param string $limit
-	 *        The number of pages to return in the list, defaults to all
+	 * @param string $parent The parent to use to find the sibling, will default to the current page
+	 * @param string $order The field used to sort the list
+	 * @param string $limit The number of pages to return in the list, defaults to all
 	 * @return string HTML for the unordered list
 	 */
 	private function render_children($page = '', $order = '', $limit = 0) {
@@ -1066,12 +999,9 @@ class WiwiRevision {
 	 *
 	 * @todo the function allows for arguments, but the current implementation does not use them all
 	 *
-	 * @param string $parent
-	 *        The parent to use to find the sibling, will default to the parent of the current page
-	 * @param string $order
-	 *        The field used to sort the list
-	 * @param string $limit
-	 *        The number of pages to return in the list, defaults to all
+	 * @param string $parent The parent to use to find the sibling, will default to the parent of the current page
+	 * @param string $order The field used to sort the list
+	 * @param string $limit The number of pages to return in the list, defaults to all
 	 * @return string HTML for the unordered list
 	 */
 	private function render_siblings($parent = '', $order = '', $limit = 0) {
@@ -1101,7 +1031,7 @@ class WiwiRevision {
 		if (preg_match_all($search, $body, $matches, PREG_SET_ORDER) < 3) {
 			return $body;
 		} else {
-			$headings = array ();
+			$headings = array();
 			foreach ($matches as $key => $match) {
 				$body = str_replace($match[0], '<a name="heading' . $key . '"></a>' . $match[0], $body);
 				$headings[] = "<a href='#heading" . $key . "'>" . $match[2] . "</a>";

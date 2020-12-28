@@ -15,6 +15,7 @@ Improved
 * PHP 5.6 strict compliance
 * Default values for datetime fields compliant with MySQL Strict Mode
 * Layout of the TOC block works better with modern themes
+* Editor selection in preferences is clearer - use the site default, or specify an alternate editor
 
 Fixed
 * All deprecated code and references updated
