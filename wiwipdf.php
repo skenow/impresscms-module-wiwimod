@@ -11,27 +11,31 @@ include_once 'header.php';
 require_once 'class/wiwiRevision.class.php';
 
 /*
- * @todo replace with core pdf generator
+ * extract all header variables to corresponding php variables ---
  */
-// require 'class/html2fpdf/html2fpdf.php';
-// define('FPDF_FONTPATH','class/html2fpdf/font/');
+$page = '';
+$allowed_getvars = array('page' => 'string');
 
-if (isset($_GET['page'])) {
-	$page = $_GET['page'];
-} else {
-	$page = "";
+$clean_GET = swiki_cleanVars($_GET, $allowed_getvars);
+extract($clean_GET);
 
+/**
+ *
+ * @param unknown $pageObj
+ * @param unknown $pdf
+ * @return boolean
+ */
 function printPage(&$pageObj, &$pdf) {
 	global $icmsConfig;
 	/*
 	 * initialize template system (copied from /header.php)
 	 */
-	$xoopsTpl = new XoopsTpl();
-	$xoopsTpl->xoops_setCaching(0);
+	$wiwiTpl = new icms_view_Tpl();
+	$wiwiTpl->caching = 0;
 	if ($icmsConfig['debug_mode'] == 3) {
-		$xoopsTpl->xoops_setDebugging(true);
+		$wiwiTpl->debugging = true;
 	}
-	$xoopsTpl->assign(array(
+	$wiwiTpl->assign(array(
 			'xoops_theme' => $icmsConfig['theme_set'],
 			'xoops_imageurl' => ICMS_THEME_URL . '/' . $icmsConfig['theme_set'] . '/',
 			'xoops_themecss' => xoops_getcss($icmsConfig['theme_set']),
@@ -45,17 +49,17 @@ function printPage(&$pageObj, &$pdf) {
 	$config = &$config_handler->getConfigs($criteria, true);
 	foreach (array_keys($config) as $i) {
 		// prefix each tag with 'xoops_'
-		$xoopsTpl->assign('xoops_' . $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
+		$wiwiTpl->assign('xoops_' . $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 	}
 	// unset($config);
 	/*
 	 * get content
 	 */
 	$pagecontent = $pageObj->render();
-	$xoopsTpl->assign('swiki', array('keyword' => $pageObj->keyword, 'title' => $pageObj->title, 'body' => $pagecontent, 'lastmodified' => formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING), 'author' => xoops_getLinkedUnameFromId($pageObj->u_id),));
+	$wiwiTpl->assign('swiki', array('keyword' => $pageObj->keyword, 'title' => $pageObj->title, 'body' => $pagecontent, 'lastmodified' => formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING), 'author' => xoops_getLinkedUnameFromId($pageObj->u_id),));
 	ob_start();
-	$xoopsTpl->xoops_setCaching(0);
-	$xoopsTpl->display('db:wiwimod_pdf.html');
+	$wiwiTpl->caching = 0;
+	$wiwiTpl->display('db:wiwimod_pdf.html');
 	$html = ob_get_contents();
 	ob_end_clean();
 	error_reporting(E_ALL & ~E_NOTICE); // brrr, don't like that ..
@@ -64,8 +68,14 @@ function printPage(&$pageObj, &$pdf) {
 	return true;
 }
 
-/*
- * Prints the current page, and all pages linked-to into a single pdf.
+/**
+ *
+ * @param unknown $page
+ * @param unknown $pdf
+ * @param unknown $followLinks
+ * @param unknown $retcode
+ * @param unknown $printedPages
+ * @return boolean
  */
 function printPagesRecurr($page, &$pdf, $followLinks, &$retcode, &$printedPages) {
 	if (in_array($page, $printedPages)) {
@@ -76,7 +86,7 @@ function printPagesRecurr($page, &$pdf, $followLinks, &$retcode, &$printedPages)
 	$pageObj = new wiwiRevision($page);
 	if ($pageObj->id == 0) {
 		$retcode = _MD_SWIKI_NOPAGE_MSG;
-		return true; // at least one page did'nt exist
+		return true; // at least one page didn't exist
 	}
 	if (!$pageObj->canRead()) {
 		$retcode = _MD_SWIKI_NOREADACCESS_MSG;
@@ -95,51 +105,83 @@ function printPagesRecurr($page, &$pdf, $followLinks, &$retcode, &$printedPages)
 	}
 	return true;
 }
-
+/**
+ *
+ * @param unknown $page
+ * @param unknown $pdf
+ * @param boolean $followLinks
+ * @param unknown $retcode
+ * @return boolean
+ */
 function printPages($page, &$pdf, $followLinks = true, &$retcode) {
 	$printedPages = Array();
 	$retcode = "";
 	return printPagesRecurr($page, $pdf, $followLinks, $retcode, $printedPages);
 }
 
-/*
- * Remove pdf files older than one hour in the server directory.
- * Supposely, one hour is enough to download the pdf.
- * Doing this avoids having to install a "cron" action on the server ;
+/* from the core file include/pdf.php */
+/**
+ * Generates a pdf file
  *
- * Note : real files must be created because IE does'nt handle correctly
- * direct pdf streams being sent to the navigator. So this is a workaround.
- * (see http://www.fpdf.org/ FAQ for more details)
+ * @param string $content	The content to put in the PDF file
+ * @param string $doc_title	The title for the PDF file
+ * @param string $doc_keywords	The keywords to put in the PDF file
+ * @return string Generated output by the pdf (@link TCPDF) class
  */
-function cleanupDir($dir) {
-	$t = time();
-	$h = opendir($dir);
-	while ($file = readdir($h)) {
-		if (substr($file, 0, 7) == 'wiwitmp' and substr($file, -4) == '.pdf') {
-			$path = $dir . '/' . $file;
-			if ($t - filemtime($path) > 3600) @unlink($path);
-		}
-	}
-	closedir($h);
-}
-/*
- * @todo replace with core pdf generator
- */
-// $pdf=new HTML2FPDF();
-$msg = '';
+function swiki_Generate_PDF ($content, $doc_title, $doc_keywords) {
+	global $icmsConfig;
+	require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
+	icms_loadLanguageFile('core', 'pdf');
+	$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'Letter', true); // hardcoded the format
+	// set document information
+	$pdf->SetCreator(PDF_CREATOR);
+	$pdf->SetAuthor(PDF_AUTHOR);
+	$pdf->SetTitle($doc_title);
+	$pdf->SetSubject($doc_title);
+	$pdf->SetKeywords($doc_keywords);
+	$sitename = $icmsConfig['sitename'];
+	$siteslogan = $icmsConfig['slogan'];
+	$pdfheader = icms_core_DataFilter::undoHtmlSpecialChars($sitename.' - '.$siteslogan);
+	$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, $pdfheader, ICMS_URL);
 
-if (!printPages($page, $pdf, true, $msg)) {
+	//set margins
+	$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+	//set auto page breaks
+	$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+	$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+	$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); //set image scale factor
+
+	$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+	$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+	$pdf->setLanguageArray($l); //set language items
+	// set font - hardcoding for testing. ImpressCMS core has a config file that loads when the class is instantiated
+	$TextFont = 'dejavusans';
+	$pdf -> SetFont($TextFont);
+
+	//initialize document
+	$pdf->AddPage();
+	$pdf->writeHTML($content, true, 0);
+	return $pdf->Output($doc_title . '.pdf', 'D');
+}
+
+/* for now, hardcoding some constants that could vary by locale */
+
+$pageObj = new wiwiRevision($page);
+$content = $pageObj->body;
+$renderedContent = $pageObj->render($content);
+$doc_title = $pageObj->title;
+$doc_keywords = $pageObj->meta_keywords;
+
+/* using the core function
+if (!Generate_PDF($renderedContent, $doc_title, $doc_keywords)) {
 	redirect_header('index.php?page=' . $page, 2, $msg);
 	exit();
 }
 
-// create a temp file
-// $file=tempnam(ICMS_ROOT_PATH.'/uploads','wiwitmp');
-// rename($file,$file.'.pdf');
-// $file.='.pdf';
-// $pdf->Output($file);
-$pdf->Output();
-// cleanup old temp files (more than one hour old)
-//cleanupDir(ICMS_ROOT_PATH.'/uploads');
-// redirect page to the newly created pdf.
-//echo "<HTML><SCRIPT>document.location='".ICMS_URL."/uploads/".basename($file)."';</SCRIPT></HTML>";
+*/
+if (!swiki_Generate_PDF($renderedContent, $doc_title, $doc_keywords)) {
+	redirect_header('index.php?page=' . $page, 2, $msg);
+	exit();
+}
