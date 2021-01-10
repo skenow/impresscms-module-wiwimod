@@ -56,7 +56,7 @@ more details.
 
 Contact
 -------
-For comments, bug reports and suggestions, visit the forums at http://community.impresscms.org
+For comments, bug reports and suggestions, visit the forums at https://www.impresscms.org
 
 
 Past Contributors (Wiwimod)
