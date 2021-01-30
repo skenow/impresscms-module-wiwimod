@@ -817,6 +817,8 @@ class WiwiRevision {
 			$pageObj->lastviewed = $row['lastviewed'];
 			$pageObj->allowComments = $row['allowComments'];
 			$pageObj->summary = $row['summary'];
+			$pageObj->meta_keywords = $row['meta_keywords'];
+			$pageObj->meta_description = $row['meta_description'];
 			$pageArr[$i] = $pageObj;
 			unset($pageObj);
 		}

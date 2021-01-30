@@ -114,10 +114,11 @@ $maxcount = $pageObj->getPagesNum($wherexpr/*,$post_selorderby . ' ' . $post_sel
 
 echo '<table border="0" cellpadding="0" cellspacing="1" width="100%" class="outer">'
 	. '<tr class="head"><td width="20%"><strong>' . _MD_SWIKI_KEYWORD_COL
-	. '</strong></td><td><strong>' . _MD_SWIKI_TITLE_COL
+	. '</strong></td><td width="25%"><strong>' . _MD_SWIKI_TITLE_COL
+	. '</strong></td><td><strong>' . _MD_SWIKI_META_DESCRIPTION
 	. '</strong></td><td width="10%"><strong>' . _MD_SWIKI_MODIFIED_COL
 	. '</strong></td><td width="10%"><strong>' . _MD_SWIKI_VIEWS
-	. '</strong></td><td width="30%"><strong>' . _MD_SWIKI_ACTION_COL
+	. '</strong></td><td width="15%"><strong>' . _MD_SWIKI_ACTION_COL
 	. '</strong></td></tr>';
 
 for ($i=0; $i<count($pageArr); $i++) {
@@ -125,6 +126,7 @@ for ($i=0; $i<count($pageArr); $i++) {
 	echo '<tr class="' . (($i % 2)?"even":"odd") . '"><td><a href="#" onclick="submitaction(\'op=history&amp;page='
 		. $encodedKeyword . '\');">'
 		. $pageArr[$i]->keyword . '</a></td><td>' . icms_core_DataFilter::htmlSpecialchars($pageArr[$i]->title)
+		. '</td><td>' . icms_core_DataFilter::htmlSpecialchars($pageArr[$i]->meta_description)
 		. '</td><td>' . formatTimestamp(@strtotime($pageArr[$i]->lastmodified), _SHORTDATESTRING)
 		. '</td><td>' . $pageArr[$i]->views
 		. '</td><td><a href="#" onclick="submitaction(\'op=history&amp;page=' . $encodedKeyword . '\');">'
