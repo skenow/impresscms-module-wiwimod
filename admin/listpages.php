@@ -49,6 +49,7 @@ $selOrder = array(
 	array('desc' => _AM_SWIKI_LISTPAGES_PARENT_OPT, 'col' => 'parent'),
 	array('desc' => _AM_SWIKI_LISTPAGES_LASTMODIFIED_OPT, 'col' => 'lastmodified'),
 	array('desc' => _MD_SWIKI_VIEWS, 'col' => 'views'),
+	array('desc' => _MD_SWIKI_META_DESCRIPTION, 'col' => 'meta_description'),
 );
 
 $selOrderDir = array(
