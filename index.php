@@ -7,7 +7,7 @@
  * @author Wiwimod: Gizmhail
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version 
+ * @version
  */
 
 /**
@@ -55,8 +55,10 @@ if (!empty($_POST)) {
 	$clean_POST = swiki_cleanVars($_POST, $allowed_postvars);
 	extract($clean_POST);
 	/* Prevent poisoning of the user ID through POST */
-	if ($uid !== icms::$user->getVar("uid")) {
-		$uid = 0;
+	if (is_object(icms::$user)) {
+		if ($uid !== icms::$user->getVar("uid")) {
+			$uid = 0;
+		}
 	}
 }
 

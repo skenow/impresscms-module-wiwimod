@@ -19,9 +19,9 @@ $modversion = array (
 		'help' => '',
 		'official' => 0,
 		'image' => 'images/wiwimod.png', /* standard XOOPS icon, 92x52 px  */
-  'iconbig' => 'images/wiwimod.png', /* big icon for ImpressCMS, 37x35 px */
-  'iconsmall' => 'images/wiwimod-small.png', /* small icon for ImpressCMS, 16x16 px */
-  'dirname' => basename(__DIR__),
+ 		'iconbig' => 'images/wiwimod.png', /* big icon for ImpressCMS, 37x35 px */
+		'iconsmall' => 'images/wiwimod-small.png', /* small icon for ImpressCMS, 16x16 px */
+		'dirname' => basename(__DIR__),
 		'onInstall' => 'include/oninstall.inc.php',
 		'onUpdate' => 'include/onupdate.inc.php',
 		'demo_site_url' => 'http://www.simplywiki.org/',
@@ -181,7 +181,6 @@ $modversion['config'][2] = array (
 		'default' => 0
 );
 
-$editor_name = !empty($_GET['editor_name']) ? $_GET['editor_name'] : '';
 $editorhandler = new icms_plugins_EditorHandler();
 
 $modversion['config'][2]['options'] = array_flip($editorhandler->getList());
