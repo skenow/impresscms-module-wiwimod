@@ -24,7 +24,7 @@ $modversion = array (
 		'dirname' => basename(__DIR__),
 		'onInstall' => 'include/oninstall.inc.php',
 		'onUpdate' => 'include/onupdate.inc.php',
-		'demo_site_url' => 'http://www.simplywiki.org/',
+		'demo_site_url' => 'https://www.simplywiki.org/',
 		'demo_site_name' => 'SimplyWiki',
 		'support_site_url' => 'https://www.impresscms.org/',
 		'support_site_name' => 'ImpressCMS Community',
@@ -36,7 +36,11 @@ $modversion = array (
 
 // Tables created by the SQL file (without prefix!)
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
-$modversion['tables'] = array ('wiki_pages','wiki_revisions','wiki_profiles','wiki_prof_groups'
+$modversion['tables'] = array (
+		'wiki_pages',
+		'wiki_revisions',
+		'wiki_profiles',
+		'wiki_prof_groups'
 );
 
 // Administration tools
@@ -96,7 +100,8 @@ $modversion['blocks'][] = array (
 		'show_func' => 'swiki_recent',
 		'edit_func' => 'swiki_recent_blockedit',
 		'options' => '5',
-		'template' => 'wiwimod_recent.html','can_clone' => true
+		'template' => 'wiwimod_recent.html',
+		'can_clone' => true
 );
 
 $modversion['blocks'][] = array (
@@ -277,7 +282,9 @@ $modversion['notification']['category'][1] = array (
 		'name' => 'page',
 		'title' => _MI_SWIKI_PAGENOTIFYCAT_TITLE,
 		'description' => '_MI_SWIKI_PAGENOTIFYCAT_DESC',
-		'subscribe_from' => array ('index.php'),
+		'subscribe_from' => array (
+				'index.php'
+		),
 		'allow_bookmark' => 1,
 		'item_name' => 'pageid'
 ); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/notification_functions.php
@@ -286,7 +293,9 @@ $modversion['notification']['category'][] = array (
 		'name' => 'global',
 		'title' => _MI_SWIKI_GLOBALNOTIFYCAT_TITLE,
 		'description' => '_MI_SWIKI_GLOBALNOTIFYCAT_DESC',
-		'subscribe_from' => array ('index.php'),
+		'subscribe_from' => array (
+				'index.php'
+		),
 		'item_name' => ''
 ); // must be a numeric value passed in a $_GET variable, or empty for global matching. See ROOT/include/notification_functions.php
 
@@ -329,4 +338,3 @@ $modversion['notification']['event'][] = array (
 		'mail_template' => 'global_pagemodified_notify',
 		'mail_subject' => _MI_SWIKI_GLOBALPAGERESTORE_SUBJECT
 );
-
