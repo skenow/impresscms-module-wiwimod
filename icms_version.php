@@ -144,7 +144,6 @@ $modversion['blocks'][] = array (
 		'can_clone' => true
 );
 
-include_once __DIR__ . '/include/functions.php';
 // Admin preferences items
 
 // name of config option for accessing its specified value. i.e. $xoopsModuleConfig['storyhome']
