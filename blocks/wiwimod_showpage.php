@@ -9,7 +9,7 @@
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version 
+ * @version
  */
 $wikiModDir = basename(dirname(__DIR__));
 include_once ICMS_MODULES_PATH . '/' . $wikiModDir . '/class/wiwiRevision.class.php';
@@ -51,8 +51,8 @@ function swiki_showpage($options) {
 		$block['mayEdit'] = $pageObj->canWrite();
 		$block['EDIT'] = _EDIT;
 		$block['dirname'] = $wikiModDir;
-		$block['showTitle'] = isset($options[1]);
-		$block['showAuthor'] = isset($options[2]);
+		$block['showTitle'] = $options[1];
+		$block['showAuthor'] = $options[2];
 	}
 	return $block;
 }
@@ -103,8 +103,12 @@ function swiki_contextshow($options) {
 
 function swiki_showpage_blockedit($options) {
 	$form = _MB_SWIKI_SHOWPAGE_DESC . "&nbsp;:&nbsp;<input type='text' name='options[0]' value='" . $options[0] . "' /><br />";
-	$form .= _MB_SWIKI_SHOW_TITLE . "&nbsp;:&nbsp;<input type='checkbox' name='options[1]' value='1'" . (isset($options[1]) ? " checked='checked'" : "") . " /><br />";
-	$form .= _MB_SWIKI_SHOW_AUTHOR . "&nbsp;:&nbsp;<input type='checkbox' name='options[2]' value='1'" . (isset($options[2]) ? " checked='checked'" : "") . " />";
 
+	$yesno = new icms_form_elements_Radioyn('', 'options[1]', $options[1]);
+	$form .= _MB_SWIKI_SHOW_TITLE . "&nbsp;:&nbsp;" . $yesno->render() . "<br />";
+	
+	$yesno = new icms_form_elements_Radioyn('', 'options[2]', $options[2]);
+	$form .= _MB_SWIKI_SHOW_AUTHOR . "&nbsp;:&nbsp;" . $yesno->render();
+	
 	return $form;
 }
