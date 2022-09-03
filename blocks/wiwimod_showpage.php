@@ -17,7 +17,7 @@ include_once ICMS_MODULES_PATH . '/' . $wikiModDir . '/class/wiwiRevision.class.
 function swiki_showpage($options) {
 	$wikiModDir = basename(dirname(__DIR__));
 
-	$block = array ();
+	$block = array();
 	$pageObj = new wiwiRevision($options[0]);
 	if ($pageObj->id == 0) {
 		$block['notfound'] = true;
@@ -40,6 +40,7 @@ function swiki_showpage($options) {
 				$pagecontent = $cpages[$startpage];
 			}
 			$pagecontent = $pageObj->render($pagecontent);
+			$pageObj->visited();
 		}
 		$block['keyword'] = $pageObj->keyword;
 		$block['encodedurl'] = $pageObj->encode($pageObj->keyword);
@@ -61,9 +62,9 @@ function swiki_contextshow($options) {
 	$wikiModDir = basename(dirname(__DIR__));
 
 	// Get content to display
-	$preg_res = array ();
+	$preg_res = array();
 	$sidePage = '';
-	$block = array ();
+	$block = array();
 
 	if (preg_match("#\?page=([^&]+)#i", htmlspecialchars($GLOBALS['xoopsRequestUri'], ENT_QUOTES), $preg_res)) {
 		$page = urldecode($preg_res[1]);
@@ -73,7 +74,7 @@ function swiki_contextshow($options) {
 
 	$sql = 'SELECT contextBlock FROM ' . icms::$xoopsDB->prefix('wiki_pages') . ' WHERE keyword="' . $page . '" ORDER BY pageid DESC LIMIT 1';
 	$result = icms::$xoopsDB->query($sql);
-	list ( $sidePage ) = icms::$xoopsDB->fetchRow($result);
+	list($sidePage) = icms::$xoopsDB->fetchRow($result);
 	if ($sidePage != '') {
 		$pageObj = new wiwiRevision($sidePage);
 		if ($pageObj->id != 0) {
@@ -86,6 +87,7 @@ function swiki_contextshow($options) {
 				$block['author'] = icms_member_user_Handler::getUserLink($pageObj->u_id);
 				$block['mayEdit'] = $pageObj->canWrite();
 				$block['EDIT'] = _EDIT;
+				$pageObj->visited();
 			} else {
 				$block['keyword'] = $sidePage;
 				$block['title'] = '';
@@ -106,9 +108,9 @@ function swiki_showpage_blockedit($options) {
 
 	$yesno = new icms_form_elements_Radioyn('', 'options[1]', $options[1]);
 	$form .= _MB_SWIKI_SHOW_TITLE . "&nbsp;:&nbsp;" . $yesno->render() . "<br />";
-	
+
 	$yesno = new icms_form_elements_Radioyn('', 'options[2]', $options[2]);
 	$form .= _MB_SWIKI_SHOW_AUTHOR . "&nbsp;:&nbsp;" . $yesno->render();
-	
+
 	return $form;
 }

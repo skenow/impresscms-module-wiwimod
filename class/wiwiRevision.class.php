@@ -342,6 +342,7 @@ class WiwiRevision {
 			// Also check if the page is empty(if it was the case, the render function may try to render the main page, and would loop)
 			if ($subPage->canRead() && $subPageBody != '') {
 				$result = $this->render($subPageBody);
+				$subPage->visited();
 			} else {
 				$result = '';
 			}
@@ -589,19 +590,21 @@ class WiwiRevision {
 	 */
 	public function render_index($type) {
 		$settings = array(
-				"pageindex" => array("ORDER BY title ASC",
-						"title",
-						1,
-						'"<br/><span class=\'wiwi_titre\' style=\"font-size:large;\">[$counter]</span><br/>"',
-						'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a><br/>"',
-						""),
-				"pageindexi" => array("ORDER BY keyword ASC", "keyword", 1, '"<br/><span class=\'wiwi_titre\'>$counter</span><br />"', '"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $content["keyword"] . "\">" . $content["keyword"] . "</a> : " . $content["title"] . "<br />"', ""),
-				"recentchanges" => array("ORDER BY lastmodified DESC LIMIT 20",
-						"lastmodified",
-						10,
-						'"<tr><td colspan=3><strong>" . formatTimestamp(strtotime($counter), _SHORTDATESTRING) . "</strong></td></tr>"',
-						'"<tr><td>&nbsp;" . formatTimestamp(strtotime($content["lastmodified"]), "H:i") . "</td><td><a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a></td><td>" . $content["summary"] . "</td><td><span class=\"itemPoster\">" . icms_member_user_Handler::getUserLink($content["u_id"]) . "</span></td></tr>"',
-						""));
+			"pageindex" => array(
+				"ORDER BY title ASC",
+				"title",
+				1,
+				'"<br/><span class=\'wiwi_titre\' style=\"font-size:large;\">[$counter]</span><br/>"',
+				'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a><br/>"',
+				""),
+			"pageindexi" => array("ORDER BY keyword ASC", "keyword", 1, '"<br/><span class=\'wiwi_titre\'>$counter</span><br />"', '"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $content["keyword"] . "\">" . $content["keyword"] . "</a> : " . $content["title"] . "<br />"', ""),
+			"recentchanges" => array(
+				"ORDER BY lastmodified DESC LIMIT 20",
+				"lastmodified",
+				10,
+				'"<tr><td colspan=3><strong>" . formatTimestamp(strtotime($counter), _SHORTDATESTRING) . "</strong></td></tr>"',
+				'"<tr><td>&nbsp;" . formatTimestamp(strtotime($content["lastmodified"]), "H:i") . "</td><td><a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a></td><td>" . $content["summary"] . "</td><td><span class=\"itemPoster\">" . icms_member_user_Handler::getUserLink($content["u_id"]) . "</span></td></tr>"',
+				""));
 		$cfg = $settings[strtolower($type[1])];
 
 		$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM ' . $this->db->prefix('wiki_pages') . ' p, ' . $this->db->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified ' . $cfg[0];
