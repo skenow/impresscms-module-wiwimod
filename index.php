@@ -388,10 +388,16 @@ $icmsTpl->assign('icms_pagetitle', icms_core_DataFilter::htmlSpecialchars($pageO
 
 if (!empty($pageObj->meta_keywords)) {
 	$xoTheme->addMeta('meta', 'keywords', icms_core_DataFilter::htmlSpecialchars($pageObj->meta_keywords));
+} else {
+	$pageSEO = new icms_ipf_Metagen($pageObj->title, false, $pageObj->body);
+	$xoTheme->addMeta('meta', 'keywords', $pageSEO->_keywords);
 }
 
 if (!empty($pageObj->meta_description)) {
 	$xoTheme->addMeta('meta', 'description', icms_core_DataFilter::htmlSpecialchars($pageObj->meta_description));
+} else {
+	$pageSEO = new icms_ipf_Metagen($pageObj->title, false, $pageObj->body);
+	$xoTheme->addMeta('meta', 'keywords', $pageSEO->createMetaDescription(60));
 }
 
 include ICMS_ROOT_PATH . '/footer.php';
