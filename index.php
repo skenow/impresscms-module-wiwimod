@@ -26,23 +26,23 @@ $id = $pageid = $visible = $allowComments = $uid = 0;
 $contextBlock = $parent = $op = $summary = $item_tag = $page = $meta_description = $meta_keywords = '';
 $allowed_getvars = array('op' => 'plaintext', 'back' => 'string', 'pageid' => 'int', 'startpage' => 'int', 'com_order' => 'plaintext', 'page' => 'string', 'id' => 'int');
 $allowed_postvars = array(
-		'op' => 'plaintext',
-		'page' => 'string',
-		'pageid' => 'int',
-		'id' => 'int',
-		'uid' => 'int',
-		'lastmodified' => 'plaintext',
-		'title' => 'plaintext',
-		'body' => 'string',
-		'parent' => 'plaintext',
-		'prid' => 'int',
-		'visible' => 'int',
-		'contextBlock' => 'plaintext',
-		'item_tag' => 'plaintext',
-		'summary' => 'plaintext',
-		'allowComments' => 'plaintext',
-		'meta_description' => 'plaintext',
-		'meta_keywords' => 'plaintext');
+	'op' => 'plaintext',
+	'page' => 'string',
+	'pageid' => 'int',
+	'id' => 'int',
+	'uid' => 'int',
+	'lastmodified' => 'plaintext',
+	'title' => 'plaintext',
+	'body' => 'string',
+	'parent' => 'plaintext',
+	'prid' => 'int',
+	'visible' => 'int',
+	'contextBlock' => 'plaintext',
+	'item_tag' => 'plaintext',
+	'summary' => 'plaintext',
+	'allowComments' => 'plaintext',
+	'meta_description' => 'plaintext',
+	'meta_keywords' => 'plaintext');
 
 $clean_GET = swiki_cleanVars($_GET, $allowed_getvars);
 extract($clean_GET);
@@ -352,23 +352,23 @@ switch ($op) {
 		$WritePrivileges = count($writeProfiles->getWriteProfiles($user));
 
 		$icmsTpl->assign('swiki', array(
-				'keyword' => $pageObj->keyword,
-				'encodedurl' => $pageObj->encode($pageObj->keyword),
-				'title' => $pageObj->title,
-				'body' => $pagecontent,
-				'lastmodified' => formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING),
-				'author' => icms_member_user_Handler::getUserLink($pageObj->u_id),
-				'mayEdit' => $pageObj->canWrite(),
-				'showComments' => $pageObj->canViewComments() && ($swikiConfig['com_rule'] != 0),
-				'showHistory' => $pageObj->canViewHistory(),
-				'allowPDF' => $swikiConfig['allowPDF'],
-				'created' => sprintf(_MD_SWIKI_CREATED, icms_member_user_Handler::getUserLink($pageObj->creator), formatTimestamp(strtotime($pageObj->created), _SHORTDATESTRING)),
-				'views' => sprintf(_MD_SWIKI_VIEWED, $pageObj->views),
-				'lastviewed' => sprintf(_MD_SWIKI_LASTVIEWED, formatTimestamp(strtotime($pageObj->lastviewed), _SHORTDATESTRING)),
-				'revisions' => sprintf(_MD_SWIKI_REVISIONS, $pageObj->revisions),
-				'ShowPageInfo' => array_flip($swikiConfig['ShowPageInfo']),
-				'ShowQuickAdd' => $swikiConfig['ShowQuickAdd'],
-				'WritePrivileges' => $WritePrivileges));
+			'keyword' => $pageObj->keyword,
+			'encodedurl' => $pageObj->encode($pageObj->keyword),
+			'title' => $pageObj->title,
+			'body' => $pagecontent,
+			'lastmodified' => formatTimestamp(strtotime($pageObj->lastmodified), _SHORTDATESTRING),
+			'author' => icms_member_user_Handler::getUserLink($pageObj->u_id),
+			'mayEdit' => $pageObj->canWrite(),
+			'showComments' => $pageObj->canViewComments() && ($swikiConfig['com_rule'] != 0),
+			'showHistory' => $pageObj->canViewHistory(),
+			'allowPDF' => $swikiConfig['allowPDF'],
+			'created' => sprintf(_MD_SWIKI_CREATED, icms_member_user_Handler::getUserLink($pageObj->creator), formatTimestamp(strtotime($pageObj->created), _SHORTDATESTRING)),
+			'views' => sprintf(_MD_SWIKI_VIEWED, $pageObj->views),
+			'lastviewed' => sprintf(_MD_SWIKI_LASTVIEWED, formatTimestamp(strtotime($pageObj->lastviewed), _SHORTDATESTRING)),
+			'revisions' => sprintf(_MD_SWIKI_REVISIONS, $pageObj->revisions),
+			'ShowPageInfo' => array_flip($swikiConfig['ShowPageInfo']),
+			'ShowQuickAdd' => $swikiConfig['ShowQuickAdd'],
+			'WritePrivileges' => $WritePrivileges));
 
 		$icmsTpl->assign('parentlist', $pageObj->parentList());
 
@@ -384,14 +384,14 @@ switch ($op) {
 		break;
 }
 
-$icmsTpl->assign('icms_pagetitle', icms_core_DataFilter::htmlSpecialchars(icms_core_DataFilter::htmlSpecialchars($pageObj->title) . ' - ' . icms::$module->getVar('name')));
+$icmsTpl->assign('icms_pagetitle', icms_core_DataFilter::htmlSpecialchars($pageObj->title . ' - ' . icms::$module->getVar('name')));
 
 if (!empty($pageObj->meta_keywords)) {
-	$xoTheme->addMeta('meta', 'keywords', icms_core_DataFilter::htmlSpecialchars(icms_core_DataFilter::htmlSpecialchars($pageObj->meta_keywords)));
+	$xoTheme->addMeta('meta', 'keywords', icms_core_DataFilter::htmlSpecialchars($pageObj->meta_keywords));
 }
 
 if (!empty($pageObj->meta_description)) {
-	$xoTheme->addMeta('meta', 'description', icms_core_DataFilter::htmlSpecialchars(icms_core_DataFilter::htmlSpecialchars($pageObj->meta_description)));
+	$xoTheme->addMeta('meta', 'description', icms_core_DataFilter::htmlSpecialchars($pageObj->meta_description));
 }
 
 include ICMS_ROOT_PATH . '/footer.php';
