@@ -16,11 +16,11 @@ include_once ICMS_ROOT_PATH . '/header.php';
 $clean_author = isset($_GET['author']) ? (int) $_GET['author'] : false;
 $clean_type = isset($_GET['type']) ? $_GET['type'] : false;
 
-$module_name = $icmsModule->name();
+$module_name = icms::$module->getVar('name');
 
 /** Include the core rss class and create a new feed instance */
 include_once ICMS_ROOT_PATH . '/class/icmsfeed.php';
-$wiki_feed = new IcmsFeed();
+$wiki_feed = new icms_feeds_Rss();
 
 $wiki_feed->title = $module_name . ' - ' . $icmsConfig['sitename'];
 $wiki_feed->url = ICMS_URL. '/modules/' . $wikiModDir . '/';
@@ -46,7 +46,7 @@ foreach($pages as $page) {
 		'pubdate' => $page->lastmodified,
 		'guid' => str_replace('&', '&amp;', ICMS_URL . '/modules/' . $wikiModDir . '/index.php?page=' . $page->keyword),
 		'category' => $module_name,
-		'author' => $wiki_author_handler->getUser($page->creator)->uname()
+		'author' => $wiki_author_handler->getUser($page->creator)->getVar('uname')
 	);
 }
 

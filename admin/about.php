@@ -20,5 +20,5 @@ if (method_exists(icms::$module, 'displayAdminMenu')) {
     echo getAdminMenu(4, 'about');
 }
 echo _MI_SWIKI_AUTHOR_WORD;
-echo '<br>' . _VERSION . ': ' . $icmsModule->getVar('version') . ' ' . $icmsModule->getInfo('status');
+echo '<br>' . _VERSION . ': ' . $wikiModule->getVar('version') . ' ' . $wikiModule->getInfo('status');
 icms_cp_footer();

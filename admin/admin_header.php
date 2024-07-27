@@ -35,8 +35,8 @@ if (file_exists('../language/' . $icmsConfig['language'] . '/main.php')) {
 }
 
 if (icms::$user) {
-	$icmsModule = icms::handler('icms_module')->getByDirname($wikiModDir);
-	if (!icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+	$wikiModule = icms::handler('icms_module')->getByDirname($wikiModDir);
+	if (!icms::$user->isAdmin($wikiModule->getVar('mid'))) {
 		redirect_header(ICMS_URL . '/', 3, _NOPERM);
 		exit();
 	}

@@ -24,7 +24,16 @@ include_once 'class/wiwiRevision.class.php';
  */
 $id = $pageid = $visible = $allowComments = $uid = 0;
 $contextBlock = $parent = $op = $summary = $item_tag = $page = $meta_description = $meta_keywords = '';
-$allowed_getvars = array('op' => 'plaintext', 'back' => 'string', 'pageid' => 'int', 'startpage' => 'int', 'com_order' => 'plaintext', 'page' => 'string', 'id' => 'int');
+
+$allowed_getvars = array(
+	'op' => 'plaintext',
+	'back' => 'string',
+	'pageid' => 'int',
+	'startpage' => 'int',
+	'com_order' => 'plaintext',
+	'page' => 'string',
+	'id' => 'int');
+
 $allowed_postvars = array(
 	'op' => 'plaintext',
 	'page' => 'string',
