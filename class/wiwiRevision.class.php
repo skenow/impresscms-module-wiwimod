@@ -445,10 +445,6 @@ class WiwiRevision {
 		$search[] = "#niv([0-9]*)ul#";
 		$replace[] = "ul";
 
-		// surrounds with <p> and </p> some lines .. hum, still useful ?
-		$search[] = "#^(?!\n|<h2>|<blockquote>|<hr />)(.*?)\n$#sm";
-		$replace[] = "<p>\\1</p>";
-
 		// removes multiple line ends .. still useful ?
 		$search[] = "#\n+#";
 		$replace[] = "\n";
