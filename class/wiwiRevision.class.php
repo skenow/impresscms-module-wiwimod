@@ -609,14 +609,22 @@ class WiwiRevision {
 		$body = '';
 		$counter = '[';
 		while ($content = $this->db->fetcharray($result)) {
-			mb_internal_encoding('UTF-8');
-			if ($counter != mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]))) {
-				$counter = mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]));
-				eval('$body .= (($body)?"' . $cfg[5] . '":"") . "" . ' . $cfg[3] . ';');
+			if (extension_loaded('mbstring')) {
+				mb_internal_encoding('UTF-8');
+				if ($counter != mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]))) {
+					$counter = mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]));
+					eval('$body .= (($body)?"' . $cfg[5] . '":"") . "" . ' . $cfg[3] . ';');
+				}
+				eval('$body .= ' . $cfg[4] . ' . "\n";');
+			} else {
+				if ($counter != strtoupper(substr($content[$cfg[1]], 0, $cfg[2]))) {
+					$counter = strtoupper(substr($content[$cfg[1]], 0, $cfg[2]));
+					eval('$body .= (($body)?"' . $cfg[5] . '":"") . "" . ' . $cfg[3] . ';');
+				}
+				eval('$body .= ' . $cfg[4] . ' . "\n";');
 			}
-			eval('$body .= ' . $cfg[4] . ' . "\n";');
 		}
-
+		
 		return "<table>" . $body . (($body) ? $cfg[5] : "") . "</table>\n\n";
 	}
 

@@ -162,7 +162,7 @@ function swiki_Generate_PDF ($content, $doc_title, $doc_keywords) {
 
 	//initialize document
 	$pdf->AddPage();
-	$pdf->writeHTML($content, true, 0);
+	$pdf->writeHTML($content, true, false);
 	return $pdf->Output($doc_title . '.pdf', 'D');
 }
 

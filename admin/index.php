@@ -6,7 +6,7 @@
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version 
+ * @version
  */
 /**
  * Load the header file for the SimplyWiki administration area
@@ -57,7 +57,7 @@ if (in_array($op, $valid_op, true)) {
 	switch ($op) {
 		default :
 		case 'listpages' :
-			if (method_exists(icms::$module, 'displayAdminMenu')) {
+			if (is_object((icms::$module) && method_exists(icms::$module, 'displayAdminMenu')) {
 				echo icms::$module->displayAdminMenu (1, _AM_SWIKI_LISTPAGE_NAV);
 			} else {
 				echo getAdminMenu (0, _AM_SWIKI_LISTPAGE_NAV);
