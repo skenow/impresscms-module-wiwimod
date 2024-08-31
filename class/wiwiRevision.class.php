@@ -19,16 +19,7 @@ include_once 'wiwiProfile.class.php';
 $wikiModDir = basename(dirname(__DIR__));
 $wikiModPath = ICMS_MODULES_PATH . '/' . $wikiModDir;
 
-if (function_exists('icms_loadLanguageFile')) {
-	icms_loadLanguageFile($wikiModDir, "main");
-} else {
-	global $icmsConfig;
-	if (file_exists($wikiModPath . '/language/' . $icmsConfig['language'] . '/main.php')) {
-		include_once $wikiModPath . '/language/' . $icmsConfig['language'] . '/main.php';
-	} else {
-		include_once $wikiModPath . '/language/english/main.php';
-	}
-}
+icms_loadLanguageFile($wikiModDir, "main");
 
 /**
  *

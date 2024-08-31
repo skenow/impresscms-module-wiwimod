@@ -18,16 +18,7 @@ $wikiModDir = basename(dirname(__DIR__));
 // language files
 $langfiles = array('modinfo', 'admin', 'main');
 foreach ($langfiles as $langfile) {
-	if (function_exists('icms_loadLanguageFile')) {
-		icms_loadLanguageFile($wikiModDir, $langfile);
-	} else {
-		$langfile = $langfile . '.php';
-		if (file_exists('../language/' . $icmsConfig['language'] . '/' . $langfile)) {
-			include_once '../language/' . $icmsConfig['language'] . '/' . $langfile;
-		} else {
-			include_once '../language/english/' . $langfile;
-		}
-	}
+	icms_loadLanguageFile($wikiModDir, $langfile);
 }
 
 if (icms::$user) {
