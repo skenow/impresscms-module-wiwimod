@@ -16,22 +16,18 @@ if (!defined('WIWI_NOCPFUNC')) include_once ICMS_ROOT_PATH . '/include/cp_functi
 $wikiModDir = basename(dirname(__DIR__));
 
 // language files
-if (file_exists('../language/' . $icmsConfig['language'] . '/modinfo.php')) {
-	include_once '../language/' . $icmsConfig['language'] . '/modinfo.php';
-} else {
-	include_once '../language/english/modinfo.php';
-}
-
-if (file_exists('../language/' . $icmsConfig['language'] . '/admin.php')) {
-	include_once '../language/' . $icmsConfig['language'] . '/admin.php';
-} else {
-	include_once '../language/english/admin.php';
-}
-
-if (file_exists('../language/' . $icmsConfig['language'] . '/main.php')) {
-	include_once '../language/' . $icmsConfig['language'] . '/main.php';
-} else {
-	include_once '../language/english/main.php';
+$langfiles = array('modinfo', 'admin', 'main');
+foreach ($langfiles as $langfile) {
+	if (function_exists('icms_loadLanguageFile')) {
+		icms_loadLanguageFile($wikiModDir, $langfile);
+	} else {
+		$langfile = $langfile . '.php';
+		if (file_exists('../language/' . $icmsConfig['language'] . '/' . $langfile)) {
+			include_once '../language/' . $icmsConfig['language'] . '/' . $langfile;
+		} else {
+			include_once '../language/english/' . $langfile;
+		}
+	}
 }
 
 if (icms::$user) {
