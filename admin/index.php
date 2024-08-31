@@ -82,7 +82,7 @@ if (in_array($op, $valid_op, true)) {
 			$pageObj->body = icms_core_DataFilter::stripSlashesGPC($restoredRevision->body);
 			$pageObj->contextBlock = $restoredRevision->contextBlock;
 			$success = $pageObj->add();
-				redirect_header("javascript:submitaction('page="
+			redirect_header("javascript:submitaction('page="
 				. urlencode($rev->encode($rev->keyword)) . "&amp;op=history');", 2,
 				($success) ? _MD_SWIKI_DBUPDATED_MSG : _MD_SWIKI_ERRORINSERT_MSG
 			);
