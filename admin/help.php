@@ -14,7 +14,7 @@
 include_once 'admin_header.php';
 
 icms_cp_header();
-if (method_exists(icms::$module, 'displayAdminMenu')) {
+if (is_object(icms::$module) && method_exists(icms::$module, 'displayAdminMenu')) {
 	echo icms::$module->displayAdminMenu(5, 'help');
 } else {
 	echo getAdminMenu(5, 'help');
