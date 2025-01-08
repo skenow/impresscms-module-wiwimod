@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// 
 // Module Info
 
 // The name of this module
@@ -25,13 +25,13 @@ define('_MI_SWIKI_ALLOWPDF', 'Show PDF button on pages ?');
 define('_MI_SWIKI_ALLOWPDF_DESC', 'PDF generation from HTML pages is still at experimental level.');
 
 define('_MI_SWIKI_SHOWTITLES', 'Show page titles instead of page name');
-define('_MI_SWIKI_SHOWTITLES_DESC', 'Show page titles instead of page names in wikilinks');
+define('_MI_SWIKI_SHOWTITLES_DESC', 'Show page titles instead of page names in  page links');
 
 define('_MI_SWIKI_USECAMELCASE', 'Use CamelCase syntax');
-define('_MI_SWIKI_USECAMELCASE_DESC', 'Interprets CamelCase words as links to other wiki pages.');
+define('_MI_SWIKI_USECAMELCASE_DESC', 'Interprets CamelCase words as links to other pages.');
 
-define('_MI_SWIKI_XOOPSEDITOR', 'Choose a "XoopsEditor" supported editor');
-define('_MI_SWIKI_XOOPSEDITOR_DESC', 'Valid if XoopsEditor was chosen above');
+define('_MI_SWIKI_XOOPSEDITOR', 'Choose a supported editor');
+define('_MI_SWIKI_XOOPSEDITOR_DESC', 'Valid if Alternate Editor was chosen above');
 
 // Notification options
 define('_MI_SWIKI_PAGENOTIFYCAT_TITLE', 'Page');
@@ -47,31 +47,29 @@ define('_MI_SWIKI_GLOBALNOTIFY_TITLE', 'Page updated');
 define('_MI_SWIKI_GLOBALNOTIFY_CAPTION', 'Notify me when any page is modified');
 define('_MI_SWIKI_GLOBALNOTIFY_DESC', 'Receive notification when any user updates any page.');
 define('_MI_SWIKI_GLOBALNOTIFY_SUBJECT', '[{X_SITENAME}] {X_MODULE} auto-notify : page updated');
-define('_MI_SWIKI_TEMPLATE_VIEW_DESC', 'View Wiki Page');
-define('_MI_SWIKI_TEMPLATE_EDIT_DESC', 'Edit Wiki Page');
+define('_MI_SWIKI_TEMPLATE_VIEW_DESC', 'View Page');
+define('_MI_SWIKI_TEMPLATE_EDIT_DESC', 'Edit Page');
 define('_MI_SWIKI_TEMPLATE_HISTORY_DESC', 'View page history');
 define('_MI_SWIKI_TEMPLATE_PDF_DESC', 'SimplyWiki - pdf');
-define('_MI_SWIKI_BLOCK_TOC_NAME', 'Wiki TOC');
-define('_MI_SWIKI_BLOCK_TOC_DESC', 'Wiki selected entry pages');
-define('_MI_SWIKI_BLOCK_RECENT_NAME', 'Wiki Recent');
-define('_MI_SWIKI_BLOCK_RECENT_DESC', 'Wiki recently modified');
-define('_MI_SWIKI_BLOCK_RELATED_NAME', 'WikiSideContent');
+define('_MI_SWIKI_BLOCK_TOC_NAME', 'Table of Contents');
+define('_MI_SWIKI_BLOCK_TOC_DESC', 'Selected entry pages');
+define('_MI_SWIKI_BLOCK_RECENT_NAME', 'Recent Pages');
+define('_MI_SWIKI_BLOCK_RECENT_DESC', 'Pages recently modified');
+define('_MI_SWIKI_BLOCK_RELATED_NAME', 'Side Content');
 define('_MI_SWIKI_BLOCK_RELATED_DESC', 'Side block for extra content on Wiki pages');
-define('_MI_SWIKI_BLOCK_SHOWPAGE_NAME', 'WikiShowPage');
-define('_MI_SWIKI_BLOCK_SHOWPAGE_DESC', 'Show a wiki page');
-define('_MI_SWIKI_AUTHOR_WORD', '<h4>About SimplyWiki</h4><br />SimplyWiki is GPL software ; visit the community support page at <a href="http://community.impresscms.org/" target="_blank">community.impresscms.org</a> to support or get help.<br /><br /><a href=\'http://www.simplywiki.org/modules/wiki/index.php?page=Wiki+Help\' target=\'_blank\'>Read the Manual</a> and <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> to get started.');
+define('_MI_SWIKI_BLOCK_SHOWPAGE_NAME', 'Show Page');
+define('_MI_SWIKI_BLOCK_SHOWPAGE_DESC', 'Show a page in a block');
+define('_MI_SWIKI_AUTHOR_WORD', '<h4>About SimplyWiki</h4>SimplyWiki is GPL software. Read the <a href=\'../ReadMe.txt\' target=\'_blank\'>release notes</a> for the latest updates.');
 define('_MI_SWIKI_DEFAULTPROFILE_DESC', 'Default profile assigned to new pages');
-if (!defined('_MI_SWIKI_HOME')){define('_MI_SWIKI_HOME', 'HomePage');}
+if (!defined('_MI_SWIKI_HOME')) {
+	define('_MI_SWIKI_HOME', 'HomePage');
+}
 
 // Added in SimplyWiki 1.1
 define('_MI_SWIKI_BLOCK_LISTPAGES_NAME', 'List Pages');
 define('_MI_SWIKI_BLOCK_LISTPAGES_DESC', 'Display a list of pages');
 define('_MI_SWIKI_BLOCK_ADDPAGE_NAME', 'Add Page');
-define('_MI_SWIKI_BLOCK_ADDPAGE_DESC', 'Add a wiki page from anywhere on your site');
-define('_MI_SWIKI_BLOCK_TAGCLOUD_NAME', 'Wiki Tag Cloud');
-define('_MI_SWIKI_BLOCK_TAGCLOUD_DESC', 'A tag cloud for SimplyWiki');
-define('_MI_SWIKI_BLOCK_TAG_NAME', 'Wiki Top Tags');
-define('_MI_SWIKI_BLOCK_TAG_DESC', 'A list of top tags for SimplyWiki');
+define('_MI_SWIKI_BLOCK_ADDPAGE_DESC', 'Add a page from anywhere on your site');
 define('_MI_SWIKI_PAGEINFO', 'Show Page Information');
 define('_MI_SWIKI_PAGEINFO_DESC', 'Select which page details to display with the page');
 define('_MI_SWIKI_SHOWREVISIONS', 'Show number of revisions');
@@ -95,3 +93,7 @@ define('_MI_SWIKI_GLOBALPAGERESTORE_TITLE', 'Page restored');
 define('_MI_SWIKI_GLOBALPAGERESTORE_CAPTION', 'Notify me when a previous version of any page is restored');
 define('_MI_SWIKI_GLOBALPAGERESTORE_DESC', 'Receive notification when any user restores a previous version of any page');
 define('_MI_SWIKI_GLOBALPAGERESTORE_SUBJECT', '[{X_SITENAME}] {X_MODULE} auto-notify : page restored');
+
+// Added in SimplyWiki 2.0
+define('_MI_SWIKI_SITE_DFLT_EDITOR', 'Site Default');
+define('_MI_SWIKI_SITE_ALT_EDITOR', 'Alternate Editor');

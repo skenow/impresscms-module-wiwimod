@@ -8,16 +8,16 @@
  * @package SimplyWiki
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$
+ * @version 
  */
 if (!defined("ICMS_ROOT_PATH") && !defined('ICMS_ROOT_PATH')) die('Root path not defined');
 
-function xoops_module_install_wiki () {
-	$mydir = dirname(dirname(__FILE__));
-	global $xoopsConfig;
+function icms_module_install_simplywiki() {
+	$mydir = dirname(__DIR__);
+	global $icmsConfig;
 
-	if (@file_exists($mydir . '/language/' . $xoopsConfig['language'] . '/install.php')){
-		include $mydir . '/language/' . $xoopsConfig['language'] . '/install.php';
+	if (@file_exists($mydir . '/language/' . $icmsConfig['language'] . '/install.php')){
+		include $mydir . '/language/' . $icmsConfig['language'] . '/install.php';
 	} else {
 		include $mydir . '/language/english/install.php';
 	}
@@ -71,11 +71,11 @@ function xoops_module_install_wiki () {
 
 	$page->add();
 
-	return TRUE;
+	return true;
 }
-/* This will create a function with a name based on the installation directory, if it is not in wiwimod */
-$myInstallDir = basename(dirname(dirname(__FILE__)));
-if (!function_exists('xoops_module_install_' . $myInstallDir)) {
-	$myfunc = "function xoops_module_install_" . $myInstallDir . "() { return xoops_module_install_wiki();}";
+/* This will create a function with a name based on the installation directory, if it is not in simplywiki */
+$myInstallDir = basename(dirname(__DIR__));
+if (!function_exists('icms_module_install_' . $myInstallDir)) {
+	$myfunc = "function icms_module_install_" . $myInstallDir . "() { return icms_module_install_simplywiki();}";
 	eval($myfunc);
 }

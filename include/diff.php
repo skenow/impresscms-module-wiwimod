@@ -6,10 +6,10 @@
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$
+ * @version 
  */
 
-if (!defined('XOOPS_ROOT_PATH') && !defined('ICMS_ROOT_PATH')) exit();
+if (!defined('ICMS_ROOT_PATH')) exit();
 
 /* arr_diff 2003 by Raphael Kirschke (see http://www.php.net/array_diff) */
 
@@ -108,9 +108,9 @@ function diffDisplay($source1, $source2) {
 				$sign = '&nbsp;';
 			}
 				
-			$table .= '<tr><td align="center" style="background-color:' . $color . '">' 
-				. $sign . '</td><td>&nbsp;</td><td>' 
-				. (($color != "") ? '<strong style="color: ' . $color . ';">' : '') 
+			$table .= '<tr><td align="center" style="background-color:' . $color . '">'
+				. $sign . '</td><td>&nbsp;</td><td>'
+				. (($color != "") ? '<strong style="color: ' . $color . ';">' : '')
 				. $line . (($color != "") ? '</strong>' : '') . '</td></tr>';
 		}
 	}

@@ -2,13 +2,11 @@
 /**
  * Permissions profile
  *
- * @todo remove any $xoopsModule or $xoopsModuleConfig references, to enable the class being used from within any other module.
- *
  * @package SimplyWiki
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$
+ * @version 
  */
 if (!defined('_WI_READ')) { // @todo move these defines and remove the conditonal
 define ('_WI_READ', 1);
@@ -39,8 +37,8 @@ class WiwiProfile {
 	/**
 	 * Constructor
 	 */
-	function WiwiProfile($prid = 0) {
-		$this->db =& Database::getInstance();
+	function __construct($prid = 0) {
+		$this->db = icms_db_Factory::instance();
 		$this->name = '';
 		$this->readers = array();
 		$this->writers = array();
@@ -65,7 +63,7 @@ class WiwiProfile {
 		$this->readers = array();
 		$this->writers = array();
 		$this->administrators = array();
-		$member_handler =& xoops_gethandler('member');
+		$member_handler =& icms::handler('icms_member');
 		$grps = $member_handler->getGroupList();
 		$sql = 'SELECT gid, priv FROM '.$this->db->prefix('wiki_prof_groups').' WHERE prid='. (int) $prid.' ORDER BY priv';
 		$res = $this->db->query($sql);
@@ -91,13 +89,12 @@ class WiwiProfile {
 	 */
 	function getDefaultProfileId () {
 		/*
-		 * cannot use globals xoopsModule or xoopsModuleConfig, if called from within another module ;
-		 * so must guess SimplyWiki module id from its folder ...
+		 * must guess SimplyWiki module id from its folder ...
 		 * @return int Integer representing the profile id of the default profile defined in the module's preferences
 		 */
-		$modhandler =& xoops_gethandler('module');
-		$config_handler =& xoops_gethandler('config');
-        $wiwiModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));
+		$modhandler =& icms::handler('icms_module');
+		$config_handler =& icms::handler('icms_config');
+        $wiwiModule = $modhandler->getByDirname(basename(dirname(__DIR__)));
 		$swikiConfig =& $config_handler->getConfigsByCat(0, $wiwiModule->getVar('mid'));
 		$prid = $swikiConfig['DefaultProfile'];
 		return $prid;
@@ -178,12 +175,12 @@ class WiwiProfile {
 	}
 	/**
 	 * Retrieves an array with all profile name and id where the selected user has admin privilege
-	 * Xoops Webmasters have admin access to all profiles of course.
+	 * Webmasters have admin access to all profiles of course.
 	 */
 	function getAdminProfiles($user) {
-		$member_handler =& xoops_gethandler('member');
-		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(XOOPS_GROUP_ANONYMOUS);
-		if (in_array(XOOPS_GROUP_ADMIN , $usergroups)) {
+		$member_handler =& icms::handler('icms_member');
+		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(ICMS_GROUP_ANONYMOUS);
+		if (in_array(ICMS_GROUP_ADMIN , $usergroups)) {
 			$prlist = $this->getAllProfiles();
 		} else {
 			$t1 = $this->db->prefix('wiki_profiles');
@@ -201,17 +198,16 @@ class WiwiProfile {
 	/*
 	 * Retrieves selected user read, write and administrator privileges on the current profile,
 	 * depending on all groups he is member of.
-	 * Xoops webmasters have full access of course.
+	 * webmasters have full access of course.
 	 * Returns an three items array with keys _WI_READ, _WI_WRITE, _WI_ADMIN, _WI_COMMENTS
 	 */
 	function getUserPrivileges ($user='') {
-		global $xoopsUser;
-		$member_handler =& xoops_gethandler('member');
-		if ($user == '') $user = $xoopsUser;
-		//$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(XOOPS_GROUP_ANONYMOUS);
-		$usergroups = $xoopsUser ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		$member_handler =& icms::handler('icms_member');
+		if ($user == '') $user = icms::$user;
+		//$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(ICMS_GROUP_ANONYMOUS);
+		$usergroups = icms::$user ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$priv = array();
-		$priv[_WI_ADMIN] = in_array(XOOPS_GROUP_ADMIN , $usergroups) || ( count(array_intersect ($usergroups, array_keys($this->administrators))) > 0 );
+		$priv[_WI_ADMIN] = in_array(ICMS_GROUP_ADMIN , $usergroups) || ( count(array_intersect ($usergroups, array_keys($this->administrators))) > 0 );
 		$priv[_WI_WRITE] = $priv[_WI_ADMIN] || ( count(array_intersect ($usergroups, array_keys($this->writers))) > 0 );
 		$priv[_WI_READ] = $priv[_WI_WRITE]  || ( count(array_intersect ($usergroups, array_keys($this->readers))) > 0 );
 		$priv[_WI_COMMENTS] = (
@@ -272,20 +268,19 @@ class WiwiProfile {
 	 */
 	function updateModuleConfig() {
 		/*
-		 * cannot use the global xoopsModule, if called from within another module ;
-		 * so must guess SimplyWiki module id from its folder ...
+		 * must guess SimplyWiki module id from its folder ...
 		 */
-		$modhandler =& xoops_gethandler('module');
-        $myXoopsModule = $modhandler->getByDirname(basename(dirname(dirname(__FILE__))));
+		$modhandler =& icms::handler('icms_module');
+        $myModule = $modhandler->getByDirname(basename(dirname(__DIR__)));
 		//-- get the config item options from the database
-		$criteria = new CriteriaCompo (new Criteria('conf_modid', $myXoopsModule->getVar('mid')));
-		$criteria->add(new Criteria('conf_name', 'DefaultProfile'));
-		$config_handler =& xoops_gethandler('config');
+		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', $myModule->getVar('mid')));
+		$criteria->add(new icms_db_criteria_Item('conf_name', 'DefaultProfile'));
+		$config_handler =& icms::handler('icms_config');
 		$configs = $config_handler->getConfigs($criteria,false);
 		$confid = $configs[0]->getVar('conf_id');
-		$old_options = $config_handler->getConfigOptions(new Criteria('conf_id',$confid),false);
+		$old_options = $config_handler->getConfigOptions(new icms_db_criteria_Item('conf_id',$confid),false);
 		//-- create the new options
-		$optionshandler = xoops_gethandler('configoption');
+		$optionshandler = icms::handler('icms_config_option');
 		$prlist = $this->getAllProfiles();
 		foreach ($prlist as $prid=>$prname) {
 			$opt = $optionshandler->create();
@@ -312,9 +307,9 @@ class WiwiProfile {
 	* @return array
 	*/
 	function getWriteProfiles($user) {
-		$member_handler =& xoops_gethandler('member');
-		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(XOOPS_GROUP_ANONYMOUS);
-		if (in_array(XOOPS_GROUP_ADMIN , $usergroups)) {
+		$member_handler =& icms::handler('icms_member');
+		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(ICMS_GROUP_ANONYMOUS);
+		if (in_array(ICMS_GROUP_ADMIN , $usergroups)) {
 			$prlist = $this->getAllProfiles();
 		} else {
 			$t1 = $this->db->prefix('wiki_profiles');

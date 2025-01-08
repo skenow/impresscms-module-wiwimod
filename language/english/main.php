@@ -9,13 +9,13 @@
  *  _DESC	: description under the title for form elements
  *  _MSG	: messages, alerts ...
  * @package SimplyWiki
- * @version $Id$
+ * @version 
  */
 
 define('_MD_SWIKI_MODIFIED_TXT', 'Last modified on');
 define('_MD_SWIKI_BY', 'by');
 define('_MD_SWIKI_HISTORY_TXT', 'History of page');
-define('_MD_SWIKI_EDIT_TXT', 'Edit Wiki Page');
+define('_MD_SWIKI_EDIT_TXT', 'Edit Page');
 define('_MD_SWIKI_BODY_TXT', 'Page content');
 define('_MD_SWIKI_DIFF_TXT', 'Differences between current and latest revisions');
 define('_MD_SWIKI_THISPAGE', 'This page');
@@ -73,3 +73,7 @@ define('_MD_SWIKI_VIEWS', 'Views');
 
 // Added in version 1.2.1
 define('_MD_SWIKI_CREATE', 'Create this page');
+
+// Added in version 2.0
+define('_MD_SWIKI_META_KEYWORDS', 'META Keywords');
+define('_MD_SWIKI_META_DESCRIPTION', 'META Description');

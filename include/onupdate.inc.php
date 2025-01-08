@@ -7,24 +7,24 @@
  * @package SimplyWiki
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version $Id$
+ * @version 
  */
 if (!defined("ICMS_ROOT_PATH") && !defined('ICMS_ROOT_PATH')) exit("Root path not defined");
 
-function xoops_module_update_wiwimod($module = NULL, $prev_version = NULL) {
-	$wikiInstallDir = dirname(dirname(__FILE__));
-	$wikiModDir = basename(dirname(dirname(__FILE__)));
-	global $xoopsConfig;
+function icms_module_update_simplywiki($module = null, $prev_version = null) {
+	$wikiInstallDir = dirname(__DIR__);
+	$wikiModDir = basename(dirname(__DIR__));
+	global $icmsConfig;
 
-	if (@file_exists($wikiInstallDir . '/language/' . $xoopsConfig['language'] . '/update.php')){
-		include $wikiInstallDir . '/language/' . $xoopsConfig['language'] . '/update.php';
+	if (@file_exists($wikiInstallDir . '/language/' . $icmsConfig['language'] . '/update.php')){
+		include $wikiInstallDir . '/language/' . $icmsConfig['language'] . '/update.php';
 	} else {
 		include $wikiInstallDir . '/language/english/update.php';
 	}
 
-	$db =& Database::getInstance();
-	$modhandler =& xoops_gethandler('module');
-	$config_handler =& xoops_gethandler('config');
+	$db = icms_db_Factory::Instance();
+	$modhandler =& icms::handler('icms_module');
+	$config_handler =& icms::handler('icms_config');
 	$SimplyWiki = $modhandler->getByDirname($wikiModDir);
 
 	/* Get current module version before proceeding */
@@ -36,18 +36,18 @@ function xoops_module_update_wiwimod($module = NULL, $prev_version = NULL) {
 
 	/* Check for new table - wiki_pages - and add it if it doesn't exist */
 	$sql = "CREATE TABLE IF NOT EXISTS ". $db->prefix('wiki_pages') ." (
-       pageid int unsigned NOT NULL auto_increment COMMENT 'Unique integer ID for the page',
-       keyword varchar(255) NOT NULL DEFAULT '' COMMENT 'Keyword/page name',
-       title varchar(255) NOT NULL DEFAULT '' COMMENT 'Title of the page',
-       creator mediumint(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Userid for the user that created the page, from users.uid',
-       createdate datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Datetime the page was created',
-       prid int NOT NULL DEFAULT 0 COMMENT 'Profile id to control page access, defined in wiki_profiles.prid',
+       pageid int unsigned NOT null auto_increment COMMENT 'Unique integer ID for the page',
+       keyword varchar(255) NOT null DEFAULT '' COMMENT 'Keyword/page name',
+       title varchar(255) NOT null DEFAULT '' COMMENT 'Title of the page',
+       creator mediumint(8) UNSIGNED NOT null DEFAULT 0 COMMENT 'Userid for the user that created the page, from users.uid',
+       createdate datetime NOT null DEFAULT CURRENT_TIMESTAMP COMMENT 'Datetime the page was created',
+       prid int NOT null DEFAULT 0 COMMENT 'Profile id to control page access, defined in wiki_profiles.prid',
        parent varchar(255) DEFAULT '' COMMENT 'Keyword/page name of the parent page for the page',
-       views int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Number of times this page has been viewed',
+       views int UNSIGNED NOT null DEFAULT 0 COMMENT 'Number of times this page has been viewed',
        visible int DEFAULT 0 COMMENT 'Determines if the page is visible in the index and its sort order (weight)',
        revisions int DEFAULT 0 COMMENT 'The number of times the page has been revised',
-       lastmodified datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Last time this page was revised',
-       lastviewed datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Last time this page was viewed by someone other than the last author',
+       lastmodified datetime NOT null DEFAULT CURRENT_TIMESTAMP COMMENT 'Last time this page was revised',
+       lastviewed datetime NOT null DEFAULT CURRENT_TIMESTAMP COMMENT 'Last time this page was viewed by someone other than the last author',
        allowComments ENUM('0','1') DEFAULT '1' COMMENT 'Allow or restrict (additional) comments for the page',
        contextBlock varchar(255) DEFAULT '' COMMENT 'Keyword/page name for the related content block',
        PRIMARY KEY (pageid),
@@ -74,12 +74,12 @@ function xoops_module_update_wiwimod($module = NULL, $prev_version = NULL) {
 
 	/* Check for new table - wiki_revisions - and add it if it doesn't exist */
 	$sql = "CREATE TABLE IF NOT EXISTS ". $db->prefix('wiki_revisions') ." (
-       revid int UNSIGNED NOT NULL AUTO_INCREMENT,
-       pageid int UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Link to wiki_pages.pageid',
-       body mediumtext NOT NULL COMMENT 'Text for this revision',
+       revid int UNSIGNED NOT null AUTO_INCREMENT,
+       pageid int UNSIGNED NOT null DEFAULT 0 COMMENT 'Link to wiki_pages.pageid',
+       body mediumtext NOT null COMMENT 'Text for this revision',
        summary tinytext COMMENT 'Summary of the revision by the author',
-       modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Timestamp for the revision',
-       userid mediumint(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Userid for the user that modified the page, from users.uid',
+       modified datetime NOT null DEFAULT CURRENT_TIMESTAMP COMMENT 'Timestamp for the revision',
+       userid mediumint(8) UNSIGNED NOT null DEFAULT 0 COMMENT 'Userid for the user that modified the page, from users.uid',
        PRIMARY KEY page (revid)
      ) ENGINE=MyISAM COMMENT 'Holds details of the individual revisions to each page';
      ";
@@ -113,9 +113,9 @@ function xoops_module_update_wiwimod($module = NULL, $prev_version = NULL) {
 	}
 
 	$sql = 'CREATE TABLE IF NOT EXISTS '. $db->prefix('wiki_prof_groups') .'(
-		prid int(11) default NULL ,
-		gid int(11) default NULL ,
-		priv smallint(6) default NULL
+		prid int(11) default null ,
+		gid int(11) default null ,
+		priv smallint(6) default null
 		) ENGINE = MYISAM ';
 	$db->query($sql);
 
@@ -149,13 +149,47 @@ function xoops_module_update_wiwimod($module = NULL, $prev_version = NULL) {
 			WHERE p.pageid = r.pageid AND r.c > p.revisions";
 		$db->query($sql);
 	}
-
-	return TRUE;
+	
+	/* check for the datetime fields default values '0000-00-00 00:00:00' is no longer valid in SQL strict mode */
+	$sql = "SHOW COLUMNS FROM `" . $db->prefix('wiki_pages') ."` WHERE type = 'datetime' AND `Default` = '0000-00-00 00:00:00';";
+	$result = $db->query($sql);
+	
+	if ($db->getRowsNum($result) > 0) {
+		$table = new icms_db_legacy_updater_Table('wiki_pages');
+		$table->addAlteredField('createdate', "DATETIME NOT null DEFAULT CURRENT_TIMESTAMP");
+		$table->addAlteredField('lastmodified', "DATETIME NOT null DEFAULT CURRENT_TIMESTAMP");
+		$table->addAlteredField('lastviewed', "DATETIME NOT null DEFAULT CURRENT_TIMESTAMP");
+		$table->alterTable();
+		unset($table);
+	}
+	
+	$sql = "SHOW COLUMNS FROM `" . $db->prefix('wiki_revisions') ."` WHERE type = 'datetime' AND `Default` = '0000-00-00 00:00:00';";
+	$result = $db->query($sql);
+	
+	if ($db->getRowsNum($result) > 0) {
+		$table = new icms_db_legacy_updater_Table('wiki_revisions');
+		$table->addAlteredField('modified', "DATETIME NOT null DEFAULT CURRENT_TIMESTAMP");
+		$table->alterTable();
+		unset($table);
+	}
+	
+	/* Add meta fields to the wiki_pages table */
+	$table = new icms_db_legacy_updater_Table('wiki_pages');
+	
+	if (!$table->fieldExists('meta_keywords')) {
+		$table->addNewField('meta_keywords', 'varchar(255) DEFAULT "" COMMENT "Allows specification of custom keywords for metatags"');
+		$table->addNewField('meta_description', 'varchar(255) DEFAULT "" COMMENT "Allows specification of custom meta description"');
+	
+		$table->addNewFields();
+		unset($table);
+	}
+	
+	return true;
 }
 
-/* This will create a function with a name based on the installation directory, if it is not in SimplyWiki */
-$wikiModDir = basename(dirname(dirname(__FILE__)));
-if (!function_exists('xoops_module_update_' . $wikiModDir)) {
-	$myfunc = "function xoops_module_update_" . $wikiModDir . '($module = NULL, $prev_version = NULL) { return xoops_module_update_wiwimod($module, $prev_version);}';
+/* This will create a function with a name based on the installation directory, if it is not in simplywiki */
+$wikiModDir = basename(dirname(__DIR__));
+if (!function_exists('icms_module_update_' . $wikiModDir)) {
+	$myfunc = "function icms_module_update_" . $wikiModDir . '($module = null, $prev_version = null) { return icms_module_update_simplywiki($module, $prev_version);}';
 	eval($myfunc);
 }
