@@ -1024,10 +1024,16 @@ class WiwiRevision {
 	 * @return string Unaltered body text if there are less than 3 headings, HTML inserted for the linked list otherwise
 	 */
 	private function render_toc(&$body) {
+		global $icmsConfigMultilang;
 		$lt = "(?:&lt;|<)";
 		$gt = "(?:&gt;|>)";
 
 		$search = '/<(h\d)>(.+?)<\/\1>/';
+		// Account for multilanguage sites
+		if ($icmsConfigMultilang['ml_enable'] == '1') {
+			$body = easiestml($body);
+		}
+		// Check the content for headings
 		if (preg_match_all($search, $body, $matches, PREG_SET_ORDER) < 3) {
 			return $body;
 		} else {
