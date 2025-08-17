@@ -7,6 +7,7 @@ What's New in 2.0
 	* Default values for datetime fields compliant with MySQL Strict Mode (required in newer versions of MyWQL)
 	* Editor selection in preferences is clearer - use the site default, or specify an alternate editor
 	* Page visits are updated for subpages (embedded in another page), context and showpage blocks
+	* Headings list handling for mulitlingual sites
 		
 == Latest Full Release: SimplyWiki 1.2.1 Final (March 2014)==
 

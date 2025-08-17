@@ -3,7 +3,7 @@
 ! changed
 
 == SimplyWiki 2.0.0 ==
-Status: Beta
+Status: Release Candidate
 Released: 
 
 Added
@@ -16,6 +16,7 @@ Improved
 * Default values for datetime fields compliant with MySQL Strict Mode
 * Layout of the TOC block works better with modern themes
 * Editor selection in preferences is clearer - use the site default, or specify an alternate editor
+* Header list rendering improved for multilingual sites
 
 Fixed
 * All deprecated code and references updated

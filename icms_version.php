@@ -11,7 +11,7 @@
 $modversion = array (
 		'name' => _MI_SWIKI_NAME,
 		'version' => '2.0.0',
-		'status' => 'Beta',
+		'status' => 'RC',
 		'description' => _MI_SWIKI_DESC,
 		'author' => 'Steve Kenow <skenow@impresscms.org>',
 		'credits' => 'Based on Wiwimod by Xavier JIMENEZ; with further contributions by Gizmhail and GibaPHP',
