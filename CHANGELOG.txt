@@ -4,7 +4,7 @@
 
 == SimplyWiki 2.0.0 ==
 Status: Release Candidate
-Released: 
+Released: September 2025
 
 Added
 * Templates for all pages
