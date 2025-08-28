@@ -12,7 +12,7 @@ Added
 * Ability to sort pages by number of views in admin area
 
 Improved
-* PHP 7 strict compliance
+* PHP 8 strict compliance
 * Default values for datetime fields compliant with MySQL Strict Mode
 * Layout of the TOC block works better with modern themes
 * Editor selection in preferences is clearer - use the site default, or specify an alternate editor
