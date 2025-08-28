@@ -2,9 +2,9 @@ Basic Features
 
 Simply create your page and edit the content using a WYSIWYG editor - no additional syntax to learn
 
-Create a new page using the new 'Create new page' element you can enable on all pages, the 'Add Page' block you can add anywhere on your site. 
+Create a new page using the new 'Create new page' element you can enable on all pages. There also is an 'Add Page' block you can eanble and place anywhere on your site. 
 
-Create links to pages by enclosing the page name in double square brackets '[' and ']' on any wiki page and a link to the page will appear. I the page doesn't exist, the link will allow you to create the new page. You can also enable CamelCase page names and using a CamelCase word or phrase in a page will create a link to a page.
+Create links to pages by enclosing the page name in double square brackets '[' and ']' on any wiki page and a link to the page will appear. If the page doesn't exist, the link will allow you to create the new page. You can also enable CamelCase page names and using a CamelCase word or phrase in a page will create a link to a page.
 
 You can create a hierarchy of pages by using the Parent page field for each page. This will enable the breadcrumb links at the top of every wiki page.
 
@@ -14,7 +14,7 @@ Create a table of contents for your wiki using the visibility field in combinati
 
 The SideContent block displays content based on the current page being viewed. Assign a page title to the side content field for a page and enable the SideContent block. When the main page is displayed, the related content page will display in the block.
 
-SimplyWiki can store multiple versions of a page (revisions), allowing you to track the history and changes to a page. You can also comment on the changes made for each revision.
+SimplyWiki can store multiple versions of a page (revisions), allowing you to track the history and changes to a page. You can also include revision notes for the changes made in each revision. There is a compare function to highlight the differences between revisions.
 
 Longer pages can be split into multiple pages, using the pagebreak tag in your text. Automatic pagination is displayed on wiki pages that span multiple pages.
 
