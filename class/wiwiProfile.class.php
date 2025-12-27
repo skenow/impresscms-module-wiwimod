@@ -6,7 +6,7 @@
  * @author Wiwimod: Xavier JIMENEZ
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version 
+ * @version
  */
 if (!defined('_WI_READ')) { // @todo move these defines and remove the conditonal
 define ('_WI_READ', 1);
@@ -263,7 +263,7 @@ class WiwiProfile {
 		return ($priv[_WI_HISTORY]);
 	}
 	/*
-	 * Updates SimplyWiki's module options with the uptodate list of profiles
+	 * Updates SimplyWiki's module options with the up to date list of profiles
 	 * to enable selecting the "default" profile within module's preferences.
 	 */
 	function updateModuleConfig() {
@@ -273,12 +273,15 @@ class WiwiProfile {
 		$modhandler =& icms::handler('icms_module');
         $myModule = $modhandler->getByDirname(basename(dirname(__DIR__)));
 		//-- get the config item options from the database
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', $myModule->getVar('mid')));
-		$criteria->add(new icms_db_criteria_Item('conf_name', 'DefaultProfile'));
-		$config_handler =& icms::handler('icms_config');
-		$configs = $config_handler->getConfigs($criteria,false);
+        $criteria_modID = new icms_db_criteria_Item('conf_modid', $myModule->getVar('mid'));
+        $criteria = new icms_db_criteria_Compo($criteria_modID);
+        $criteria_default_profile = new icms_db_criteria_Item('conf_name', 'DefaultProfile');
+        $criteria->add($criteria_default_profile);
+		$config_handler = icms::handler('icms_config');
+		$configs = $config_handler->getConfigs($criteria, false);
 		$confid = $configs[0]->getVar('conf_id');
-		$old_options = $config_handler->getConfigOptions(new icms_db_criteria_Item('conf_id',$confid),false);
+		$criteria_configID = new icms_db_criteria_Item('conf_id', $confid);
+		$old_options = $config_handler->getConfigOptions($criteria_configID, false);
 		//-- create the new options
 		$optionshandler = icms::handler('icms_config_option');
 		$prlist = $this->getAllProfiles();
@@ -307,7 +310,7 @@ class WiwiProfile {
 	* @return array
 	*/
 	function getWriteProfiles($user) {
-		$member_handler =& icms::handler('icms_member');
+		$member_handler = icms::handler('icms_member');
 		$usergroups = $user ? $member_handler->getGroupsByUser($user->getVar('uid')) : array(ICMS_GROUP_ANONYMOUS);
 		if (in_array(ICMS_GROUP_ADMIN , $usergroups)) {
 			$prlist = $this->getAllProfiles();

@@ -83,8 +83,10 @@ if (in_array($op, $valid_ops, true)) {
 			if ($prid !== null) $btnTray->addElement($aclDelete);
 			$form->addElement($btnTray);
 
-			$form->addElement(new icms_form_elements_Hidden('op', 'save'));
-			$form->addElement(new icms_form_elements_Hidden('prid', $prid));
+			$save_element = new icms_form_elements_Hidden('op', 'save');
+			$prid_element = new icms_form_elements_Hidden('prid', $prid);
+			$form->addElement($save_element);
+			$form->addElement($prid_element);
 
 			$form->display();
 
@@ -156,8 +158,10 @@ if (in_array($op, $valid_ops, true)) {
 			$form->addElement($aclConfirmDelete);
 			$form->addElement($aclRedir);
 			$form->addElement($btnTray);
-			$form->addElement(new icms_form_elements_Hidden('op', 'edit'));
-			$form->addElement(new icms_form_elements_Hidden('prid', $prid));
+			$edit_element = new icms_form_elements_Hidden('op', 'edit');
+			$form->addElement($edit_element);
+			$prid_element = new icms_form_elements_Hidden('prid', $prid);
+			$form->addElement($prid_element);
 			$form->display();
 
 			icms_cp_footer();
