@@ -186,19 +186,15 @@ switch ($op) {
 		$form = new icms_form_Theme(_MD_SWIKI_EDIT_TXT . ': ' . $page, 'swikiform', 'index.php');
 		$btn_tray = new icms_form_elements_Tray('', ' ');
 
-		$form_elements = [];
-		$form_elements[] = new icms_form_elements_Hidden('op', 'insert');
-		$form_elements[] = new icms_form_elements_Hidden('page', icms_core_DataFilter::htmlSpecialchars($pageObj->keyword));
-		$form_elements[] = new icms_form_elements_Hidden('pageid', $pageObj->pageid);
-		$form_elements[] = new icms_form_elements_Hidden('id', $pageObj->id);
-		$form_elements[] = new icms_form_elements_Hidden('uid', (icms::$user) ? icms::$user->getVar('uid') : 0);
-		$form_elements[] = new icms_form_elements_Hidden('lastmodified', $pageObj->lastmodified);
-		$form_elements[] = new icms_form_elements_Text(_MD_SWIKI_TITLE_FLD, 'title', 50, 250, icms_core_DataFilter::htmlSpecialchars($pageObj->title));
-		
-		foreach ($form_elements as $element) {
-			$form->addElement($element);
-		}
-		
+		$form->addElement(new icms_form_elements_Hidden('op', 'insert'));
+		$form->addElement(new icms_form_elements_Hidden('page', icms_core_DataFilter::htmlSpecialchars($pageObj->keyword)));
+		$form->addElement(new icms_form_elements_Hidden('pageid', $pageObj->pageid));
+		$form->addElement(new icms_form_elements_Hidden('id', $pageObj->id));
+		$form->addElement(new icms_form_elements_Hidden('uid', (icms::$user) ? icms::$user->getVar('uid') : 0));
+		$form->addElement(new icms_form_elements_Hidden('lastmodified', $pageObj->lastmodified));
+
+		$form->addElement(new icms_form_elements_Text(_MD_SWIKI_TITLE_FLD, 'title', 50, 250, icms_core_DataFilter::htmlSpecialchars($pageObj->title)));
+
 		switch ($swikiConfig['Editor']) {
 			default:
 			case 0: // standard editor
@@ -225,8 +221,7 @@ switch ($op) {
 
 		$form->addElement($t_area);
 
-		$parent_element = new icms_form_elements_Text(_MD_SWIKI_PARENT_FLD, 'parent', 15, 100, icms_core_DataFilter::htmlSpecialchars($pageObj->parent));
-		$form->addElement($parent_element);
+		$form->addElement(new icms_form_elements_Text(_MD_SWIKI_PARENT_FLD, 'parent', 15, 100, icms_core_DataFilter::htmlSpecialchars($pageObj->parent)));
 
 		if ($pageObj->canAdministrate()) {
 			$prflst = $pageObj->profile->getAdminProfiles(icms::$user);
@@ -234,19 +229,14 @@ switch ($op) {
 			$prfsel->addOptionArray($prflst);
 			$form->addElement($prfsel);
 		} else {
-			$profile_label = new icms_form_elements_Label(_MD_SWIKI_PROFILE_FLD, $pageObj->profile->name);
-			$form->addElement($profile_label);
-			$profile_ID_element = new icms_form_elements_Hidden('prid', $pageObj->profile->prid);
-			$form->addElement($profile_ID_element);
+			$form->addElement(new icms_form_elements_Label(_MD_SWIKI_PROFILE_FLD, $pageObj->profile->name));
+			$form->addElement(new icms_form_elements_Hidden('prid', $pageObj->profile->prid));
 		}
 
-		$visible_element = new icms_form_elements_Text(_MD_SWIKI_VISIBLE_FLD, 'visible', 3, 3, $pageObj->visible);
-		$form->addElement($visible_element);
-		$contextBlock_element = new icms_form_elements_Text(_MD_SWIKI_CONTEXTBLOCK_FLD, 'contextBlock', 15, 100, icms_core_DataFilter::htmlSpecialchars($pageObj->contextBlock));
-		$form->addElement($contextBlock_element);
+		$form->addElement(new icms_form_elements_Text(_MD_SWIKI_VISIBLE_FLD, 'visible', 3, 3, $pageObj->visible));
+		$form->addElement(new icms_form_elements_Text(_MD_SWIKI_CONTEXTBLOCK_FLD, 'contextBlock', 15, 100, icms_core_DataFilter::htmlSpecialchars($pageObj->contextBlock)));
 		$rev_summary = $summary ? $summary : '';
-		$summary_element = new icms_form_elements_Text(_MI_SWIKI_REVISION_SUMMARY, 'summary', 50, 255, $rev_summary);
-		$form->addElement($summary_element);
+		$form->addElement(new icms_form_elements_Text(_MI_SWIKI_REVISION_SUMMARY, 'summary', 50, 255, $rev_summary));
 		/*
 		 * $allowComments_checkbox = new XoopsFormCheckBox(_MI_SWIKI_ALLOW_COMMENTS, 'allowComments',);
 		 * $allowComments_checkbox->addOption ($allowComments, $pageObj->allowComments);
@@ -255,17 +245,14 @@ switch ($op) {
 		 * $form->addElement($allowComments_checkbox);
 		 */
 
-		$meta_keywords_element = new icms_form_elements_Text(_MD_SWIKI_META_KEYWORDS, 'meta_keywords', 50, 255, $pageObj->meta_keywords);
-		$form->addElement($meta_keywords_element);
-		$meta_description_element = new icms_form_elements_Textarea(_MD_SWIKI_META_DESCRIPTION, 'meta_description', $pageObj->meta_description, 5, 50);
-		$form->addElement($meta_description_element);
+		$form->addElement(new icms_form_elements_Text(_MD_SWIKI_META_KEYWORDS, 'meta_keywords', 50, 255, $pageObj->meta_keywords));
+		$form->addElement(new icms_form_elements_Textarea(_MD_SWIKI_META_DESCRIPTION, 'meta_description', $pageObj->meta_description, 5, 50));
 
 		$preview_btn = new icms_form_elements_Button('', 'preview', _PREVIEW, 'button');
 		$preview_btn->setExtra("onclick='document.forms.swikiform.op.value=\"preview\"; document.forms.swikiform.submit.click();'");
 		$btn_tray->addElement($preview_btn);
 
-		$submit_element = new icms_form_elements_Button('', 'submit', _MD_SWIKI_SUBMITREVISION_BTN, 'submit');
-		$btn_tray->addElement($submit_element);
+		$btn_tray->addElement(new icms_form_elements_Button('', 'submit', _MD_SWIKI_SUBMITREVISION_BTN, 'submit'));
 
 		/*
 		 * only show the Save button if the user is an administrator for the page.
@@ -279,8 +266,7 @@ switch ($op) {
 
 		// Captcha Hack
 		if ($swikiConfig['Captcha']) {
-			$captcha_element = new icms_form_elements_Captcha();
-			$form->addElement($captcha_element);
+			$form->addElement(new icms_form_elements_Captcha());
 		}
 		// Captcha Hack
 

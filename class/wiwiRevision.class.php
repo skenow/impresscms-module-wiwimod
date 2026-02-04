@@ -28,127 +28,127 @@ icms_loadLanguageFile($wikiModDir, "main");
  * @subpackage
  */
 class WiwiRevision {
-
+	
 	/**
 	 * the CamelCase code of the page
 	 */
 	public $keyword;
-
+	
 	/**
 	 * title of the page
 	 */
 	public $title;
-
+	
 	/**
 	 * content of the page
 	 */
 	public $body;
-
+	
 	/**
 	 * date the page was last modified
 	 */
 	public $lastmodified;
-
+	
 	/**
 	 * user id of last author
 	 */
 	public $u_id;
-
+	
 	/**
 	 * CamelCase code of the parent page
 	 */
 	public $parent;
-
+	
 	/**
 	 * weight of the revision in TOC block
 	 */
 	public $visible;
-
+	
 	/**
 	 * CamelCase code of the page to be shown in the side block
 	 */
 	public $contextBlock;
-
+	
 	/**
 	 * id of the initial revision (necessary to keep comments visible)
 	 */
 	public $pageid;
-
+	
 	/**
 	 * the current revision profile (@link WiwiProfile)
 	 */
 	public $profile;
-
+	
 	/**
 	 * revision unique id.
 	 */
 	public $id;
-
+	
 	/**
 	 * reference to the database connection
 	 */
 	private $db;
-
+	
 	/**
 	 * reference to the text sanitizer
 	 */
 	private $ts;
-
+	
 	/**
 	 * used to get SimplyWiki configs, even when called from other modules
 	 */
 	private $swikiConfig;
-
+	
 	/**
 	 * revision summary
 	 */
 	public $summary;
-
+	
 	/**
 	 * number of times the page was viewed
 	 */
 	public $views;
-
+	
 	/**
 	 * creator of the page
 	 */
 	public $creator;
-
+	
 	/**
 	 * create datetime of the page
 	 */
 	public $created;
-
+	
 	/**
 	 * number of revisions of this page, also the latest revision of the page
 	 */
 	public $revisions;
-
+	
 	/**
 	 * last time the page was accessed
 	 */
 	public $lastviewed;
-
+	
 	/**
 	 * whether to allow comments or not for the page
 	 */
 	public $allowComments;
-
+	
 	/**
 	 * Base directory for the module
 	 */
 	/* custom meta keywords */
 	public $meta_keywords;
-
+	
 	/* custom meta_description */
 	public $meta_description;
 	private $_dir;
-
+	
 	/**
 	 * Base URL for the module
 	 */
 	private $_url;
-
+	
 	/**
 	 * Constructor.
 	 * Loads revision from database :
@@ -164,12 +164,12 @@ class WiwiRevision {
 	 */
 	public function __construct($page = null, $id = 0, $pageid = 0) {
 		if ($page == '') $page = null;
-
+		
 		$this->db = icms_db_Factory::instance();
 		$this->ts = icms_core_Textsanitizer::getInstance();
 		$this->_dir = basename(dirname(__DIR__));
 		$this->_url = ICMS_URL . '/modules/' . $this->_dir . '/';
-
+		
 		$modhandler = &icms::handler('icms_module');
 		$config_handler = &icms::handler('icms_config');
 		$SimplyWiki = $modhandler->getByDirname($this->_dir);
@@ -194,7 +194,7 @@ class WiwiRevision {
 		$this->allowComments = '1';
 		$this->meta_keywords = '';
 		$this->meta_description = '';
-
+		
 		/* new SQL, based on the new tables */
 		$sql = 'SELECT * FROM ' . $this->db->prefix('wiki_pages') . ' p INNER JOIN ' . $this->db->prefix('wiki_revisions') . ' r ON p.pageid = r.pageid';
 		if ($id != 0) {
@@ -207,7 +207,7 @@ class WiwiRevision {
 			$sql = '';
 		}
 		/* end of the new SQL */
-
+		
 		if ($sql != '') {
 			$result = $this->db->query($sql);
 			if ($this->db->getRowsNum($result) == 0) return false;
@@ -233,10 +233,10 @@ class WiwiRevision {
 			$this->meta_keywords = $row['meta_keywords'];
 			$this->meta_description = $row['meta_description'];
 		}
-
+		
 		return $this;
 	}
-
+	
 	/**
 	 * Creates a new revision from current object.
 	 *
@@ -249,8 +249,8 @@ class WiwiRevision {
 		if ($this->pageid == 0) {
 			$sql = sprintf("INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock, meta_keywords, meta_description)
 					VALUES('%s', '%s', '%s', %u, %u, %u, '%s', '%s', '%s', '%s', '%s', '%s')", $this->db->prefix('wiki_pages'), icms_core_DataFilter::addSlashes($this->keyword), icms_core_DataFilter::addSlashes($this->title), $add_date, // -- lastmodified is Now
-			icms_core_DataFilter::addSlashes($this->parent), $this->visible, $this->profile->prid, icms::$user ? icms::$user->getVar('uid') : 0, // $this->creator,
-			$add_date, $this->allowComments, icms_core_DataFilter::addSlashes($this->contextBlock), icms_core_DataFilter::addSlashes($this->meta_keywords), icms_core_DataFilter::addSlashes($this->meta_description));
+					icms_core_DataFilter::addSlashes($this->parent), $this->visible, $this->profile->prid, icms::$user ? icms::$user->getVar('uid') : 0, // $this->creator,
+					$add_date, $this->allowComments, icms_core_DataFilter::addSlashes($this->contextBlock), icms_core_DataFilter::addSlashes($this->meta_keywords), icms_core_DataFilter::addSlashes($this->meta_description));
 			$result = $this->db->query($sql);
 			if (!$result) return false;
 			$this->pageid = $this->db->getInsertId();
@@ -270,7 +270,7 @@ class WiwiRevision {
 		$result = $this->db->query($sql);
 		return ($result ? true : false);
 	}
-
+	
 	/**
 	 *
 	 * @todo Remove the cached version of a page after saving
@@ -288,11 +288,11 @@ class WiwiRevision {
 		}
 		$sql = sprintf("UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', meta_keywords='%s', meta_description='%s'
 				WHERE revid=%u AND p.pageid=%u", $this->db->prefix('wiki_pages'), $this->db->prefix('wiki_revisions'), $body, $save_date, icms::$user ? icms::$user->getVar('uid') : 0, // -- author is always the current user
-		icms_core_DataFilter::addSlashes($this->contextBlock), icms_core_DataFilter::addSlashes($this->summary), icms_core_DataFilter::addSlashes($this->title), $save_date, icms_core_DataFilter::addSlashes($this->parent), $this->profile->prid, $this->visible, $this->allowComments, icms_core_DataFilter::addSlashes($this->meta_keywords), icms_core_DataFilter::addSlashes($this->meta_description), $this->id, $this->pageid);
+				icms_core_DataFilter::addSlashes($this->contextBlock), icms_core_DataFilter::addSlashes($this->summary), icms_core_DataFilter::addSlashes($this->title), $save_date, icms_core_DataFilter::addSlashes($this->parent), $this->profile->prid, $this->visible, $this->allowComments, icms_core_DataFilter::addSlashes($this->meta_keywords), icms_core_DataFilter::addSlashes($this->meta_description), $this->id, $this->pageid);
 		$result = $this->db->query($sql);
 		return ($result ? true : false);
 	}
-
+	
 	/**
 	 * function visited() - version 0.85
 	 * Return True or False.
@@ -312,11 +312,11 @@ class WiwiRevision {
 	 */
 	public function visited() {
 		$sql = sprintf("UPDATE %s SET views=%u, lastviewed='%s' WHERE pageid=%u", $this->db->prefix("wiki_pages"), $this->views + 1, date('Y/n/j G:i:s'), // do not change this date format - it is valid for MySQL
-		$this->pageid);
+				$this->pageid);
 		$result = $this->db->queryF($sql);
 		return ($result ? true : false);
 	}
-
+	
 	/**
 	 * Callback function to render content from another page within the current page
 	 * Renders sub page content, using render method.
@@ -342,7 +342,7 @@ class WiwiRevision {
 		}
 		return $result;
 	}
-
+	
 	/**
 	 * Renders revision content, interpreting wiki codes and XoopsCodes.
 	 *
@@ -351,16 +351,16 @@ class WiwiRevision {
 	 */
 	public function render(&$body = '') {
 		if ($body == '') $body = $this->body;
-
+		
 		$lbr = "<p>|</p>|<hr />|<table>|</table>|<div>|</div>|<br />|<ul>|<li>|</li>|</ul>";
 		$nl = "^|" . $lbr;
 		$eol = $lbr . "|$";
 		$lt = "(?:&lt;|<)";
 		$gt = "(?:&gt;|>)";
-
+		
 		$search = array();
 		$replace = array();
-
+		
 		/**
 		 *
 		 * @todo Many of these are not necessary with a full WYSIWYG editor in use. Still left here for legacy support
@@ -368,43 +368,43 @@ class WiwiRevision {
 		// is this one still useful ?
 		$search[] = "#\r\n?#";
 		$replace[] = "\n";
-
+		
 		// <<bold text>>
 		$search[] = "#" . $lt . "{2}(.*?)" . $gt . "{2}#s";
 		$replace[] = "<strong>\\1</strong>";
-
+		
 		// {{italic text}}
 		$search[] = "#\{{2}(.*?)\}{2}#s";
 		$replace[] = "<em>\\1</em>";
-
+		
 		// ---- : horizontal rule
 		$search[] = "#(" . $nl . ")-{4,}(" . $eol . ")#m";
 		$replace[] = "\\1<hr />\\2";
-
+		
 		// [[br]] : line break .. still useful?
 		// Need to process before other [[ ]] page links, or it will be interpretted as a link to another page
 		$search[] = "#\[\[BR\]\]#i";
 		$replace[] = "<br />";
-
+		
 		// [[IMG url title]] : inline image.
 		// Need to process before other [[ ]] page links, or it will be interpretted as a link to another page
 		$search[] = "#\[\[IMG ([^\s\"\[>{}]+)( ([^\"<\n]+?))?\]\]#i";
 		$replace[] = '<img src="\\1" alt="\\3" />';
-
+		
 		// [[www.mysite.org title]] and [[<a ... /a> title]]
 		$search[] = "#\[\[(<a.*>)(.*)</a> (.+?)\]\]#i";
 		$replace[] = '\\1\\3</a>';
 		// "#([\w.-]+@[\w.-]+)(?![\w.]*(\">|<))#";
 		// '<a href="mailto:\\1">\\1</a>';
-
+		
 		// =Title=
 		$search[] = "#(" . $nl . ")=(.*)=(" . $eol . ")#m";
 		$replace[] = "\n\\1<h2>\\2</h2>\\3\n";
-
+		
 		// * list item
 		$search[] = "#(" . $nl . ")\* (.*)#m";
 		$replace[] = "\\1<li>\\2</li>\\3";
-
+		
 		// detection des niv0li
 		$search[] = "#(" . $nl . ")\* (.*)#m";
 		$replace[] = "<niv0li>\\2</niv0li>";
@@ -435,46 +435,46 @@ class WiwiRevision {
 		// nettoyage des niv*ul
 		$search[] = "#niv([0-9]*)ul#";
 		$replace[] = "ul";
-
+		
 		// removes multiple line ends .. still useful ?
 		$search[] = "#\n+#";
 		$replace[] = "\n";
-
+		
 		$body = $this->ts->displayTarea(preg_replace($search, $replace, $body), 1, 1, 1, 1, 0);
-
+		
 		$delayedsearch = array();
 		$delayedreplace = array();
-
+		
 		// link with href ending with ?page=CamelCase
 		$search_callback = "#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))(\">.*)</a>#Ui";
 		$body = preg_replace_callback($search_callback, function ($matches) {
 			return $this->render_wiwiLink($matches[2], $matches[1], $matches[4]);
 		}, $body);
-
-		// CamelCase
-		if ($this->swikiConfig['ShowCamelCase']) {
-			// [[CamelCase title]]
-			$search_callback = "#\[\[(?:(?<!XBLK |PAGE )([A-Z][a-z]+){2,}\d*) (.+?)\]\]#";
+			
+			// CamelCase
+			if ($this->swikiConfig['ShowCamelCase']) {
+				// [[CamelCase title]]
+				$search_callback = "#\[\[(?:(?<!XBLK |PAGE )([A-Z][a-z]+){2,}\d*) (.+?)\]\]#";
+				$body = preg_replace_callback($search_callback, function ($matches) {
+					return $this->render_wikiLink($matches[1], $matches[2], $this->swikiConfig['ShowTitles']);
+				}, $body);
+					
+					// CamelCase
+					$search_callback = "#(?<!XBLK|PAGE)(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#";
+					$body = preg_replace_callback($search_callback, function ($matches) {
+						return $matches[1] . $this->render_wikiLink($matches[2], '', $this->swikiConfig['ShowTitles']);
+					}, $body);
+						
+						// escaped ~CamelCase
+						$delayedsearch[] = "#(^|\s|>)~(([A-Z][a-z]+){2,}\d*)\b#";
+						$delayedreplace[] = '\\1\\2';
+			}
+			
+			// [[free link | title]]
+			$search_callback = "#\[\[((?!XBLK|PAGE)[^\[\]]+?)\s*\|\s*(.+?)\]\]#";
 			$body = preg_replace_callback($search_callback, function ($matches) {
 				return $this->render_wikiLink($matches[1], $matches[2], $this->swikiConfig['ShowTitles']);
 			}, $body);
-
-			// CamelCase
-			$search_callback = "#(?<!XBLK|PAGE)(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#";
-			$body = preg_replace_callback($search_callback, function ($matches) {
-				return $matches[1] . $this->render_wikiLink($matches[2], '', $this->swikiConfig['ShowTitles']);
-			}, $body);
-
-			// escaped ~CamelCase
-			$delayedsearch[] = "#(^|\s|>)~(([A-Z][a-z]+){2,}\d*)\b#";
-			$delayedreplace[] = '\\1\\2';
-		}
-
-		// [[free link | title]]
-		$search_callback = "#\[\[((?!XBLK|PAGE)[^\[\]]+?)\s*\|\s*(.+?)\]\]#";
-		$body = preg_replace_callback($search_callback, function ($matches) {
-			return $this->render_wikiLink($matches[1], $matches[2], $this->swikiConfig['ShowTitles']);
-		}, $body);
 
 		// [[free link]]
 		$search_callback = "#\[\[((?!XBLK |PAGE ).+?)\]\]#";
@@ -519,14 +519,14 @@ class WiwiRevision {
 
 		return $this->render_toc($body);
 	}
-
+	
 	/**
 	 * Utilities for page rendering ;
 	 */
 	public function render_wiwiLink($pg, $a, $txt) {
 		return $a . $txt . ($this->pageExists($pg) ? "" : "<img src='" . $this->_url . "images/nopage.gif' alt='' />") . "</a>";
 	}
-
+	
 	/**
 	 * Generate the text or link for a wiki tag
 	 *
@@ -555,10 +555,10 @@ class WiwiRevision {
 			$txt = ($customTitle != '' ? $customTitle : $normKeyword);
 			$privileges = $this->profile->getUserPrivileges();
 		}
-
+		
 		$userCanWrite = $privileges[_WI_WRITE];
 		$userCanView = $privileges[_WI_READ];
-
+		
 		if ($pageExists && $userCanView) {
 			$link = sprintf('<a href="%s" title="' . $title . '">%s</a>', $this->_url . 'index.php?page=' . $this->encode($normKeyword), stripslashes($txt));
 		} elseif (!$pageExists && $userCanWrite) {
@@ -566,10 +566,10 @@ class WiwiRevision {
 		} else {
 			$link = $txt;
 		}
-
+		
 		return $link;
 	}
-
+	
 	/**
 	 * Callback function to render an index or list of recent changes embedded in the page
 	 *
@@ -577,48 +577,48 @@ class WiwiRevision {
 	 */
 	public function render_index($type) {
 		$settings = array(
-			"pageindex" => array(
-				"ORDER BY title ASC",
-				"title",
-				1,
-				'"<br/><span class=\'wiwi_titre\' style=\"font-size:large;\">[$counter]</span><br/>"',
-				'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a><br/>"',
-				""),
-			"pageindexi" => array("ORDER BY keyword ASC", "keyword", 1, '"<br/><span class=\'wiwi_titre\'>$counter</span><br />"', '"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $content["keyword"] . "\">" . $content["keyword"] . "</a> : " . $content["title"] . "<br />"', ""),
-			"recentchanges" => array(
-				"ORDER BY lastmodified DESC LIMIT 20",
-				"lastmodified",
-				10,
-				'"<tr><td colspan=3><strong>" . formatTimestamp(strtotime($counter), _SHORTDATESTRING) . "</strong></td></tr>"',
-				'"<tr><td>&nbsp;" . formatTimestamp(strtotime($content["lastmodified"]), "H:i") . "</td><td><a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a></td><td>" . $content["summary"] . "</td><td><span class=\"itemPoster\">" . icms_member_user_Handler::getUserLink($content["u_id"]) . "</span></td></tr>"',
-				""));
-		$cfg = $settings[strtolower($type[1])];
-
-		$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM ' . $this->db->prefix('wiki_pages') . ' p, ' . $this->db->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified ' . $cfg[0];
-		$result = $this->db->query($sql);
-
-		$body = '';
-		$counter = '[';
-		while ($content = $this->db->fetcharray($result)) {
-			if (extension_loaded('mbstring')) {
-				mb_internal_encoding('UTF-8');
-				if ($counter != mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]))) {
-					$counter = mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]));
-					eval('$body .= (($body)?"' . $cfg[5] . '":"") . "" . ' . $cfg[3] . ';');
-				}
-				eval('$body .= ' . $cfg[4] . ' . "\n";');
-			} else {
-				if ($counter != strtoupper(substr($content[$cfg[1]], 0, $cfg[2]))) {
-					$counter = strtoupper(substr($content[$cfg[1]], 0, $cfg[2]));
-					eval('$body .= (($body)?"' . $cfg[5] . '":"") . "" . ' . $cfg[3] . ';');
-				}
-				eval('$body .= ' . $cfg[4] . ' . "\n";');
-			}
-		}
-		
-		return "<table>" . $body . (($body) ? $cfg[5] : "") . "</table>\n\n";
+				"pageindex" => array(
+						"ORDER BY title ASC",
+						"title",
+						1,
+						'"<br/><span class=\'wiwi_titre\' style=\"font-size:large;\">[$counter]</span><br/>"',
+						'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a><br/>"',
+						""),
+				"pageindexi" => array("ORDER BY keyword ASC", "keyword", 1, '"<br/><span class=\'wiwi_titre\'>$counter</span><br />"', '"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $content["keyword"] . "\">" . $content["keyword"] . "</a> : " . $content["title"] . "<br />"', ""),
+				"recentchanges" => array(
+						"ORDER BY lastmodified DESC LIMIT 20",
+						"lastmodified",
+						10,
+						'"<tr><td colspan=3><strong>" . formatTimestamp(strtotime($counter), _SHORTDATESTRING) . "</strong></td></tr>"',
+						'"<tr><td>&nbsp;" . formatTimestamp(strtotime($content["lastmodified"]), "H:i") . "</td><td><a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a></td><td>" . $content["summary"] . "</td><td><span class=\"itemPoster\">" . icms_member_user_Handler::getUserLink($content["u_id"]) . "</span></td></tr>"',
+						""));
+						$cfg = $settings[strtolower($type[1])];
+						
+						$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM ' . $this->db->prefix('wiki_pages') . ' p, ' . $this->db->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified ' . $cfg[0];
+						$result = $this->db->query($sql);
+						
+						$body = '';
+						$counter = '[';
+						while ($content = $this->db->fetcharray($result)) {
+							if (extension_loaded('mbstring')) {
+								mb_internal_encoding('UTF-8');
+								if ($counter != mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]))) {
+									$counter = mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]));
+									eval('$body .= (($body)?"' . $cfg[5] . '":"") . "" . ' . $cfg[3] . ';');
+								}
+								eval('$body .= ' . $cfg[4] . ' . "\n";');
+							} else {
+								if ($counter != strtoupper(substr($content[$cfg[1]], 0, $cfg[2]))) {
+									$counter = strtoupper(substr($content[$cfg[1]], 0, $cfg[2]));
+									eval('$body .= (($body)?"' . $cfg[5] . '":"") . "" . ' . $cfg[3] . ';');
+								}
+								eval('$body .= ' . $cfg[4] . ' . "\n";');
+							}
+						}
+						
+						return "<table>" . $body . (($body) ? $cfg[5] : "") . "</table>\n\n";
 	}
-
+	
 	/**
 	 * Callback function to render a system block within the body
 	 *
@@ -629,7 +629,7 @@ class WiwiRevision {
 		$blk = swiki_getBlock($matches[1]);
 		return "<table><tr><td>" . $blk['content'] . "</td></tr></table>";
 	}
-
+	
 	/**
 	 * private function , used by parentList method.
 	 * Note : this was formerly an inline function, but php5 doesn't seem to accept it recursively.
@@ -643,7 +643,7 @@ class WiwiRevision {
 			$this->parentList_recurr($parent, $parlist, $db);
 		}
 	}
-
+	
 	/**
 	 * Creates breadcrumb of all parent pages to current page
 	 *
@@ -659,7 +659,7 @@ class WiwiRevision {
 		}
 		return array_reverse($parlist);
 	}
-
+	
 	/**
 	 *
 	 * @param $limit
@@ -668,14 +668,14 @@ class WiwiRevision {
 	public function history($limit = 0, $start = 0) {
 		$sql = 'SELECT keyword, revid as id, title, body, modified as lastmodified, userid as u_id, summary FROM ' . $this->db->prefix('wiki_revisions') . ' r, ' . $this->db->prefix('wiki_pages') . ' p WHERE p.keyword="' . icms_core_DataFilter::addSlashes($this->keyword) . '" AND p.pageid=r.pageid ORDER BY id DESC';
 		$result = $this->db->query($sql, $limit, $start);
-
+		
 		$hist = array();
 		for ($i = 0; $i < $this->db->getRowsNum($result); $i++ ) {
 			$hist[] = $this->db->fetchArray($result);
 		}
 		return $hist;
 	}
-
+	
 	/**
 	 *
 	 * @param $bodyDiff
@@ -687,49 +687,49 @@ class WiwiRevision {
 		$sql = 'SELECT title, body FROM ' . $this->db->prefix('wiki_revisions') . ' r, ' . $this->db->prefix('wiki_pages') . ' p WHERE p.pageid="' . $this->pageid . '" AND r.pageid="' . $this->pageid . '" ORDER BY revid DESC LIMIT 1';
 		$result = $this->db->query($sql);
 		list($title, $body) = $this->db->fetchRow($result);
-
+		
 		// remove formatting tags, replace tags generating a line break with a "\n".
 		$search = array("#<(/?TABLE|TD|P|HR|DIV|UL|LI|PRE|BR)>#i", "#<(?!/?A|IMG)[/!]*?[^<>]*?>#si");
-
+		
 		$replace = array("<$1>\n", "");
-
+		
 		$body = preg_replace($search, $replace, $body);
 		$body2 = preg_replace($search, $replace, $this->body);
 		$diff2Disp = diffDisplay($body2, $body);
 		$bodyDiff = $this->render($diff2Disp);
 		$titleDiff = ($title == $this->title) ? '<h2>' . icms_core_DataFilter::htmlSpecialchars($title) . '</h2>' : '<h2><span style="color: red;">' . icms_core_DataFilter::htmlSpecialchars($this->title) . '</span> &rarr; <span style="color: green;">' . icms_core_DataFilter::htmlSpecialchars($title) . '</span></h2>';
 	}
-
+	
 	/**
 	 */
 	public function canRead() {
 		return ($this->profile->canRead());
 	}
-
+	
 	/**
 	 */
 	public function canWrite() {
 		return ($this->profile->canWrite());
 	}
-
+	
 	/**
 	 */
 	public function canAdministrate() {
 		return ($this->profile->canAdministrate());
 	}
-
+	
 	/**
 	 */
 	public function canViewComments() {
 		return ($this->profile->canViewComments());
 	}
-
+	
 	/**
 	 */
 	public function canViewHistory() {
 		return ($this->profile->canViewHistory());
 	}
-
+	
 	/**
 	 * checks if current revision has been saved concurrently by another user
 	 * Note : even if this "was" a new page when first edited the doc, another
@@ -744,16 +744,16 @@ class WiwiRevision {
 		$sql = "SELECT lastmodified FROM " . $this->db->prefix("wiki_pages") . " WHERE keyword='" . icms_core_DataFilter::addSlashes($this->keyword) . "'";
 		$result = $this->db->query($sql);
 		$rowsnum = $this->db->getRowsNum($result);
-
+		
 		if ($this->id == 0) {
-
+			
 			return ($rowsnum > 0); // this was a page creation : somebody did it before ...
 		} else {
 			list($db_lastmodified) = $this->db->fetchRow($result);
 			return ($this->lastmodified != $db_lastmodified);
 		}
 	}
-
+	
 	/**
 	 *
 	 * @param $page
@@ -772,7 +772,7 @@ class WiwiRevision {
 		}
 		return ($this->db->getRowsNum($this->db->query($sql)) > 0);
 	}
-
+	
 	/**
 	 * Returns an array of wiwiRevisions, selected upon given criteria
 	 * $where :
@@ -782,9 +782,9 @@ class WiwiRevision {
 	 */
 	public function getPages($where = "", $order = "", $items_perpage = 0, $current_start = 0) {
 		if ($order == "") $order = "keyword ASC";
-
+		
 		$sql_a = "SELECT p.*, body, summary, contextBlock, r.userid as u_id, revid as id FROM " . $this->db->prefix("wiki_pages") . " AS p, " . $this->db->prefix("wiki_revisions") . " AS r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified";
-
+		
 		if ($where != "") {
 			$sql_a .= " AND " . $where;
 		}
@@ -792,7 +792,7 @@ class WiwiRevision {
 			$sql_a .= " ORDER BY " . $order;
 		}
 		$result_a = $this->db->query($sql_a, $items_perpage, $current_start);
-
+		
 		$pageArr = array();
 		for ($i = 0; $i < $this->db->getRowsNum($result_a); $i++ ) {
 			$row = $this->db->fetchArray($result_a);
@@ -822,24 +822,24 @@ class WiwiRevision {
 		}
 		return $pageArr;
 	}
-
+	
 	/**
 	 *
 	 * @param $where
 	 */
 	public function getPagesNum($where = "") {
 		$sql_a = "SELECT count(p.pageid) as count FROM " . $this->db->prefix("wiki_pages") . ' p, ' . $this->db->prefix("wiki_revisions") . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified';
-
+		
 		if ($where != "") {
 			$sql_a .= " AND " . $where;
 		}
-
+		
 		$result = $this->db->query($sql_a);
 		list($maxcount) = $this->db->fetchRow($result);
-
+		
 		return $maxcount;
 	}
-
+	
 	/**
 	 * Creates a new revision whose content is copied from the selected one, but with other data (parent, privileges etc..) untouched.
 	 */
@@ -849,7 +849,7 @@ class WiwiRevision {
 		$latestRev->contextBlock = $this->contextBlock;
 		return $latestRev->add();
 	}
-
+	
 	/**
 	 * Deletes all revisions of current page, anterior to current revision.
 	 */
@@ -858,7 +858,7 @@ class WiwiRevision {
 		$success = $this->db->query($sql);
 		return $success;
 	}
-
+	
 	/**
 	 */
 	public function cleanPagesHistory() {
@@ -871,7 +871,7 @@ class WiwiRevision {
 		}
 		return $success;
 	}
-
+	
 	/**
 	 */
 	public function deletePage() {
@@ -883,7 +883,7 @@ class WiwiRevision {
 		}
 		return $success;
 	}
-
+	
 	/**
 	 * Returns an array with all links on the current page.
 	 *
@@ -895,11 +895,11 @@ class WiwiRevision {
 	public function getLinks($allowExternals = false) {
 		$links = array();
 		$search = array("#(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#", // CamelCase
-		"#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#", // [[CamelCase title]]
-		"#\[\[<a href=\"([^\"]*)\"(?:[^>]*)>(.*)</a> (.+?)\]\]#i", // [[www.mysite.org title]] and [[<a ... /a> title]]
-		"#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#", // [[free link | title]]
-		"#\[\[(.+?)\]\]#", // [[free link]]
-		"#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))\">(.*)</a>#Ui" // link with href ending with ?page=
+				"#\[\[(([A-Z][a-z]+){2,}\d*) (.+?)\]\]#", // [[CamelCase title]]
+				"#\[\[<a href=\"([^\"]*)\"(?:[^>]*)>(.*)</a> (.+?)\]\]#i", // [[www.mysite.org title]] and [[<a ... /a> title]]
+				"#\[\[([^\[\]]+?)\s*\|\s*(.+?)\]\]#", // [[free link | title]]
+				"#\[\[(.+?)\]\]#", // [[free link]]
+				"#(<a.+\?page=(([A-Z][a-z]+){2,}\d*))\">(.*)</a>#Ui" // link with href ending with ?page=
 		);
 		$replace = array(array(2, 2, true), array(1, 3, true), array(1, 2, false), array(1, 2, true), array(1, 1, true), array(2, 2, true));
 		foreach ($search as $key => $pattern) {
@@ -911,7 +911,7 @@ class WiwiRevision {
 		}
 		return $links;
 	}
-
+	
 	/**
 	 *
 	 * @param $keyword
@@ -921,7 +921,7 @@ class WiwiRevision {
 		$replace = array("'", '"', '"', ' ');
 		return str_replace($search, $replace, $keyword);
 	}
-
+	
 	/**
 	 *
 	 * @param $keyword
@@ -931,7 +931,7 @@ class WiwiRevision {
 		$replace = array('%27', '%27', '%22', '%22', '%22', '+', '+');
 		return str_replace($search, $replace, $keyword);
 	}
-
+	
 	/**
 	 *
 	 * @param $keyword
@@ -941,7 +941,7 @@ class WiwiRevision {
 		$search = array('%27', '%22', '+');
 		return str_replace($search, $replace, $keyword);
 	}
-
+	
 	/**
 	 * Retrieves a list of pages with the same parent page
 	 *
@@ -957,7 +957,7 @@ class WiwiRevision {
 		$siblings = $this->getPages($where, $order, $limit);
 		return $siblings;
 	}
-
+	
 	/**
 	 * Retrieves a list of pages that have the specified parent page
 	 *
@@ -973,7 +973,7 @@ class WiwiRevision {
 		$children = $this->getPages($where, $order, $limit);
 		return $children;
 	}
-
+	
 	/**
 	 * Render an unordered list of pages that have the same parent
 	 *
@@ -993,7 +993,7 @@ class WiwiRevision {
 		}
 		return "<ul>" . $body . "</ul>";
 	}
-
+	
 	/**
 	 * Render an unordered list of pages that have the same parent
 	 *
@@ -1013,7 +1013,7 @@ class WiwiRevision {
 		}
 		return "<ul>" . $body . "</ul>";
 	}
-
+	
 	/**
 	 * Create a linked table of contents for a page
 	 * This function locates all the heading tags and creates a linked list to assist with
@@ -1027,7 +1027,7 @@ class WiwiRevision {
 		global $icmsConfigMultilang;
 		$lt = "(?:&lt;|<)";
 		$gt = "(?:&gt;|>)";
-
+		
 		$search = '/<(h\d)>(.+?)<\/\1>/';
 		// Account for multilanguage sites
 		if ($icmsConfigMultilang['ml_enable'] == '1') {
@@ -1046,10 +1046,10 @@ class WiwiRevision {
 		// <[Headings]>
 		$search = "#(<p>)*" . $lt . "\[Headings\]" . $gt . "(</p>)*#i";
 		$replace = "<div class='wiki_toc'>" . implode("<br />", $headings) . "</div>";
-
+		
 		return preg_replace($search, $replace, $body);
 	}
-
+	
 	/**
 	 * Determine the link title
 	 *
@@ -1057,7 +1057,7 @@ class WiwiRevision {
 	 * @return string Text to use for the title attribute of the link
 	 */
 	public function getTitle($link) {}
-
+	
 	/*
 	 * Return the module configs
 	 *
@@ -1079,9 +1079,9 @@ class WiwiRevision {
  * @since SimplyWiki 1.2
  */
 class WiwiRevisionHandler {
-
+	
 	public function __construct() {}
-
+	
 	/**
 	 *
 	 * @param int $author
