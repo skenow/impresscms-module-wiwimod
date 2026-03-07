@@ -196,13 +196,13 @@ class WiwiRevision {
 		$this->meta_description = '';
 		
 		/* new SQL, based on the new tables */
-		$sql = 'SELECT * FROM ' . $this->db->prefix('wiki_pages') . ' p INNER JOIN ' . $this->db->prefix('wiki_revisions') . ' r ON p.pageid = r.pageid';
+		$sql = "SELECT * FROM " . $this->db->prefix('wiki_pages') . " p INNER JOIN " . $this->db->prefix('wiki_revisions') . " r ON p.pageid = r.pageid";
 		if ($id != 0) {
-			$sql .= ' WHERE revid = ' . $id;
+			$sql .= " WHERE revid = $id";
 		} elseif ($page !== null) {
-			$sql .= ' WHERE p.lastmodified = r.modified AND keyword="' . icms_core_DataFilter::addSlashes($page) . '" ';
+			$sql .= " WHERE p.lastmodified = r.modified AND keyword='" . icms_core_DataFilter::addSlashes($page) . "'";
 		} elseif ($pageid != 0) {
-			$sql .= ' WHERE p.lastmodified = r.modified AND p.pageid=' . $pageid;
+			$sql .= " WHERE p.lastmodified = r.modified AND p.pageid = $pageid";
 		} else {
 			$sql = '';
 		}
@@ -247,10 +247,22 @@ class WiwiRevision {
 		$add_date = date('Y/n/j G:i:s');
 		// only insert into the pages table if it is the first revision
 		if ($this->pageid == 0) {
-			$sql = sprintf("INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock, meta_keywords, meta_description)
-					VALUES('%s', '%s', '%s', %u, %u, %u, '%s', '%s', '%s', '%s', '%s', '%s')", $this->db->prefix('wiki_pages'), icms_core_DataFilter::addSlashes($this->keyword), icms_core_DataFilter::addSlashes($this->title), $add_date, // -- lastmodified is Now
-					icms_core_DataFilter::addSlashes($this->parent), $this->visible, $this->profile->prid, icms::$user ? icms::$user->getVar('uid') : 0, // $this->creator,
-					$add_date, $this->allowComments, icms_core_DataFilter::addSlashes($this->contextBlock), icms_core_DataFilter::addSlashes($this->meta_keywords), icms_core_DataFilter::addSlashes($this->meta_description));
+			$sql = sprintf(
+					"INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock, meta_keywords, meta_description)"
+					. " VALUES ('%s', '%s', '%s', %u, %u, %u, '%s', '%s', '%s', '%s', '%s', '%s')",
+					$this->db->prefix('wiki_pages'),
+					icms_core_DataFilter::addSlashes($this->keyword),
+					icms_core_DataFilter::addSlashes($this->title),
+					$add_date, // -- lastmodified is Now
+					icms_core_DataFilter::addSlashes($this->parent),
+					$this->visible,
+					$this->profile->prid,
+					icms::$user ? icms::$user->getVar('uid') : 0, // $this->creator,
+					$add_date,
+					$this->allowComments,
+					icms_core_DataFilter::addSlashes($this->contextBlock),
+					icms_core_DataFilter::addSlashes($this->meta_keywords),
+					icms_core_DataFilter::addSlashes($this->meta_description));
 			$result = $this->db->query($sql);
 			if (!$result) return false;
 			$this->pageid = $this->db->getInsertId();
@@ -262,11 +274,31 @@ class WiwiRevision {
 		} else {
 			$body = icms_core_DataFilter::addSlashes($this->body);
 		}
-		$sql = sprintf("INSERT INTO %s (pageid, summary, body, userid, modified)
-				VALUES (%u, '%s', '%s', %u, '%s')", $this->db->prefix('wiki_revisions'), $this->pageid, icms_core_DataFilter::addSlashes($this->summary), $body, icms::$user ? icms::$user->getVar('uid') : 0, $add_date);
+		$sql = sprintf(
+				"INSERT INTO %s (pageid, summary, body, userid, modified) VALUES (%u, '%s', '%s', %u, '%s')",
+				$this->db->prefix('wiki_revisions'),
+				$this->pageid,
+				icms_core_DataFilter::addSlashes($this->summary),
+				$body,
+				icms::$user ? icms::$user->getVar('uid') : 0,
+				$add_date
+				);
 		$result = $this->db->query($sql);
 		if (!$result) return false;
-		$sql = sprintf("UPDATE %s SET revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s', meta_keywords='%s', meta_description='%s' WHERE pageid=%u", $this->db->prefix('wiki_pages'), $add_date, icms_core_DataFilter::addSlashes($this->parent), $this->profile->prid, $this->visible, $this->allowComments, icms_core_DataFilter::addSlashes($this->title), icms_core_DataFilter::addSlashes($this->contextBlock), icms_core_DataFilter::addSlashes($this->meta_keywords), icms_core_DataFilter::addSlashes($this->meta_description), $this->pageid);
+		$sql = sprintf(
+				"UPDATE %s SET revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s', meta_keywords='%s', meta_description='%s' WHERE pageid=%u",
+				$this->db->prefix('wiki_pages'),
+				$add_date,
+				icms_core_DataFilter::addSlashes($this->parent),
+				$this->profile->prid,
+				$this->visible,
+				$this->allowComments,
+				icms_core_DataFilter::addSlashes($this->title),
+				icms_core_DataFilter::addSlashes($this->contextBlock),
+				icms_core_DataFilter::addSlashes($this->meta_keywords),
+				icms_core_DataFilter::addSlashes($this->meta_description),
+				$this->pageid
+				);
 		$result = $this->db->query($sql);
 		return ($result ? true : false);
 	}
@@ -286,9 +318,26 @@ class WiwiRevision {
 		} else {
 			$body = icms_core_DataFilter::addSlashes($this->body);
 		}
-		$sql = sprintf("UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', meta_keywords='%s', meta_description='%s'
-				WHERE revid=%u AND p.pageid=%u", $this->db->prefix('wiki_pages'), $this->db->prefix('wiki_revisions'), $body, $save_date, icms::$user ? icms::$user->getVar('uid') : 0, // -- author is always the current user
-				icms_core_DataFilter::addSlashes($this->contextBlock), icms_core_DataFilter::addSlashes($this->summary), icms_core_DataFilter::addSlashes($this->title), $save_date, icms_core_DataFilter::addSlashes($this->parent), $this->profile->prid, $this->visible, $this->allowComments, icms_core_DataFilter::addSlashes($this->meta_keywords), icms_core_DataFilter::addSlashes($this->meta_description), $this->id, $this->pageid);
+		$sql = sprintf(
+				"UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', meta_keywords='%s', meta_description='%s' WHERE revid=%u AND p.pageid=%u",
+				$this->db->prefix('wiki_pages'),
+				$this->db->prefix('wiki_revisions'),
+				$body,
+				$save_date,
+				icms::$user ? icms::$user->getVar('uid') : 0, // -- author is always the current user
+				icms_core_DataFilter::addSlashes($this->contextBlock),
+				icms_core_DataFilter::addSlashes($this->summary),
+				icms_core_DataFilter::addSlashes($this->title),
+				$save_date,
+				icms_core_DataFilter::addSlashes($this->parent),
+				$this->profile->prid,
+				$this->visible,
+				$this->allowComments,
+				icms_core_DataFilter::addSlashes($this->meta_keywords),
+				icms_core_DataFilter::addSlashes($this->meta_description),
+				$this->id,
+				$this->pageid
+				);
 		$result = $this->db->query($sql);
 		return ($result ? true : false);
 	}
@@ -311,8 +360,13 @@ class WiwiRevision {
 	 * anonymous count and section interest.
 	 */
 	public function visited() {
-		$sql = sprintf("UPDATE %s SET views=%u, lastviewed='%s' WHERE pageid=%u", $this->db->prefix("wiki_pages"), $this->views + 1, date('Y/n/j G:i:s'), // do not change this date format - it is valid for MySQL
-				$this->pageid);
+		$sql = sprintf(
+				"UPDATE %s SET views=%u, lastviewed='%s' WHERE pageid=%u",
+				$this->db->prefix("wiki_pages"),
+				$this->views + 1,
+				date('Y/n/j G:i:s'), // do not change this date format - it is valid for MySQL
+				$this->pageid
+				);
 		$result = $this->db->queryF($sql);
 		return ($result ? true : false);
 	}
@@ -457,17 +511,17 @@ class WiwiRevision {
 				$search_callback = "#\[\[(?:(?<!XBLK |PAGE )([A-Z][a-z]+){2,}\d*) (.+?)\]\]#";
 				$body = preg_replace_callback($search_callback, function ($matches) {
 					return $this->render_wikiLink($matches[1], $matches[2], $this->swikiConfig['ShowTitles']);
-				}, $body);
+					}, $body);
 					
 					// CamelCase
-					$search_callback = "#(?<!XBLK|PAGE)(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#";
+				$search_callback = "#(?<!XBLK|PAGE)(^|\s|>)(([A-Z][a-z]+){2,}\d*)\b#";
 					$body = preg_replace_callback($search_callback, function ($matches) {
 						return $matches[1] . $this->render_wikiLink($matches[2], '', $this->swikiConfig['ShowTitles']);
 					}, $body);
 						
 						// escaped ~CamelCase
-						$delayedsearch[] = "#(^|\s|>)~(([A-Z][a-z]+){2,}\d*)\b#";
-						$delayedreplace[] = '\\1\\2';
+				$delayedsearch[] = "#(^|\s|>)~(([A-Z][a-z]+){2,}\d*)\b#";
+				$delayedreplace[] = '\\1\\2';
 			}
 			
 			// [[free link | title]]
@@ -584,7 +638,13 @@ class WiwiRevision {
 						'"<br/><span class=\'wiwi_titre\' style=\"font-size:large;\">[$counter]</span><br/>"',
 						'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a><br/>"',
 						""),
-				"pageindexi" => array("ORDER BY keyword ASC", "keyword", 1, '"<br/><span class=\'wiwi_titre\'>$counter</span><br />"', '"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $content["keyword"] . "\">" . $content["keyword"] . "</a> : " . $content["title"] . "<br />"', ""),
+				"pageindexi" => array(
+						"ORDER BY keyword ASC",
+						"keyword",
+						1,
+						'"<br/><span class=\'wiwi_titre\'>$counter</span><br />"',
+						'"&nbsp;&nbsp;<a href=\"' . $this->_url . 'index.php?page=" . $content["keyword"] . "\">" . $content["keyword"] . "</a> : " . $content["title"] . "<br />"',
+				""),
 				"recentchanges" => array(
 						"ORDER BY lastmodified DESC LIMIT 20",
 						"lastmodified",
@@ -592,31 +652,31 @@ class WiwiRevision {
 						'"<tr><td colspan=3><strong>" . formatTimestamp(strtotime($counter), _SHORTDATESTRING) . "</strong></td></tr>"',
 						'"<tr><td>&nbsp;" . formatTimestamp(strtotime($content["lastmodified"]), "H:i") . "</td><td><a href=\"' . $this->_url . 'index.php?page=" . $this->encode($content["keyword"]) . "\">" . ($content["title"] == "" ? $content["keyword"] : $content["title"]) . "</a></td><td>" . $content["summary"] . "</td><td><span class=\"itemPoster\">" . icms_member_user_Handler::getUserLink($content["u_id"]) . "</span></td></tr>"',
 						""));
-						$cfg = $settings[strtolower($type[1])];
-						
-						$sql = 'SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM ' . $this->db->prefix('wiki_pages') . ' p, ' . $this->db->prefix('wiki_revisions') . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified ' . $cfg[0];
-						$result = $this->db->query($sql);
-						
-						$body = '';
-						$counter = '[';
-						while ($content = $this->db->fetcharray($result)) {
-							if (extension_loaded('mbstring')) {
-								mb_internal_encoding('UTF-8');
-								if ($counter != mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]))) {
-									$counter = mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]));
-									eval('$body .= (($body)?"' . $cfg[5] . '":"") . "" . ' . $cfg[3] . ';');
-								}
-								eval('$body .= ' . $cfg[4] . ' . "\n";');
-							} else {
-								if ($counter != strtoupper(substr($content[$cfg[1]], 0, $cfg[2]))) {
-									$counter = strtoupper(substr($content[$cfg[1]], 0, $cfg[2]));
-									eval('$body .= (($body)?"' . $cfg[5] . '":"") . "" . ' . $cfg[3] . ';');
-								}
-								eval('$body .= ' . $cfg[4] . ' . "\n";');
-							}
-						}
-						
-						return "<table>" . $body . (($body) ? $cfg[5] : "") . "</table>\n\n";
+		$cfg = $settings[strtolower($type[1])];
+		
+		$sql = "SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM " . $this->db->prefix('wiki_pages') . " p, " . $this->db->prefix('wiki_revisions') . " r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified $cfg[0]";
+		$result = $this->db->query($sql);
+		
+		$body = '';
+		$counter = '[';
+		while ($content = $this->db->fetcharray($result)) {
+			if (extension_loaded('mbstring')) {
+				mb_internal_encoding('UTF-8');
+				if ($counter != mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]))) {
+					$counter = mb_strtoupper(mb_substr($content[$cfg[1]], 0, $cfg[2]));
+					eval('$body .= (($body)?"' . $cfg[5] . '":"") . "" . ' . $cfg[3] . ';');
+				}
+				eval('$body .= ' . $cfg[4] . ' . "\n";');
+			} else {
+				if ($counter != strtoupper(substr($content[$cfg[1]], 0, $cfg[2]))) {
+					$counter = strtoupper(substr($content[$cfg[1]], 0, $cfg[2]));
+					eval('$body .= (($body)?"' . $cfg[5] . '":"") . "" . ' . $cfg[3] . ';');
+				}
+				eval('$body .= ' . $cfg[4] . ' . "\n";');
+			}
+		}
+		
+		return "<table>" . $body . (($body) ? $cfg[5] : "") . "</table>\n\n";
 	}
 	
 	/**
@@ -635,7 +695,7 @@ class WiwiRevision {
 	 * Note : this was formerly an inline function, but php5 doesn't seem to accept it recursively.
 	 */
 	private function parentList_recurr($child, &$parlist, &$db) {
-		$sql = 'SELECT parent FROM ' . $db->prefix('wiki_pages') . ' WHERE keyword="' . icms_core_DataFilter::addSlashes($child) . '"';
+		$sql = "SELECT parent FROM " . $db->prefix('wiki_pages') . " WHERE keyword='" . icms_core_DataFilter::addSlashes($child) . "'";
 		$result = $db->query($sql);
 		list($parent) = $db->fetchRow($result);
 		if (($parent != '') && (!in_array($parent, $parlist))) {
@@ -666,7 +726,11 @@ class WiwiRevision {
 	 * @param $start
 	 */
 	public function history($limit = 0, $start = 0) {
-		$sql = 'SELECT keyword, revid as id, title, body, modified as lastmodified, userid as u_id, summary FROM ' . $this->db->prefix('wiki_revisions') . ' r, ' . $this->db->prefix('wiki_pages') . ' p WHERE p.keyword="' . icms_core_DataFilter::addSlashes($this->keyword) . '" AND p.pageid=r.pageid ORDER BY id DESC';
+		$sql = "SELECT keyword, revid as id, title, body, modified as lastmodified, userid as u_id, summary FROM "
+				. $this->db->prefix('wiki_revisions') . " r, "
+				. $this->db->prefix('wiki_pages') . " p WHERE p.keyword = '"
+				. icms_core_DataFilter::addSlashes($this->keyword)
+				. "' AND p.pageid=r.pageid ORDER BY id DESC";
 		$result = $this->db->query($sql, $limit, $start);
 		
 		$hist = array();
@@ -684,7 +748,9 @@ class WiwiRevision {
 	public function diff(&$bodyDiff, &$titleDiff) {
 		include_once ICMS_MODULES_PATH . '/' . $this->_dir . '/include/diff.php';
 		// Get the latest revision contents
-		$sql = 'SELECT title, body FROM ' . $this->db->prefix('wiki_revisions') . ' r, ' . $this->db->prefix('wiki_pages') . ' p WHERE p.pageid="' . $this->pageid . '" AND r.pageid="' . $this->pageid . '" ORDER BY revid DESC LIMIT 1';
+		$sql = "SELECT title, body FROM "
+				. $this->db->prefix('wiki_revisions') . " r, " . $this->db->prefix('wiki_pages')
+				. " p WHERE p.pageid = '$this->pageid' AND r.pageid = '$this->pageid' ORDER BY revid DESC LIMIT 1";
 		$result = $this->db->query($sql);
 		list($title, $body) = $this->db->fetchRow($result);
 		
@@ -741,7 +807,7 @@ class WiwiRevision {
 		 * @todo returning false, because the logic is not working correctly
 		 */
 		return false;
-		$sql = "SELECT lastmodified FROM " . $this->db->prefix("wiki_pages") . " WHERE keyword='" . icms_core_DataFilter::addSlashes($this->keyword) . "'";
+		$sql = "SELECT lastmodified FROM " . $this->db->prefix("wiki_pages") . " WHERE keyword = '" . icms_core_DataFilter::addSlashes($this->keyword) . "'";
 		$result = $this->db->query($sql);
 		$rowsnum = $this->db->getRowsNum($result);
 		
@@ -764,9 +830,9 @@ class WiwiRevision {
 		if ($id > 0) {
 			$sql = "SELECT keyword FROM " . $this->db->prefix("wiki_pages") . " WHERE pageid = $id";
 		} elseif (($page != "") && ((int) $page == 0)) {
-			$sql = "SELECT keyword FROM " . $this->db->prefix("wiki_pages") . " WHERE keyword='$page'";
+			$sql = "SELECT keyword FROM " . $this->db->prefix("wiki_pages") . " WHERE keyword ='$page'";
 		} elseif ($page != "") {
-			$sql = "SELECT keyword FROM " . $this->db->prefix("wiki_pages") . " WHERE pageid=$page";
+			$sql = "SELECT keyword FROM " . $this->db->prefix("wiki_pages") . " WHERE pageid = $page";
 		} else {
 			return false;
 		}
@@ -783,7 +849,10 @@ class WiwiRevision {
 	public function getPages($where = "", $order = "", $items_perpage = 0, $current_start = 0) {
 		if ($order == "") $order = "keyword ASC";
 		
-		$sql_a = "SELECT p.*, body, summary, contextBlock, r.userid as u_id, revid as id FROM " . $this->db->prefix("wiki_pages") . " AS p, " . $this->db->prefix("wiki_revisions") . " AS r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified";
+		$sql_a = "SELECT p.*, body, summary, contextBlock, r.userid as u_id, revid as id FROM "
+				. $this->db->prefix("wiki_pages") . " AS p, "
+				. $this->db->prefix("wiki_revisions")
+				. " AS r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified";
 		
 		if ($where != "") {
 			$sql_a .= " AND " . $where;
@@ -828,7 +897,10 @@ class WiwiRevision {
 	 * @param $where
 	 */
 	public function getPagesNum($where = "") {
-		$sql_a = "SELECT count(p.pageid) as count FROM " . $this->db->prefix("wiki_pages") . ' p, ' . $this->db->prefix("wiki_revisions") . ' r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified';
+		$sql_a = "SELECT count(p.pageid) as count FROM "
+				. $this->db->prefix("wiki_pages") . " p, "
+				. $this->db->prefix("wiki_revisions")
+				. " r WHERE p.pageid = r.pageid AND p.lastmodified=r.modified";
 		
 		if ($where != "") {
 			$sql_a .= " AND " . $where;
@@ -854,7 +926,9 @@ class WiwiRevision {
 	 * Deletes all revisions of current page, anterior to current revision.
 	 */
 	public function fix() {
-		$sql = 'DELETE FROM ' . $this->db->prefix('wiki_revisions') . ' WHERE pageid="' . icms_core_DataFilter::addSlashes($this->pageid) . '" AND modified < "' . $this->lastmodified . '"';
+		$sql = "DELETE FROM "
+				. $this->db->prefix('wiki_revisions')
+				. " WHERE pageid = '" . icms_core_DataFilter::addSlashes($this->pageid) . "' AND modified < '$this->lastmodified'";
 		$success = $this->db->query($sql);
 		return $success;
 	}
@@ -863,7 +937,8 @@ class WiwiRevision {
 	 */
 	public function cleanPagesHistory() {
 		$success = true;
-		$sql = "SELECT pageid, MAX(revid) AS id FROM " . $this->db->prefix("wiki_revisions") . " WHERE modified<'" . formatTimestamp(time() - 61 * 24 * 3600, 'Y/n/j G:i:s') . "' GROUP BY pageid"; // do not change this date format - it is valide for MySQL
+		$sql = "SELECT pageid, MAX(revid) AS id FROM "
+				. $this->db->prefix("wiki_revisions") . " WHERE modified < '" . formatTimestamp(time() - 61 * 24 * 3600, 'Y/n/j G:i:s') . "' GROUP BY pageid"; // do not change this date format - it is valide for MySQL
 		$result = $this->db->query($sql);
 		while ($content = $this->db->fetcharray($result)) {
 			$rev = new wiwiRevision("", $content['id']);
@@ -875,7 +950,9 @@ class WiwiRevision {
 	/**
 	 */
 	public function deletePage() {
-		$sql = 'DELETE r.*, p.* FROM ' . $this->db->prefix('wiki_revisions') . ' r, ' . $this->db->prefix('wiki_pages') . ' p WHERE r.pageid="' . $this->pageid . '" AND p.pageid="' . $this->pageid . '"';
+		$sql = "DELETE r.*, p.* FROM "
+				. $this->db->prefix('wiki_revisions') . " r, "
+				. $this->db->prefix('wiki_pages') . " p WHERE r.pageid = $this->pageid AND p.pageid = $this->pageid";
 		$success = $this->db->query($sql);
 		if ($success) {
 			$this->id = 0;
@@ -953,7 +1030,7 @@ class WiwiRevision {
 	private function getSiblings($parent = '', $order = '', $limit = 0) {
 		if ($parent == '') $parent = $this->parent;
 		$siblings = array();
-		$where = ' parent = "' . $parent . '" AND keyword !="' . $this->keyword . '"';
+		$where = " parent = '$parent' AND keyword != '$this->keyword'";
 		$siblings = $this->getPages($where, $order, $limit);
 		return $siblings;
 	}
@@ -969,7 +1046,7 @@ class WiwiRevision {
 	private function getChildren($page = '', $order = '', $limit = 0) {
 		if ($page == '') $page = $this->keyword;
 		$children = array();
-		$where = ' parent = "' . $page . '"';
+		$where = " parent = '$page'";
 		$children = $this->getPages($where, $order, $limit);
 		return $children;
 	}
@@ -1095,14 +1172,14 @@ class WiwiRevisionHandler {
 		$revObj = new WiwiRevision();
 		$where = $sort = '';
 		if ($type && $type == 'new') {
-			$sort = 'createdate ' . $order;
+			$sort = "createdate $order";
 			if ($author) {
-				$where = 'creator = ' . $author;
+				$where = "creator = $author";
 			}
 		} else {
-			$sort = 'lastmodified ' . $order;
+			$sort = "lastmodified $order";
 			if ($author) {
-				$where = 'userid = ' . $author;
+				$where = "userid = $author";
 			}
 		}
 		$revisions = $revObj->getPages($where, $sort, $limit, $start);
