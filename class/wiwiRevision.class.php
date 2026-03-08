@@ -149,6 +149,15 @@ class WiwiRevision {
 	 */
 	private $_url;
 	
+	/* name of the pages table, with prefix */
+	private $pagesTable;
+	
+	/* name of the revisions table, with prefix */
+	private $revisionsTable;
+	
+	/* date format for MySQL, used for created and lastmodified fields */
+	private $dateTimeFormat = 'Y/n/j G:i:s';
+	
 	/**
 	 * Constructor.
 	 * Loads revision from database :
@@ -169,6 +178,8 @@ class WiwiRevision {
 		$this->ts = icms_core_Textsanitizer::getInstance();
 		$this->_dir = basename(dirname(__DIR__));
 		$this->_url = ICMS_URL . '/modules/' . $this->_dir . '/';
+		$this->pagesTable = $this->db->prefix('wiki_pages');
+		$this->revisionsTable = $this->db->prefix('wiki_revisions');
 		
 		$modhandler = &icms::handler('icms_module');
 		$config_handler = &icms::handler('icms_config');
@@ -196,7 +207,7 @@ class WiwiRevision {
 		$this->meta_description = '';
 		
 		/* new SQL, based on the new tables */
-		$sql = "SELECT * FROM " . $this->db->prefix('wiki_pages') . " p INNER JOIN " . $this->db->prefix('wiki_revisions') . " r ON p.pageid = r.pageid";
+		$sql = "SELECT * FROM $this->pagesTable p INNER JOIN $this->revisionsTable r ON p.pageid = r.pageid";
 		if ($id != 0) {
 			$sql .= " WHERE revid = $id";
 		} elseif ($page !== null) {
@@ -244,13 +255,13 @@ class WiwiRevision {
 	 */
 	public function add() {
 		// $this->created, in a format that MySQL can handle. In PHP 5.1.1+, this can be date(DATE_ATOM) or date(DATE_W3C)
-		$add_date = date('Y/n/j G:i:s');
+		$add_date = date($this->dateTimeFormat);
 		// only insert into the pages table if it is the first revision
 		if ($this->pageid == 0) {
 			$sql = sprintf(
 					"INSERT INTO %s (keyword, title, lastmodified, parent, visible, prid, creator, createdate, allowComments, contextBlock, meta_keywords, meta_description)"
 					. " VALUES ('%s', '%s', '%s', %u, %u, %u, '%s', '%s', '%s', '%s', '%s', '%s')",
-					$this->db->prefix('wiki_pages'),
+					$this->pagesTable,
 					icms_core_DataFilter::addSlashes($this->keyword),
 					icms_core_DataFilter::addSlashes($this->title),
 					$add_date, // -- lastmodified is Now
@@ -276,7 +287,7 @@ class WiwiRevision {
 		}
 		$sql = sprintf(
 				"INSERT INTO %s (pageid, summary, body, userid, modified) VALUES (%u, '%s', '%s', %u, '%s')",
-				$this->db->prefix('wiki_revisions'),
+				$this->revisionsTable,
 				$this->pageid,
 				icms_core_DataFilter::addSlashes($this->summary),
 				$body,
@@ -287,7 +298,7 @@ class WiwiRevision {
 		if (!$result) return false;
 		$sql = sprintf(
 				"UPDATE %s SET revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s', meta_keywords='%s', meta_description='%s' WHERE pageid=%u",
-				$this->db->prefix('wiki_pages'),
+				$this->pagesTable,
 				$add_date,
 				icms_core_DataFilter::addSlashes($this->parent),
 				$this->profile->prid,
@@ -310,7 +321,7 @@ class WiwiRevision {
 	 *       a new query to update a revision and page - mysql allows updating multiple tables in a single query
 	 */
 	public function save() {
-		$save_date = date('Y/n/j G:i:s');
+		$save_date = date($this->dateTimeFormat);
 		/* need to do this because of new input filtering in ImpressCMS 1.3.3 */
 		if (ICMS_VERSION_BUILD > 63) {
 			/* deliberate use of addslashes, here */
@@ -320,8 +331,8 @@ class WiwiRevision {
 		}
 		$sql = sprintf(
 				"UPDATE %s p, %s r SET body='%s', modified='%s', userid='%s', contextBlock='%s', summary='%s', title='%s', revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', meta_keywords='%s', meta_description='%s' WHERE revid=%u AND p.pageid=%u",
-				$this->db->prefix('wiki_pages'),
-				$this->db->prefix('wiki_revisions'),
+				$this->pagesTable,
+				$this->revisionsTable,
 				$body,
 				$save_date,
 				icms::$user ? icms::$user->getVar('uid') : 0, // -- author is always the current user
@@ -362,9 +373,9 @@ class WiwiRevision {
 	public function visited() {
 		$sql = sprintf(
 				"UPDATE %s SET views=%u, lastviewed='%s' WHERE pageid=%u",
-				$this->db->prefix("wiki_pages"),
+				$this->pagesTable,
 				$this->views + 1,
-				date('Y/n/j G:i:s'), // do not change this date format - it is valid for MySQL
+				date($this->dateTimeFormat), // do not change this date format - it is valid for MySQL
 				$this->pageid
 				);
 		$result = $this->db->queryF($sql);
@@ -654,7 +665,7 @@ class WiwiRevision {
 						""));
 		$cfg = $settings[strtolower($type[1])];
 		
-		$sql = "SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM " . $this->db->prefix('wiki_pages') . " p, " . $this->db->prefix('wiki_revisions') . " r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified $cfg[0]";
+		$sql = "SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM $this->pagesTable p, $this->revisionsTable r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified $cfg[0]";
 		$result = $this->db->query($sql);
 		
 		$body = '';
@@ -695,7 +706,7 @@ class WiwiRevision {
 	 * Note : this was formerly an inline function, but php5 doesn't seem to accept it recursively.
 	 */
 	private function parentList_recurr($child, &$parlist, &$db) {
-		$sql = "SELECT parent FROM " . $db->prefix('wiki_pages') . " WHERE keyword='" . icms_core_DataFilter::addSlashes($child) . "'";
+		$sql = "SELECT parent FROM $this->pagesTable  WHERE keyword='" . icms_core_DataFilter::addSlashes($child) . "'";
 		$result = $db->query($sql);
 		list($parent) = $db->fetchRow($result);
 		if (($parent != '') && (!in_array($parent, $parlist))) {
@@ -726,9 +737,7 @@ class WiwiRevision {
 	 * @param $start
 	 */
 	public function history($limit = 0, $start = 0) {
-		$sql = "SELECT keyword, revid as id, title, body, modified as lastmodified, userid as u_id, summary FROM "
-				. $this->db->prefix('wiki_revisions') . " r, "
-				. $this->db->prefix('wiki_pages') . " p WHERE p.keyword = '"
+		$sql = "SELECT keyword, revid as id, title, body, modified as lastmodified, userid as u_id, summary FROM $this->revisionsTable r, $this->pagesTable p WHERE p.keyword = '"
 				. icms_core_DataFilter::addSlashes($this->keyword)
 				. "' AND p.pageid=r.pageid ORDER BY id DESC";
 		$result = $this->db->query($sql, $limit, $start);
@@ -748,9 +757,7 @@ class WiwiRevision {
 	public function diff(&$bodyDiff, &$titleDiff) {
 		include_once ICMS_MODULES_PATH . '/' . $this->_dir . '/include/diff.php';
 		// Get the latest revision contents
-		$sql = "SELECT title, body FROM "
-				. $this->db->prefix('wiki_revisions') . " r, " . $this->db->prefix('wiki_pages')
-				. " p WHERE p.pageid = '$this->pageid' AND r.pageid = '$this->pageid' ORDER BY revid DESC LIMIT 1";
+		$sql = "SELECT title, body FROM $this->revisionsTable r, $this->pagesTable p WHERE p.pageid = '$this->pageid' AND r.pageid = '$this->pageid' ORDER BY revid DESC LIMIT 1";
 		$result = $this->db->query($sql);
 		list($title, $body) = $this->db->fetchRow($result);
 		
@@ -807,7 +814,7 @@ class WiwiRevision {
 		 * @todo returning false, because the logic is not working correctly
 		 */
 		return false;
-		$sql = "SELECT lastmodified FROM " . $this->db->prefix("wiki_pages") . " WHERE keyword = '" . icms_core_DataFilter::addSlashes($this->keyword) . "'";
+		$sql = "SELECT lastmodified FROM $this->pagesTable WHERE keyword = '" . icms_core_DataFilter::addSlashes($this->keyword) . "'";
 		$result = $this->db->query($sql);
 		$rowsnum = $this->db->getRowsNum($result);
 		
@@ -828,11 +835,11 @@ class WiwiRevision {
 	public function pageExists($page = "", $id = 0) {
 		$page = icms_core_DataFilter::addSlashes($this->normalize($page));
 		if ($id > 0) {
-			$sql = "SELECT keyword FROM " . $this->db->prefix("wiki_pages") . " WHERE pageid = $id";
+			$sql = "SELECT keyword FROM $this->pagesTable WHERE pageid = $id";
 		} elseif (($page != "") && ((int) $page == 0)) {
-			$sql = "SELECT keyword FROM " . $this->db->prefix("wiki_pages") . " WHERE keyword ='$page'";
+			$sql = "SELECT keyword FROM $this->pagesTable WHERE keyword ='$page'";
 		} elseif ($page != "") {
-			$sql = "SELECT keyword FROM " . $this->db->prefix("wiki_pages") . " WHERE pageid = $page";
+			$sql = "SELECT keyword FROM $this->pagesTable WHERE pageid = $page";
 		} else {
 			return false;
 		}
@@ -849,10 +856,7 @@ class WiwiRevision {
 	public function getPages($where = "", $order = "", $items_perpage = 0, $current_start = 0) {
 		if ($order == "") $order = "keyword ASC";
 		
-		$sql_a = "SELECT p.*, body, summary, contextBlock, r.userid as u_id, revid as id FROM "
-				. $this->db->prefix("wiki_pages") . " AS p, "
-				. $this->db->prefix("wiki_revisions")
-				. " AS r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified";
+		$sql_a = "SELECT p.*, body, summary, contextBlock, r.userid as u_id, revid as id FROM $this->pagesTable p, $this->revisionsTable r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified";
 		
 		if ($where != "") {
 			$sql_a .= " AND " . $where;
@@ -897,10 +901,7 @@ class WiwiRevision {
 	 * @param $where
 	 */
 	public function getPagesNum($where = "") {
-		$sql_a = "SELECT count(p.pageid) as count FROM "
-				. $this->db->prefix("wiki_pages") . " p, "
-				. $this->db->prefix("wiki_revisions")
-				. " r WHERE p.pageid = r.pageid AND p.lastmodified=r.modified";
+		$sql_a = "SELECT count(p.pageid) as count FROM $this->pagesTable p, $this->revisionsTable r WHERE p.pageid = r.pageid AND p.lastmodified=r.modified";
 		
 		if ($where != "") {
 			$sql_a .= " AND " . $where;
@@ -926,9 +927,7 @@ class WiwiRevision {
 	 * Deletes all revisions of current page, anterior to current revision.
 	 */
 	public function fix() {
-		$sql = "DELETE FROM "
-				. $this->db->prefix('wiki_revisions')
-				. " WHERE pageid = '" . icms_core_DataFilter::addSlashes($this->pageid) . "' AND modified < '$this->lastmodified'";
+		$sql = "DELETE FROM $this->revisionsTable  WHERE pageid = '" . icms_core_DataFilter::addSlashes($this->pageid) . "' AND modified < '$this->lastmodified'";
 		$success = $this->db->query($sql);
 		return $success;
 	}
@@ -937,8 +936,7 @@ class WiwiRevision {
 	 */
 	public function cleanPagesHistory() {
 		$success = true;
-		$sql = "SELECT pageid, MAX(revid) AS id FROM "
-				. $this->db->prefix("wiki_revisions") . " WHERE modified < '" . formatTimestamp(time() - 61 * 24 * 3600, 'Y/n/j G:i:s') . "' GROUP BY pageid"; // do not change this date format - it is valide for MySQL
+		$sql = "SELECT pageid, MAX(revid) AS id FROM $this->revisionsTable WHERE modified < '" . formatTimestamp(time() - 61 * 24 * 3600, $this->dateTimeFormat) . "' GROUP BY pageid"; // do not change this date format - it is valide for MySQL
 		$result = $this->db->query($sql);
 		while ($content = $this->db->fetcharray($result)) {
 			$rev = new wiwiRevision("", $content['id']);
@@ -950,9 +948,7 @@ class WiwiRevision {
 	/**
 	 */
 	public function deletePage() {
-		$sql = "DELETE r.*, p.* FROM "
-				. $this->db->prefix('wiki_revisions') . " r, "
-				. $this->db->prefix('wiki_pages') . " p WHERE r.pageid = $this->pageid AND p.pageid = $this->pageid";
+		$sql = "DELETE r.*, p.* FROM $this->revisionsTable r, $this->pagesTable p WHERE r.pageid = $this->pageid AND p.pageid = $this->pageid";
 		$success = $this->db->query($sql);
 		if ($success) {
 			$this->id = 0;
