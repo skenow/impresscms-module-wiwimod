@@ -220,7 +220,7 @@ class WiwiRevision {
 		/* end of the new SQL */
 		
 		if ($sql != '') {
-			$result = $this->db->query($sql);
+			$result = icms::$db->query($sql);
 			if ($this->db->getRowsNum($result) == 0) return false;
 			$row = $this->db->fetchArray($result);
 			$this->keyword = $row['keyword'];
@@ -274,7 +274,7 @@ class WiwiRevision {
 					icms_core_DataFilter::addSlashes($this->contextBlock),
 					icms_core_DataFilter::addSlashes($this->meta_keywords),
 					icms_core_DataFilter::addSlashes($this->meta_description));
-			$result = $this->db->query($sql);
+			$result = icms::$db->query($sql);
 			if (!$result) return false;
 			$this->pageid = $this->db->getInsertId();
 		}
@@ -294,7 +294,7 @@ class WiwiRevision {
 				icms::$user ? icms::$user->getVar('uid') : 0,
 				$add_date
 				);
-		$result = $this->db->query($sql);
+		$result = icms::$db->query($sql);
 		if (!$result) return false;
 		$sql = sprintf(
 				"UPDATE %s SET revisions=revisions + 1, lastmodified='%s', parent='%s', prid=%u, visible=%u, allowComments='%s', title='%s', contextBlock='%s', meta_keywords='%s', meta_description='%s' WHERE pageid=%u",
@@ -310,7 +310,7 @@ class WiwiRevision {
 				icms_core_DataFilter::addSlashes($this->meta_description),
 				$this->pageid
 				);
-		$result = $this->db->query($sql);
+		$result = icms::$db->query($sql);
 		return ($result ? true : false);
 	}
 	
@@ -349,7 +349,7 @@ class WiwiRevision {
 				$this->id,
 				$this->pageid
 				);
-		$result = $this->db->query($sql);
+		$result = icms::$db->query($sql);
 		return ($result ? true : false);
 	}
 	
@@ -378,7 +378,7 @@ class WiwiRevision {
 				date($this->dateTimeFormat), // do not change this date format - it is valid for MySQL
 				$this->pageid
 				);
-		$result = $this->db->queryF($sql);
+		$result = icms::$db->query($sql);
 		return ($result ? true : false);
 	}
 	
@@ -666,7 +666,7 @@ class WiwiRevision {
 		$cfg = $settings[strtolower($type[1])];
 		
 		$sql = "SELECT keyword, title, lastmodified, r.userid as u_id, summary FROM $this->pagesTable p, $this->revisionsTable r WHERE p.pageid=r.pageid AND p.lastmodified=r.modified $cfg[0]";
-		$result = $this->db->query($sql);
+		$result = icms::$db->query($sql);
 		
 		$body = '';
 		$counter = '[';
@@ -740,7 +740,7 @@ class WiwiRevision {
 		$sql = "SELECT keyword, revid as id, title, body, modified as lastmodified, userid as u_id, summary FROM $this->revisionsTable r, $this->pagesTable p WHERE p.keyword = '"
 				. icms_core_DataFilter::addSlashes($this->keyword)
 				. "' AND p.pageid=r.pageid ORDER BY id DESC";
-		$result = $this->db->query($sql, $limit, $start);
+		$result = icms::$db->query($sql, $limit, $start);
 		
 		$hist = array();
 		for ($i = 0; $i < $this->db->getRowsNum($result); $i++ ) {
@@ -758,7 +758,7 @@ class WiwiRevision {
 		include_once ICMS_MODULES_PATH . '/' . $this->_dir . '/include/diff.php';
 		// Get the latest revision contents
 		$sql = "SELECT title, body FROM $this->revisionsTable r, $this->pagesTable p WHERE p.pageid = '$this->pageid' AND r.pageid = '$this->pageid' ORDER BY revid DESC LIMIT 1";
-		$result = $this->db->query($sql);
+		$result = icms::$db->query($sql);
 		list($title, $body) = $this->db->fetchRow($result);
 		
 		// remove formatting tags, replace tags generating a line break with a "\n".
@@ -815,7 +815,7 @@ class WiwiRevision {
 		 */
 		return false;
 		$sql = "SELECT lastmodified FROM $this->pagesTable WHERE keyword = '" . icms_core_DataFilter::addSlashes($this->keyword) . "'";
-		$result = $this->db->query($sql);
+		$result = icms::$db->query($sql);
 		$rowsnum = $this->db->getRowsNum($result);
 		
 		if ($this->id == 0) {
@@ -843,7 +843,7 @@ class WiwiRevision {
 		} else {
 			return false;
 		}
-		return ($this->db->getRowsNum($this->db->query($sql)) > 0);
+		return ($this->db->getRowsNum(icms::$db->query($sql)) > 0);
 	}
 	
 	/**
@@ -907,7 +907,7 @@ class WiwiRevision {
 			$sql_a .= " AND " . $where;
 		}
 		
-		$result = $this->db->query($sql_a);
+		$result = icms::$db->query($sql_a);
 		list($maxcount) = $this->db->fetchRow($result);
 		
 		return $maxcount;
@@ -928,7 +928,7 @@ class WiwiRevision {
 	 */
 	public function fix() {
 		$sql = "DELETE FROM $this->revisionsTable  WHERE pageid = '" . icms_core_DataFilter::addSlashes($this->pageid) . "' AND modified < '$this->lastmodified'";
-		$success = $this->db->query($sql);
+		$success = icms::$db->query($sql);
 		return $success;
 	}
 	
@@ -937,7 +937,7 @@ class WiwiRevision {
 	public function cleanPagesHistory() {
 		$success = true;
 		$sql = "SELECT pageid, MAX(revid) AS id FROM $this->revisionsTable WHERE modified < '" . formatTimestamp(time() - 61 * 24 * 3600, $this->dateTimeFormat) . "' GROUP BY pageid"; // do not change this date format - it is valide for MySQL
-		$result = $this->db->query($sql);
+		$result = icms::$db->query($sql);
 		while ($content = $this->db->fetcharray($result)) {
 			$rev = new wiwiRevision("", $content['id']);
 			$success &= $rev->fix();
@@ -949,7 +949,7 @@ class WiwiRevision {
 	 */
 	public function deletePage() {
 		$sql = "DELETE r.*, p.* FROM $this->revisionsTable r, $this->pagesTable p WHERE r.pageid = $this->pageid AND p.pageid = $this->pageid";
-		$success = $this->db->query($sql);
+		$success = icms::$db->query($sql);
 		if ($success) {
 			$this->id = 0;
 			$this->pageid = 0;
